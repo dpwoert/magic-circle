@@ -1,0 +1,19 @@
+{
+  "name": "creative-controls-example-simple",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel index.html"
+  },
+  "keywords": [],
+  "author": "Davey van der Woert",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel": "^1.10.1"
+  },
+  "dependencies": {
+    "three": "^0.97.0",
+    "creative-controls-client": "^0.0.0"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "creative-controls-client",
+  "version": "0.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "parcel watch src/index.js"
+  },
+  "keywords": [],
+  "author": "Davey van der Woert",
+  "license": "ISC",
+  "devDependencies": {},
+  "dependencies": {
+    "is-electron": "^2.1.0"
+  }
+}
