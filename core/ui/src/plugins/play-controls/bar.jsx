@@ -3,6 +3,10 @@ import styled from 'styled-components';
 
 import withPlayState from './with-play-state';
 
+import playIcon from '../../../assets/play.svg';
+import pauseIcon from '../../../assets/pause.svg';
+import refreshIcon from '../../../assets/reload.svg';
+
 const Container = styled.div`
   margin-left: 80px;
   display: flex;
@@ -17,8 +21,13 @@ const Button = styled.div`
   text-align: center;
   user-select: none;
   font-size: 12px;
-  background: rgba(136, 74, 255, 0.19);
+  ${'' /* background: rgba(136, 74, 255, 0.19); */}
+  background-size: auto 70%;
+  background-position: center center;
+  background-repeat: no-repeat;
   font-size: 14px;
+  width: 25px;
+  height: 25px;
 
   &:first-of-type{
     border-radius: 3px 0px 0px 3px;
@@ -31,26 +40,21 @@ const Button = styled.div`
 `;
 
 const Play = styled(Button)`
-
+  background-image: url(${props => props.play ? pauseIcon : playIcon});
 `
 
 const Reload = styled(Button)`
-
+  background-image: url(${refreshIcon});
 `
 
 class Bar extends Component {
 
   render(){
     const play = this.props.play;
-    const label = !play ? '>' : '| |';
     return(
       <Container>
-        <Play onClick={() => this.props.changeState(!play)}>
-          {label}
-        </Play>
-        <Reload onClick={() => this.props.refresh()}>
-          ↻
-        </Reload>
+        <Play play={play} onClick={() => this.props.changeState(!play)} />
+        <Reload onClick={() => this.props.refresh()} />
       </Container>
     )
   }

@@ -23,8 +23,8 @@ export const addListener = fn => {
 }
 
 export const removeListener = fn => {
-  const id = listeners.getIndex(fn);
-  listeners.splice(i, 1);
+  const id = listeners.indexOf(fn);
+  listeners.splice(id, 1);
 }
 
 const withLayers = WrappedComponent =>

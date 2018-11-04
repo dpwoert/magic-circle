@@ -1,4 +1,5 @@
 import React from 'react';
+import { ipcRenderer } from 'electron';
 
 import Bar from './bar.jsx';
 import ScreenshotsPanel from './panel.jsx';
@@ -10,7 +11,7 @@ class Screenshots {
   }
 
   takeScreenshot(){
-    //tos
+    ipcRenderer.send('screenshot');
   }
 
   header(position){
@@ -25,7 +26,7 @@ class Screenshots {
   }
 
   sidebar(){
-    return <ScreenshotsPanel key="layers" />
+    return <ScreenshotsPanel key="screenshots" />
   }
 
 }

@@ -1,4 +1,4 @@
-process.env.HMR_PORT=54039;process.env.HMR_HOSTNAME="localhost";// modules are defined as an array
+process.env.HMR_PORT=55724;process.env.HMR_HOSTNAME="localhost";// modules are defined as an array
 // [ module function, map of requires ]
 //
 // map of requires is short require name -> numeric require
@@ -253,11 +253,12 @@ const Icons = _styledComponents.default.ul.withConfig({
 const Icon = _styledComponents.default.li.withConfig({
   displayName: "sidebar__Icon",
   componentId: "sc-1eq9wp3-2"
-})(["width:54px;height:54px;&:before{content:'';display:block;position:relative;width:10px;height:10px;left:22px;top:22px;background:rgb(136,74,255);}"]);
+})(["width:54px;height:54px;background-size:40% auto;background-position:center center;background-repeat:no-repeat;background-image:url(", ");"], props => props.icon);
 
-const IconBar = props => _react.default.createElement(Icons, null, props.icons.map(icon => _react.default.createElement(Icon, {
-  key: icon.name,
-  icon: icon
+const IconBar = props => _react.default.createElement(Icons, null, props.panels.map(panel => _react.default.createElement(Icon, {
+  key: panel.name,
+  icon: panel.icon,
+  onClick: () => props.setActivePanel(panel)
 })));
 
 class Sidebar extends _react.Component {
@@ -276,17 +277,17 @@ class Sidebar extends _react.Component {
 
   setActivePanel(active) {
     this.setState({
-      active
+      active: active.name
     });
   }
 
   render() {
     const children = _react.default.Children.toArray(this.props.children);
 
-    const icons = children.map(c => c.type.navigation);
+    const panels = children.map(c => c.type.navigation);
     const active = children.find(c => c.type.navigation.name === this.state.active);
     return _react.default.createElement(Container, null, _react.default.createElement(IconBar, {
-      icons: icons,
+      panels: panels,
       setActivePanel: this.setActivePanel
     }), active);
   }
@@ -384,8 +385,8 @@ const addListener = fn => {
 exports.addListener = addListener;
 
 const removeListener = fn => {
-  const id = listeners.getIndex(fn);
-  listeners.splice(i, 1);
+  const id = listeners.indexOf(fn);
+  listeners.splice(id, 1);
 };
 
 exports.removeListener = removeListener;
@@ -433,6 +434,8 @@ const withLayers = WrappedComponent => {
 
 var _default = withLayers;
 exports.default = _default;
+},{}],"../assets/layers.svg":[function(require,module,exports) {
+module.exports = "layers.3694205d.svg";
 },{}],"plugins/layers/panel.jsx":[function(require,module,exports) {
 "use strict";
 
@@ -446,6 +449,8 @@ var _react = _interopRequireWildcard(require("react"));
 var _styledComponents = _interopRequireDefault(require("styled-components"));
 
 var _withLayers = _interopRequireWildcard(require("./with-layers"));
+
+var _layers = _interopRequireDefault(require("../../../assets/layers.svg"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -496,13 +501,13 @@ class LayersPanel extends _react.Component {
 
 _defineProperty(LayersPanel, "navigation", {
   name: 'layers',
-  icon: ''
+  icon: _layers.default
 });
 
 var _default = (0, _withLayers.default)(LayersPanel);
 
 exports.default = _default;
-},{"./with-layers":"plugins/layers/with-layers.jsx"}],"plugins/layers/layers.jsx":[function(require,module,exports) {
+},{"./with-layers":"plugins/layers/with-layers.jsx","../../../assets/layers.svg":"../assets/layers.svg"}],"plugins/layers/layers.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -573,8 +578,8 @@ const addListener = fn => {
 exports.addListener = addListener;
 
 const removeListener = fn => {
-  const id = listeners.getIndex(fn);
-  listeners.splice(i, 1);
+  const id = listeners.indexOf(fn);
+  listeners.splice(id, 1);
 };
 
 exports.removeListener = removeListener;
@@ -615,6 +620,12 @@ const withPlayState = WrappedComponent => class PlayStateProvider extends _react
 
 var _default = withPlayState;
 exports.default = _default;
+},{}],"../assets/play.svg":[function(require,module,exports) {
+module.exports = "play.57a9a871.svg";
+},{}],"../assets/pause.svg":[function(require,module,exports) {
+module.exports = "pause.c4ce4016.svg";
+},{}],"../assets/reload.svg":[function(require,module,exports) {
+module.exports = "reload.c78dca4d.svg";
 },{}],"plugins/play-controls/bar.jsx":[function(require,module,exports) {
 "use strict";
 
@@ -629,6 +640,12 @@ var _styledComponents = _interopRequireDefault(require("styled-components"));
 
 var _withPlayState = _interopRequireDefault(require("./with-play-state"));
 
+var _play = _interopRequireDefault(require("../../../assets/play.svg"));
+
+var _pause = _interopRequireDefault(require("../../../assets/pause.svg"));
+
+var _reload = _interopRequireDefault(require("../../../assets/reload.svg"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
@@ -641,26 +658,28 @@ const Container = _styledComponents.default.div.withConfig({
 const Button = _styledComponents.default.div.withConfig({
   displayName: "bar__Button",
   componentId: "sc-8pe30s-1"
-})(["padding:3px 6px;border:1px solid rgb(136,74,255);color:rgb(136,74,255);display:block;text-align:center;user-select:none;font-size:12px;background:rgba(136,74,255,0.19);font-size:14px;&:first-of-type{border-radius:3px 0px 0px 3px;border-right:none;}&:last-of-type{border-radius:0px 3px 3px 0px;}"]);
+})(["padding:3px 6px;border:1px solid rgb(136,74,255);color:rgb(136,74,255);display:block;text-align:center;user-select:none;font-size:12px;", " background-size:auto 70%;background-position:center center;background-repeat:no-repeat;font-size:14px;width:25px;height:25px;&:first-of-type{border-radius:3px 0px 0px 3px;border-right:none;}&:last-of-type{border-radius:0px 3px 3px 0px;}"], ''
+/* background: rgba(136, 74, 255, 0.19); */
+);
 
 const Play = (0, _styledComponents.default)(Button).withConfig({
   displayName: "bar__Play",
   componentId: "sc-8pe30s-2"
-})([""]);
+})(["background-image:url(", ");"], props => props.play ? _pause.default : _play.default);
 const Reload = (0, _styledComponents.default)(Button).withConfig({
   displayName: "bar__Reload",
   componentId: "sc-8pe30s-3"
-})([""]);
+})(["background-image:url(", ");"], _reload.default);
 
 class Bar extends _react.Component {
   render() {
     const play = this.props.play;
-    const label = !play ? '>' : '| |';
     return _react.default.createElement(Container, null, _react.default.createElement(Play, {
+      play: play,
       onClick: () => this.props.changeState(!play)
-    }, label), _react.default.createElement(Reload, {
+    }), _react.default.createElement(Reload, {
       onClick: () => this.props.refresh()
-    }, "\u21BB"));
+    }));
   }
 
 }
@@ -668,7 +687,7 @@ class Bar extends _react.Component {
 var _default = (0, _withPlayState.default)(Bar);
 
 exports.default = _default;
-},{"./with-play-state":"plugins/play-controls/with-play-state.jsx"}],"plugins/play-controls/play-controls.jsx":[function(require,module,exports) {
+},{"./with-play-state":"plugins/play-controls/with-play-state.jsx","../../../assets/play.svg":"../assets/play.svg","../../../assets/pause.svg":"../assets/pause.svg","../../../assets/reload.svg":"../assets/reload.svg"}],"plugins/play-controls/play-controls.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1568,7 +1587,9 @@ class Seed {
 
 var _default = Seed;
 exports.default = _default;
-},{"./with-page-info.jsx":"plugins/page-information/with-page-info.jsx","./title.jsx":"plugins/page-information/title.jsx"}],"plugins/screenshots/bar.jsx":[function(require,module,exports) {
+},{"./with-page-info.jsx":"plugins/page-information/with-page-info.jsx","./title.jsx":"plugins/page-information/title.jsx"}],"../assets/screenshot.svg":[function(require,module,exports) {
+module.exports = "screenshot.49efaf0a.svg";
+},{}],"plugins/screenshots/bar.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1579,6 +1600,8 @@ exports.default = void 0;
 var _react = _interopRequireWildcard(require("react"));
 
 var _styledComponents = _interopRequireDefault(require("styled-components"));
+
+var _screenshot = _interopRequireDefault(require("../../../assets/screenshot.svg"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1592,7 +1615,9 @@ const Container = _styledComponents.default.div.withConfig({
 const Button = _styledComponents.default.div.withConfig({
   displayName: "bar__Button",
   componentId: "p1ucog-1"
-})(["padding:3px 6px;border:1px solid rgb(136,74,255);color:rgb(136,74,255);display:block;text-align:center;user-select:none;font-size:12px;background:rgba(136,74,255,0.19);font-size:14px;border-radius:3px;"]);
+})(["padding:3px 6px;border:1px solid rgb(136,74,255);color:rgb(136,74,255);display:block;text-align:center;user-select:none;font-size:12px;", " background-size:auto 70%;background-position:center center;background-repeat:no-repeat;background-image:url(", ");font-size:14px;width:25px;height:25px;border-radius:3px;"], ''
+/* background: rgba(136, 74, 255, 0.19); */
+, _screenshot.default);
 
 class Bar extends _react.Component {
   render() {
@@ -1600,13 +1625,15 @@ class Bar extends _react.Component {
     const label = !play ? '>' : '| |';
     return _react.default.createElement(Container, null, _react.default.createElement(Button, {
       onClick: () => this.props.takeScreenshot()
-    }, "sc"));
+    }));
   }
 
 }
 
 var _default = Bar;
 exports.default = _default;
+},{"../../../assets/screenshot.svg":"../assets/screenshot.svg"}],"../assets/camera-roll.svg":[function(require,module,exports) {
+module.exports = "camera-roll.231d435c.svg";
 },{}],"plugins/screenshots/panel.jsx":[function(require,module,exports) {
 "use strict";
 
@@ -1619,13 +1646,14 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _styledComponents = _interopRequireDefault(require("styled-components"));
 
+var _cameraRoll = _interopRequireDefault(require("../../../assets/camera-roll.svg"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-// import withLayers, { setActiveLayer } from './with-layers';
 const Panel = _styledComponents.default.ul.withConfig({
   displayName: "panel__Panel",
   componentId: "lgjr1i-0"
@@ -1640,12 +1668,12 @@ class ScreenshotsPanel extends _react.Component {
 
 _defineProperty(ScreenshotsPanel, "navigation", {
   name: 'screenshots',
-  icon: ''
+  icon: _cameraRoll.default
 });
 
 var _default = ScreenshotsPanel;
 exports.default = _default;
-},{}],"plugins/screenshots/screenshots.jsx":[function(require,module,exports) {
+},{"../../../assets/camera-roll.svg":"../assets/camera-roll.svg"}],"plugins/screenshots/screenshots.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1654,6 +1682,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
+
+var _electron = require("electron");
 
 var _bar = _interopRequireDefault(require("./bar.jsx"));
 
@@ -1666,7 +1696,8 @@ class Screenshots {
     this.client = client;
   }
 
-  takeScreenshot() {//tos
+  takeScreenshot() {
+    _electron.ipcRenderer.send('screenshot');
   }
 
   header(position) {
@@ -1680,7 +1711,7 @@ class Screenshots {
 
   sidebar() {
     return _react.default.createElement(_panel.default, {
-      key: "layers"
+      key: "screenshots"
     });
   }
 

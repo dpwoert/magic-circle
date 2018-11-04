@@ -27,22 +27,21 @@ const Icons = styled.ul`
 const Icon = styled.li`
   width: 54px;
   height: 54px;
-
-  &:before{
-    content: '';
-    display: block;
-    position: relative;
-    width: 10px;
-    height: 10px;
-    left: 22px;
-    top: 22px;
-    background: rgb(136, 74, 255);
-  }
+  background-size: 40% auto;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-image: url(${props => props.icon});
 `;
 
 const IconBar = props => (
   <Icons>
-    {props.icons.map(icon => <Icon key={icon.name} icon={icon} />)}
+    {props.panels.map(panel => (
+      <Icon
+        key={panel.name}
+        icon={panel.icon}
+        onClick={() => props.setActivePanel(panel)}
+      />
+    ))}
   </Icons>
 );
 
@@ -61,16 +60,16 @@ class Sidebar extends Component {
   }
 
   setActivePanel(active){
-    this.setState({ active });
+    this.setState({ active: active.name });
   }
 
   render(){
     const children = React.Children.toArray(this.props.children);
-    const icons = children.map(c => c.type.navigation);
+    const panels = children.map(c => c.type.navigation);
     const active = children.find(c => c.type.navigation.name === this.state.active);
     return(
       <Container>
-        <IconBar icons={icons} setActivePanel={this.setActivePanel} />
+        <IconBar panels={panels} setActivePanel={this.setActivePanel} />
         {active}
       </Container>
     )

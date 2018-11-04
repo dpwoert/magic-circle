@@ -3,6 +3,8 @@ import styled from 'styled-components';
 
 import withLayers, { setActiveLayer } from './with-layers';
 
+import layersIcon from '../../../assets/layers.svg';
+
 const Panel = styled.ul`
   width: 100%;
   height: 100%;
@@ -33,7 +35,7 @@ class LayersPanel extends Component {
 
   static navigation = {
     name: 'layers',
-    icon: '',
+    icon: layersIcon,
   };
 
   renderLayer(layers, layer, depth){
