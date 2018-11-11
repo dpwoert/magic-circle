@@ -6,7 +6,7 @@ import Layout from './components/layout';
 import Layers from './plugins/layers/layers';
 import PlayControls from './plugins/play-controls/play-controls';
 import Controls from './plugins/controls/controls';
-import Seed from './plugins/seed/seed';
+import Seed from '@creative-controls/seed';
 import PageInfo from './plugins/page-information/page-information';
 import Screenshots from './plugins/screenshots/screenshots';
 

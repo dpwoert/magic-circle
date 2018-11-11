@@ -10,7 +10,7 @@ export default {
     format: 'cjs',
     // globals: { 'styled-components': 'styled' },
   },
-  external: ['styled-components'],
+  external: ['styled-components','react'],
   plugins: [
     babel({
       exclude: 'node_modules/**'
