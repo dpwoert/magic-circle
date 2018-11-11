@@ -1,14 +1,2 @@
 @import "rc-color-picker/assets/index.css";
 @import "./plugins/controls/components/color-control.css";
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body{
-  background: #1c1c1c;
-  font-size: 14px;
-  font-family: 'helvetica neue';
-}

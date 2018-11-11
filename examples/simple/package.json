@@ -1,19 +1,26 @@
 {
-  "name": "creative-controls-example-simple",
+  "name": "@creative-controls/example-simple",
   "version": "0.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "parcel index.html"
+    "serve": "parcel index.html",
+    "electron": "controls --config controls.config.js --url http://localhost:1234/index.html"
   },
   "keywords": [],
   "author": "Davey van der Woert",
   "license": "ISC",
   "devDependencies": {
-    "parcel": "^1.10.1"
+    "@babel/core": "^7.1.5",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-plugin-styled-components": "^1.8.0",
+    "@creative-controls/electron": "^0.0.0",
+    "parcel": "^1.10.1",
+    "styled-components": "^4.0.3"
   },
   "dependencies": {
     "three": "^0.97.0",
-    "creative-controls-client": "^0.0.0"
+    "@creative-controls/client": "^0.0.0"
   }
 }

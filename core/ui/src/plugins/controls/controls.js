@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ControlPanel from './panel.jsx';
+import ControlPanel from './panel';
 
 class Controls {
 

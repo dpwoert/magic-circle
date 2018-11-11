@@ -2,7 +2,14 @@ const { app, BrowserWindow } = require('electron');
 const url = require('url');
 const path = require('path');
 
-const eventSystem = require('./src/electron/events.js');
+const inject = require('./inject.js');
+const eventSystem = require('./events.js');
+
+const argv = require('minimist')(process.argv.slice(2));
+
+global.cmd = argv.cwd;
+global.configFile = argv.config;
+global.url = argv.url;
 
 let window = null;
 let frame = null;
@@ -31,21 +38,12 @@ app.once('ready', () => {
   // Load a URL in the window to the local index.html path
   window.loadURL(
     url.format({
-      pathname: path.join(__dirname, 'dist/index.html'),
+      pathname: path.join(__dirname, 'index.html'),
       protocol: 'file:',
       slashes: true
     })
   );
-  frame.loadURL('http://localhost:1234/index.html');
-
-  frame.webContents.on('dom-ready', () => {
-    // Add ipcRenderer to front-end
-    frame.webContents.executeJavaScript(`
-      window.__IPC = require(\'electron\').ipcRenderer
-      window.__controls.connect();
-    `);
-    console.log('injected IPC');
-  });
+  frame.loadURL(global.url);
 
   window.webContents.on('devtools-reload-page', () => {
     frame.reload();
@@ -56,6 +54,9 @@ app.once('ready', () => {
     window.show();
     frame.show();
   });
+
+  //inject needed data
+  inject(window, frame);
 
   //load event system
   eventSystem(window, frame);

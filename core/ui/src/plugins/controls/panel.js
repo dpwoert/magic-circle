@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 import withControls from './with-controls';
-import Control from './control.jsx';
+import Control from './control';
 
 const Container = styled.div`
   position: absolute;

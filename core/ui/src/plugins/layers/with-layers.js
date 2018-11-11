@@ -4,6 +4,8 @@ let layers = [];
 let activeLayer = {};
 const listeners = [];
 
+export const getLayers = () => layers;
+
 export const refresh = () => {
   listeners.forEach(l => l(layers, activeLayer));
 }

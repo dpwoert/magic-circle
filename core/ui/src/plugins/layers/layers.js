@@ -1,12 +1,13 @@
 import React from 'react';
 
-import LayersPanel from './panel.jsx';
-import { updateLayers, setActiveLayer } from '../layers/with-layers.jsx';
+import LayersPanel from './panel';
+import { updateLayers, setActiveLayer, getLayers } from '../layers/with-layers';
 
 class Layers {
 
   constructor(client){
     this.client = client;
+    this.client.getLayers = getLayers;
     this.client.addListener('layers', (evt, payload) => this.setLayers(payload));
   }
 

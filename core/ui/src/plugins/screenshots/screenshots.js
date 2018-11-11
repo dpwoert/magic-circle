@@ -1,8 +1,7 @@
 import React from 'react';
-import { ipcRenderer } from 'electron';
 
-import Bar from './bar.jsx';
-import ScreenshotsPanel from './panel.jsx';
+import Bar from './bar';
+import ScreenshotsPanel from './panel';
 
 class Screenshots {
 
@@ -10,15 +9,11 @@ class Screenshots {
     this.client = client;
   }
 
-  takeScreenshot(){
-    ipcRenderer.send('screenshot');
-  }
-
   header(position){
     if(position === 'left'){
       return (
         <Bar
-          takeScreenshot={(p) => this.takeScreenshot(p)}
+          takeScreenshot={(p) => this.client.takeScreenshot(p)}
           key="screenshot-control"
         />
       );

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import screenshotIcon from '../../../assets/screenshot.svg';
+const screenshotIcon = 'assets/screenshot.svg';
 
 const Container = styled.div`
   margin-left: 12px;

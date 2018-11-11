@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import withLayers, { setActiveLayer } from './with-layers';
 
-import layersIcon from '../../../assets/layers.svg';
+const layersIcon = 'assets/layers.svg';
 
 const Panel = styled.ul`
   width: 100%;

@@ -1,8 +1,17 @@
 {
-  "name": "root",
+  "name": "creative-controls",
   "private": true,
-  "scripts": {},
+  "scripts": {
+    "start": "lerna run start --parallel",
+    "example:simple": "cd examples/simple && npm run serve && cd ../..",
+    "electron": "cd examples/simple && npm run electron && cd ../.."
+  },
   "devDependencies": {
-    "lerna": "^3.4.3"
+    "lerna": "^3.4.3",
+    "@babel/core": "^7.1.5",
+    "rollup": "^0.67.0",
+    "rollup-plugin-babel": "^4.0.3",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-node-resolve": "^3.4.0"
   }
 }

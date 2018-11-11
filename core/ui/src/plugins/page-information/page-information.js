@@ -1,7 +1,7 @@
 import React from 'react';
 
-import {updateInfo} from './with-page-info.jsx';
-import Title from './title.jsx';
+import {updateInfo} from './with-page-info';
+import Title from './title';
 
 class Seed {
 

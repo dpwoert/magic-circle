@@ -1,11 +1,10 @@
 {
-  "name": "creative-controls-ui",
+  "name": "@creative-controls/ui",
   "version": "0.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/bundle.js",
   "scripts": {
-    "start": "parcel watch src/index.html --target electron --public-url .",
-    "electron": "electron app.js"
+    "start": "rollup --config ../../rollup.config.js --watch"
   },
   "keywords": [],
   "author": "Davey van der Woert",
@@ -14,18 +13,13 @@
     "@babel/core": "^7.1.2",
     "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
-    "babel-plugin-styled-components": "^1.8.0",
-    "parcel": "^1.10.1"
+    "babel-plugin-styled-components": "^1.8.0"
   },
   "dependencies": {
-    "electron": "^3.0.2",
     "is-electron": "^2.1.0",
-    "plugins": "^0.4.2",
     "rc-color-picker": "^1.2.6",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "slug": "^0.9.1",
-    "src": "^1.1.2",
     "styled-components": "^3.4.9"
   }
 }

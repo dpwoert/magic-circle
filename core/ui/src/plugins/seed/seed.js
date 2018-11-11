@@ -1,12 +1,13 @@
 import React from 'react';
 
-import {updateSeed} from './with-seed.jsx';
-import Bar from './bar.jsx';
+import {updateSeed, getSeed} from './with-seed';
+import Bar from './bar';
 
 class Seed {
 
   constructor(client){
     this.client = client;
+    this.client.getSeed = getSeed;
     this.client.addListener('seed', (evt, payload) => this.setSeed(payload));
   }
 

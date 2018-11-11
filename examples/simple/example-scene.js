@@ -14,7 +14,7 @@ import {
   FloatControl,
   TextControl,
   ColorControl
-} from 'creative-controls-client';
+} from '@creative-controls/client';
 
 let renderer, scene, camera, mesh;
 

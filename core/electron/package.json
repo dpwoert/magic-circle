@@ -1,0 +1,19 @@
+{
+  "name": "@creative-controls/electron",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "controls": "./run.js"
+  },
+  "scripts": {},
+  "keywords": [],
+  "author": "Davey van der Woert",
+  "license": "ISC",
+  "devDependencies": {},
+  "dependencies": {
+    "electron": "^3.0.8",
+    "minimist": "^1.2.0",
+    "@creative-controls/ui": "^0.0.0"
+  }
+}

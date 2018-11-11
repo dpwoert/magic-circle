@@ -3,9 +3,9 @@ import styled from 'styled-components';
 
 import withPlayState from './with-play-state';
 
-import playIcon from '../../../assets/play.svg';
-import pauseIcon from '../../../assets/pause.svg';
-import refreshIcon from '../../../assets/reload.svg';
+const playIcon = 'assets/play.svg';
+const pauseIcon = 'assets/pause.svg';
+const refreshIcon = 'assets/reload.svg';
 
 const Container = styled.div`
   margin-left: 80px;

@@ -1,13 +1,15 @@
-import { ipcRenderer } from 'electron';
+import defaultSettings from './default-settings';
+const { ipcRenderer } = require('electron');
 
-class Client {
+export class Client {
 
-  constructor(settings, render){
+  constructor(settings){
 
-    this.settings = settings;
+    // this.settings = defaultSettings;
+    this.settings = Object.assign(defaultSettings, settings);
 
     //add plugins
-    this.plugins = (settings.plugins || []).map(P => new P(this, settings));
+    this.plugins = this.settings.plugins.map(P => new P(this, this.settings));
 
     //run setup scripts
     let actions = [];
@@ -24,11 +26,7 @@ class Client {
     this.sendMessage('editor-loaded', true);
 
     //render on finish loading
-    if(settings.render){
-      document.addEventListener('DOMContentLoaded', () => {
-        settings.render(this);
-      });
-    }
+    this.settings.render(this);
 
     // listen to refreshes
     this.addListener('setup', () => this.setup());
@@ -71,6 +69,12 @@ class Client {
     ipcRenderer.send('refresh');
   }
 
-}
+  takeScreenshot(){
+    const data = {
+      layers: this.getLayers ? this.getLayers() : {},
+      seed: this.getSeed ? this.getSeed() : null,
+    };
+    ipcRenderer.send('screenshot', data);
+  }
 
-export default Client;
+}

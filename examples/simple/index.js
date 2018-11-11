@@ -1,4 +1,4 @@
-import { Controls } from 'creative-controls-client';
+import { Controls } from '@creative-controls/client';
 import { setup, loop } from './example-scene';
 
 const controls = new Controls();

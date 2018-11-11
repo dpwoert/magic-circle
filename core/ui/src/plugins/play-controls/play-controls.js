@@ -1,7 +1,7 @@
 import React from 'react';
 
-import {updatePlayState} from './with-play-state.jsx';
-import Bar from './bar.jsx';
+import {updatePlayState} from './with-play-state';
+import Bar from './bar';
 
 class PlayControls {
 

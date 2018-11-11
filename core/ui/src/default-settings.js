@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Client from './client';
+
 import Layout from './components/layout';
 
 import Layers from './plugins/layers/layers';
@@ -24,5 +24,4 @@ const settings = {
   }
 };
 
-// Create client
-const client = new Client(settings);
+export default settings;
