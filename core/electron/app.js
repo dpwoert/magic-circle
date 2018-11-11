@@ -7,7 +7,7 @@ const eventSystem = require('./events.js');
 
 const argv = require('minimist')(process.argv.slice(2));
 
-global.cmd = argv.cwd;
+global.cwd = argv.cwd;
 global.configFile = argv.config;
 global.url = argv.url;
 

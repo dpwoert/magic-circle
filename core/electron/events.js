@@ -18,7 +18,7 @@ module.exports = (window, frame) => {
   ipcMain.on('screenshot', (evt, settings = {}) => {
 
     //TODO AGAIN
-    window.capturePage(img => {
+    frame.capturePage(img => {
 
       const now = new Date();
       const date = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}`;
