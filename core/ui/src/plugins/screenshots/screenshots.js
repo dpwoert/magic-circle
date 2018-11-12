@@ -5,6 +5,8 @@ import ScreenshotsPanel from './panel';
 
 class Screenshots {
 
+  static electronOnly = true;
+
   constructor(client){
     this.client = client;
   }

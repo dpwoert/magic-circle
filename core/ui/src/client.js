@@ -5,7 +5,7 @@ export class Client {
 
   constructor(settings){
 
-    // this.settings = defaultSettings;
+    this.isElectron = true;
     this.settings = Object.assign(defaultSettings, settings);
 
     //add plugins

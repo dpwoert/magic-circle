@@ -45,4 +45,4 @@ jspm_packages/
 
 # project specific
 dist
-screenshots
+examples/**/screenshots

@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import Layout from './components/layout';
 
 import Layers from './plugins/layers/layers';
-import PlayControls from './plugins/play-controls/play-controls';
+import PlayControls from '@creative-controls/play-controls';
 import Controls from './plugins/controls/controls';
 import Seed from '@creative-controls/seed';
 import PageInfo from './plugins/page-information/page-information';
