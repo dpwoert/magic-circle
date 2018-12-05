@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import withLayers, { setActiveLayer } from './with-layers';
+// import withLayers, { setActiveLayer } from './with-layers';
 
 const layersIcon = 'assets/layers.svg';
 
@@ -45,7 +45,7 @@ class LayersPanel extends Component {
         depth={depth}
         i={layers.length}
         selected={this.props.activeLayer === layer}
-        onClick={() => setActiveLayer(layer)}
+        onClick={() => this.props.set('activeLayer', layer)}
       >
         {layer.label}
       </Item>
@@ -69,4 +69,4 @@ class LayersPanel extends Component {
 
 }
 
-export default withLayers(LayersPanel);
+export default LayersPanel;

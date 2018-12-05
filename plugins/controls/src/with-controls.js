@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { addListener, removeListener } from '../layers/with-layers';
+// import { addListener, removeListener } from '../../layers/dist/bundle';
+
+const addListener = () => {}
+const removeListener = () => {}
 
 const withControls = WrappedComponent =>
   class ControlsProvider extends Component {

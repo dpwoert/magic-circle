@@ -1,6 +1,8 @@
 import defaultSettings from './default-settings';
 const { ipcRenderer } = require('electron');
 
+import Store from './store';
+
 export class Client {
 
   constructor(settings){
@@ -9,7 +11,12 @@ export class Client {
     this.settings = Object.assign(defaultSettings, settings);
 
     //add plugins
-    this.plugins = this.settings.plugins.map(P => new P(this, this.settings));
+    this.plugins = this.settings.plugins.map(P => {
+      const store = new Store(P.initStore ? P.initStore(this.settings) : {});
+      return new P(this, store, this.settings);
+    });
+
+    console.log(this.plugins);
 
     //run setup scripts
     let actions = [];
@@ -67,6 +74,10 @@ export class Client {
 
   refresh(){
     ipcRenderer.send('refresh');
+  }
+
+  getPlugin(name){
+    return this.plugins.find(p => p.name === name);
   }
 
   takeScreenshot(){

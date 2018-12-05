@@ -2,15 +2,23 @@ import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import babel from 'rollup-plugin-babel';
 
+const pkg = require(`${process.cwd()}/package.json`);
+
+console.log(Object.keys(pkg.peerDependencies || {}));
+
 export default {
   input: 'src/index.js',
   output: {
     name: 'creativeControls',
     file: 'dist/bundle.js',
     format: 'cjs',
-    // globals: { 'styled-components': 'styled' },
   },
-  external: ['styled-components','react'],
+  external: [
+    'styled-components',
+    'react'
+    // ...Object.keys(pkg.dependencies || {}),
+    // ...Object.keys(pkg.peerDependencies || {})
+  ],
   plugins: [
     babel({
       exclude: 'node_modules/**'

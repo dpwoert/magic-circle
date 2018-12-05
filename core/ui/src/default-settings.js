@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom';
 
 import Layout from './components/layout';
 
-import Layers from './plugins/layers/layers';
+import Layers from '@creative-controls/layers';
 import PlayControls from '@creative-controls/play-controls';
-import Controls from './plugins/controls/controls';
+import Controls from '@creative-controls/controls';
 import Seed from '@creative-controls/seed';
-import PageInfo from './plugins/page-information/page-information';
-import Screenshots from './plugins/screenshots/screenshots';
+import PageInfo from '@creative-controls/page-information';
+import Screenshots from '@creative-controls/screenshots';
 
 const settings = {
   plugins: [

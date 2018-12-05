@@ -22,6 +22,10 @@
     "react-dom": "^16.5.2",
     "styled-components": "^3.4.9",
     "@creative-controls/seed": "^0.0.0",
-    "@creative-controls/play-controls": "^0.0.0"
+    "@creative-controls/play-controls": "^0.0.0",
+    "@creative-controls/layers": "^0.0.0",
+    "@creative-controls/controls": "^0.0.0",
+    "@creative-controls/screenshots": "^0.0.0",
+    "@creative-controls/page-information": "^0.0.0"
   }
 }

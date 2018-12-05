@@ -65,6 +65,7 @@ class Sidebar extends Component {
 
   render(){
     const children = React.Children.toArray(this.props.children);
+    console.log(children, this.props.children);
     const panels = children.map(c => c.type.navigation);
     const active = children.find(c => c.type.navigation.name === this.state.active);
     return(

@@ -1,0 +1,22 @@
+{
+  "name": "@creative-controls/layers",
+  "version": "0.0.0",
+  "description": "",
+  "main": "dist/bundle.js",
+  "scripts": {
+    "start": "rollup --config ../../rollup.config.js --watch"
+  },
+  "keywords": [],
+  "author": "Davey van der Woert",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.2.0",
+    "@babel/plugin-proposal-class-properties": "^7.2.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-plugin-styled-components": "^1.8.0"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "styled-components": "*"
+  }
+}
