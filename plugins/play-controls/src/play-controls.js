@@ -5,18 +5,27 @@ import Bar from './bar';
 
 class PlayControls {
 
-  constructor(client){
+  static name = 'play-controls';
+
+  static initStore(){
+    return {
+      play: false
+    };
+  }
+
+  constructor(client, store){
     this.client = client;
+    this.store = store;
     this.client.addListener('play', (evt, payload) => this.play());
     this.client.addListener('stop', (evt, payload) => this.stop());
   }
 
   play(){
-    updatePlayState(true);
+    this.store.set('play', true);
   }
 
   stop(){
-    updatePlayState(false);
+    this.store.set('play', false);
   }
 
   changeState(play){
@@ -25,8 +34,10 @@ class PlayControls {
 
   header(position){
     if(position === 'left'){
+
+      const BarWithStore = this.store.withStore(Bar, this.store);
       return (
-        <Bar
+        <BarWithStore
           changeState={(p) => this.changeState(p)}
           refresh={() => this.client.refresh()}
           key="play-controls"

@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import withPlayState from './with-play-state';
-
 const playIcon = 'assets/play.svg';
 const pauseIcon = 'assets/pause.svg';
 const refreshIcon = 'assets/reload.svg';
@@ -61,4 +59,4 @@ class Bar extends Component {
 
 }
 
-export default withPlayState(Bar);
+export default Bar;

@@ -5,6 +5,8 @@ import withControls from './with-controls';
 
 class Controls {
 
+  static name = 'controls';
+
   constructor(client){
     this.client = client;
     this.changelog = new Map();

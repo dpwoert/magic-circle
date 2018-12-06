@@ -20,7 +20,6 @@ const withStore = (WrappedComponent, store) =>
     }
 
     update(data) {
-      console.log('update', data)
       this.setState({ data });
     }
 

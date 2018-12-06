@@ -10,7 +10,6 @@ const withControls = (WrappedComponent, store) =>
     }
 
     componentDidMount() {
-      console.log('add listener')
       store.addListener(this.update);
     }
 
@@ -19,7 +18,6 @@ const withControls = (WrappedComponent, store) =>
     }
 
     update({layers, activeLayer}) {
-      console.log('UPDATE', layers, activeLayer)
       const hasControls = activeLayer && activeLayer.controls;
       const controls = hasControls ? activeLayer.controls : [];
       const path = hasControls ? activeLayer.path : '';
@@ -28,7 +26,6 @@ const withControls = (WrappedComponent, store) =>
 
     render() {
       const {controls, path} = this.state;
-      console.log('state', this.state)
       return <WrappedComponent controls={controls} path={path} {...this.props} />;
     }
   };
