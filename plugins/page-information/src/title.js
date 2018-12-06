@@ -20,8 +20,6 @@ class Title extends Component {
     const {title, nodeEnv} = this.props.info;
     const display = title && title.length > 0 ?
       `${truncate(title || '', 25)} (${nodeEnv})` : 'no page loaded';
-
-    console.log('title', title)
     return(
       <Container>
         {display}

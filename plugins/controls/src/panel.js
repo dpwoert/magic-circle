@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import withControls from './with-controls';
 import Control from './control';
 
 const Container = styled.div`
@@ -66,4 +65,4 @@ class ControlsPanel extends Component {
 
 }
 
-export default withControls(ControlsPanel);
+export default ControlsPanel;

@@ -1,27 +1,25 @@
 import React, { Component } from 'react';
-// import { addListener, removeListener } from '../../layers/dist/bundle';
 
-const addListener = () => {}
-const removeListener = () => {}
-
-const withControls = WrappedComponent =>
+const withControls = (WrappedComponent, store) =>
   class ControlsProvider extends Component {
 
     constructor(props, context){
       super(props, context);
       this.state = { controls: [] };
-      this.updateControls = this.updateControls.bind(this);
+      this.update = this.update.bind(this);
     }
 
     componentDidMount() {
-      addListener(this.updateControls);
+      console.log('add listener')
+      store.addListener(this.update);
     }
 
     componentWillUnmount() {
-      removeListener(this.updateControls);
+      store.removeListener(this.update);
     }
 
-    updateControls(layers, activeLayer) {
+    update({layers, activeLayer}) {
+      console.log('UPDATE', layers, activeLayer)
       const hasControls = activeLayer && activeLayer.controls;
       const controls = hasControls ? activeLayer.controls : [];
       const path = hasControls ? activeLayer.path : '';
@@ -30,6 +28,7 @@ const withControls = WrappedComponent =>
 
     render() {
       const {controls, path} = this.state;
+      console.log('state', this.state)
       return <WrappedComponent controls={controls} path={path} {...this.props} />;
     }
   };

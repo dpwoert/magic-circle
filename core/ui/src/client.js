@@ -11,12 +11,13 @@ export class Client {
     this.settings = Object.assign(defaultSettings, settings);
 
     //add plugins
-    this.plugins = this.settings.plugins.map(P => {
-      const store = new Store(P.initStore ? P.initStore(this.settings) : {});
-      return new P(this, store, this.settings);
+    this.plugins = this.settings.plugins.map(Plugin => {
+      const initialData = Plugin.initStore ? Plugin.initStore(this.settings) : {}
+      const store = new Store(initialData);
+      const plugin = new Plugin(this, store, this.settings);
+      plugin._name = Plugin.name;
+      return plugin;
     });
-
-    console.log(this.plugins);
 
     //run setup scripts
     let actions = [];
@@ -77,7 +78,7 @@ export class Client {
   }
 
   getPlugin(name){
-    return this.plugins.find(p => p.name === name);
+    return this.plugins.find(p => p._name === name);
   }
 
   takeScreenshot(){

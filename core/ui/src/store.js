@@ -20,6 +20,7 @@ const withStore = (WrappedComponent, store) =>
     }
 
     update(data) {
+      console.log('update', data)
       this.setState({ data });
     }
 
@@ -41,7 +42,6 @@ class Store {
   }
 
   get(key){
-    console.log(this.data);
     return key ? this.data[key] : this.data;
   }
 

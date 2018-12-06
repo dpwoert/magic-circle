@@ -1,6 +1,7 @@
 import React from 'react';
 
 import ControlPanel from './panel';
+import withControls from './with-controls';
 
 class Controls {
 
@@ -28,7 +29,11 @@ class Controls {
   }
 
   layout(){
-    return <ControlPanel updateControl={this.updateControl} />
+    const store = this.client.getPlugin('layers').store;
+    if(store){
+      const Panel = withControls(ControlPanel, store);
+      return <Panel updateControl={this.updateControl} />;
+    }
   }
 
   updateControl(path, value){
