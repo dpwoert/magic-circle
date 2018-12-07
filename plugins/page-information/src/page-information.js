@@ -5,23 +5,29 @@ import Title from './title';
 
 class Seed {
 
-  constructor(client){
+  static name = 'page-information';
+
+  static initStore(){
+    return {
+      title: '',
+      nodeEnv: 'development',
+    };
+  }
+
+  constructor(client, store){
     this.client = client;
+    this.store = store;
     this.client.addListener('page-information', (evt, payload) => this.setPageInfo(payload));
   }
 
-  setPageInfo(seed){
-    updateInfo(seed);
-  }
-
-  refresh(){
-    this.client.sendMessage('generate-seed');
-    console.log('refresh');
+  setPageInfo(info){
+    this.store.set(info)
   }
 
   header(position){
     if(position === 'center'){
-      return <Title key="title" />;
+      const TitleWithStore = this.store.withStore(Title);
+      return <TitleWithStore key="title" />;
     }
   }
 

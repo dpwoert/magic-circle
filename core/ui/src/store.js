@@ -45,7 +45,11 @@ class Store {
   }
 
   set(key, value){
-    this.data[key] = value;
+    if(value !== undefined){
+      this.data[key] = value;
+    } else {
+      this.data = key;
+    }
     this.refresh();
   }
 

@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import withSeed from './with-seed';
-
 const Container = styled.div`
   padding: 3px;
   border: 1px solid rgb(136, 74, 255);
@@ -32,4 +30,4 @@ class Bar extends Component {
 
 }
 
-export default withSeed(Bar);
+export default Bar;

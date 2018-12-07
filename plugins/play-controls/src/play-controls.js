@@ -34,8 +34,7 @@ class PlayControls {
 
   header(position){
     if(position === 'left'){
-
-      const BarWithStore = this.store.withStore(Bar, this.store);
+      const BarWithStore = this.store.withStore(Bar);
       return (
         <BarWithStore
           changeState={(p) => this.changeState(p)}

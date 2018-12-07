@@ -5,24 +5,37 @@ import Bar from './bar';
 
 class Seed {
 
-  constructor(client){
+  static name = 'seed';
+
+  static initStore(){
+    return {
+      seed: 0
+    };
+  }
+
+  constructor(client, store){
     this.client = client;
-    this.client.getSeed = getSeed;
+    this.store = store;
+    this.client.getSeed = this.getSeed.bind(this);
     this.client.addListener('seed', (evt, payload) => this.setSeed(payload));
   }
 
   setSeed(seed){
-    updateSeed(seed);
+    this.store.set('seed', seed);
   }
 
   refresh(){
     this.client.sendMessage('generate-seed');
-    console.log('refresh');
+  }
+
+  getSeed(){
+    return this.store.get('seed');
   }
 
   header(position){
     if(position === 'right'){
-      return <Bar key="seed" refresh={() => this.refresh()} />;
+      const BarWithStore = this.store.withStore(Bar);
+      return <BarWithStore key="seed" refresh={() => this.refresh()} />;
     }
   }
 

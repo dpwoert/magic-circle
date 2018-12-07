@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import withPageInfo from './with-page-info';
-
 const Container = styled.div`
   font-size: 12px;
   font-weight: bold;
@@ -17,7 +15,7 @@ const truncate = (string, max) => {
 class Title extends Component {
 
   render(){
-    const {title, nodeEnv} = this.props.info;
+    const {title, nodeEnv} = this.props;
     const display = title && title.length > 0 ?
       `${truncate(title || '', 25)} (${nodeEnv})` : 'no page loaded';
     return(
@@ -29,4 +27,4 @@ class Title extends Component {
 
 }
 
-export default withPageInfo(Title);
+export default Title;
