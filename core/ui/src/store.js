@@ -62,8 +62,8 @@ class Store {
   }
 
   removeListener(fn){
-    const id = listeners.indexOf(fn);
-    listeners.splice(id, 1);
+    const id = this.listeners.indexOf(fn);
+    this.listeners.splice(id, 1);
   }
 
   withStore(WrappedComponent){
