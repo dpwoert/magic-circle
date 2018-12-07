@@ -18,7 +18,7 @@ module.exports = function(window, frame){
       try{
         const settings = require(\'${global.cwd}/${global.configFile}\');
         const {Client} = require('@creative-controls/ui');
-        window.__client = new Client(settings);
+        window.__client = new Client(settings, '${global.cwd}');
       } catch(e){
         console.log('⚠️  error during injecting of settings');
         console.error(e);

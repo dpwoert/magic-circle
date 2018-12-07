@@ -1,14 +1,25 @@
 import React from 'react';
+import fs from 'fs';
 
 import Bar from './bar';
 import ScreenshotsPanel from './panel';
 
 class Screenshots {
 
+  static name = 'screenshots';
+
   static electronOnly = true;
 
-  constructor(client){
+  static initStore(){
+    return { screenshots: [] };
+  }
+
+  constructor(client, store){
     this.client = client;
+    this.store = store;
+    this.refresh();
+    this.client.addListener('screenshot-taken', () => this.refresh());
+    this.loadScreenshot = this.loadScreenshot.bind(this);
   }
 
   header(position){
@@ -22,8 +33,28 @@ class Screenshots {
     }
   }
 
+  refresh(){
+    // load all screenshots
+    const re = /(?:\.([^.]+))?$/;
+    const files = fs
+      .readdirSync(`${this.client.cwd}/screenshots`)
+      .filter(f => f.substr(f.lastIndexOf('.') + 1) === 'json')
+      .map(f => f.replace('.json', ''));
+
+    this.store.set('screenshots', files)
+  }
+
+  loadScreenshot(file){
+    let data = fs.readFileSync(`${this.client.cwd}/screenshots/${file}.json`);
+    data = JSON.parse(data);
+
+    //todo
+    console.log(data);
+  }
+
   sidebar(){
-    return <ScreenshotsPanel key="screenshots" />
+    const Panel = this.store.withStore(ScreenshotsPanel);
+    return <Panel loadScreenshot={this.loadScreenshot} path={`${this.client.cwd}/screenshots`} key="screenshots" />
   }
 
 }

@@ -5,10 +5,12 @@ import Store from './store';
 
 export class Client {
 
-  constructor(settings){
+  constructor(settings, cwd){
 
     this.isElectron = true;
     this.settings = Object.assign(defaultSettings, settings);
+    this.cwd = cwd;
+    console.log('cwd',cwd);
 
     //add plugins
     this.plugins = this.settings.plugins.map(Plugin => {

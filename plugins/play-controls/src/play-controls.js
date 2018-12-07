@@ -1,6 +1,5 @@
 import React from 'react';
 
-import {updatePlayState} from './with-play-state';
 import Bar from './bar';
 
 class PlayControls {

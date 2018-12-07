@@ -15,6 +15,8 @@ module.exports = (window, frame) => {
     frame.reload();
   });
 
+  const screenshotBuffer = {};
+
   ipcMain.on('screenshot', (evt, settings = {}) => {
 
     //TODO AGAIN
@@ -23,7 +25,17 @@ module.exports = (window, frame) => {
       const now = new Date();
       const date = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}`;
       const time = `${now.getHours()}.${now.getMinutes()}`;
-      const path = `${global.cwd}/screenshots/screenshot ${date} ${time}`;
+      const dateTime = `${date} ${time}`;
+
+      let version = '';
+      if(screenshotBuffer[dateTime]){
+        version = ` (${screenshotBuffer[dateTime]})`;
+        screenshotBuffer[dateTime]++;
+      } else {
+        screenshotBuffer[dateTime] = 1;
+      }
+
+      const path = `${global.cwd}/screenshots/screenshot ${dateTime}${version}`;
       const data = JSON.stringify(settings);
 
       //save both files to HDD

@@ -1,7 +1,6 @@
 import React from 'react';
 
 import LayersPanel from './panel';
-import { getLayers } from './with-layers';
 
 class Layers {
 

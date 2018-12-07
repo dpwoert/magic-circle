@@ -15,7 +15,8 @@ export default {
   },
   external: [
     'styled-components',
-    'react'
+    'react',
+    'fs',
     // ...Object.keys(pkg.dependencies || {}),
     // ...Object.keys(pkg.peerDependencies || {})
   ],

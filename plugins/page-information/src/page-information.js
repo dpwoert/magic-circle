@@ -1,6 +1,5 @@
 import React from 'react';
 
-import {updateInfo} from './with-page-info';
 import Title from './title';
 
 class Seed {
