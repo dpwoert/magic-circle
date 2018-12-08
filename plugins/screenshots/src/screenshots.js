@@ -19,6 +19,7 @@ class Screenshots {
     this.store = store;
     this.refresh();
     this.client.addListener('screenshot-taken', () => this.refresh());
+    this.deleteScreenshot = this.deleteScreenshot.bind(this);
     this.loadScreenshot = this.loadScreenshot.bind(this);
   }
 
@@ -52,9 +53,21 @@ class Screenshots {
     console.log(data);
   }
 
+  deleteScreenshot(file){
+    fs.unlinkSync(`${this.client.cwd}/screenshots/${file}.json`);
+    this.refresh();
+  }
+
   sidebar(){
     const Panel = this.store.withStore(ScreenshotsPanel);
-    return <Panel loadScreenshot={this.loadScreenshot} path={`${this.client.cwd}/screenshots`} key="screenshots" />
+    return (
+      <Panel
+        deleteScreenshot={this.deleteScreenshot}
+        loadScreenshot={this.loadScreenshot}
+        path={`${this.client.cwd}/screenshots`}
+        key="screenshots"
+      />
+    );
   }
 
 }
