@@ -37,7 +37,7 @@ export class Layer {
   toJSON(mapping){
     const recursiveGenerate = (layer, basePath) => {
 
-      const path = path ? `${basePath}.${layer.slug}` : layer.slug;
+      const path = basePath ? `${basePath}.${layer.slug}` : layer.slug;
       if(mapping){
         layer.GUI.map(f =>
           f.controls.map(c => mapping.set(`${path}.${f.slug}.${c.key}`, c))
@@ -49,7 +49,7 @@ export class Layer {
         slug: layer.slug,
         path: path,
         children: layer.children.map(c => recursiveGenerate(c, path)),
-        controls: layer.GUI.map(f => f.toJSON())
+        controls: layer.GUI.map(f => f.toJSON(path))
       };
     }
 

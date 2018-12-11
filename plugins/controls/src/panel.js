@@ -55,7 +55,6 @@ class ControlsPanel extends Component {
 
   render(){
     const { controls } = this.props;
-
     return(
       <Container>
         {controls.map(f => this.renderFolder(f))}

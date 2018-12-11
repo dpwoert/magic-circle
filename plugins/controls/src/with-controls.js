@@ -17,11 +17,19 @@ const withControls = (WrappedComponent, store) =>
       store.removeListener(this.update);
     }
 
-    update({layers, activeLayer}) {
-      const hasControls = activeLayer && activeLayer.controls;
-      const controls = hasControls ? activeLayer.controls : [];
-      const path = hasControls ? activeLayer.path : '';
-      this.setState({ controls, path });
+    update({mapping, activeLayer}) {
+      const active = mapping.get(activeLayer);
+      if(active && active.controls){
+        this.setState({
+          controls: active.controls,
+          path: active.path,
+        });
+      } else {
+        this.setState({
+          controls: [],
+          path: '',
+        });
+      }
     }
 
     render() {

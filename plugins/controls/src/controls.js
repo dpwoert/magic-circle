@@ -30,17 +30,22 @@ class Controls {
     return updates;
   }
 
+  updateControl(path, value){
+    this.client.sendMessage('control-set-value', { path, value });
+    this.changelog.set(path, value);
+  }
+
+  resync(){
+    console.log('resync');
+    //todo diff and send changelog
+  }
+
   layout(){
     const store = this.client.getPlugin('layers').store;
     if(store){
       const Panel = withControls(ControlPanel, store);
       return <Panel updateControl={this.updateControl} />;
     }
-  }
-
-  updateControl(path, value){
-    this.client.sendMessage('control-set-value', { path, value });
-    this.changelog.set(path, value);
   }
 
 }

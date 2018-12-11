@@ -17,10 +17,17 @@ class SeedPlugin{
     this.client.addListener('generate-seed', () => {
       this.generateSeed();
     });
+    this.client.addListener('set-seed', (evt, payload) => {
+      this.setSeed(payload);
+    });
   }
 
   getSeed(){
     return this.seed;
+  }
+
+  setSeed(seed){
+    this.seed = seed;
   }
 
   generateSeed(){

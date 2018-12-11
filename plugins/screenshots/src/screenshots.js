@@ -49,8 +49,17 @@ class Screenshots {
     let data = fs.readFileSync(`${this.client.cwd}/screenshots/${file}.json`);
     data = JSON.parse(data);
 
-    //todo
-    console.log(data);
+    if(data.layers){
+      const layers = this.client.getPlugin('layers');
+      const controls = this.client.getPlugin('controls');
+      layers.setLayers(data.layers);
+      console.log('LAYERS update', data.layers);
+      // controls.resync();
+    }
+    if(data.seed){
+      const seed = this.client.getPlugin('seed');
+      seed.setSeed(data.seed, true);
+    }
   }
 
   deleteScreenshot(file){

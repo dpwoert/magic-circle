@@ -42,8 +42,10 @@ export class Control {
     return this;
   }
 
-  toJSON(){
+  toJSON(basePath){
+    const path = `${basePath}.${this.key}`;
     return {
+      path,
       type: this.type,
       key: this.key,
       label: this.label,

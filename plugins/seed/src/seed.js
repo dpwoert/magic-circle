@@ -20,8 +20,12 @@ class Seed {
     this.client.addListener('seed', (evt, payload) => this.setSeed(payload));
   }
 
-  setSeed(seed){
+  setSeed(seed, update){
     this.store.set('seed', seed);
+
+    if(update){
+      this.client.sendMessage('set-seed', seed);
+    }
   }
 
   refresh(){

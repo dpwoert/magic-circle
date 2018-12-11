@@ -44,8 +44,8 @@ class LayersPanel extends Component {
         key={layer.path}
         depth={depth}
         i={layers.length}
-        selected={this.props.activeLayer === layer}
-        onClick={() => this.props.set('activeLayer', layer)}
+        selected={this.props.activeLayer === layer.path}
+        onClick={() => this.props.set('activeLayer', layer.path)}
       >
         {layer.label}
       </Item>

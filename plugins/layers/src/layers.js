@@ -2,6 +2,11 @@ import React from 'react';
 
 import LayersPanel from './panel';
 
+const createMapping = (mapping, layer) => {
+  mapping.set(layer.path, layer);
+  layer.children.forEach(l => createMapping(mapping, l));
+};
+
 class Layers {
 
   static name = 'layers';
@@ -9,7 +14,8 @@ class Layers {
   static initStore(){
     return {
       layers: [],
-      activeLayer: {},
+      activeLayer: null,
+      mapping: new Map(),
     };
   }
 
@@ -20,16 +26,19 @@ class Layers {
     this.client.addListener('layers', (evt, payload) => this.setLayers(payload));
   }
 
-  setLayers(layers){
-    this.store.set('layers', layers);
-  }
+  setLayers(layers, update){
 
-  setActiveLayer(layer){
-    this.store.set('activeLayer', layer);
+    // create mapping
+    const mapping = new Map();
+    layers.forEach(l => createMapping(mapping, l));
+
+    // Save new state
+    this.store.set('layers', layers);
+    this.store.set('mapping', mapping);
   }
 
   getLayers(){
-    this.store.get('layers')
+    return this.store.get('layers');
   }
 
   sidebar(){
