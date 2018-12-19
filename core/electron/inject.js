@@ -1,5 +1,6 @@
 const ui = require('@creative-controls/ui');
-console.log(ui)
+
+let initialLoad = true;
 
 module.exports = function(window, frame){
 
@@ -10,6 +11,7 @@ module.exports = function(window, frame){
       window.__controls.connect();
     `);
     console.log('🔌  injected IPC');
+    initialLoad = false;
   });
 
   window.webContents.on('dom-ready', () => {
@@ -25,6 +27,11 @@ module.exports = function(window, frame){
       }
     `);
     console.log('⚙️  injected settings');
+
+    if(!initialLoad){
+      frame.reload();
+      console.log('🔄  reloaded page [debug]');
+    }
   });
 
 }
