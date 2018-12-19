@@ -51,7 +51,7 @@ class Control extends Component {
   constructor(props){
     super(props);
     this.state = {
-      original: props.control.value,
+      original: props.control.initialValue,
       value: props.control.value,
     };
     this.updateControl = this.updateControl.bind(this);
@@ -68,9 +68,6 @@ class Control extends Component {
     const { control, path } = this.props;
     const cPath = `${path}.${control.key}`;
     this.props.updateControl(cPath, value);
-
-    // hack to save values too in the editor
-    control.value = value;
   }
 
   reset(){

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 const playIcon = 'assets/play.svg';
 const pauseIcon = 'assets/pause.svg';
 const refreshIcon = 'assets/reload.svg';
+const resetIcon = 'assets/rewind.svg';
 
 const Container = styled.div`
   margin-left: 80px;
@@ -26,13 +27,14 @@ const Button = styled.div`
   font-size: 14px;
   width: 25px;
   height: 25px;
+  border-right: none;
 
   &:first-of-type{
     border-radius: 3px 0px 0px 3px;
-    border-right: none;
   }
 
   &:last-of-type{
+    border-right: 1px solid rgb(136, 74, 255);
     border-radius: 0px 3px 3px 0px;
   }
 `;
@@ -45,14 +47,19 @@ const Reload = styled(Button)`
   background-image: url(${refreshIcon});
 `
 
+const Reset = styled(Button)`
+  background-image: url(${resetIcon});
+`
+
 class Bar extends Component {
 
   render(){
-    const play = this.props.play;
+    const {play, reset, refresh, changeState} = this.props;
     return(
       <Container>
-        <Play play={play} onClick={() => this.props.changeState(!play)} />
-        <Reload onClick={() => this.props.refresh()} />
+        <Play play={play} onClick={() => changeState(!play)} />
+        <Reload onClick={() => refresh()} />
+        <Reset onClick={() => reset()} />
       </Container>
     )
   }

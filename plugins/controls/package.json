@@ -19,5 +19,8 @@
   "peerDependencies": {
     "react": "*",
     "styled-components": "*"
+  },
+  "dependencies": {
+    "shallowequal": "^1.1.0"
   }
 }

@@ -49,12 +49,10 @@ class Screenshots {
     let data = fs.readFileSync(`${this.client.cwd}/screenshots/${file}.json`);
     data = JSON.parse(data);
 
-    if(data.layers){
-      const layers = this.client.getPlugin('layers');
+    if(data.changelog){
       const controls = this.client.getPlugin('controls');
-      layers.setLayers(data.layers);
-      console.log('LAYERS update', data.layers);
-      // controls.resync();
+      controls.reset();
+      controls.applyChangelog(this.client.JSONToMap(data.changelog));
     }
     if(data.seed){
       const seed = this.client.getPlugin('seed');

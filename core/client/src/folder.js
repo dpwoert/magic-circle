@@ -28,7 +28,7 @@ export class Folder {
     const path = `${basePath}.${this.slug}`;
     return {
       path,
-      folder: true,
+      isFolder: true,
       slug: this.slug,
       label: this.label,
       controls: this.controls.map(c => c.toJSON(path))

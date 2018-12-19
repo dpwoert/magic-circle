@@ -47,6 +47,10 @@ export class Client {
     if(window.__IPC){
       console.log('🔌 Creative Controls loaded')
       ipcRenderer = window.__IPC;
+
+      this.sendMessage('connect');
+
+      // create all plugins
       this.plugins.forEach(p => p.connect ? p.connect() : null);
 
       // Send page information to front-end
@@ -66,6 +70,11 @@ export class Client {
 
         // run actions after setup is done
         this.batch(evt, payload);
+
+        // make sure all is synced
+        if(this.regenerate){
+          this.regenerate();
+        }
 
         //start rendering
         this.play();

@@ -27,6 +27,13 @@ class PlayControls {
     this.store.set('play', false);
   }
 
+  reset(){
+    const controls = this.client.getPlugin('controls');
+    if(controls){
+      controls.reset();
+    }
+  }
+
   changeState(play){
     this.client.sendMessage('change-play-state', play);
   }
@@ -38,6 +45,7 @@ class PlayControls {
         <BarWithStore
           changeState={(p) => this.changeState(p)}
           refresh={() => this.client.refresh()}
+          reset={() => this.reset()}
           key="play-controls"
         />
       );

@@ -46,11 +46,13 @@ export class Control {
     const path = `${basePath}.${this.key}`;
     return {
       path,
+      isControl: true,
       type: this.type,
       key: this.key,
       label: this.label,
       options: this.options,
       value: this.getValue(),
+      initialValue: this.initialValue,
     };
   }
 

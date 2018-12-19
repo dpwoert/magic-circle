@@ -17,6 +17,12 @@ class LayersPlugin {
     this.client.addListener('control-set-value', (evt, payload) => {
       this.setValue(payload.path, payload.value);
     });
+    this.client.addListener('control-reset', (evt, payload) => {
+      this.reset(payload.path);
+    });
+    this.client.addListener('resync', (evt, payload) => {
+      this.regenerate();
+    });
 
     console.log('connect');
     this.regenerate();
@@ -39,7 +45,6 @@ class LayersPlugin {
   regenerate(){
     this.mapping.clear();
     const data = this.layers.map(l => l.toJSON(this.mapping));
-
     this.client.sendMessage('layers', data);
   }
 
@@ -50,6 +55,16 @@ class LayersPlugin {
       control.setValue(value);
     } else {
       console.error('could not update control', path, value);
+    }
+  }
+
+  reset(path){
+    const control = this.mapping.get(path);
+
+    if(control){
+      control.reset();
+    } else {
+      console.error('could not update control', path);
     }
   }
 

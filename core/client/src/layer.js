@@ -45,6 +45,7 @@ export class Layer {
       }
 
       return {
+        isLayer: true,
         label: layer.label,
         slug: layer.slug,
         path: path,

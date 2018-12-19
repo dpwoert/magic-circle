@@ -21,17 +21,6 @@ export class Client {
       return plugin;
     });
 
-    //run setup scripts
-    let actions = [];
-    this.plugins.forEach(async s => {
-      if(s.setup){
-        const action = await s.setup(this);
-        if(Array.isArray(action)){
-
-        }
-      }
-    });
-
     //send message to front-end
     this.sendMessage('editor-loaded', true);
 
@@ -83,9 +72,28 @@ export class Client {
     return this.plugins.find(p => p._name === name);
   }
 
+  mapToJSON(map){
+    const list = [];
+
+    map.forEach((value, key) => {
+      list.push({ key, value })
+    });
+
+    return list;
+  }
+
+  JSONToMap(list){
+    const map = new Map();
+    list.forEach(i => {
+      map.set(i.key, i.value);
+    })
+    return map;
+  }
+
   takeScreenshot(){
     const data = {
-      layers: this.getLayers ? this.getLayers() : {},
+      changelog: this.createChangelog ?
+        this.mapToJSON(this.createChangelog()) : [],
       seed: this.getSeed ? this.getSeed() : null,
     };
     ipcRenderer.send('screenshot', data);

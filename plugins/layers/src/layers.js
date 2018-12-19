@@ -4,7 +4,13 @@ import LayersPanel from './panel';
 
 const createMapping = (mapping, layer) => {
   mapping.set(layer.path, layer);
-  layer.children.forEach(l => createMapping(mapping, l));
+
+  if(layer.children){
+    layer.children.forEach(l => createMapping(mapping, l));
+  }
+  if(layer.controls){
+    layer.controls.forEach(c => createMapping(mapping, c));
+  }
 };
 
 class Layers {
@@ -23,10 +29,10 @@ class Layers {
     this.client = client;
     this.store = store;
     this.client.getLayers = this.getLayers.bind(this);
-    this.client.addListener('layers', (evt, payload) => this.setLayers(payload));
+    this.client.addListener('layers', (e, payload) => this.setLayers(payload));
   }
 
-  setLayers(layers, update){
+  setLayers(layers){
 
     // create mapping
     const mapping = new Map();
