@@ -409,7 +409,9 @@ const GlobalStyle = createGlobalStyle`
   .rc-color-picker-trigger{
     border: none;
     box-shadow: none;
-    width: 24px;
+    width: 18px;
+    height: 18px;
+    margin-right: 5px;
   }
 
   .rc-color-picker-panel{

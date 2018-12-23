@@ -134,7 +134,7 @@ export class ColorControl extends Control {
 
 }
 
-export class BoolControl extends Control {
+export class BooleanControl extends Control {
 
   constructor(reference, key){
     super(reference, key);

@@ -12,6 +12,7 @@ import {
   Folder,
   Layer,
   FloatControl,
+  BooleanControl,
   TextControl,
   ColorControl
 } from '@creative-controls/client';
@@ -65,6 +66,7 @@ export function setup(gui){
   new Folder(layer3, 'Material',
     new ColorControl(mesh.material, 'color'),
     new FloatControl(mesh.material, 'opacity').range(0, 1),
+    new BooleanControl(mesh.material, 'transparent'),
   );
 
   gui.addLayer(layer1);
