@@ -2,7 +2,7 @@ import React from 'react';
 
 import Title from './title';
 
-class Seed {
+class PageInformation {
 
   static name = 'page-information';
 
@@ -32,4 +32,4 @@ class Seed {
 
 }
 
-export default Seed;
+export default PageInformation;

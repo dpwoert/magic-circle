@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
+
+console.log('createGlobalPlease', createGlobalStyle);
 
 const Container = styled.div`
   padding: 3px;

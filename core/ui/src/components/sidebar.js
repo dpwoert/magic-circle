@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import styled, {createGlobalStyle} from 'styled-components';
+
+console.log('createGlobalPleaseMain', createGlobalStyle, styled)
 
 const Container = styled.div`
   position: absolute;
@@ -52,7 +54,7 @@ class Sidebar extends Component {
 
     // determine initial state
     const children = React.Children.toArray(this.props.children);
-    const firstItem = children[0].type.navigation;
+    const firstItem = children[0] ? children[0].type.navigation : {};
     this.state = { active: firstItem.name };
 
     // event binding

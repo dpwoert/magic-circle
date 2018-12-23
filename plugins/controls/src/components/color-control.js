@@ -2,11 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import ColorPicker from 'rc-color-picker';
 
-import {Row, Label, Center, Value} from './styles';
+import { Row, Label, Center, Value } from './styles';
 import GlobalStyle from './color-control-style';
-
-// const GlobalStyle = styled.div``;
-// const ColorPicker = styled.div``;
 
 const Color = styled.div`
   margin-right: 6px;
@@ -49,33 +46,32 @@ const ColorControl = props => {
   const color = alpha ? rgba(normalised) : rgbToHex(normalised);
 
   return (
-    <GlobalStyle>
-      <Row>
-        <Label>{label}</Label>
-        <Center right>
-          <Color>{color}</Color>
-          <ColorPicker
-            color={rgbToHex(normalised)}
-            alpha={value.a}
-            onChange={(c) => {
-              const rgb = hexToRgb(c.color);
+    <Row>
+      <GlobalStyle />
+      <Label>{label}</Label>
+      <Center right>
+        <Color>{color}</Color>
+        <ColorPicker
+          color={rgbToHex(normalised)}
+          alpha={value.a}
+          onChange={(c) => {
+            const rgb = hexToRgb(c.color);
 
-              if(alpha){
-                rgb.a = c.alpha / 100;
-              }
+            if(alpha){
+              rgb.a = c.alpha / 100;
+            }
 
-              rgb.r = rgb.r / 255;
-              rgb.g = rgb.g / 255;
-              rgb.b = rgb.b / 255;
+            rgb.r = rgb.r / 255;
+            rgb.g = rgb.g / 255;
+            rgb.b = rgb.b / 255;
 
-              updateControl(rgb);
-            }}
-            placement="bottomRight"
-            enableAlpha={alpha}
-          />
-        </Center>
-      </Row>
-    </GlobalStyle>
+            updateControl(rgb);
+          }}
+          placement="bottomRight"
+          enableAlpha={alpha}
+        />
+      </Center>
+    </Row>
   );
 };
 

@@ -1,11 +1,11 @@
 import TextControl from './text-control';
 import FloatControl from './float-control';
-// import ColorControl from './color-control';
+import ColorControl from './color-control';
 
 const controls = [
   TextControl,
   FloatControl,
-  // ColorControl
+  ColorControl
 ];
 
 export const addControl = c => controls.push(c);

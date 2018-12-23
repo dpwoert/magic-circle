@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "description": "",
   "main": "dist/bundle.js",
+  "module": "dist/bundle.esm.js",
   "scripts": {
     "start": "rollup --config ../../rollup.config.js --watch"
   },
