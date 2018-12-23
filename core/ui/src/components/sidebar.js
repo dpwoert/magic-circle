@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import styled, {createGlobalStyle} from 'styled-components';
-
-console.log('createGlobalPleaseMain', createGlobalStyle, styled)
+import styled from 'styled-components';
 
 const Container = styled.div`
   position: absolute;

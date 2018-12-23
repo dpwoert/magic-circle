@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import shallowEqual from 'shallowequal';
 
 import {getControl} from './components';
 
@@ -78,7 +79,7 @@ class Control extends Component {
     const { control } = this.props;
     const { value, original } = this.state;
     const CustomControl = getControl(control.type);
-    const changed = original !== value;
+    const changed = !shallowEqual(original, value);
 
     if(!CustomControl){
       return (
