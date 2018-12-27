@@ -14,8 +14,8 @@ const Container = styled.div`
 
 const Button = styled.div`
   padding: 3px 6px;
-  border: 1px solid rgb(136, 74, 255);
-  color: rgb(136, 74, 255);
+  border: 1px solid ${props => props.theme.accent};
+  color: ${props => props.theme.accent};
   display: block;
   text-align: center;
   user-select: none;
@@ -34,7 +34,7 @@ const Button = styled.div`
   }
 
   &:last-of-type{
-    border-right: 1px solid rgb(136, 74, 255);
+    border-right: 1px solid ${props => props.theme.accent};
     border-radius: 0px 3px 3px 0px;
   }
 `;

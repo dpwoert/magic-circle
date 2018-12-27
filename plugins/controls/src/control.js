@@ -24,7 +24,7 @@ const Indicator = styled.div`
   height: 100%;
   left: 0;
   top: 0;
-  background: ${props => props.changed ? 'rgb(136, 74, 255)' : 'none'};
+  background: ${props => props.changed ? props.theme.accent : 'none'};
 `;
 
 const Reset = styled.div`
@@ -33,7 +33,7 @@ const Reset = styled.div`
   height: 100%;
   left: 0;
   top: 0;
-  background: rgb(136, 74, 255);
+  background: ${props => props.theme.accent};
   transform: translateX(-100%);
   display: ${props => props.changed ? 'flex' : 'none'};
   transition: transform 0.2s ease;

@@ -10,9 +10,9 @@ const Panel = styled.ul`
   height: 100%;
 `;
 
-const getBackgroundColor = (selected, i) => {
+const getBackgroundColor = (selected, i, accent) => {
   if(selected){
-    return 'rgb(136,74,255,1)';
+    return accent;
   } else {
     return i % 2 === 0 ? '#191919' : '#111111';
   }
@@ -25,7 +25,7 @@ const Item = styled.li`
   padding-left: ${props => (props.depth + 1) * 12}px;
   color: white;
   list-style: none;
-  background: ${props => getBackgroundColor(props.selected, props.i)};
+  background: ${props => getBackgroundColor(props.selected, props.i, props.theme.accent)};
   box-sizing: border-box;
   border-radius: ${props => props.selected ? 3 : 0}px;
   font-weight: ${props => props.selected ? 'bold' : 'normal'};

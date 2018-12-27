@@ -11,8 +11,8 @@ const Container = styled.div`
 
 const Button = styled.div`
   padding: 3px 6px;
-  border: 1px solid rgb(136, 74, 255);
-  color: rgb(136, 74, 255);
+  border: 1px solid ${props => props.theme.accent};
+  color: ${props => props.theme.accent};
   display: block;
   text-align: center;
   user-select: none;
@@ -31,8 +31,6 @@ const Button = styled.div`
 class Bar extends Component {
 
   render(){
-    const play = this.props.play;
-    const label = !play ? '>' : '| |';
     return(
       <Container>
         <Button onClick={() => this.props.takeScreenshot()}/>

@@ -3,9 +3,9 @@ import styled from 'styled-components';
 
 const Container = styled.div`
   padding: 3px;
-  border: 1px solid rgb(136, 74, 255);
+  border: 1px solid ${props => props.theme.accent};
   border-radius: 3px;
-  color: rgb(136, 74, 255);
+  color: ${props => props.theme.accent};
   display: inline-block;
   min-width: 50px;
   text-align: center;

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Color from '@creative-controls/colors'
 
 import {Row, Label, Center, Value, TextBox} from './styles';
 
@@ -26,7 +27,7 @@ const Slider = styled.input`
     appearance: none;
     width: 2px;
     height: 20px;
-    background: rgb(136, 74, 255);
+    background: ${props => props.theme.accent};
     cursor: grab;
   }
 
@@ -46,7 +47,7 @@ const Progress = styled.div`
   left: 0;
   width: ${props => props.progress}%;
   height: 100%;
-  background: rgba(136, 74, 255, 0.2);
+  background: ${props => new Color(props.theme.accent).alpha(0.2).toCSS()};
   cursor: grab;
 `;
 
