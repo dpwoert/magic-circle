@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { ThemeProvider } from 'styled-components';
 import Header from './header';
 import Sidebar from './sidebar';
+import * as icons from '../icons';
 
 class Layout extends Component {
 
@@ -16,7 +17,7 @@ class Layout extends Component {
 
   render(){
     return(
-      <ThemeProvider theme={this.props.client.settings.theme}>
+      <ThemeProvider theme={{ icons, ...this.props.client.settings.theme }}>
         <div>
             <Header
               left={this.hook('header', 'left')}

@@ -14,7 +14,8 @@
     "@babel/core": "^7.1.2",
     "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
-    "babel-plugin-styled-components": "^1.8.0"
+    "babel-plugin-styled-components": "^1.8.0",
+    "babel-plugin-inline-react-svg": "^1.0.1"
   },
   "dependencies": {
     "is-electron": "^2.1.0",
