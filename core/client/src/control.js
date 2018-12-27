@@ -12,7 +12,13 @@ export class Control {
 
   /** Receive an updated value from the client */
   setValue(value){
-    this.reference[this.key] = value;
+    if(typeof value === 'object' && !Array.isArray(value)){
+      Object.keys(value).forEach(key => {
+        this.reference[this.key][key] = value[key];
+      });
+    } else {
+      this.reference[this.key] = value;
+    }
   }
 
   /** returns current value of controls */
@@ -124,11 +130,17 @@ export class ColorControl extends Control {
     this.type = 'color';
     this.options = {
       alpha: false,
+      range: 255,
     }
   }
 
   alpha(alpha){
     this.options.alpha = !!alpha;
+    return this;
+  }
+
+  range(range){
+    this.options.range = range;
     return this;
   }
 

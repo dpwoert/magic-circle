@@ -64,7 +64,7 @@ export function setup(gui){
     new FloatControl(mesh.scale, 'z').range(-3, 3)
   );
   new Folder(layer3, 'Material',
-    new ColorControl(mesh.material, 'color'),
+    new ColorControl(mesh.material, 'color').range(1),
     new FloatControl(mesh.material, 'opacity').range(0, 1),
     new BooleanControl(mesh.material, 'transparent'),
   );

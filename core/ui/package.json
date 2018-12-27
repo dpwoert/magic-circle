@@ -27,6 +27,7 @@
     "@creative-controls/layers": "^0.0.0",
     "@creative-controls/controls": "^0.0.0",
     "@creative-controls/screenshots": "^0.0.0",
-    "@creative-controls/page-information": "^0.0.0"
+    "@creative-controls/page-information": "^0.0.0",
+    "@creative-controls/colors": "^0.0.0"
   }
 }
