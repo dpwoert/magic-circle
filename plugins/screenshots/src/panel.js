@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
-
-const cameraRollIcon = 'assets/camera-roll.svg';
-const deleteIcon = 'assets/delete.svg';
+import styled, {withTheme} from 'styled-components';
 
 const Panel = styled.div`
   width: 100%;
@@ -45,22 +42,29 @@ const Name = styled.div`
 const Delete = styled.div`
   width: 25px;
   height: 25px;
-  background-image: url(${deleteIcon});
-  background-size: auto 70%;
-  background-position: center center;
-  background-repeat: no-repeat;
   cursor: pointer;
+
+  fill: ${props => props.theme.accent};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  svg{
+    width: 70%;
+    height: auto;
+  }
 `;
 
 class ScreenshotsPanel extends Component {
 
   static navigation = {
     name: 'screenshots',
-    icon: cameraRollIcon,
+    icon: 'CameraRoll',
   };
 
   render(){
     const {screenshots, path, loadScreenshot, deleteScreenshot} = this.props;
+    const DeleteIcon = this.props.theme.icons.Trashbin;
     return(
       <Panel>
         <Screenshots>
@@ -69,7 +73,9 @@ class ScreenshotsPanel extends Component {
               <ImageFrame image={`${path}/${screenshot}.png`} />
               <Details>
                 <Name>{screenshot.replace('screenshot ', '')}</Name>
-                <Delete onClick={() => deleteScreenshot(screenshot)} />
+                <Delete onClick={() => deleteScreenshot(screenshot)}>
+                  <DeleteIcon />
+                </Delete>
               </Details>
             </Screenshot>
           ))}
@@ -80,4 +86,4 @@ class ScreenshotsPanel extends Component {
 
 }
 
-export default ScreenshotsPanel;
+export default withTheme(ScreenshotsPanel);

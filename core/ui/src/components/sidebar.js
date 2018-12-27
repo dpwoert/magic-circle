@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import styled, { withTheme } from 'styled-components';
 
 const Container = styled.div`
   position: absolute;
@@ -24,26 +24,38 @@ const Icons = styled.ul`
   border-right: 1px solid #262626;
 `;
 
-const Icon = styled.li`
+const Button = styled.li`
   width: 54px;
   height: 54px;
-  background-size: 40% auto;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-image: url(${props => props.icon});
+
+  fill: ${props => props.theme.accent};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  svg{
+    width: 40%;
+    height: auto;
+  }
 `;
 
-const IconBar = props => (
+const IconBar = withTheme(props => (
   <Icons>
-    {props.panels.map(panel => (
-      <Icon
-        key={panel.name}
-        icon={panel.icon}
-        onClick={() => props.setActivePanel(panel)}
-      />
-    ))}
+    {props.panels.map(panel => {
+      const Icon = typeof panel.icon === 'string' ?
+        props.theme.icons[panel.icon] : panel.icon;
+      return (
+        <Button
+          key={panel.name}
+          icon={panel.icon}
+          onClick={() => props.setActivePanel(panel)}
+        >
+          <Icon />
+        </Button>
+      );
+    })}
   </Icons>
-);
+));
 
 class Sidebar extends Component {
 

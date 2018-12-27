@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
-
-const screenshotIcon = 'assets/screenshot.svg';
+import styled, { withTheme } from 'styled-components';
 
 const Container = styled.div`
   margin-left: 12px;
@@ -10,34 +8,41 @@ const Container = styled.div`
 `
 
 const Button = styled.div`
-  padding: 3px 6px;
   border: 1px solid ${props => props.theme.accent};
-  color: ${props => props.theme.accent};
   display: block;
   text-align: center;
   user-select: none;
   font-size: 12px;
   ${'' /* background: rgba(136, 74, 255, 0.19); */}
-  background-size: auto 70%;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-image: url(${screenshotIcon});
   font-size: 14px;
   width: 25px;
   height: 25px;
   border-radius: 3px;
+
+  fill: ${props => props.theme.accent};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  svg{
+    width: 70%;
+    height: auto;
+  }
 `;
 
 class Bar extends Component {
 
   render(){
+    const Icon = this.props.theme.icons.Screenshot;
     return(
       <Container>
-        <Button onClick={() => this.props.takeScreenshot()}/>
+        <Button onClick={() => this.props.takeScreenshot()}>
+          <Icon />
+        </Button>
       </Container>
     )
   }
 
 }
 
-export default Bar;
+export default withTheme(Bar);

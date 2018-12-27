@@ -20,9 +20,6 @@
   "dependencies": {
     "is-electron": "^2.1.0",
     "rc-color-picker": "^1.2.6",
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
-    "styled-components": "^4.1.2",
     "@creative-controls/seed": "^0.0.0",
     "@creative-controls/play-controls": "^0.0.0",
     "@creative-controls/layers": "^0.0.0",
@@ -30,5 +27,10 @@
     "@creative-controls/screenshots": "^0.0.0",
     "@creative-controls/page-information": "^0.0.0",
     "@creative-controls/colors": "^0.0.0"
+  },
+  "peerDependencies": {
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
+    "styled-components": "^4.1.2"
   }
 }
