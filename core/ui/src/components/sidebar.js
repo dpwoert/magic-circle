@@ -27,6 +27,7 @@ const Icons = styled.ul`
 const Button = styled.li`
   width: 54px;
   height: 54px;
+  border-right: 2px solid ${props => props.selected ? props.theme.accent : 'rgba(0,0,0,0)'};
 
   fill: ${props => props.theme.accent};
   display: flex;
@@ -49,6 +50,7 @@ const IconBar = withTheme(props => (
           key={panel.name}
           icon={panel.icon}
           onClick={() => props.setActivePanel(panel)}
+          selected={panel.name === props.active}
         >
           <Icon />
         </Button>
@@ -81,7 +83,7 @@ class Sidebar extends Component {
     const active = children.find(c => c.type.navigation.name === this.state.active);
     return(
       <Container>
-        <IconBar panels={panels} setActivePanel={this.setActivePanel} />
+        <IconBar panels={panels} active={this.state.active} setActivePanel={this.setActivePanel} />
         {active}
       </Container>
     )

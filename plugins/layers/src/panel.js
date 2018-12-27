@@ -25,6 +25,7 @@ const Item = styled.li`
   box-sizing: border-box;
   border-radius: ${props => props.selected ? 3 : 0}px;
   font-weight: ${props => props.selected ? 'bold' : 'normal'};
+  cursor: default;
 `
 
 class LayersPanel extends Component {
