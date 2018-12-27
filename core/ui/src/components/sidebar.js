@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled, { withTheme } from 'styled-components';
+import Color from '@creative-controls/colors'
 
 const Container = styled.div`
   position: absolute;
@@ -27,7 +28,7 @@ const Icons = styled.ul`
 const Button = styled.li`
   width: 54px;
   height: 54px;
-  border-right: 2px solid ${props => props.selected ? props.theme.accent : 'rgba(0,0,0,0)'};
+  background: ${props => props.selected ? new Color(props.theme.accent).alpha(0.15).toCSS() : 'none'};
 
   fill: ${props => props.theme.accent};
   display: flex;

@@ -13,7 +13,7 @@ const ButtonControl = props => {
   const { label, updateControl } = props;
   return (
     <Row>
-      <Button onClick={updateControl('')}>{label}</Button>
+      <Button onClick={() => updateControl('')}>{label}</Button>
     </Row>
   );
 };

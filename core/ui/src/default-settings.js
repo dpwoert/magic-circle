@@ -20,6 +20,7 @@ const settings = {
     Screenshots
   ],
   theme: {
+    // accent: 'rgb(102, 255, 153)',
     accent: 'rgb(136, 74, 255)',
   },
   render: client => {

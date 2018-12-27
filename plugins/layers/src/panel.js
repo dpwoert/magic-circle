@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import Color from '@creative-controls/colors'
 
 const Panel = styled.ul`
   width: 100%;
@@ -8,7 +9,7 @@ const Panel = styled.ul`
 
 const getBackgroundColor = (selected, i, accent) => {
   if(selected){
-    return accent;
+    return new Color(accent).alpha(0.9).toCSS();
   } else {
     return i % 2 === 0 ? '#191919' : '#111111';
   }
