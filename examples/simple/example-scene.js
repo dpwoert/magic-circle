@@ -14,7 +14,8 @@ import {
   FloatControl,
   BooleanControl,
   TextControl,
-  ColorControl
+  ColorControl,
+  ButtonControl,
 } from '@creative-controls/client';
 
 let renderer, scene, camera, mesh;
@@ -40,7 +41,8 @@ export function setup(gui){
   const glob = {
     'name': 'Test name',
     'subtitle': 'Test subtitle',
-    'subtitle2': 'Subtitle to test 2'
+    'subtitle2': 'Subtitle to test 2',
+    'alert': () => alert(`name: ${glob.name}`)
   };
 
   // controls
@@ -52,6 +54,8 @@ export function setup(gui){
     new TextControl(glob, 'name'),
     new TextControl(glob, 'subtitle'),
     new TextControl(glob, 'subtitle2'),
+    new ButtonControl(glob, 'alert').label('Trigger alert')
+    // new ButtonControl(glob, 'alert').label('Trigger alert')
   );
   new Folder(layer3, 'Position',
     new FloatControl(mesh.position, 'x').range(-100, 100),

@@ -79,7 +79,7 @@ class Control extends Component {
     const { control } = this.props;
     const { value, original } = this.state;
     const CustomControl = getControl(control.type);
-    const changed = !shallowEqual(original, value);
+    const changed = !shallowEqual(original, value) && !CustomControl.noReset;
 
     if(!CustomControl){
       return (

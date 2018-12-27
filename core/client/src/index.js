@@ -8,5 +8,6 @@ export {
   IntControl,
   FloatControl,
   ColorControl,
-  BooleanControl
+  BooleanControl,
+  ButtonControl,
 } from './control';

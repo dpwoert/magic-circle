@@ -4,7 +4,7 @@ export class Control {
     this.type = 'text';
     this.reference = reference;
     this.key = key;
-    this.label = key;
+    this.labelValue = key;
     this.options = {};
     this.initialValue = this.reference[this.key];
     return this;
@@ -38,7 +38,7 @@ export class Control {
 
   /** Sets the label for this control */
   label(label){
-    this.label = label;
+    this.labelValue = label;
     return this;
   }
 
@@ -55,7 +55,7 @@ export class Control {
       isControl: true,
       type: this.type,
       key: this.key,
-      label: this.label,
+      label: this.labelValue,
       options: this.options,
       value: this.getValue(),
       initialValue: this.initialValue,
@@ -72,6 +72,7 @@ export class SelectionControl extends Control{
   constructor(reference, key){
     super(reference, key);
     this.type = 'selectionBox';
+    return this;
   }
 
   values(values){
@@ -91,6 +92,7 @@ export class IntControl extends Control{
   constructor(reference, key){
     super(reference, key);
     this.type = 'int';
+    return this;
   }
 
   stepSize(stepSize){
@@ -109,6 +111,7 @@ export class FloatControl extends Control{
       range: [0, 100],
       stepSize: 0,
     }
+    return this;
   }
 
   range(start, end){
@@ -132,6 +135,7 @@ export class ColorControl extends Control {
       alpha: false,
       range: 255,
     }
+    return this;
   }
 
   alpha(alpha){
@@ -151,6 +155,26 @@ export class BooleanControl extends Control {
   constructor(reference, key){
     super(reference, key);
     this.type = 'boolean';
+    return this;
+  }
+
+}
+
+export class ButtonControl extends Control {
+
+  constructor(reference, key){
+    super(reference, key);
+    this.type = 'button';
+    this.initialValue = '';
+    return this;
+  }
+
+  setValue(){
+    this.reference[this.key]();
+  }
+
+  getValue(){
+    return this.initialValue;
   }
 
 }
