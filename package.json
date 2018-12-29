@@ -2,6 +2,7 @@
   "name": "creative-controls",
   "private": true,
   "scripts": {
+    "postinstall": "lerna run bootstrap",
     "start": "lerna run start --parallel",
     "example:simple": "cd examples/simple && npm run serve && cd ../..",
     "electron": "cd examples/simple && npm run electron && cd ../.."
@@ -9,7 +10,7 @@
   "devDependencies": {
     "@babel/core": "^7.1.5",
     "lerna": "^3.4.3",
-    "rollup": "^0.67.0",
+    "rollup": "^0.68.2",
     "rollup-plugin-babel": "^4.0.3",
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-node-resolve": "^4.0.0",

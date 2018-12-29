@@ -9,6 +9,7 @@ import Controls from '@creative-controls/controls';
 import Seed from '@creative-controls/seed';
 import PageInfo from '@creative-controls/page-information';
 import Screenshots from '@creative-controls/screenshots';
+import Performance from '@creative-controls/performance';
 
 const settings = {
   plugins: [
@@ -17,7 +18,8 @@ const settings = {
     Layers,
     PlayControls,
     Controls,
-    Screenshots
+    Screenshots,
+    Performance,
   ],
   theme: {
     // accent: 'rgb(102, 255, 153)',

@@ -9,6 +9,7 @@ import { Play2 } from './play2.svg';
 import { Reload } from './reload.svg';
 import { Rewind } from './rewind.svg';
 import { Screenshot } from './screenshot.svg';
+import { Performance } from './performance.svg';
 
 export {
   CameraRoll,
@@ -22,4 +23,5 @@ export {
   Reload,
   Rewind,
   Screenshot,
+  Performance,
 };

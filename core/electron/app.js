@@ -45,10 +45,6 @@ app.once('ready', () => {
   );
   frame.loadURL(global.url);
 
-  window.webContents.on('devtools-reload-page', () => {
-    frame.reload();
-  });
-
   window.once('ready-to-show', () => {
     // Show window when page is ready
     window.show();

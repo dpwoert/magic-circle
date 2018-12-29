@@ -1,5 +1,6 @@
 import LayersPlugin from './plugins/layers';
 import SeedPlugin from './plugins/seed';
+import PerformancePlugin from './plugins/performance';
 
 import isElectron from 'is-electron';
 
@@ -17,6 +18,7 @@ const getNodeEnv = () => {
 export class Client {
 
   constructor(...plugins){
+    this.frames = 0;
     this.listeners = [];
     this.channels = [];
     this.fn = {
@@ -27,6 +29,7 @@ export class Client {
     //add plugins
     plugins.push(LayersPlugin);
     plugins.push(SeedPlugin);
+    plugins.push(PerformancePlugin);
     this.plugins = plugins.map(P => new P(this));
 
     //event binding
@@ -157,13 +160,9 @@ export class Client {
     }
   }
 
-  startFrame(){
+  startFrame(){ }
 
-  }
-
-  endFrame(){
-
-  }
+  endFrame(){ }
 
   nextFrame(){
 
