@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "postinstall": "lerna run bootstrap",
-    "start": "lerna run start --parallel",
+    "build:dev": "lerna run start --parallel",
+    "start": "nodemon --exec \"npm run build:dev\"",
     "example:simple": "cd examples/simple && npm run serve && cd ../..",
     "electron": "cd examples/simple && npm run electron && cd ../.."
   },
@@ -15,5 +16,8 @@
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-peer-deps-external": "^2.2.0"
+  },
+  "nodemonConfig": {
+    "ignore": ["dist/*"]
   }
 }

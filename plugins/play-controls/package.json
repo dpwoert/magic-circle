@@ -5,7 +5,7 @@
   "main": "dist/bundle.js",
   "module": "dist/bundle.esm.js",
   "scripts": {
-    "start": "rollup --config ../../rollup.config.js --watch"
+    "start": "rollup --config ../../rollup.config.js"
   },
   "keywords": [],
   "author": "Davey van der Woert",
