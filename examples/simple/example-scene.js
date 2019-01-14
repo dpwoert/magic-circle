@@ -53,7 +53,7 @@ export function setup(gui){
   new Folder(layer3, 'Global',
     new TextControl(glob, 'name'),
     new TextControl(glob, 'subtitle'),
-    new TextControl(glob, 'subtitle2'),
+    new TextControl(glob, 'subtitle2').values(['test1', 'test2', 'test3']),
     new ButtonControl(glob, 'alert').label('Trigger alert')
     // new ButtonControl(glob, 'alert').label('Trigger alert')
   );

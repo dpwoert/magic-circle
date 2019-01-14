@@ -65,15 +65,7 @@ export class Control {
 
 };
 
-export class TextControl extends Control{}
-
-export class SelectionControl extends Control{
-
-  constructor(reference, key){
-    super(reference, key);
-    this.type = 'selectionBox';
-    return this;
-  }
+export class TextControl extends Control{
 
   values(values){
     this.options.values = values;

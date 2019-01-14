@@ -41,7 +41,7 @@ class PerformancePanel extends Component {
 
   static navigation = {
     name: 'performance',
-    icon: 'Performance',
+    icon: 'Performance2',
   };
 
   render(){

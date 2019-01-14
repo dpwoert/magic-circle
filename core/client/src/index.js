@@ -4,7 +4,6 @@ export { Layer } from './layer';
 export {
   Control,
   TextControl,
-  SelectionControl,
   IntControl,
   FloatControl,
   ColorControl,

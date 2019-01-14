@@ -45,3 +45,13 @@ export const TextBox = styled.input`
   border: none;
   padding: 6px;
 `;
+
+export const Selection = styled.select`
+  width: 100%;
+  background: #191919;
+  color: #fff;
+  border-radius: 3px;
+  border: none;
+  padding: 6px;
+  height: 25px;
+`;
