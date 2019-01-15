@@ -17,7 +17,10 @@ import {
   ButtonControl,
 } from '@creative-controls/client';
 
-let renderer, scene, camera, mesh;
+let renderer;
+let scene;
+let camera;
+let mesh;
 
 export function setup(gui) {
   // Create renderer
@@ -45,14 +48,14 @@ export function setup(gui) {
     name: 'Test name',
     subtitle: 'Test subtitle',
     subtitle2: 'Subtitle to test 2',
-    alert: () => alert(`name: ${glob.name}`),
+    alert: () => alert(`name: ${glob.name}`), //eslint-disable-line
   };
 
   // controls
   const layer1 = new Layer('World');
   const layer2 = new Layer('Scene');
   const layer3 = new Layer('Box').addTo(layer1);
-  const layer4 = new Layer('Box2').addTo(layer1);
+  const layer4 = new Layer('Box2').addTo(layer1); //eslint-disable-line
 
   layer3.folder(
     'Global',

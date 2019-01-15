@@ -31,11 +31,12 @@ class Screenshots {
         />
       );
     }
+
+    return false;
   }
 
   refresh() {
     // load all screenshots
-    const re = /(?:\.([^.]+))?$/;
     const files = fs
       .readdirSync(`${this.client.cwd}/screenshots`)
       .filter(f => f.substr(f.lastIndexOf('.') + 1) === 'json')

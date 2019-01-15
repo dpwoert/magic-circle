@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Color from '@creative-controls/colors';
 
-import { Row, Label, Center, Value, TextBox } from './styles';
+import { Row, Label, Center, Value } from './styles';
 
 const Box = styled.div`
   position: relative;
@@ -29,16 +29,16 @@ const Input = styled.input`
 `;
 
 const BooleanControl = props => {
-  const { value, options, updateControl } = props;
+  const { value, label, updateControl } = props;
   return (
     <Row>
-      <Label>{props.label}</Label>
+      <Label>{label}</Label>
       <Center />
       <Value>
         <label>
           <Input
-            onChange={() => updateControl(!props.value)}
-            checked={props.value}
+            onChange={() => updateControl(!value)}
+            checked={value}
             type="checkbox"
           />
           <Box />

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { Row, Label, Center, Value, TextBox } from './styles';
+import { Row, Label } from './styles';
 
 const Button = styled(Label)`
   width: auto;

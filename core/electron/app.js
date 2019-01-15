@@ -2,10 +2,10 @@ const { app, BrowserWindow } = require('electron');
 const url = require('url');
 const path = require('path');
 
+const argv = require('minimist')(process.argv.slice(2));
+
 const inject = require('./inject.js');
 const eventSystem = require('./events.js');
-
-const argv = require('minimist')(process.argv.slice(2));
 
 global.cwd = argv.cwd;
 global.configFile = argv.config;
@@ -51,10 +51,10 @@ app.once('ready', () => {
     frame.show();
   });
 
-  //inject needed data
+  // inject needed data
   inject(window, frame);
 
-  //load event system
+  // load event system
   eventSystem(window, frame);
 
   const moveResize = () => {

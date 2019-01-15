@@ -29,6 +29,8 @@ class PageInformation {
       const TitleWithStore = this.store.withStore(Title);
       return <TitleWithStore key="title" />;
     }
+
+    return false;
   }
 }
 

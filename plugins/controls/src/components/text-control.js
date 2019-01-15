@@ -1,11 +1,10 @@
 import React from 'react';
-import styled from 'styled-components';
 
-import { Row, Label, Center, Value, TextBox, Selection } from './styles';
+import { Row, Label, Center, TextBox, Selection } from './styles';
 
 const TextControl = props => {
   const { values, labels } = props.options;
-  const labelList = labels && values.length === values.length ? labels : values;
+  const labelList = labels && values.length === labels.length ? labels : values;
   return (
     <Row>
       <Label>{props.label}</Label>

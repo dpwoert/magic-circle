@@ -10,9 +10,8 @@ const Panel = styled.ul`
 const getBackgroundColor = (selected, i, accent) => {
   if (selected) {
     return new Color(accent).alpha(0.9).toCSS();
-  } else {
-    return i % 2 === 0 ? '#191919' : '#111111';
   }
+  return i % 2 === 0 ? '#191919' : '#111111';
 };
 
 const Item = styled.li`

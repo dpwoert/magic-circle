@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled, { withTheme } from 'styled-components';
 
 const Container = styled.div`
@@ -30,17 +30,15 @@ const Button = styled.div`
   }
 `;
 
-class Bar extends Component {
-  render() {
-    const Icon = this.props.theme.icons.Screenshot;
-    return (
-      <Container>
-        <Button onClick={() => this.props.takeScreenshot()}>
-          <Icon />
-        </Button>
-      </Container>
-    );
-  }
-}
+const Bar = props => {
+  const Icon = props.theme.icons.Screenshot;
+  return (
+    <Container>
+      <Button onClick={() => props.takeScreenshot()}>
+        <Icon />
+      </Button>
+    </Container>
+  );
+};
 
 export default withTheme(Bar);

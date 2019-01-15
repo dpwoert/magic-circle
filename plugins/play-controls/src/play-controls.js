@@ -14,8 +14,8 @@ class PlayControls {
   constructor(client, store) {
     this.client = client;
     this.store = store;
-    this.client.addListener('play', (evt, payload) => this.play());
-    this.client.addListener('stop', (evt, payload) => this.stop());
+    this.client.addListener('play', () => this.play());
+    this.client.addListener('stop', () => this.stop());
   }
 
   play() {
@@ -49,6 +49,8 @@ class PlayControls {
         />
       );
     }
+
+    return false;
   }
 }
 

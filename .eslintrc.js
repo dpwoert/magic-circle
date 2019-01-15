@@ -8,10 +8,17 @@ module.exports = {
 
   rules: {
     // No need to append .js extension to imports
-    'import/extensions': ['error', 'always', { js: 'never' }],
+    'global-require': 0,
+    'import/extensions': 0,
+    'import/no-extraneous-dependencies': 0,
+    'import/no-unresolved': 0,
+
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'react/prop-types': 0,
-    'global-require': 0,
+    'react/jsx-one-expression-per-line': 0,
+    'react/destructuring-assignment': 0,
+    'jsx-a11y/label-has-associated-control': 0,
+    'jsx-a11y/label-has-for': 0,
 
     // Recommend not to leave any console.log in your code
     // Use console.error, console.warn and console.info instead

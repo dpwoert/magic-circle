@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { updateSeed, getSeed } from './with-seed';
 import Bar from './bar';
 
 class Seed {
@@ -36,10 +35,13 @@ class Seed {
   }
 
   header(position) {
+    // Show bar on the right
     if (position === 'right') {
       const BarWithStore = this.store.withStore(Bar);
       return <BarWithStore key="seed" refresh={() => this.refresh()} />;
     }
+
+    return false;
   }
 }
 

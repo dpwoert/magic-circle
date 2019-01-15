@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import ColorPicker from 'rc-color-picker';
 
-import { Row, Label, Center, Value } from './styles';
-import GlobalStyle from './color-control-style';
-
 import Color from '@creative-controls/colors';
+
+import { Row, Label, Center } from './styles';
+import GlobalStyle from './color-control-style';
 
 const ColorValue = styled.div`
   margin-right: 6px;

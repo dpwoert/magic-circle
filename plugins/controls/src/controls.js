@@ -40,7 +40,7 @@ class Controls {
     return updates;
   }
 
-  createChangelog(json) {
+  createChangelog() {
     const { store } = this.client.getPlugin('layers');
     const mapping = store.get('mapping');
 
@@ -57,7 +57,7 @@ class Controls {
     return changelog;
   }
 
-  applyChangelog(changelog, json) {
+  applyChangelog(changelog) {
     const updates = [];
 
     // batch updates to controls containing initial values
@@ -107,11 +107,13 @@ class Controls {
   }
 
   layout() {
-    const store = this.client.getPlugin('layers').store;
+    const { store } = this.client.getPlugin('layers');
     if (store) {
       const Panel = withControls(ControlPanel, store);
       return <Panel updateControl={this.updateControl} />;
     }
+
+    return null;
   }
 }
 

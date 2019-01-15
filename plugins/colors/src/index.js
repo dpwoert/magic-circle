@@ -1,5 +1,7 @@
 import colorString from 'color-string';
 
+/* eslint-disable prefer-destructuring */
+
 export default class Color {
   constructor(color, range = 255) {
     this.color = [0, 0, 0];
@@ -44,7 +46,7 @@ export default class Color {
       this.hasAlpha = color.indexOf('rgba') > -1;
     }
 
-    //do range stuff
+    // do range stuff
     if (range !== 255) {
       this.color = this.color.map(c => (255 / range) * c);
     }
@@ -60,7 +62,7 @@ export default class Color {
     return this;
   }
 
-  red(r) {
+  blue(b) {
     this.color[2] = b;
     return this;
   }
@@ -74,7 +76,7 @@ export default class Color {
   toObject() {
     const { color } = this;
 
-    //range conversion
+    // range conversion
     const converted = color.map(c => (c * this.range) / 255);
 
     let obj;
@@ -98,9 +100,9 @@ export default class Color {
   toString() {
     if (this.type === 'hex') {
       return this.toHex();
-    } else {
-      return this.toCSS();
     }
+
+    return this.toCSS();
   }
 
   toHex() {

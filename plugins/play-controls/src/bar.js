@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled, { withTheme } from 'styled-components';
 
 const Container = styled.div`
@@ -40,25 +40,23 @@ const Button = styled.div`
   }
 `;
 
-class Bar extends Component {
-  render() {
-    const { play, reset, refresh, changeState, theme } = this.props;
-    const { Play, Pause, Reload, Rewind } = theme.icons;
-    const PlayState = play ? Pause : Play;
-    return (
-      <Container>
-        <Button play={play} onClick={() => changeState(!play)}>
-          <PlayState />
-        </Button>
-        <Button onClick={() => refresh()}>
-          <Reload />
-        </Button>
-        <Button onClick={() => reset()}>
-          <Rewind />
-        </Button>
-      </Container>
-    );
-  }
-}
+const Bar = props => {
+  const { play, reset, refresh, changeState, theme } = props;
+  const { Play, Pause, Reload, Rewind } = theme.icons;
+  const PlayState = play ? Pause : Play;
+  return (
+    <Container>
+      <Button play={play} onClick={() => changeState(!play)}>
+        <PlayState />
+      </Button>
+      <Button onClick={() => refresh()}>
+        <Reload />
+      </Button>
+      <Button onClick={() => reset()}>
+        <Rewind />
+      </Button>
+    </Container>
+  );
+};
 
 export default withTheme(Bar);

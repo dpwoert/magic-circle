@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Color from '@creative-controls/colors';
 
-import { Row, Label, Center, Value, TextBox } from './styles';
+import { Row, Label, Center, Value } from './styles';
 
 const InputContainer = styled.div`
   position: relative;
@@ -55,9 +55,9 @@ const FloatControl = props => {
   const { value, options, updateControl } = props;
   const { range, stepSize } = options;
   const progress =
-    ((value - parseInt(range[0])) * 100) /
-    (parseInt(range[1]) - parseInt(range[0]));
-  const extent = Math.abs(parseInt(range[1]) - parseInt(range[0]));
+    ((value - parseInt(range[0], 10)) * 100) /
+    (parseInt(range[1], 10) - parseInt(range[0], 10));
+  const extent = Math.abs(parseInt(range[1], 10) - parseInt(range[0], 10));
   const step = stepSize === 0 ? extent / 100 : stepSize;
 
   return (
@@ -72,8 +72,8 @@ const FloatControl = props => {
               updateControl(+evt.target.value);
             }}
             type="range"
-            min={parseInt(range[0])}
-            max={parseInt(range[1])}
+            min={parseInt(range[0], 10)}
+            max={parseInt(range[1], 10)}
             step={step}
           />
         </InputContainer>

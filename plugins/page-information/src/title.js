@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -8,19 +8,16 @@ const Container = styled.div`
   min-width: 50px;
 `;
 
-const truncate = (string, max) => {
-  return string.length > max ? string.substring(0, max) + '...' : string;
-};
+const truncate = (string, max) =>
+  string.length > max ? `${string.substring(0, max)}...` : string;
 
-class Title extends Component {
-  render() {
-    const { title, nodeEnv } = this.props;
-    const display =
-      title && title.length > 0
-        ? `${truncate(title || '', 25)} (${nodeEnv})`
-        : 'no page loaded';
-    return <Container>{display}</Container>;
-  }
-}
+const Title = props => {
+  const { title, nodeEnv } = props;
+  const display =
+    title && title.length > 0
+      ? `${truncate(title || '', 25)} (${nodeEnv})`
+      : 'no page loaded';
+  return <Container>{display}</Container>;
+};
 
 export default Title;
