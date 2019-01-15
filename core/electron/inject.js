@@ -2,8 +2,7 @@ const ui = require('@creative-controls/ui');
 
 let initialLoad = true;
 
-module.exports = function(window, frame){
-
+module.exports = function(window, frame) {
   frame.webContents.on('dom-ready', () => {
     // Add ipcRenderer to front-end
     frame.webContents.executeJavaScript(`
@@ -28,10 +27,9 @@ module.exports = function(window, frame){
     `);
     console.log('⚙️  injected settings');
 
-    if(!initialLoad){
+    if (!initialLoad) {
       frame.reload();
       console.log('🔄  reloaded page [debug]');
     }
   });
-
-}
+};

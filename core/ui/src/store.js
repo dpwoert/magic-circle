@@ -1,11 +1,10 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 const withStore = (WrappedComponent, store) =>
   class LayerProvider extends Component {
-
     static navigation = WrappedComponent.navigation;
 
-    constructor(props, context){
+    constructor(props, context) {
       super(props, context);
       this.state = { data: store.get() };
       this.update = this.update.bind(this);
@@ -29,10 +28,8 @@ const withStore = (WrappedComponent, store) =>
     }
   };
 
-
 class Store {
-
-  constructor(initialData = {}){
+  constructor(initialData = {}) {
     this.listeners = [];
     this.data = initialData;
 
@@ -40,12 +37,12 @@ class Store {
     this.get = this.get.bind(this);
   }
 
-  get(key){
+  get(key) {
     return key ? this.data[key] : this.data;
   }
 
-  set(key, value){
-    if(value !== undefined){
+  set(key, value) {
+    if (value !== undefined) {
       this.data[key] = value;
     } else {
       this.data = key;
@@ -53,23 +50,22 @@ class Store {
     this.refresh();
   }
 
-  refresh(){
+  refresh() {
     this.listeners.forEach(l => l(this.data));
   }
 
-  addListener(fn){
+  addListener(fn) {
     this.listeners.push(fn);
   }
 
-  removeListener(fn){
+  removeListener(fn) {
     const id = this.listeners.indexOf(fn);
     this.listeners.splice(id, 1);
   }
 
-  withStore(WrappedComponent){
+  withStore(WrappedComponent) {
     return withStore(WrappedComponent, this);
   }
-
 }
 
 export default Store;

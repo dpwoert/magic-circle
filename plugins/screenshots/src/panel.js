@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styled, {withTheme} from 'styled-components';
+import styled, { withTheme } from 'styled-components';
 
 const Panel = styled.div`
   width: 100%;
@@ -49,27 +49,29 @@ const Delete = styled.div`
   justify-content: center;
   align-items: center;
 
-  svg{
+  svg {
     width: 70%;
     height: auto;
   }
 `;
 
 class ScreenshotsPanel extends Component {
-
   static navigation = {
     name: 'screenshots',
     icon: 'CameraRoll',
   };
 
-  render(){
-    const {screenshots, path, loadScreenshot, deleteScreenshot} = this.props;
+  render() {
+    const { screenshots, path, loadScreenshot, deleteScreenshot } = this.props;
     const DeleteIcon = this.props.theme.icons.Trashbin;
-    return(
+    return (
       <Panel>
         <Screenshots>
           {screenshots.map(screenshot => (
-            <Screenshot key={screenshot} onClick={() => loadScreenshot(screenshot)}>
+            <Screenshot
+              key={screenshot}
+              onClick={() => loadScreenshot(screenshot)}
+            >
               <ImageFrame image={`${path}/${screenshot}.png`} />
               <Details>
                 <Name>{screenshot.replace('screenshot ', '')}</Name>
@@ -81,9 +83,8 @@ class ScreenshotsPanel extends Component {
           ))}
         </Screenshots>
       </Panel>
-    )
+    );
   }
-
 }
 
 export default withTheme(ScreenshotsPanel);

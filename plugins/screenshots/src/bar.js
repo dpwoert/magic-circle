@@ -5,7 +5,7 @@ const Container = styled.div`
   margin-left: 12px;
   display: flex;
   flex-direction: row;
-`
+`;
 
 const Button = styled.div`
   border: 1px solid ${props => props.theme.accent};
@@ -24,25 +24,23 @@ const Button = styled.div`
   justify-content: center;
   align-items: center;
 
-  svg{
+  svg {
     width: 70%;
     height: auto;
   }
 `;
 
 class Bar extends Component {
-
-  render(){
+  render() {
     const Icon = this.props.theme.icons.Screenshot;
-    return(
+    return (
       <Container>
         <Button onClick={() => this.props.takeScreenshot()}>
           <Icon />
         </Button>
       </Container>
-    )
+    );
   }
-
 }
 
 export default withTheme(Bar);

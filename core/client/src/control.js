@@ -1,6 +1,5 @@
 export class Control {
-
-  constructor(reference, key){
+  constructor(reference, key) {
     this.type = 'text';
     this.reference = reference;
     this.key = key;
@@ -11,8 +10,8 @@ export class Control {
   }
 
   /** Receive an updated value from the client */
-  setValue(value){
-    if(typeof value === 'object' && !Array.isArray(value)){
+  setValue(value) {
+    if (typeof value === 'object' && !Array.isArray(value)) {
       Object.keys(value).forEach(key => {
         this.reference[this.key][key] = value[key];
       });
@@ -22,33 +21,33 @@ export class Control {
   }
 
   /** returns current value of controls */
-  getValue(){
+  getValue() {
     return this.reference[this.key];
   }
 
   /** Value has been updated outside of the controls */
-  update(){
+  update() {
     // TODO read & send value
   }
 
   /** Reset to initial value */
-  reset(){
+  reset() {
     this.reference[this.key] = this.initialValue;
   }
 
   /** Sets the label for this control */
-  label(label){
+  label(label) {
     this.labelValue = label;
     return this;
   }
 
   /** Add to folder */
-  addTo(parent){
+  addTo(parent) {
     parent.addControl(this);
     return this;
   }
 
-  toJSON(basePath){
+  toJSON(basePath) {
     const path = `${basePath}.${this.key}`;
     return {
       path,
@@ -61,112 +60,98 @@ export class Control {
       initialValue: this.initialValue,
     };
   }
+}
 
-
-};
-
-export class TextControl extends Control{
-
-  values(values){
+export class TextControl extends Control {
+  values(values) {
     this.options.values = values;
     return this;
   }
 
-  labels(){
+  labels() {
     this.options.labels = labels;
     return this;
   }
-
 }
 
-export class IntControl extends Control{
-
-  constructor(reference, key){
+export class IntControl extends Control {
+  constructor(reference, key) {
     super(reference, key);
     this.type = 'int';
     return this;
   }
 
-  stepSize(stepSize){
+  stepSize(stepSize) {
     this.options.stepSize = stepSize;
     return this;
   }
-
 }
 
-export class FloatControl extends Control{
-
-  constructor(reference, key){
+export class FloatControl extends Control {
+  constructor(reference, key) {
     super(reference, key);
     this.type = 'float';
     this.options = {
       range: [0, 100],
       stepSize: 0,
-    }
+    };
     return this;
   }
 
-  range(start, end){
+  range(start, end) {
     this.options.range = [start, end];
     return this;
   }
 
-  stepSize(size){
+  stepSize(size) {
     this.options.stepSize = size;
     return this;
   }
-
 }
 
 export class ColorControl extends Control {
-
-  constructor(reference, key){
+  constructor(reference, key) {
     super(reference, key);
     this.type = 'color';
     this.options = {
       alpha: false,
       range: 255,
-    }
+    };
     return this;
   }
 
-  alpha(alpha){
+  alpha(alpha) {
     this.options.alpha = !!alpha;
     return this;
   }
 
-  range(range){
+  range(range) {
     this.options.range = range;
     return this;
   }
-
 }
 
 export class BooleanControl extends Control {
-
-  constructor(reference, key){
+  constructor(reference, key) {
     super(reference, key);
     this.type = 'boolean';
     return this;
   }
-
 }
 
 export class ButtonControl extends Control {
-
-  constructor(reference, key){
+  constructor(reference, key) {
     super(reference, key);
     this.type = 'button';
     this.initialValue = '';
     return this;
   }
 
-  setValue(){
+  setValue() {
     this.reference[this.key]();
   }
 
-  getValue(){
+  getValue() {
     return this.initialValue;
   }
-
 }

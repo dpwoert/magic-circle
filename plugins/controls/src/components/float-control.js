@@ -1,15 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-import Color from '@creative-controls/colors'
+import Color from '@creative-controls/colors';
 
-import {Row, Label, Center, Value, TextBox} from './styles';
+import { Row, Label, Center, Value, TextBox } from './styles';
 
 const InputContainer = styled.div`
   position: relative;
   width: 100%;
   height: 20px;
   cursor: grab;
-  background: rgba(100,100,100,0.1);
+  background: rgba(100, 100, 100, 0.1);
 `;
 
 const Slider = styled.input`
@@ -31,12 +31,12 @@ const Slider = styled.input`
     cursor: grab;
   }
 
-  &::-webkit-slider-runnable-track{
+  &::-webkit-slider-runnable-track {
     height: 20px;
     background: none;
   }
 
-  &:focus{
+  &:focus {
     outline: none;
   }
 `;
@@ -54,7 +54,9 @@ const Progress = styled.div`
 const FloatControl = props => {
   const { value, options, updateControl } = props;
   const { range, stepSize } = options;
-  const progress = ((value - parseInt(range[0])) * 100) / (parseInt(range[1]) - parseInt(range[0]));
+  const progress =
+    ((value - parseInt(range[0])) * 100) /
+    (parseInt(range[1]) - parseInt(range[0]));
   const extent = Math.abs(parseInt(range[1]) - parseInt(range[0]));
   const step = stepSize === 0 ? extent / 100 : stepSize;
 
@@ -63,10 +65,12 @@ const FloatControl = props => {
       <Label>{props.label}</Label>
       <Center>
         <InputContainer>
-          <Progress progress={progress}/>
+          <Progress progress={progress} />
           <Slider
             value={value}
-            onChange={evt => { updateControl(+evt.target.value) }}
+            onChange={evt => {
+              updateControl(+evt.target.value);
+            }}
             type="range"
             min={parseInt(range[0])}
             max={parseInt(range[1])}
@@ -74,9 +78,7 @@ const FloatControl = props => {
           />
         </InputContainer>
       </Center>
-      <Value>
-        {props.value}
-      </Value>
+      <Value>{props.value}</Value>
     </Row>
   );
 };

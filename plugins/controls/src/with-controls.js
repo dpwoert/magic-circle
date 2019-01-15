@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 
 const withControls = (WrappedComponent, store) =>
   class ControlsProvider extends Component {
-
-    constructor(props, context){
+    constructor(props, context) {
       super(props, context);
       this.state = { controls: [] };
       this.update = this.update.bind(this);
@@ -17,9 +16,9 @@ const withControls = (WrappedComponent, store) =>
       store.removeListener(this.update);
     }
 
-    update({mapping, activeLayer}) {
+    update({ mapping, activeLayer }) {
       const active = mapping.get(activeLayer);
-      if(active && active.controls){
+      if (active && active.controls) {
         this.setState({
           controls: active.controls,
           path: active.path,
@@ -33,8 +32,10 @@ const withControls = (WrappedComponent, store) =>
     }
 
     render() {
-      const {controls, path} = this.state;
-      return <WrappedComponent controls={controls} path={path} {...this.props} />;
+      const { controls, path } = this.state;
+      return (
+        <WrappedComponent controls={controls} path={path} {...this.props} />
+      );
     }
   };
 

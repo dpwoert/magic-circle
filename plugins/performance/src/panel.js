@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styled, {withTheme} from 'styled-components';
+import styled, { withTheme } from 'styled-components';
 
 import PerformanceChart from './chart';
 
@@ -39,21 +39,22 @@ const Chart = styled.div`
 
 const getLast = arr => arr[arr.length - 1];
 
-const displayMetric = value => value >= 0 ? value : 'N/A';
+const displayMetric = value => (value >= 0 ? value : 'N/A');
 
 class PerformancePanel extends Component {
-
   static navigation = {
     name: 'performance',
     icon: 'Performance2',
   };
 
-  render(){
-    const {FPS, ms, memorySize, memoryLimit} = this.props;
-    const memory = memorySize.length > 0 ? `${getLast(memorySize)} / ${memoryLimit} mb` : 'N/A';
-    return(
+  render() {
+    const { FPS, ms, memorySize, memoryLimit } = this.props;
+    const memory =
+      memorySize.length > 0
+        ? `${getLast(memorySize)} / ${memoryLimit} mb`
+        : 'N/A';
+    return (
       <Panel>
-
         <Section>
           <Heading>Frames Per Second</Heading>
           <Content>
@@ -84,9 +85,8 @@ class PerformancePanel extends Component {
           </Content>
         </Section>
       </Panel>
-    )
+    );
   }
-
 }
 
 export default withTheme(PerformancePanel);

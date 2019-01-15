@@ -23,7 +23,7 @@ app.once('ready', () => {
     // show: false,
     resizable: true,
     useContentSize: true,
-    titleBarStyle: 'hiddenInset'
+    titleBarStyle: 'hiddenInset',
   });
   frame = new BrowserWindow({
     parent: window,
@@ -33,14 +33,14 @@ app.once('ready', () => {
     // resize: false,
     hasShadow: false,
     // transparent: true
-  })
+  });
 
   // Load a URL in the window to the local index.html path
   window.loadURL(
     url.format({
       pathname: path.join(__dirname, 'index.html'),
       protocol: 'file:',
-      slashes: true
+      slashes: true,
     })
   );
   frame.loadURL(global.url);
@@ -63,7 +63,7 @@ app.once('ready', () => {
     const contentSize = window.getContentSize();
     const titleBarHeight = size[1] - contentSize[1];
 
-    if(frame){
+    if (frame) {
       frame.setPosition(position[0] + 250, position[1] + titleBarHeight + 46);
       frame.setSize(contentSize[0] - 475, contentSize[1] - 46);
       // frame.setSize(100, contentSize[1]);
@@ -76,7 +76,6 @@ app.once('ready', () => {
   window.on('move', moveResize);
   window.on('resize', moveResize);
   moveResize();
-
 });
 
 // Quit when all windows are closed.

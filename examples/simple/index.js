@@ -3,6 +3,4 @@ import { setup, loop } from './example-scene';
 
 const controls = new Controls();
 
-controls
-  .setup(setup)
-  .loop(loop);
+controls.setup(setup).loop(loop);

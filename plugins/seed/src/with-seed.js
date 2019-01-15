@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 let seed = 0;
 let listeners = [];
 
-export const getSeed = (print) => {
+export const getSeed = print => {
   return print ? String(seed).replace('0.') : seed;
 };
 
@@ -23,8 +23,7 @@ export const removeListener = fn => {
 
 const withSeed = WrappedComponent =>
   class SeedProvider extends Component {
-
-    constructor(props, context){
+    constructor(props, context) {
       super(props, context);
       this.state = { seed };
       this.updateSeed = this.updateSeed.bind(this);

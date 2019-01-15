@@ -26,42 +26,33 @@ const FolderLabel = styled.div`
   padding: 10px 16px;
   background: #191919;
   color: #d4d4d4;
-`
+`;
 
-const ControlList = styled.div`
-
-`
-
+const ControlList = styled.div``;
 
 class ControlsPanel extends Component {
-
-  renderFolder(folder){
+  renderFolder(folder) {
     const path = `${this.props.path}.${folder.slug}`;
     return (
       <Folder key={path}>
-          <FolderLabel>{folder.label}</FolderLabel>
-          <ControlList>
-            {folder.controls.map(c => (
-              <Control
-                control={c}
-                path={path}
-                updateControl={this.props.updateControl}
-              />
-            ))}
-          </ControlList>
+        <FolderLabel>{folder.label}</FolderLabel>
+        <ControlList>
+          {folder.controls.map(c => (
+            <Control
+              control={c}
+              path={path}
+              updateControl={this.props.updateControl}
+            />
+          ))}
+        </ControlList>
       </Folder>
-    )
+    );
   }
 
-  render(){
+  render() {
     const { controls } = this.props;
-    return(
-      <Container>
-        {controls.map(f => this.renderFolder(f))}
-      </Container>
-    )
+    return <Container>{controls.map(f => this.renderFolder(f))}</Container>;
   }
-
 }
 
 export default ControlsPanel;

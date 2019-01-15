@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import Color from '@creative-controls/colors'
+import Color from '@creative-controls/colors';
 
 const Panel = styled.ul`
   width: 100%;
@@ -8,12 +8,12 @@ const Panel = styled.ul`
 `;
 
 const getBackgroundColor = (selected, i, accent) => {
-  if(selected){
+  if (selected) {
     return new Color(accent).alpha(0.9).toCSS();
   } else {
     return i % 2 === 0 ? '#191919' : '#111111';
   }
-}
+};
 
 const Item = styled.li`
   position: relative;
@@ -22,21 +22,21 @@ const Item = styled.li`
   padding-left: ${props => (props.depth + 1) * 12}px;
   color: white;
   list-style: none;
-  background: ${props => getBackgroundColor(props.selected, props.i, props.theme.accent)};
+  background: ${props =>
+    getBackgroundColor(props.selected, props.i, props.theme.accent)};
   box-sizing: border-box;
-  border-radius: ${props => props.selected ? 3 : 0}px;
-  font-weight: ${props => props.selected ? 'bold' : 'normal'};
+  border-radius: ${props => (props.selected ? 3 : 0)}px;
+  font-weight: ${props => (props.selected ? 'bold' : 'normal')};
   cursor: default;
-`
+`;
 
 class LayersPanel extends Component {
-
   static navigation = {
     name: 'layers',
     icon: 'Layers',
   };
 
-  renderLayer(layers, layer, depth){
+  renderLayer(layers, layer, depth) {
     layers.push(
       <Item
         key={layer.path}
@@ -49,22 +49,17 @@ class LayersPanel extends Component {
       </Item>
     );
 
-    if(layer.children){
+    if (layer.children) {
       layer.children.forEach(l => this.renderLayer(layers, l, depth + 1));
     }
   }
 
-  render(){
+  render() {
     const layers = [];
-    this.props.layers.forEach(l => this.renderLayer(layers, l, 0))
+    this.props.layers.forEach(l => this.renderLayer(layers, l, 0));
 
-    return(
-      <Panel>
-        {layers.map((layer) => layer)}
-      </Panel>
-    )
+    return <Panel>{layers.map(layer => layer)}</Panel>;
   }
-
 }
 
 export default LayersPanel;

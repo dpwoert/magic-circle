@@ -25,8 +25,8 @@ const ColorControl = props => {
         <ColorValue>{color.toHex()}</ColorValue>
         <ColorPicker
           color={color.toHex()}
-          alpha={alpha ? color.toArray()[3] * (100/255) : 100}
-          onChange={(c) => {
+          alpha={alpha ? color.toArray()[3] * (100 / 255) : 100}
+          onChange={c => {
             const newColor = new Color(c.color);
             color.copyFrom(newColor);
             updateControl(color.get());

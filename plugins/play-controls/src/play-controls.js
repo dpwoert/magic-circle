@@ -3,47 +3,46 @@ import React from 'react';
 import Bar from './bar';
 
 class PlayControls {
-
   static name = 'play-controls';
 
-  static initStore(){
+  static initStore() {
     return {
-      play: false
+      play: false,
     };
   }
 
-  constructor(client, store){
+  constructor(client, store) {
     this.client = client;
     this.store = store;
     this.client.addListener('play', (evt, payload) => this.play());
     this.client.addListener('stop', (evt, payload) => this.stop());
   }
 
-  play(){
+  play() {
     this.store.set('play', true);
   }
 
-  stop(){
+  stop() {
     this.store.set('play', false);
   }
 
-  reset(){
+  reset() {
     const controls = this.client.getPlugin('controls');
-    if(controls){
+    if (controls) {
       controls.reset();
     }
   }
 
-  changeState(play){
+  changeState(play) {
     this.client.sendMessage('change-play-state', play);
   }
 
-  header(position){
-    if(position === 'left'){
+  header(position) {
+    if (position === 'left') {
       const BarWithStore = this.store.withStore(Bar);
       return (
         <BarWithStore
-          changeState={(p) => this.changeState(p)}
+          changeState={p => this.changeState(p)}
           refresh={() => this.client.refresh()}
           reset={() => this.reset()}
           key="play-controls"
@@ -51,7 +50,6 @@ class PlayControls {
       );
     }
   }
-
 }
 
 export default PlayControls;

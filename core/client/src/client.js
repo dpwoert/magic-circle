@@ -10,14 +10,13 @@ let ipcRenderer = null;
 const getNodeEnv = () => {
   try {
     return process.env.NODE_ENV;
-  } catch(e){
+  } catch (e) {
     return 'development';
   }
-}
+};
 
 export class Client {
-
-  constructor(...plugins){
+  constructor(...plugins) {
     this.frames = 0;
     this.listeners = [];
     this.channels = [];
@@ -36,25 +35,24 @@ export class Client {
     this.nextFrame = this.nextFrame.bind(this);
 
     // Not electron so don't wait for connection to backend
-    if(!isElectron()){
+    if (!isElectron()) {
       this.fn.setup(this);
       this.play();
     } else {
       // Add to window global to it can be reached by Electron
       window.__controls = this;
     }
-
   }
 
-  connect(){
-    if(window.__IPC){
-      console.log('🔌 Creative Controls loaded')
+  connect() {
+    if (window.__IPC) {
+      console.log('🔌 Creative Controls loaded');
       ipcRenderer = window.__IPC;
 
       this.sendMessage('connect');
 
       // create all plugins
-      this.plugins.forEach(p => p.connect ? p.connect() : null);
+      this.plugins.forEach(p => (p.connect ? p.connect() : null));
 
       // Send page information to front-end
       this.sendMessage('page-information', {
@@ -65,9 +63,8 @@ export class Client {
       // trigger setup hook
       this.sendMessage('setup');
       ipcRenderer.once('setup-response', (evt, payload) => {
-
         //run setup script
-        if(this.fn.setup){
+        if (this.fn.setup) {
           this.fn.setup(this);
         }
 
@@ -75,7 +72,7 @@ export class Client {
         this.batch(evt, payload);
 
         // make sure all is synced
-        if(this.regenerate){
+        if (this.regenerate) {
           this.regenerate();
         }
 
@@ -85,29 +82,28 @@ export class Client {
     }
   }
 
-  trigger(channel, evt, payload){
+  trigger(channel, evt, payload) {
     this.listeners.forEach(l => {
-      if(l.channel === channel){
+      if (l.channel === channel) {
         l.fn(evt, payload);
       }
-    })
+    });
   }
 
-  batch(evt, payload){
+  batch(evt, payload) {
     payload.batch.forEach(message => {
       this.trigger(message.channel, evt, message.payload);
-    })
+    });
   }
 
-  addListener(channel, fn){
+  addListener(channel, fn) {
     this.listeners.push({ channel, fn });
     this.resetListeners();
   }
 
-
-  removeListener(fn){
-    for( let i = this.listeners.length - 1 ; i >= 0 ; i++ ){
-      if(this.listeners[i].fn === fn){
+  removeListener(fn) {
+    for (let i = this.listeners.length - 1; i >= 0; i++) {
+      if (this.listeners[i].fn === fn) {
         this.listeners.splice(i, 1);
       }
     }
@@ -115,16 +111,15 @@ export class Client {
     this.resetListeners();
   }
 
-  resetListeners(){
-    if(ipcRenderer){
-
+  resetListeners() {
+    if (ipcRenderer) {
       //delete all listeners
       this.channels.forEach(channel => ipcRenderer.removeAllListeners(channel));
       this.channels = [];
 
       //get all channels
       this.listeners.forEach(l => {
-        if(this.channels.indexOf(l.channel) === -1){
+        if (this.channels.indexOf(l.channel) === -1) {
           this.channels.push(l.channel);
         }
       });
@@ -138,8 +133,8 @@ export class Client {
 
       //play/stop messages
       ipcRenderer.on('change-play-state', (evt, payload) => {
-        console.log('receive play state', payload)
-        if(payload === true){
+        console.log('receive play state', payload);
+        if (payload === true) {
           this.play();
         } else {
           this.stop();
@@ -153,24 +148,23 @@ export class Client {
     }
   }
 
-  sendMessage(channel, payload){
-    if(ipcRenderer){
+  sendMessage(channel, payload) {
+    if (ipcRenderer) {
       ipcRenderer.send('intercom', { channel, payload, to: 'editor' });
       console.log('send', channel, payload);
     }
   }
 
-  startFrame(){ }
+  startFrame() {}
 
-  endFrame(){ }
+  endFrame() {}
 
-  nextFrame(){
-
+  nextFrame() {
     //measure FPS
     this.startFrame();
 
     //do user action
-    if(this.fn.loop){
+    if (this.fn.loop) {
       this.fn.loop();
     }
 
@@ -179,30 +173,28 @@ export class Client {
 
     //Schedule next frame
     this.frameRequest = requestAnimationFrame(this.nextFrame);
-
   }
 
-  play(){
+  play() {
     this.stop();
     this.frameRequest = requestAnimationFrame(this.nextFrame);
     this.sendMessage('play');
   }
 
-  stop(){
-    if(this.frameRequest){
+  stop() {
+    if (this.frameRequest) {
       cancelAnimationFrame(this.frameRequest);
     }
     this.sendMessage('stop');
   }
 
-  setup(fn){
+  setup(fn) {
     this.fn.setup = fn;
     return this;
   }
 
-  loop(fn){
+  loop(fn) {
     this.fn.loop = fn;
     return this;
   }
-
 }

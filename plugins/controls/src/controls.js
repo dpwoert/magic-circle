@@ -5,34 +5,32 @@ import ControlPanel from './panel';
 import withControls from './with-controls';
 
 class Controls {
-
   static name = 'controls';
 
-  constructor(client){
+  constructor(client) {
     this.client = client;
     this.updateControl = this.updateControl.bind(this);
     this.client.createChangelog = this.createChangelog.bind(this);
 
     this.client.addListener('connect', () => this.presetup());
-
   }
 
-  presetup(){
+  presetup() {
     this.changelog = this.createChangelog();
   }
 
-  setup(){
+  setup() {
     const updates = [];
 
     // batch updates to controls containing initial values
-    if(this.changelog){
+    if (this.changelog) {
       this.changelog.forEach((value, path) => {
         updates.push({
           channel: 'control-set-value',
           payload: {
             value,
-            path
-          }
+            path,
+          },
         });
       });
 
@@ -42,9 +40,8 @@ class Controls {
     return updates;
   }
 
-  createChangelog(json){
-
-    const {store} = this.client.getPlugin('layers');
+  createChangelog(json) {
+    const { store } = this.client.getPlugin('layers');
     const mapping = store.get('mapping');
 
     // clear previous changelog
@@ -52,7 +49,7 @@ class Controls {
 
     // diff
     mapping.forEach(c => {
-      if(c.isControl && !shallowEqual(c.value,c.initialValue)){
+      if (c.isControl && !shallowEqual(c.value, c.initialValue)) {
         changelog.set(c.path, c.value);
       }
     });
@@ -60,8 +57,7 @@ class Controls {
     return changelog;
   }
 
-  applyChangelog(changelog, json){
-
+  applyChangelog(changelog, json) {
     const updates = [];
 
     // batch updates to controls containing initial values
@@ -70,8 +66,8 @@ class Controls {
         channel: 'control-set-value',
         payload: {
           value,
-          path
-        }
+          path,
+        },
       });
     });
 
@@ -79,34 +75,30 @@ class Controls {
       batch: updates,
     });
     this.client.sendMessage('resync');
-
   }
 
-  reset(){
-
+  reset() {
     const updates = [];
 
     this.createChangelog().forEach((value, path) => {
       updates.push({
         channel: 'control-reset',
-        payload: { path }
+        payload: { path },
       });
     });
-
 
     this.client.sendMessage('batch', {
       batch: updates,
     });
 
     this.client.sendMessage('resync');
-
   }
 
-  updateControl(path, value){
+  updateControl(path, value) {
     this.client.sendMessage('control-set-value', { path, value });
 
     // save to store
-    const {store} = this.client.getPlugin('layers');
+    const { store } = this.client.getPlugin('layers');
     const mapping = store.get('mapping');
     const control = mapping.get(path);
     control.value = value;
@@ -114,14 +106,13 @@ class Controls {
     store.set('mapping', mapping);
   }
 
-  layout(){
+  layout() {
     const store = this.client.getPlugin('layers').store;
-    if(store){
+    if (store) {
       const Panel = withControls(ControlPanel, store);
       return <Panel updateControl={this.updateControl} />;
     }
   }
-
 }
 
 export default Controls;

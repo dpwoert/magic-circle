@@ -14,20 +14,18 @@ const Container = styled.div`
 `;
 
 const truncate = (string, max) => {
-  return string.length > max ? string.substring(0,max)+'...' : string;
+  return string.length > max ? string.substring(0, max) + '...' : string;
 };
 
 class Bar extends Component {
-
-  render(){
-    const seed = String(this.props.seed).replace('0.','');
-    return(
+  render() {
+    const seed = String(this.props.seed).replace('0.', '');
+    return (
       <Container onClick={() => this.props.refresh()}>
         seed: {truncate(seed, 5)}
       </Container>
-    )
+    );
   }
-
 }
 
 export default Bar;

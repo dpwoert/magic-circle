@@ -4,17 +4,17 @@ const { ipcRenderer } = require('electron');
 import Store from './store';
 
 export class Client {
-
-  constructor(settings, cwd){
-
+  constructor(settings, cwd) {
     this.isElectron = true;
     this.settings = Object.assign(defaultSettings, settings);
     this.cwd = cwd;
-    console.log('cwd',cwd);
+    console.log('cwd', cwd);
 
     //add plugins
     this.plugins = this.settings.plugins.map(Plugin => {
-      const initialData = Plugin.initStore ? Plugin.initStore(this.settings) : {}
+      const initialData = Plugin.initStore
+        ? Plugin.initStore(this.settings)
+        : {};
       const store = new Store(initialData);
       const plugin = new Plugin(this, store, this.settings);
       plugin._name = Plugin.name;
@@ -31,14 +31,14 @@ export class Client {
     this.addListener('setup', () => this.setup());
   }
 
-  async setup(){
+  async setup() {
     let actions = [];
     await this.plugins.forEach(async s => {
-      if(s.setup){
+      if (s.setup) {
         const action = await s.setup(this);
 
         //added to list of actions
-        if(Array.isArray(action)){
+        if (Array.isArray(action)) {
           actions = actions.concat(action);
         } else {
           actions.push(action);
@@ -48,55 +48,55 @@ export class Client {
 
     //send message to front-end
     this.sendMessage('setup-response', {
-      batch: actions
+      batch: actions,
     });
   }
 
-  addListener(channel, fn){
+  addListener(channel, fn) {
     ipcRenderer.on(channel, fn);
   }
 
-  removeListener(fn){
+  removeListener(fn) {
     ipcRenderer.removeListener(channel, fn);
   }
 
-  sendMessage(channel, payload){
+  sendMessage(channel, payload) {
     ipcRenderer.send('intercom', { channel, payload, to: 'frame' });
   }
 
-  refresh(){
+  refresh() {
     ipcRenderer.send('refresh');
   }
 
-  getPlugin(name){
+  getPlugin(name) {
     return this.plugins.find(p => p._name === name);
   }
 
-  mapToJSON(map){
+  mapToJSON(map) {
     const list = [];
 
     map.forEach((value, key) => {
-      list.push({ key, value })
+      list.push({ key, value });
     });
 
     return list;
   }
 
-  JSONToMap(list){
+  JSONToMap(list) {
     const map = new Map();
     list.forEach(i => {
       map.set(i.key, i.value);
-    })
+    });
     return map;
   }
 
-  takeScreenshot(){
+  takeScreenshot() {
     const data = {
-      changelog: this.createChangelog ?
-        this.mapToJSON(this.createChangelog()) : [],
+      changelog: this.createChangelog
+        ? this.mapToJSON(this.createChangelog())
+        : [],
       seed: this.getSeed ? this.getSeed() : null,
     };
     ipcRenderer.send('screenshot', data);
   }
-
 }

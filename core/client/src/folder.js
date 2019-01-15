@@ -1,38 +1,36 @@
 import slug from './utils/slug';
 
 export class Folder {
-
-  constructor(label, ...controls){
+  constructor(label, ...controls) {
     this.controls = [];
     this.slug = slug(label);
     this.label = label;
 
-    if(controls.length > 0){
+    if (controls.length > 0) {
       this.addControls(controls);
     }
   }
 
-  addControls(controls){
-    controls.forEach((c) => this.addControl(c));
+  addControls(controls) {
+    controls.forEach(c => this.addControl(c));
   }
 
-  addControl(control){
+  addControl(control) {
     this.controls.push(control);
   }
 
-  addTo(layer){
+  addTo(layer) {
     layer.addControl(layer);
   }
 
-  toJSON(basePath){
+  toJSON(basePath) {
     const path = `${basePath}.${this.slug}`;
     return {
       path,
       isFolder: true,
       slug: this.slug,
       label: this.label,
-      controls: this.controls.map(c => c.toJSON(path))
+      controls: this.controls.map(c => c.toJSON(path)),
     };
   }
-
 }

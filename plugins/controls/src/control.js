@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import shallowEqual from 'shallowequal';
 
-import {getControl} from './components';
+import { getControl } from './components';
 
 const Wrapper = styled.div`
   position: relative;
@@ -24,7 +24,7 @@ const Indicator = styled.div`
   height: 100%;
   left: 0;
   top: 0;
-  background: ${props => props.changed ? props.theme.accent : 'none'};
+  background: ${props => (props.changed ? props.theme.accent : 'none')};
 `;
 
 const Reset = styled.div`
@@ -35,7 +35,7 @@ const Reset = styled.div`
   top: 0;
   background: ${props => props.theme.accent};
   transform: translateX(-100%);
-  display: ${props => props.changed ? 'flex' : 'none'};
+  display: ${props => (props.changed ? 'flex' : 'none')};
   transition: transform 0.2s ease;
   justify-content: center;
   align-items: center;
@@ -48,8 +48,7 @@ const Reset = styled.div`
 `;
 
 class Control extends Component {
-
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       original: props.control.initialValue,
@@ -58,33 +57,31 @@ class Control extends Component {
     this.updateControl = this.updateControl.bind(this);
   }
 
-  componentWillReceiveProps(next){
-    if(next.control.value !== this.props.control.value){
+  componentWillReceiveProps(next) {
+    if (next.control.value !== this.props.control.value) {
       this.setState({ value: next.control.value });
     }
   }
 
-  updateControl(value){
+  updateControl(value) {
     this.setState({ value });
     const { control, path } = this.props;
     const cPath = `${path}.${control.key}`;
     this.props.updateControl(cPath, value);
   }
 
-  reset(){
+  reset() {
     this.updateControl(this.state.original);
   }
 
-  render(){
+  render() {
     const { control } = this.props;
     const { value, original } = this.state;
     const CustomControl = getControl(control.type);
     const changed = !shallowEqual(original, value) && !CustomControl.noReset;
 
-    if(!CustomControl){
-      return (
-        <div>control not found: {control.type}</div>
-      )
+    if (!CustomControl) {
+      return <div>control not found: {control.type}</div>;
     }
 
     return (
@@ -102,7 +99,6 @@ class Control extends Component {
       </Wrapper>
     );
   }
-
 }
 
 export default Control;

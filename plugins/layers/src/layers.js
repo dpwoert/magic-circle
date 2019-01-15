@@ -5,19 +5,18 @@ import LayersPanel from './panel';
 const createMapping = (mapping, layer) => {
   mapping.set(layer.path, layer);
 
-  if(layer.children){
+  if (layer.children) {
     layer.children.forEach(l => createMapping(mapping, l));
   }
-  if(layer.controls){
+  if (layer.controls) {
     layer.controls.forEach(c => createMapping(mapping, c));
   }
 };
 
 class Layers {
-
   static name = 'layers';
 
-  static initStore(){
+  static initStore() {
     return {
       layers: [],
       activeLayer: null,
@@ -25,15 +24,14 @@ class Layers {
     };
   }
 
-  constructor(client, store){
+  constructor(client, store) {
     this.client = client;
     this.store = store;
     this.client.getLayers = this.getLayers.bind(this);
     this.client.addListener('layers', (e, payload) => this.setLayers(payload));
   }
 
-  setLayers(layers){
-
+  setLayers(layers) {
     // create mapping
     const mapping = new Map();
     layers.forEach(l => createMapping(mapping, l));
@@ -43,15 +41,14 @@ class Layers {
     this.store.set('mapping', mapping);
   }
 
-  getLayers(){
+  getLayers() {
     return this.store.get('layers');
   }
 
-  sidebar(){
+  sidebar() {
     const Panel = this.store.withStore(LayersPanel);
     return <Panel key="layers" />;
   }
-
 }
 
 export default Layers;

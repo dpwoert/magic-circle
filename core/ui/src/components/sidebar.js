@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled, { withTheme } from 'styled-components';
-import Color from '@creative-controls/colors'
+import Color from '@creative-controls/colors';
 
 const Container = styled.div`
   position: absolute;
@@ -28,14 +28,17 @@ const Icons = styled.ul`
 const Button = styled.li`
   width: 54px;
   height: 54px;
-  background: ${props => props.selected ? new Color(props.theme.accent).alpha(0.15).toCSS() : 'none'};
+  background: ${props =>
+    props.selected
+      ? new Color(props.theme.accent).alpha(0.15).toCSS()
+      : 'none'};
 
   fill: ${props => props.theme.accent};
   display: flex;
   justify-content: center;
   align-items: center;
 
-  svg{
+  svg {
     width: 40%;
     height: auto;
   }
@@ -44,8 +47,10 @@ const Button = styled.li`
 const IconBar = withTheme(props => (
   <Icons>
     {props.panels.map(panel => {
-      const Icon = typeof panel.icon === 'string' ?
-        props.theme.icons[panel.icon] : panel.icon;
+      const Icon =
+        typeof panel.icon === 'string'
+          ? props.theme.icons[panel.icon]
+          : panel.icon;
       return (
         <Button
           key={panel.name}
@@ -61,8 +66,7 @@ const IconBar = withTheme(props => (
 ));
 
 class Sidebar extends Component {
-
-  constructor(props, context){
+  constructor(props, context) {
     super(props, context);
 
     // determine initial state
@@ -74,22 +78,27 @@ class Sidebar extends Component {
     this.setActivePanel = this.setActivePanel.bind(this);
   }
 
-  setActivePanel(active){
+  setActivePanel(active) {
     this.setState({ active: active.name });
   }
 
-  render(){
+  render() {
     const children = React.Children.toArray(this.props.children);
     const panels = children.map(c => c.type.navigation);
-    const active = children.find(c => c.type.navigation.name === this.state.active);
-    return(
+    const active = children.find(
+      c => c.type.navigation.name === this.state.active
+    );
+    return (
       <Container>
-        <IconBar panels={panels} active={this.state.active} setActivePanel={this.setActivePanel} />
+        <IconBar
+          panels={panels}
+          active={this.state.active}
+          setActivePanel={this.setActivePanel}
+        />
         {active}
       </Container>
-    )
+    );
   }
-
 }
 
 export default Sidebar;

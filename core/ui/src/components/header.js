@@ -23,19 +23,19 @@ const Bar = styled.div`
 const Left = styled.div`
   display: flex;
   justify-content: flex-start;
-`
+`;
 
 const Center = styled.div`
   display: flex;
   justify-content: center;
-`
+`;
 
 const Right = styled.div`
   display: flex;
   justify-content: flex-end;
-`
+`;
 
-const Header = (props) => (
+const Header = props => (
   <Bar>
     <Left>{props.left}</Left>
     <Center>{props.center}</Center>

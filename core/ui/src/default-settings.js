@@ -26,8 +26,11 @@ const settings = {
     accent: 'rgb(136, 74, 255)',
   },
   render: client => {
-    ReactDOM.render(<Layout client={client} />, document.getElementById('root'));
-  }
+    ReactDOM.render(
+      <Layout client={client} />,
+      document.getElementById('root')
+    );
+  },
 };
 
 export default settings;

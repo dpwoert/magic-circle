@@ -1,6 +1,5 @@
-class SeedPlugin{
-
-  constructor(client){
+class SeedPlugin {
+  constructor(client) {
     this.client = client;
     this.seed = 0;
     this.generateSeed();
@@ -10,7 +9,7 @@ class SeedPlugin{
     this.client.getSeed = this.getSeed.bind(this);
   }
 
-  connect(){
+  connect() {
     this.client.sendMessage('seed', this.seed);
 
     // Event listeners
@@ -22,19 +21,18 @@ class SeedPlugin{
     });
   }
 
-  getSeed(){
+  getSeed() {
     return this.seed;
   }
 
-  setSeed(seed){
+  setSeed(seed) {
     this.seed = seed;
   }
 
-  generateSeed(){
+  generateSeed() {
     this.seed = Math.random();
     this.client.sendMessage('seed', this.seed);
   }
-
 }
 
 export default SeedPlugin;

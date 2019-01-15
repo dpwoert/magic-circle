@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import Color from '@creative-controls/colors'
+import Color from '@creative-controls/colors';
 
-import {Row, Label, Center, Value, TextBox} from './styles';
+import { Row, Label, Center, Value, TextBox } from './styles';
 
 const Box = styled.div`
   position: relative;
@@ -14,8 +14,7 @@ const Box = styled.div`
 
   transition: border 0.2s ease, background 0.2s ease;
 
-  &:after{
-
+  &:after {
   }
 `;
 
@@ -23,7 +22,7 @@ const Input = styled.input`
   position: absolute;
   visibility: hidden;
 
-  &:checked + ${Box}{
+  &:checked + ${Box} {
     border: 1px solid ${props => props.theme.accent};
     background: ${props => new Color(props.theme.accent).alpha(0.25).toCSS()};
   }

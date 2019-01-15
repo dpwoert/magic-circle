@@ -5,7 +5,7 @@ const Container = styled.div`
   margin-left: 80px;
   display: flex;
   flex-direction: row;
-`
+`;
 
 const Button = styled.div`
   border: 1px solid ${props => props.theme.accent};
@@ -25,28 +25,27 @@ const Button = styled.div`
   justify-content: center;
   align-items: center;
 
-  svg{
+  svg {
     width: 70%;
     height: auto;
   }
 
-  &:first-of-type{
+  &:first-of-type {
     border-radius: 3px 0px 0px 3px;
   }
 
-  &:last-of-type{
+  &:last-of-type {
     border-right: 1px solid ${props => props.theme.accent};
     border-radius: 0px 3px 3px 0px;
   }
 `;
 
 class Bar extends Component {
-
-  render(){
-    const {play, reset, refresh, changeState, theme} = this.props;
-    const {Play, Pause, Reload, Rewind} = theme.icons;
+  render() {
+    const { play, reset, refresh, changeState, theme } = this.props;
+    const { Play, Pause, Reload, Rewind } = theme.icons;
     const PlayState = play ? Pause : Play;
-    return(
+    return (
       <Container>
         <Button play={play} onClick={() => changeState(!play)}>
           <PlayState />
@@ -58,9 +57,8 @@ class Bar extends Component {
           <Rewind />
         </Button>
       </Container>
-    )
+    );
   }
-
 }
 
 export default withTheme(Bar);
