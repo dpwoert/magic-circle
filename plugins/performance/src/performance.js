@@ -2,14 +2,28 @@ import React from 'react';
 
 import PerformancePanel from './panel';
 
+const MAX_TICKS = 75;
+
+const updateTick = (store, key, value) => {
+  const current = store.get(key);
+  current.push(value);
+
+  if(current.length > MAX_TICKS){
+    current.shift();
+  }
+
+  store.set(key, current);
+};
+
 class Performance {
 
   static name = 'performance';
 
   static initStore(){
     return {
-      FPS: 0,
-      memorySize: 0,
+      FPS: [],
+      ms: [],
+      memorySize: [],
       memoryLimit: 0,
     };
   }
@@ -18,13 +32,20 @@ class Performance {
     this.client = client;
     this.store = store;
     this.client.addListener('FPS', (evt, payload) => this.tick(payload));
+    this.client.addListener('connect', () => this.restart());
   }
 
   tick(tick){
-    this.store.set('FPS', Math.floor(tick.fps));
-    this.store.set('ms', Math.ceil(tick.ms*10));
-    this.store.set('memorySize', Math.floor(tick.memory.size));
+    updateTick(this.store, 'FPS', Math.floor(tick.fps));
+    updateTick(this.store, 'ms', Math.ceil(tick.ms*10));
+    updateTick(this.store, 'memorySize', Math.floor(tick.memory.size));
     this.store.set('memoryLimit', Math.floor(tick.memory.limit));
+  }
+
+  restart(){
+    updateTick(this.store, 'FPS', 'restart');
+    updateTick(this.store, 'ms', 'restart');
+    updateTick(this.store, 'memorySize', 'restart');
   }
 
   sidebar(){

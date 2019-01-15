@@ -37,6 +37,10 @@ const Chart = styled.div`
   flex: 1;
 `;
 
+const getLast = arr => arr[arr.length - 1];
+
+const displayMetric = value => value >= 0 ? value : 'N/A';
+
 class PerformancePanel extends Component {
 
   static navigation = {
@@ -46,16 +50,16 @@ class PerformancePanel extends Component {
 
   render(){
     const {FPS, ms, memorySize, memoryLimit} = this.props;
-    const memory = memorySize > 0 ? `${memorySize} / ${memoryLimit} mb` : 'N/A';
+    const memory = memorySize.length > 0 ? `${getLast(memorySize)} / ${memoryLimit} mb` : 'N/A';
     return(
       <Panel>
 
         <Section>
           <Heading>Frames Per Second</Heading>
           <Content>
-            <Value>{FPS || 'N/A'}</Value>
+            <Value>{displayMetric(getLast(FPS))}</Value>
             <Chart>
-              <PerformanceChart value={FPS} max={70} />
+              <PerformanceChart values={FPS} max={70} />
             </Chart>
           </Content>
         </Section>
@@ -63,9 +67,9 @@ class PerformancePanel extends Component {
         <Section>
           <Heading>Render Time</Heading>
           <Content>
-            <Value>{ms || 'N/A'} ms</Value>
+            <Value>{displayMetric(getLast(ms))} ms</Value>
             <Chart>
-              <PerformanceChart value={ms} max={200} />
+              <PerformanceChart values={ms} max={200} />
             </Chart>
           </Content>
         </Section>
@@ -75,7 +79,7 @@ class PerformancePanel extends Component {
           <Content>
             <Value>{memory}</Value>
             <Chart>
-              <PerformanceChart value={memorySize} max={memoryLimit} />
+              <PerformanceChart values={memorySize} max={memoryLimit} />
             </Chart>
           </Content>
         </Section>
