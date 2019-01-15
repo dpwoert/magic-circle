@@ -1,3 +1,4 @@
+import { Folder } from './folder';
 import slug from './utils/slug';
 
 const slugs = [];
@@ -21,7 +22,7 @@ export class Layer {
     this.label = label;
     this.slug = ensureUnique(slug(label));
     this.children = [];
-    this.GUI = [];
+    this.controls = [];
   }
 
   add(child){
@@ -34,12 +35,23 @@ export class Layer {
     return this;
   }
 
+  addControl(control){
+    this.controls.push(control);
+    return this;
+  }
+
+  folder(...opts){
+    const folder = new Folder(...opts);
+    this.addControl(folder);
+    return this;
+  }
+
   toJSON(mapping){
     const recursiveGenerate = (layer, basePath) => {
 
       const path = basePath ? `${basePath}.${layer.slug}` : layer.slug;
       if(mapping){
-        layer.GUI.map(f =>
+        layer.controls.map(f =>
           f.controls.map(c => mapping.set(`${path}.${f.slug}.${c.key}`, c))
         );
       }
@@ -50,7 +62,7 @@ export class Layer {
         slug: layer.slug,
         path: path,
         children: layer.children.map(c => recursiveGenerate(c, path)),
-        controls: layer.GUI.map(f => f.toJSON(path))
+        controls: layer.controls.map(f => f.toJSON(path))
       };
     }
 

@@ -2,14 +2,10 @@ import slug from './utils/slug';
 
 export class Folder {
 
-  constructor(parent, label, ...controls){
+  constructor(label, ...controls){
     this.controls = [];
     this.slug = slug(label);
     this.label = label;
-
-    //Add to parent
-    parent.GUI = parent.GUI || [];
-    parent.GUI.push(this);
 
     if(controls.length > 0){
       this.addControls(controls);
@@ -22,6 +18,10 @@ export class Folder {
 
   addControl(control){
     this.controls.push(control);
+  }
+
+  addTo(layer){
+    layer.addControl(layer);
   }
 
   toJSON(basePath){

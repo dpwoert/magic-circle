@@ -9,7 +9,6 @@ import {
 } from 'three';
 
 import {
-  Folder,
   Layer,
   FloatControl,
   BooleanControl,
@@ -50,24 +49,24 @@ export function setup(gui){
   const layer2 = new Layer('Scene');
   const layer3 = new Layer('Box').addTo(layer1);
   const layer4 = new Layer('Box2').addTo(layer1);
-  new Folder(layer3, 'Global',
+
+  layer3.folder('Global',
     new TextControl(glob, 'name'),
     new TextControl(glob, 'subtitle'),
     new TextControl(glob, 'subtitle2').values(['test1', 'test2', 'test3']),
     new ButtonControl(glob, 'alert').label('Trigger alert')
-    // new ButtonControl(glob, 'alert').label('Trigger alert')
   );
-  new Folder(layer3, 'Position',
+  layer3.folder('Position',
     new FloatControl(mesh.position, 'x').range(-100, 100),
     new FloatControl(mesh.position, 'y').range(-100, 100),
     new FloatControl(mesh.position, 'z').range(-100, 100)
   );
-  new Folder(layer3, 'Scale',
+  layer3.folder('Scale',
     new FloatControl(mesh.scale, 'x').range(-3, 3),
     new FloatControl(mesh.scale, 'y').range(-3, 3),
     new FloatControl(mesh.scale, 'z').range(-3, 3)
   );
-  new Folder(layer3, 'Material',
+  layer3.folder('Material',
     new ColorControl(mesh.material, 'color').range(1),
     new FloatControl(mesh.material, 'opacity').range(0, 1),
     new BooleanControl(mesh.material, 'transparent'),
