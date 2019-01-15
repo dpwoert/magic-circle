@@ -8,7 +8,8 @@
     "example:simple": "cd examples/simple && npm run serve && cd ../..",
     "electron": "cd examples/simple && npm run electron && cd ../..",
     "prettier": "prettier --config --write \"{core,examples,plugins}/**/*.js\"",
-    "lint": "eslint {core,examples,plugins}/**/*.js"
+    "lint": "eslint {core,examples,plugins}/**/*.js",
+    "test": "npm run lint"
   },
   "devDependencies": {
     "@babel/core": "^7.1.5",
