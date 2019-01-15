@@ -16,7 +16,7 @@ class PerformancePlugin {
   }
 
   endFrame() {
-    this.frames++;
+    this.frames += 1;
     const time = (performance || Date).now();
 
     // inspired by:

@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Layout from './components/layout';
-
 import Layers from '@creative-controls/layers';
 import PlayControls from '@creative-controls/play-controls';
 import Controls from '@creative-controls/controls';
@@ -10,6 +8,8 @@ import Seed from '@creative-controls/seed';
 import PageInfo from '@creative-controls/page-information';
 import Screenshots from '@creative-controls/screenshots';
 import Performance from '@creative-controls/performance';
+
+import Layout from './components/layout';
 
 const settings = {
   plugins: [

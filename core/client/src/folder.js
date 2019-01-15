@@ -13,14 +13,17 @@ export class Folder {
 
   addControls(controls) {
     controls.forEach(c => this.addControl(c));
+    return this;
   }
 
   addControl(control) {
     this.controls.push(control);
+    return this;
   }
 
   addTo(layer) {
     layer.addControl(layer);
+    return this;
   }
 
   toJSON(basePath) {

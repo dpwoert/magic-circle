@@ -26,6 +26,7 @@ export class Control {
   }
 
   /** Value has been updated outside of the controls */
+  /* eslint-disable-next-line */
   update() {
     // TODO read & send value
   }
@@ -68,7 +69,7 @@ export class TextControl extends Control {
     return this;
   }
 
-  labels() {
+  labels(labels) {
     this.options.labels = labels;
     return this;
   }

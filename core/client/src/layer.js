@@ -3,17 +3,18 @@ import slug from './utils/slug';
 
 const slugs = [];
 
-const ensureUnique = slug => {
-  if (slugs.indexOf(slug) > -1) {
-    let newName = slug;
+const ensureUnique = str => {
+  if (slugs.indexOf(str) > -1) {
+    let newName = str;
     let i = 1;
     while (slugs.indexOf(newName) > -1) {
-      newName = `${slug}-${i}`;
-      i = i + 1;
+      newName = `${str}-${i}`;
+      i += 1;
     }
-  } else {
-    return slug;
+    return newName;
   }
+
+  return str;
 };
 
 export class Layer {
@@ -58,7 +59,7 @@ export class Layer {
         isLayer: true,
         label: layer.label,
         slug: layer.slug,
-        path: path,
+        path,
         children: layer.children.map(c => recursiveGenerate(c, path)),
         controls: layer.controls.map(f => f.toJSON(path)),
       };

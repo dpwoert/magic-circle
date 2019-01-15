@@ -1,8 +1,11 @@
+import isElectron from 'is-electron';
+
 import LayersPlugin from './plugins/layers';
 import SeedPlugin from './plugins/seed';
 import PerformancePlugin from './plugins/performance';
 
-import isElectron from 'is-electron';
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable class-methods-use-this */
 
 // load ipc renderer
 let ipcRenderer = null;
@@ -25,13 +28,13 @@ export class Client {
       loop: () => {},
     };
 
-    //add plugins
+    // add plugins
     plugins.push(LayersPlugin);
     plugins.push(SeedPlugin);
     plugins.push(PerformancePlugin);
     this.plugins = plugins.map(P => new P(this));
 
-    //event binding
+    // event binding
     this.nextFrame = this.nextFrame.bind(this);
 
     // Not electron so don't wait for connection to backend
@@ -46,7 +49,7 @@ export class Client {
 
   connect() {
     if (window.__IPC) {
-      console.log('🔌 Creative Controls loaded');
+      console.info('🔌 Creative Controls loaded');
       ipcRenderer = window.__IPC;
 
       this.sendMessage('connect');
@@ -63,7 +66,7 @@ export class Client {
       // trigger setup hook
       this.sendMessage('setup');
       ipcRenderer.once('setup-response', (evt, payload) => {
-        //run setup script
+        // run setup script
         if (this.fn.setup) {
           this.fn.setup(this);
         }
@@ -76,7 +79,7 @@ export class Client {
           this.regenerate();
         }
 
-        //start rendering
+        // start rendering
         this.play();
       });
     }
@@ -102,7 +105,7 @@ export class Client {
   }
 
   removeListener(fn) {
-    for (let i = this.listeners.length - 1; i >= 0; i++) {
+    for (let i = this.listeners.length - 1; i >= 0; i -= 1) {
       if (this.listeners[i].fn === fn) {
         this.listeners.splice(i, 1);
       }
@@ -113,27 +116,26 @@ export class Client {
 
   resetListeners() {
     if (ipcRenderer) {
-      //delete all listeners
+      // delete all listeners
       this.channels.forEach(channel => ipcRenderer.removeAllListeners(channel));
       this.channels = [];
 
-      //get all channels
+      // get all channels
       this.listeners.forEach(l => {
         if (this.channels.indexOf(l.channel) === -1) {
           this.channels.push(l.channel);
         }
       });
 
-      //recreate listeners
+      // recreate listeners
       this.channels.forEach(channel => {
         ipcRenderer.on(channel, (evt, payload) => {
           this.trigger(channel, evt, payload);
         });
       });
 
-      //play/stop messages
+      // play/stop messages
       ipcRenderer.on('change-play-state', (evt, payload) => {
-        console.log('receive play state', payload);
         if (payload === true) {
           this.play();
         } else {
@@ -141,7 +143,7 @@ export class Client {
         }
       });
 
-      //batch messages
+      // batch messages
       ipcRenderer.on('batch', (evt, payload) => {
         this.batch(evt, payload);
       });
@@ -151,7 +153,6 @@ export class Client {
   sendMessage(channel, payload) {
     if (ipcRenderer) {
       ipcRenderer.send('intercom', { channel, payload, to: 'editor' });
-      console.log('send', channel, payload);
     }
   }
 
@@ -160,18 +161,18 @@ export class Client {
   endFrame() {}
 
   nextFrame() {
-    //measure FPS
+    // measure FPS
     this.startFrame();
 
-    //do user action
+    // do user action
     if (this.fn.loop) {
       this.fn.loop();
     }
 
-    //end of FPS measurement
+    // end of FPS measurement
     this.endFrame();
 
-    //Schedule next frame
+    // Schedule next frame
     this.frameRequest = requestAnimationFrame(this.nextFrame);
   }
 

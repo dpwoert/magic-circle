@@ -1,30 +1,32 @@
 import defaultSettings from './default-settings';
+import Store from './store';
+
 const { ipcRenderer } = require('electron');
 
-import Store from './store';
+/* eslint-disable class-methods-use-this */
 
 export class Client {
   constructor(settings, cwd) {
     this.isElectron = true;
     this.settings = Object.assign(defaultSettings, settings);
     this.cwd = cwd;
-    console.log('cwd', cwd);
+    console.info('cwd', cwd);
 
-    //add plugins
+    // add plugins
     this.plugins = this.settings.plugins.map(Plugin => {
       const initialData = Plugin.initStore
         ? Plugin.initStore(this.settings)
         : {};
       const store = new Store(initialData);
       const plugin = new Plugin(this, store, this.settings);
-      plugin._name = Plugin.name;
+      plugin._name = Plugin.name; //eslint-disable-line
       return plugin;
     });
 
-    //send message to front-end
+    // send message to front-end
     this.sendMessage('editor-loaded', true);
 
-    //render on finish loading
+    // render on finish loading
     this.settings.render(this);
 
     // listen to refreshes
@@ -37,7 +39,7 @@ export class Client {
       if (s.setup) {
         const action = await s.setup(this);
 
-        //added to list of actions
+        // added to list of actions
         if (Array.isArray(action)) {
           actions = actions.concat(action);
         } else {
@@ -46,7 +48,7 @@ export class Client {
       }
     });
 
-    //send message to front-end
+    // send message to front-end
     this.sendMessage('setup-response', {
       batch: actions,
     });
@@ -56,7 +58,7 @@ export class Client {
     ipcRenderer.on(channel, fn);
   }
 
-  removeListener(fn) {
+  removeListener(channel, fn) {
     ipcRenderer.removeListener(channel, fn);
   }
 
@@ -69,7 +71,7 @@ export class Client {
   }
 
   getPlugin(name) {
-    return this.plugins.find(p => p._name === name);
+    return this.plugins.find(p => p._name === name); //eslint-disable-line
   }
 
   mapToJSON(map) {
@@ -91,11 +93,13 @@ export class Client {
   }
 
   takeScreenshot() {
+    const changelog = this.createChangelog
+      ? this.mapToJSON(this.createChangelog())
+      : [];
+    const seed = this.getSeed ? this.getSeed() : null;
     const data = {
-      changelog: this.createChangelog
-        ? this.mapToJSON(this.createChangelog())
-        : [],
-      seed: this.getSeed ? this.getSeed() : null,
+      changelog,
+      seed,
     };
     ipcRenderer.send('screenshot', data);
   }

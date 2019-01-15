@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { ThemeProvider } from 'styled-components';
 import Header from './header';
 import Sidebar from './sidebar';
@@ -11,6 +11,8 @@ class Layout extends Component {
       if (p[name]) {
         return p[name](position);
       }
+
+      return null;
     });
   }
 

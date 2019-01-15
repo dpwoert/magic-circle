@@ -18,11 +18,10 @@ class LayersPlugin {
     this.client.addListener('control-reset', (evt, payload) => {
       this.reset(payload.path);
     });
-    this.client.addListener('resync', (evt, payload) => {
+    this.client.addListener('resync', () => {
       this.regenerate();
     });
 
-    console.log('connect');
     this.regenerate();
   }
 
