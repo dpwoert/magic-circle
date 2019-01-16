@@ -71,6 +71,7 @@ class Screenshots {
       <Panel
         deleteScreenshot={this.deleteScreenshot}
         loadScreenshot={this.loadScreenshot}
+        resize={this.client.resize}
         path={`${this.client.cwd}/screenshots`}
         key="screenshots"
       />

@@ -6,6 +6,7 @@ const argv = require('minimist')(process.argv.slice(2));
 
 const inject = require('./inject.js');
 const eventSystem = require('./events.js');
+const resizeHandler = require('./resize.js');
 
 global.cwd = argv.cwd;
 global.configFile = argv.config;
@@ -57,25 +58,8 @@ app.once('ready', () => {
   // load event system
   eventSystem(window, frame);
 
-  const moveResize = () => {
-    const position = window.getPosition();
-    const size = window.getSize();
-    const contentSize = window.getContentSize();
-    const titleBarHeight = size[1] - contentSize[1];
-
-    if (frame) {
-      frame.setPosition(position[0] + 250, position[1] + titleBarHeight + 46);
-      frame.setSize(contentSize[0] - 475, contentSize[1] - 46);
-      // frame.setSize(100, contentSize[1]);
-
-      // frame.close();
-      // frame = null;
-    }
-  };
-
-  window.on('move', moveResize);
-  window.on('resize', moveResize);
-  moveResize();
+  // Resize logic
+  resizeHandler(window, frame);
 });
 
 // Quit when all windows are closed.

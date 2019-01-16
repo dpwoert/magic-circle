@@ -7,6 +7,21 @@ const Panel = styled.div`
   overflow: auto;
 `;
 
+const ResizePanel = styled.div`
+  padding: 16px;
+  background: #191919;
+`;
+
+const WindowSize = styled.select`
+  width: 100%;
+  background: #191919;
+  color: #fff;
+  border-radius: 3px;
+  border: none;
+  padding: 6px;
+  height: 25px;
+`;
+
 const Screenshots = styled.ul`
   display: flex;
   flex-direction: column;
@@ -61,11 +76,36 @@ class ScreenshotsPanel extends Component {
     icon: 'CameraRoll',
   };
 
+  changeWindowSize(width, height) {
+    this.props.resize('frame', width, height);
+  }
+
   render() {
     const { screenshots, path, loadScreenshot, deleteScreenshot } = this.props;
     const DeleteIcon = this.props.theme.icons.Trashbin;
     return (
       <Panel>
+        <ResizePanel>
+          <WindowSize
+            onChange={evt => {
+              const { value } = evt.target;
+
+              if (value !== 'custom') {
+                const sizes = value.split('x');
+                this.changeWindowSize(+sizes[0], +sizes[1]);
+              } else {
+                this.setState({ customSize: true });
+              }
+            }}
+          >
+            <option>800x600</option>
+            <option>1024x768</option>
+            <option>1080x720</option>
+            <option>1920x1080</option>
+            <option>3840×2160</option>
+            <option>custom</option>
+          </WindowSize>
+        </ResizePanel>
         <Screenshots>
           {screenshots.map(screenshot => (
             <Screenshot

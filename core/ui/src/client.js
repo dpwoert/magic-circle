@@ -92,6 +92,10 @@ export class Client {
     return map;
   }
 
+  resize(window, width, height) {
+    ipcRenderer.send(`resize-${window}`, { width, height });
+  }
+
   takeScreenshot() {
     const changelog = this.createChangelog
       ? this.mapToJSON(this.createChangelog())
