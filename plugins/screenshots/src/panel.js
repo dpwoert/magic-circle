@@ -20,6 +20,33 @@ const WindowSize = styled.select`
   border: none;
   padding: 6px;
   height: 25px;
+  padding-left: 0;
+`;
+
+const CustomSize = styled.div`
+  display: ${props => (props.show ? 'block' : 'none')};
+  padding-top: 12px;
+`;
+
+const SizeRow = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  margin-bottom: 2px;
+`;
+
+const Axis = styled.div`
+  color: ${props => props.theme.accent};
+  padding-right: 6px;
+`;
+
+const AxisInput = styled.input`
+  flex: 1;
+  background: #191919;
+  color: #fff;
+  border-radius: 3px;
+  border: none;
+  padding: 6px;
 `;
 
 const Screenshots = styled.ul`
@@ -76,13 +103,32 @@ class ScreenshotsPanel extends Component {
     icon: 'CameraRoll',
   };
 
+  state = {
+    customSize: false,
+    x: 1080,
+    y: 720,
+  };
+
   changeWindowSize(width, height) {
     this.props.resize('frame', width, height);
+    this.setState({
+      x: width,
+      y: height,
+    });
+  }
+
+  setCustomAxis(axis, value) {
+    if (axis === 'x') {
+      this.changeWindowSize(parseInt(value, 10), this.state.y);
+    } else if (axis === 'y') {
+      this.changeWindowSize(this.state.x, parseInt(value, 10));
+    }
   }
 
   render() {
     const { screenshots, path, loadScreenshot, deleteScreenshot } = this.props;
     const DeleteIcon = this.props.theme.icons.Trashbin;
+
     return (
       <Panel>
         <ResizePanel>
@@ -93,6 +139,7 @@ class ScreenshotsPanel extends Component {
               if (value !== 'custom') {
                 const sizes = value.split('x');
                 this.changeWindowSize(+sizes[0], +sizes[1]);
+                this.setState({ customSize: false });
               } else {
                 this.setState({ customSize: true });
               }
@@ -105,6 +152,22 @@ class ScreenshotsPanel extends Component {
             <option>3840×2160</option>
             <option>custom</option>
           </WindowSize>
+          <CustomSize show={this.state.customSize}>
+            <SizeRow>
+              <Axis>x</Axis>
+              <AxisInput
+                onChange={evt => this.setCustomAxis('x', evt.target.value)}
+                value={this.state.x}
+              />
+            </SizeRow>
+            <SizeRow>
+              <Axis>y</Axis>
+              <AxisInput
+                onChange={evt => this.setCustomAxis('y', evt.target.value)}
+                value={this.state.y}
+              />
+            </SizeRow>
+          </CustomSize>
         </ResizePanel>
         <Screenshots>
           {screenshots.map(screenshot => (
