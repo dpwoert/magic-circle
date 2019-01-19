@@ -1,7 +1,7 @@
 const { app, BrowserWindow } = require('electron');
+const settings = require('electron-settings');
 const url = require('url');
 const path = require('path');
-
 const argv = require('minimist')(process.argv.slice(2));
 
 const inject = require('./inject.js');
@@ -17,10 +17,18 @@ let frame = null;
 
 // Wait until the app is ready
 app.once('ready', () => {
+  // clear settings if needed
+  if (argv.clear) {
+    console.info('🗑  cleared app settings');
+    settings.deleteAll();
+  }
+
+  const initialSize = settings.get('size') || {};
+
   // Create a new window
   window = new BrowserWindow({
-    width: 1400,
-    height: 768,
+    width: initialSize.width || 1400,
+    height: initialSize.height || 768,
     // show: false,
     resizable: true,
     useContentSize: true,

@@ -2,17 +2,26 @@
 const { exec } = require('child_process');
 const argv = require('minimist')(process.argv.slice(2));
 
-const cwd = process.cwd();
-const url = argv.url || argv.u;
-const configFile = argv.config || argv.c;
+const args = {};
+args.cwd = process.cwd();
+args.url = argv.url || argv.u;
+args.config = argv.config || argv.c;
+args.clear = argv.clear || argv.clear;
+
+const argsStr = Object.keys(args)
+  .filter(key => args[key])
+  .map(key => {
+    if (args[key] === true) {
+      return `--${key}`;
+    }
+    return `--${key} ${args[key]}`;
+  })
+  .join(' ');
 
 // execute
-const run = exec(
-  `electron app.js --cwd ${cwd} --url ${url} --config ${configFile}`,
-  {
-    cwd: __dirname,
-  }
-);
+const run = exec(`electron app.js ${argsStr}`, {
+  cwd: __dirname,
+});
 
 // log
 run.stdout.on('data', data => {

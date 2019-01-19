@@ -12,11 +12,12 @@
   "license": "ISC",
   "devDependencies": {},
   "dependencies": {
+    "@creative-controls/ui": "^0.0.0",
     "electron": "^3.0.8",
+    "electron-settings": "^3.2.0",
     "minimist": "^1.2.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "styled-components": "^4.1.2",
-    "@creative-controls/ui": "^0.0.0"
+    "styled-components": "^4.1.2"
   }
 }

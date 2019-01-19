@@ -147,6 +147,7 @@ class ScreenshotsPanel extends Component {
           >
             <option>800x600</option>
             <option>1024x768</option>
+            <option>1400x768</option>
             <option>1080x720</option>
             <option>1920x1080</option>
             <option>3840×2160</option>
