@@ -4,7 +4,7 @@ module.exports = function inject(window, frame) {
   frame.webContents.on('dom-ready', () => {
     // Add ipcRenderer to front-end
     frame.webContents.executeJavaScript(`
-      window.__IPC = require('electron').ipcRenderer
+      window.__IPC = require('electron').ipcRenderer;
       window.__controls.connect();
     `);
     console.info('🔌  injected IPC');
@@ -12,10 +12,14 @@ module.exports = function inject(window, frame) {
   });
 
   window.webContents.on('dom-ready', () => {
+    const settings = global.configFile
+      ? `require('${global.cwd}/${global.configFile}')`
+      : `{}`;
+
     // Add ipcRenderer to front-end
     window.webContents.executeJavaScript(`
       try{
-        const settings = require('${global.cwd}/${global.configFile}');
+        const settings = ${settings};
         const {Client} = require('@creative-controls/ui');
         window.__client = new Client(settings, '${global.cwd}');
       } catch(e){
