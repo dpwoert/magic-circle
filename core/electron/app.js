@@ -9,7 +9,6 @@ const eventSystem = require('./events.js');
 const resizeHandler = require('./resize.js');
 
 global.cwd = argv.cwd;
-global.configFile = argv.config;
 global.url = argv.url;
 
 let window = null;

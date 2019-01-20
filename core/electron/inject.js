@@ -12,9 +12,7 @@ module.exports = function inject(window, frame) {
   });
 
   window.webContents.on('dom-ready', () => {
-    const settings = global.configFile
-      ? `require('${global.cwd}/${global.configFile}')`
-      : `{}`;
+    const settings = `require('${__dirname}/settings.tmp.js')`;
 
     // Add ipcRenderer to front-end
     window.webContents.executeJavaScript(`

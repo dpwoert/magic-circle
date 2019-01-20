@@ -2,10 +2,13 @@
 const { exec } = require('child_process');
 const argv = require('minimist')(process.argv.slice(2));
 
+const rollup = require('rollup');
+const resolve = require('rollup-plugin-node-resolve');
+const commonjs = require('rollup-plugin-commonjs');
+
 const args = {};
 args.cwd = process.cwd();
 args.url = argv.url || argv.u;
-args.config = argv.config || argv.c;
 args.clear = argv.clear || argv.clear;
 
 const argsStr = Object.keys(args)
@@ -18,20 +21,46 @@ const argsStr = Object.keys(args)
   })
   .join(' ');
 
-// execute
-const run = exec(`electron app.js ${argsStr}`, {
-  cwd: __dirname,
-});
+// compile settings
+async function build() {
+  try {
+    const config = argv.config || argv.c;
+    const configFile = config
+      ? `${process.cwd()}/${config}`
+      : `${__dirname}/default-settings.js`;
 
-// log
-run.stdout.on('data', data => {
-  process.stdout.write(data);
-});
-run.stderr.on('data', data => {
-  process.stdout.write(`⚠️  ${data}`);
-});
+    // create a bundle
+    const bundle = await rollup.rollup({
+      input: configFile,
+      plugins: [resolve(), commonjs()],
+    });
 
-// waiting to be done
-run.on('close', () => {
-  console.info('👋  closing creative controls');
-});
+    await bundle.write({
+      file: `${__dirname}/settings.tmp.js`,
+      format: 'cjs',
+    });
+
+    // execute
+    const run = exec(`electron app.js ${argsStr}`, {
+      cwd: __dirname,
+    });
+
+    // log
+    run.stdout.on('data', data => {
+      process.stdout.write(data);
+    });
+    run.stderr.on('data', data => {
+      process.stdout.write(`⚠️  ${data}`);
+    });
+
+    // waiting to be done
+    run.on('close', () => {
+      console.info('👋  closing creative controls');
+    });
+  } catch (e) {
+    console.error(e);
+    process.exit();
+  }
+}
+
+build();
