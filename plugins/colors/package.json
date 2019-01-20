@@ -1,15 +1,28 @@
 {
   "name": "@creative-controls/colors",
   "version": "0.0.0",
-  "description": "",
+  "description": "Creative controls color library",
+  "keywords": [
+    "controls",
+    "creative coding",
+    "editor",
+    "colors",
+    "alpha",
+    "rgb",
+    "rgba"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dpwoert/creative-controls.git",
+    "directory": "plugins/colors"
+  },
+  "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
+  "license": "MIT",
   "main": "dist/bundle.js",
   "module": "dist/bundle.esm.js",
   "scripts": {
     "start": "rollup --config ../../rollup.config.js"
   },
-  "keywords": [],
-  "author": "Davey van der Woert",
-  "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.1.2",
     "@babel/plugin-proposal-class-properties": "^7.1.0",

@@ -1,15 +1,30 @@
 {
   "name": "@creative-controls/performance",
   "version": "0.0.0",
-  "description": "",
+  "description": "Creative controls performance management",
+  "keywords": [
+    "controls",
+    "creative coding",
+    "editor",
+    "editing",
+    "GUI",
+    "performance",
+    "frames per second",
+    "FPS",
+    "memory"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dpwoert/creative-controls.git",
+    "directory": "plugins/performance"
+  },
+  "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
+  "license": "MIT",
   "main": "dist/bundle.js",
   "module": "dist/bundle.esm.js",
   "scripts": {
     "start": "rollup --config ../../rollup.config.js"
   },
-  "keywords": [],
-  "author": "Davey van der Woert",
-  "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.1.2",
     "@babel/plugin-proposal-class-properties": "^7.1.0",

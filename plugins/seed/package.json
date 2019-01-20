@@ -1,15 +1,30 @@
 {
   "name": "@creative-controls/seed",
   "version": "0.0.0",
-  "description": "",
+  "description": "Creative controls seed manangement",
+  "keywords": [
+    "controls",
+    "creative coding",
+    "editor",
+    "performance",
+    "layers",
+    "editing",
+    "GUI",
+    "seed",
+    "random"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dpwoert/creative-controls.git",
+    "directory": "plugins/seed"
+  },
+  "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
+  "license": "MIT",
   "main": "dist/bundle.js",
   "module": "dist/bundle.esm.js",
   "scripts": {
     "start": "rollup --config ../../rollup.config.js"
   },
-  "keywords": [],
-  "author": "Davey van der Woert",
-  "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.1.2",
     "@babel/plugin-proposal-class-properties": "^7.1.0",

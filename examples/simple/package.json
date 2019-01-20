@@ -1,15 +1,31 @@
 {
   "name": "@creative-controls/example-simple",
+  "private": true,
   "version": "0.0.0",
-  "description": "",
+  "description": "Creative controls simple example",
+  "keywords": [
+    "controls",
+    "creative coding",
+    "editor",
+    "performance",
+    "layers",
+    "editing",
+    "GUI",
+    "example",
+    "simple"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dpwoert/creative-controls.git",
+    "directory": "example/simple"
+  },
+  "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
+  "license": "MIT",
   "main": "index.js",
   "scripts": {
     "serve": "parcel index.html",
     "electron": "controls --config controls.config.js --url http://localhost:1234/index.html"
   },
-  "keywords": [],
-  "author": "Davey van der Woert",
-  "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/plugin-proposal-class-properties": "^7.1.0",

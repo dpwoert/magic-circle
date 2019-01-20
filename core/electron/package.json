@@ -1,15 +1,27 @@
 {
   "name": "@creative-controls/electron",
   "version": "0.0.0",
-  "description": "",
+  "description": "Creative controls electron runner",
+  "keywords": [
+    "controls",
+    "creative coding",
+    "editor",
+    "CLI",
+    "GUI",
+    "electron"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dpwoert/creative-controls.git",
+    "directory": "core/electron"
+  },
+  "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
+  "license": "MIT",
   "main": "index.js",
   "bin": {
     "controls": "./run.js"
   },
   "scripts": {},
-  "keywords": [],
-  "author": "Davey van der Woert",
-  "license": "ISC",
   "devDependencies": {},
   "dependencies": {
     "@creative-controls/ui": "^0.0.0",

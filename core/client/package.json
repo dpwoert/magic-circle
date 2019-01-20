@@ -1,7 +1,23 @@
 {
   "name": "@creative-controls/client",
   "version": "0.0.0",
-  "description": "",
+  "description": "Creative controls front-end client",
+  "keywords": [
+    "controls",
+    "creative coding",
+    "editor",
+    "performance",
+    "layers",
+    "editing",
+    "GUI"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dpwoert/creative-controls.git",
+    "directory": "core/client"
+  },
+  "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
+  "license": "MIT",
   "main": "dist/bundle.js",
   "scripts": {
     "start": "rollup --config ../../rollup.config.js"
