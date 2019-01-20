@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import Color from '@creative-controls/colors';
 
-import { Row, Label, Center, Value } from './styles';
+import { Row, Label, Center, Value, TextBox } from './styles';
+
+const NumberBox = styled(TextBox)`
+  cursor: ns-resize;
+`;
 
 const InputContainer = styled.div`
   position: relative;
@@ -54,7 +58,59 @@ const Progress = styled.div`
 const mapLinear = (x, a1, a2, b1, b2) =>
   b1 + ((x - a1) * (b2 - b1)) / (a2 - a1);
 
-const FloatControl = props => {
+const STEP_SIZE = 25;
+
+class StepControl extends Component {
+  constructor(props) {
+    super(props);
+    this.drag = this.drag.bind(this);
+    this.endDrag = this.endDrag.bind(this);
+  }
+
+  startDrag(e) {
+    this.dragStart = e.clientY;
+    this.dragValue = parseInt(this.props.value, 10);
+
+    window.addEventListener('mousemove', this.drag);
+    window.addEventListener('mouseup', this.endDrag);
+
+    document.querySelector('body').style.cursor = 'ns-resize';
+  }
+
+  drag(e) {
+    const delta = e.clientY - this.dragStart;
+    const steps = Math.floor(delta / STEP_SIZE);
+    const stepSize = this.props.options.stepSize || 1;
+
+    this.props.updateControl(this.dragValue + steps * stepSize);
+  }
+
+  endDrag() {
+    document.querySelector('body').style.cursor = 'auto';
+    window.removeEventListener('mousemove', this.drag);
+    window.removeEventListener('mouseup', this.endDrag);
+  }
+
+  render() {
+    const { label, value, updateControl } = this.props;
+    return (
+      <Row>
+        <Label>{label}</Label>
+        <Center>
+          <NumberBox
+            value={value}
+            onMouseDown={e => this.startDrag(e)}
+            onChange={evt => {
+              updateControl(evt.target.value);
+            }}
+          />
+        </Center>
+      </Row>
+    );
+  }
+}
+
+const ContiousControl = props => {
   const { value, options, updateControl } = props;
   const { range, stepSize } = options;
   const biDirectional = Math.abs(range[0]) === Math.abs(range[1]);
@@ -93,5 +149,18 @@ const FloatControl = props => {
   );
 };
 
-FloatControl.type = 'float';
-export default FloatControl;
+const NumberControl = props => (
+  <>
+    {props.options.range ? (
+      <ContiousControl {...props} />
+    ) : (
+      <StepControl {...props} />
+    )}
+  </>
+);
+
+// const NumberControl = props => props.options.range ?
+//   ContiousControl(props) : StepControl(props);
+
+NumberControl.type = 'number';
+export default NumberControl;

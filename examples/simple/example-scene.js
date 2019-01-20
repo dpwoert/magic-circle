@@ -10,7 +10,7 @@ import {
 
 import {
   Layer,
-  FloatControl,
+  NumberControl,
   BooleanControl,
   TextControl,
   ColorControl,
@@ -48,6 +48,7 @@ export function setup(gui) {
     name: 'Test name',
     subtitle: 'Test subtitle',
     subtitle2: 'Subtitle to test 2',
+    number: '2000',
     alert: () => alert(`name: ${glob.name}`), //eslint-disable-line
   };
 
@@ -62,24 +63,25 @@ export function setup(gui) {
     new TextControl(glob, 'name'),
     new TextControl(glob, 'subtitle'),
     new TextControl(glob, 'subtitle2').values(['test1', 'test2', 'test3']),
+    new NumberControl(glob, 'number'),
     new ButtonControl(glob, 'alert').label('Trigger alert')
   );
   layer3.folder(
     'Position',
-    new FloatControl(mesh.position, 'x').range(-100, 100),
-    new FloatControl(mesh.position, 'y').range(-100, 100),
-    new FloatControl(mesh.position, 'z').range(-100, 100)
+    new NumberControl(mesh.position, 'x').range(-100, 100),
+    new NumberControl(mesh.position, 'y').range(-100, 100),
+    new NumberControl(mesh.position, 'z').range(-100, 100)
   );
   layer3.folder(
     'Scale',
-    new FloatControl(mesh.scale, 'x').range(-3, 3),
-    new FloatControl(mesh.scale, 'y').range(-3, 3),
-    new FloatControl(mesh.scale, 'z').range(-3, 3)
+    new NumberControl(mesh.scale, 'x').range(-3, 3),
+    new NumberControl(mesh.scale, 'y').range(-3, 3),
+    new NumberControl(mesh.scale, 'z').range(-3, 3)
   );
   layer3.folder(
     'Material',
     new ColorControl(mesh.material, 'color').range(1),
-    new FloatControl(mesh.material, 'opacity').range(0, 1),
+    new NumberControl(mesh.material, 'opacity').range(0, 1),
     new BooleanControl(mesh.material, 'transparent')
   );
 

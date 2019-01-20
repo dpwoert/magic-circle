@@ -5,7 +5,7 @@ export {
   Control,
   TextControl,
   IntControl,
-  FloatControl,
+  NumberControl,
   ColorControl,
   BooleanControl,
   ButtonControl,

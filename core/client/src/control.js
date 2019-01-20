@@ -88,12 +88,12 @@ export class IntControl extends Control {
   }
 }
 
-export class FloatControl extends Control {
+export class NumberControl extends Control {
   constructor(reference, key) {
     super(reference, key);
-    this.type = 'float';
+    this.type = 'number';
     this.options = {
-      range: [0, 100],
+      range: null,
       stepSize: 0,
     };
     return this;
