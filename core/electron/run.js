@@ -36,7 +36,7 @@ async function build() {
     });
 
     await bundle.write({
-      file: `${__dirname}/settings.tmp.js`,
+      file: `${__dirname}/settings.build.js`,
       format: 'cjs',
     });
 

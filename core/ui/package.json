@@ -12,7 +12,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/dpwoert/creative-controls.git",
-    "directory": "core/client"
+    "directory": "core/ui"
   },
   "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
   "license": "MIT",
@@ -31,12 +31,15 @@
   "dependencies": {
     "is-electron": "^2.1.0",
     "rc-color-picker": "^1.2.6",
+    "dot-prop": "^4.2.0",
     "@creative-controls/seed": "^0.0.0",
     "@creative-controls/play-controls": "^0.0.0",
     "@creative-controls/layers": "^0.0.0",
     "@creative-controls/controls": "^0.0.0",
     "@creative-controls/screenshots": "^0.0.0",
     "@creative-controls/page-information": "^0.0.0",
+    "@creative-controls/performance": "^0.0.0",
+    "@creative-controls/debug": "^0.0.0",
     "@creative-controls/colors": "^0.0.0"
   },
   "peerDependencies": {

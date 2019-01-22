@@ -8,6 +8,7 @@ import Seed from '@creative-controls/seed';
 import PageInfo from '@creative-controls/page-information';
 import Screenshots from '@creative-controls/screenshots';
 import Performance from '@creative-controls/performance';
+import Debug from '@creative-controls/debug';
 
 import Layout from './components/layout';
 
@@ -20,6 +21,7 @@ const settings = {
     Controls,
     Screenshots,
     Performance,
+    Debug,
   ],
   theme: {
     // accent: 'rgb(102, 255, 153)',

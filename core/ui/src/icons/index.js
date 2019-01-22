@@ -11,6 +11,7 @@ import { Rewind } from './rewind.svg';
 import { Screenshot } from './screenshot.svg';
 import { Performance } from './performance.svg';
 import { Performance2 } from './performance2.svg';
+import { Debug } from './debug.svg';
 
 export {
   CameraRoll,
@@ -26,4 +27,5 @@ export {
   Screenshot,
   Performance,
   Performance2,
+  Debug,
 };

@@ -12,12 +12,10 @@ module.exports = function inject(window, frame) {
   });
 
   window.webContents.on('dom-ready', () => {
-    const settings = `require('${__dirname}/settings.tmp.js')`;
-
     // Add ipcRenderer to front-end
     window.webContents.executeJavaScript(`
       try{
-        const settings = ${settings};
+        const settings = require('${__dirname}/settings.build.js');
         const {Client} = require('@creative-controls/ui');
         window.__client = new Client(settings, '${global.cwd}');
       } catch(e){

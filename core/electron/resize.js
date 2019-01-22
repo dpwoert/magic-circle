@@ -52,7 +52,7 @@ module.exports = (window, frame) => {
   });
 
   // full screen
-  window.on('enter-full-screen', evt => {
+  window.on('enter-full-screen', () => {
     window.setFullScreen(false);
     frame.setFullScreen(true);
   });

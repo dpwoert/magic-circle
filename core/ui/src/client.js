@@ -1,3 +1,5 @@
+import dotProp from 'dot-prop';
+
 import defaultSettings from './default-settings';
 import Store from './store';
 
@@ -13,15 +15,20 @@ export class Client {
     console.info('cwd', cwd);
 
     // add plugins
-    this.plugins = this.settings.plugins.map(Plugin => {
-      const initialData = Plugin.initStore
-        ? Plugin.initStore(this.settings)
-        : {};
-      const store = new Store(initialData);
-      const plugin = new Plugin(this, store, this.settings);
-      plugin._name = Plugin.name; //eslint-disable-line
-      return plugin;
-    });
+    this.plugins = this.settings.plugins
+      .filter(
+        Plugin =>
+          (this.isElectron && Plugin.electronOnly) || !Plugin.electronOnly
+      )
+      .map(Plugin => {
+        const initialData = Plugin.initStore
+          ? Plugin.initStore(this.settings)
+          : {};
+        const store = new Store(initialData);
+        const plugin = new Plugin(this, store, this.settings);
+        plugin._name = Plugin.name; //eslint-disable-line
+        return plugin;
+      });
 
     // send message to front-end
     this.sendMessage('editor-loaded', true);
@@ -74,6 +81,10 @@ export class Client {
     return this.plugins.find(p => p._name === name); //eslint-disable-line
   }
 
+  getSetting(path, d) {
+    return dotProp.get(this.settings, path, d);
+  }
+
   mapToJSON(map) {
     const list = [];
 
@@ -106,5 +117,10 @@ export class Client {
       seed,
     };
     ipcRenderer.send('screenshot', data);
+  }
+
+  devTools() {
+    const mode = this.getSetting('debug.devTools');
+    ipcRenderer.send('dev-tools', { mode });
   }
 }
