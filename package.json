@@ -14,14 +14,15 @@
   "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
   "license": "MIT",
   "scripts": {
-    "postinstall": "lerna run bootstrap",
+    "postinstall": "lerna bootstrap",
     "build:dev": "lerna run start --parallel",
     "start": "nodemon --exec \"npm run build:dev\"",
     "example:simple": "cd examples/simple && npm run serve && cd ../..",
     "electron": "cd examples/simple && npm run electron && cd ../..",
     "prettier": "prettier --config --write \"{core,examples,plugins}/**/*.js\"",
     "lint": "eslint \"{core,examples,plugins}/**/*.js\"",
-    "test": "npm run lint"
+    "test": "npm run lint",
+    "clean": "find . -name 'node_modules' -type d | xargs rm -rf -v && find . -name 'dist' -type d | xargs rm -rf -v"
   },
   "devDependencies": {
     "@babel/core": "^7.1.5",
@@ -58,7 +59,8 @@
   },
   "nodemonConfig": {
     "ignore": [
-      "dist/*"
+      "dist/*",
+      "*.build.js"
     ]
   },
   "dependencies": {}
