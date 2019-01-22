@@ -37,11 +37,7 @@ export class Client {
     // event binding
     this.nextFrame = this.nextFrame.bind(this);
 
-    // Not electron so don't wait for connection to backend
-    if (!isElectron()) {
-      this.fn.setup(this);
-      this.play();
-    } else {
+    if (isElectron()) {
       // Add to window global to it can be reached by Electron
       window.__controls = this;
     }
@@ -191,11 +187,23 @@ export class Client {
 
   setup(fn) {
     this.fn.setup = fn;
+
+    // if it isn't run by electron, make sure to run it now
+    if (!isElectron()) {
+      this.fn.setup(this);
+    }
+
     return this;
   }
 
   loop(fn) {
     this.fn.loop = fn;
+
+    // start playing if it isn't run by electron, no need to wait
+    if (!isElectron()) {
+      this.play();
+    }
+
     return this;
   }
 }
