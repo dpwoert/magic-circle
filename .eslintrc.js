@@ -22,6 +22,8 @@ module.exports = {
     'jsx-a11y/label-has-associated-control': 0,
     'jsx-a11y/label-has-for': 0,
 
+    'class-methods-use-this': 0,
+
     // Recommend not to leave any console.log in your code
     // Use console.error, console.warn and console.info instead
     'no-console': ['error', { allow: ['warn', 'error', 'info'] }],

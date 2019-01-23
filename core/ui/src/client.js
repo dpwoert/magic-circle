@@ -27,6 +27,14 @@ export class Client {
         const store = new Store(initialData);
         const plugin = new Plugin(this, store, this.settings);
         plugin._name = Plugin.name; //eslint-disable-line
+
+        // load electron plugins?
+        if (this.isElectron && plugin.electron) {
+          let files = plugin.electron();
+          files = Array.isArray(files) ? files : [files];
+          this.sendAction('electron-load', { files, settings });
+        }
+
         return plugin;
       });
 
@@ -73,6 +81,10 @@ export class Client {
     ipcRenderer.send('intercom', { channel, payload, to: 'frame' });
   }
 
+  sendAction(action, payload) {
+    ipcRenderer.send(action, payload);
+  }
+
   refresh() {
     ipcRenderer.send('refresh');
   }
@@ -105,22 +117,5 @@ export class Client {
 
   resize(window, width, height) {
     ipcRenderer.send(`resize-${window}`, { width, height });
-  }
-
-  takeScreenshot() {
-    const changelog = this.createChangelog
-      ? this.mapToJSON(this.createChangelog())
-      : [];
-    const seed = this.getSeed ? this.getSeed() : null;
-    const data = {
-      changelog,
-      seed,
-    };
-    ipcRenderer.send('screenshot', data);
-  }
-
-  devTools() {
-    const mode = this.getSetting('debug.devTools');
-    ipcRenderer.send('dev-tools', { mode });
   }
 }

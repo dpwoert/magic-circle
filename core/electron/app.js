@@ -7,6 +7,7 @@ const argv = require('minimist')(process.argv.slice(2));
 const inject = require('./inject.js');
 const eventSystem = require('./events.js');
 const resizeHandler = require('./resize.js');
+const loadFiles = require('./load-files.js');
 
 global.cwd = argv.cwd;
 global.url = argv.url;
@@ -67,6 +68,9 @@ app.once('ready', () => {
 
   // Resize logic
   resizeHandler(window, frame);
+
+  // Load plugins
+  loadFiles(window, frame);
 });
 
 // Quit when all windows are closed.

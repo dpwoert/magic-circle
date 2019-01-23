@@ -2,6 +2,8 @@ import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import babel from 'rollup-plugin-babel';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
+import replace from 'rollup-plugin-replace';
+import path from 'path';
 
 const pkg = require(`${process.cwd()}/package.json`);
 
@@ -19,14 +21,15 @@ export default {
       format: 'esm',
     },
   ],
-  external: [
-    'styled-components',
-    'fs',
-  ],
+  external: ['styled-components', 'fs'],
   plugins: [
     peerDepsExternal(),
+    replace({
+      ENVIRONMENT: JSON.stringify('development'),
+      __dirname: id => `'${path.dirname(id)}'`,
+    }),
     babel({
-      exclude: 'node_modules/**'
+      exclude: 'node_modules/**',
     }),
     resolve({
       browser: true,
@@ -35,10 +38,22 @@ export default {
       // include: 'node_modules/**',
       // module: false,
       namedExports: {
-        'node_modules/react-is/index.js': ['isValidElementType','isElement', 'ForwardRef'],
-        'node_modules/react/index.js': ['Component', 'PureComponent', 'Fragment', 'Children', 'createElement','cloneElement','createContext'],
+        'node_modules/react-is/index.js': [
+          'isValidElementType',
+          'isElement',
+          'ForwardRef',
+        ],
+        'node_modules/react/index.js': [
+          'Component',
+          'PureComponent',
+          'Fragment',
+          'Children',
+          'createElement',
+          'cloneElement',
+          'createContext',
+        ],
         'node_modules/react-dom/index.js': ['findDOMNode'],
-      }
+      },
     }),
-  ]
-}
+  ],
+};

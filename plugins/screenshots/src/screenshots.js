@@ -22,11 +22,15 @@ class Screenshots {
     this.loadScreenshot = this.loadScreenshot.bind(this);
   }
 
+  electron() {
+    return `${__dirname}/electron.js`;
+  }
+
   header(position) {
     if (position === 'left') {
       return (
         <Bar
-          takeScreenshot={p => this.client.takeScreenshot(p)}
+          takeScreenshot={p => this.takeScreenshot(p)}
           key="screenshot-control"
         />
       );
@@ -63,6 +67,15 @@ class Screenshots {
   deleteScreenshot(file) {
     fs.unlinkSync(`${this.client.cwd}/screenshots/${file}.json`);
     this.refresh();
+  }
+
+  takeScreenshot() {
+    const changelog = this.createChangelog
+      ? this.client.mapToJSON(this.client.createChangelog())
+      : [];
+    const seed = this.getSeed ? this.getSeed() : null;
+    const data = { changelog, seed };
+    this.client.sendAction('screenshot', data);
   }
 
   sidebar() {
