@@ -40,6 +40,7 @@
     "@creative-controls/page-information": "^0.0.0",
     "@creative-controls/performance": "^0.0.0",
     "@creative-controls/debug": "^0.0.0",
+    "@creative-controls/fullscreen": "^0.0.0",
     "@creative-controls/colors": "^0.0.0"
   },
   "peerDependencies": {
