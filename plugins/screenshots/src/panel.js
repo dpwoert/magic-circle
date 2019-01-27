@@ -262,9 +262,12 @@ class ScreenshotsPanel extends Component {
                     />
                   )}
                   <MetaData>{parseDate(screenshot.meta.createdAt)}</MetaData>
-                  <MetaData>
-                    {screenshot.git.branch} - {screenshot.git.lastTag}
-                  </MetaData>
+                  {screenshot.git.branch && (
+                    <MetaData>
+                      {screenshot.git.branch}
+                      {screenshot.git.lastTag && ` - ${screenshot.git.lastTag}`}
+                    </MetaData>
+                  )}
                 </Meta>
                 <Delete onClick={() => deleteScreenshot(screenshot)}>
                   <DeleteIcon />
