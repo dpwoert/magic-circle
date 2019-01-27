@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 const fs = require('fs');
 const { ipcMain } = require('electron');
 const getRepoInfo = require('git-repo-info');

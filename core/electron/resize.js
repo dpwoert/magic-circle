@@ -53,7 +53,6 @@ module.exports = (window, frame) => {
 
   // fullscreen frame
   ipcMain.on('fullscreen-frame', () => {
-    console.log('fullscreen');
     frame.setFullScreen(!frame.isFullScreen());
   });
 

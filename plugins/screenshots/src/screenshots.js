@@ -1,13 +1,16 @@
+/* eslint-disable no-restricted-globals */
+/* eslint-disable no-alert */
+
 import React from 'react';
 import fs from 'fs';
 import { promisify } from 'util';
 
+import Bar from './bar';
+import ScreenshotsPanel from './panel';
+
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
 const readdir = promisify(fs.readdir);
-
-import Bar from './bar';
-import ScreenshotsPanel from './panel';
 
 const memoize = dirName => {
   const cache = {};
@@ -15,7 +18,7 @@ const memoize = dirName => {
   return async fileName => {
     if (!cache[fileName]) {
       const file = await readFile(`${dirName}/${fileName}`);
-      cache[name] = JSON.parse(file);
+      cache[fileName] = JSON.parse(file);
     }
     return cache[name];
   };

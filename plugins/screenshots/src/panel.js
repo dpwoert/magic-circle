@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-globals */
+/* eslint-disable no-alert */
 import React, { Component } from 'react';
 import styled, { withTheme } from 'styled-components';
 
@@ -173,19 +175,13 @@ class ScreenshotsPanel extends Component {
 
   renameScreenshot(evt, screenshot) {
     if (confirm('Are you sure you want to rename this screenshot?')) {
-      renameScreenshot(screenshot.fileName, evt.target.value);
+      this.props.renameScreenshot(screenshot.fileName, evt.target.value);
     }
     this.setState({ editName: null });
   }
 
   render() {
-    const {
-      screenshots,
-      path,
-      loadScreenshot,
-      renameScreenshot,
-      deleteScreenshot,
-    } = this.props;
+    const { screenshots, path, loadScreenshot, deleteScreenshot } = this.props;
 
     const DeleteIcon = this.props.theme.icons.Trashbin;
 

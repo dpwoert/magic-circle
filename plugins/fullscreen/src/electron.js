@@ -1,3 +1,3 @@
-const { ipcMain } = require('electron');
+// const { ipcMain } = require('electron');
 
-module.exports = (window, frame) => {};
+// module.exports = (window, frame) => {};

@@ -33,7 +33,6 @@ class Debug {
   }
 
   toggleFullscreen() {
-    console.log('fullscreen!');
     this.client.sendAction('fullscreen-frame');
   }
 }
