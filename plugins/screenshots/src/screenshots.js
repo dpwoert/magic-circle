@@ -1,8 +1,25 @@
 import React from 'react';
 import fs from 'fs';
+import { promisify } from 'util';
+
+const readFile = promisify(fs.readFile);
+const writeFile = promisify(fs.writeFile);
+const readdir = promisify(fs.readdir);
 
 import Bar from './bar';
 import ScreenshotsPanel from './panel';
+
+const memoize = dirName => {
+  const cache = {};
+
+  return async fileName => {
+    if (!cache[fileName]) {
+      const file = await readFile(`${dirName}/${fileName}`);
+      cache[name] = JSON.parse(file);
+    }
+    return cache[name];
+  };
+};
 
 class Screenshots {
   static name = 'screenshots';
@@ -16,10 +33,14 @@ class Screenshots {
   constructor(client, store) {
     this.client = client;
     this.store = store;
-    this.refresh();
+
     this.client.addListener('screenshot-taken', () => this.refresh());
     this.deleteScreenshot = this.deleteScreenshot.bind(this);
     this.loadScreenshot = this.loadScreenshot.bind(this);
+    this.renameScreenshot = this.renameScreenshot.bind(this);
+
+    this.fileCache = memoize(`${this.client.cwd}/screenshots`);
+    this.refresh();
   }
 
   electron() {
@@ -39,14 +60,21 @@ class Screenshots {
     return false;
   }
 
-  refresh() {
+  async refresh() {
     // load all screenshots
-    const files = fs
-      .readdirSync(`${this.client.cwd}/screenshots`)
-      .filter(f => f.substr(f.lastIndexOf('.') + 1) === 'json')
-      .map(f => f.replace('.json', ''));
+    const screenshots = [];
+    const files = await readdir(`${this.client.cwd}/screenshots`);
 
-    this.store.set('screenshots', files);
+    for (let i = 0; i < files.length; i += 1) {
+      const ext = files[i].substr(files[i].lastIndexOf('.') + 1);
+      if (ext === 'json') {
+        const data = await this.fileCache(files[i]);
+        data.fileName = files[i].replace('.json', '');
+        screenshots.push(data);
+      }
+    }
+
+    this.store.set('screenshots', screenshots);
   }
 
   loadScreenshot(file) {
@@ -64,9 +92,22 @@ class Screenshots {
     }
   }
 
-  deleteScreenshot(file) {
-    fs.unlinkSync(`${this.client.cwd}/screenshots/${file}.json`);
-    this.refresh();
+  deleteScreenshot(screenshot) {
+    if (confirm('Are you sure you want to delete this screenshot?')) {
+      fs.unlinkSync(
+        `${this.client.cwd}/screenshots/${screenshot.fileName}.json`
+      );
+      this.refresh();
+    }
+  }
+
+  async renameScreenshot(fileName, name) {
+    const data = await this.fileCache(`${fileName}.json`);
+    data.meta.name = name;
+
+    const file = `${this.client.cwd}/screenshots/${fileName}.json`;
+    await writeFile(file, JSON.stringify(data));
+    await this.refresh();
   }
 
   takeScreenshot() {
@@ -83,6 +124,7 @@ class Screenshots {
     return (
       <Panel
         deleteScreenshot={this.deleteScreenshot}
+        renameScreenshot={this.renameScreenshot}
         loadScreenshot={this.loadScreenshot}
         resize={this.client.resize}
         path={`${this.client.cwd}/screenshots`}

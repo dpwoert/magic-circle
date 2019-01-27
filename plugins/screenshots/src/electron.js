@@ -1,5 +1,6 @@
 const fs = require('fs');
 const { ipcMain } = require('electron');
+const getRepoInfo = require('git-repo-info');
 
 module.exports = (window, frame) => {
   // screenshots
@@ -21,6 +22,16 @@ module.exports = (window, frame) => {
       } else {
         screenshotBuffer[dateTime] = 1;
       }
+
+      // Add git info
+      const git = getRepoInfo();
+      settings.git = git || {};
+
+      // Add meta info
+      settings.meta = {
+        name: git.commitMessage || `${dateTime}${version}`,
+        createdAt: +Date.now(),
+      };
 
       // Get path
       const path = `${global.cwd}/screenshots/screenshot ${dateTime}${version}`;

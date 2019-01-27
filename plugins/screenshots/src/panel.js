@@ -67,6 +67,7 @@ const ImageFrame = styled.div`
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
+  border-radius: 3px;
 `;
 
 const Details = styled.div`
@@ -75,10 +76,33 @@ const Details = styled.div`
   align-items: center;
 `;
 
+const Meta = styled.div`
+  flex: 1;
+`;
+
 const Name = styled.div`
+  font-weight: bold;
   color: #fff;
   margin-top: 8px;
   font-size: 12px;
+`;
+
+const NameInput = styled.input`
+  color: ${props => props.theme.accent};
+  margin-top: 8px;
+  font-size: 12px;
+  border: none;
+  background: none;
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+const MetaData = styled.div`
+  color: #ddd;
+  margin-top: 8px;
+  font-size: 10px;
 `;
 
 const Delete = styled.div`
@@ -97,6 +121,16 @@ const Delete = styled.div`
   }
 `;
 
+const truncate = (string, max) =>
+  string.length > max ? `${string.substring(0, max)}...` : string;
+
+const parseDate = str => {
+  const d = new Date(str);
+  const date = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+  const time = `${d.getHours()}:${d.getMinutes()}`;
+  return `${date} ${time}`;
+};
+
 class ScreenshotsPanel extends Component {
   static navigation = {
     name: 'screenshots',
@@ -104,6 +138,7 @@ class ScreenshotsPanel extends Component {
   };
 
   state = {
+    editName: null,
     customSize: false,
     x: 1080,
     y: 720,
@@ -125,8 +160,33 @@ class ScreenshotsPanel extends Component {
     }
   }
 
+  toggleRenaming(evt, screenshot) {
+    evt.preventDefault();
+    this.setState({ editName: screenshot.fileName });
+
+    setTimeout(() => {
+      if (this.inputRef) {
+        this.inputRef.focus();
+      }
+    }, 24);
+  }
+
+  renameScreenshot(evt, screenshot) {
+    if (confirm('Are you sure you want to rename this screenshot?')) {
+      renameScreenshot(screenshot.fileName, evt.target.value);
+    }
+    this.setState({ editName: null });
+  }
+
   render() {
-    const { screenshots, path, loadScreenshot, deleteScreenshot } = this.props;
+    const {
+      screenshots,
+      path,
+      loadScreenshot,
+      renameScreenshot,
+      deleteScreenshot,
+    } = this.props;
+
     const DeleteIcon = this.props.theme.icons.Trashbin;
 
     return (
@@ -172,13 +232,40 @@ class ScreenshotsPanel extends Component {
         </ResizePanel>
         <Screenshots>
           {screenshots.map(screenshot => (
-            <Screenshot
-              key={screenshot}
-              onClick={() => loadScreenshot(screenshot)}
-            >
-              <ImageFrame image={`${path}/${screenshot}.png`} />
+            <Screenshot key={screenshot.fileName}>
+              <ImageFrame
+                image={`${path}/${screenshot.fileName}.png`}
+                onClick={() => loadScreenshot(screenshot.fileName)}
+              />
               <Details>
-                <Name>{screenshot.replace('screenshot ', '')}</Name>
+                <Meta>
+                  {this.state.editName !== screenshot.fileName ? (
+                    <Name
+                      onDoubleClick={evt =>
+                        this.toggleRenaming(evt, screenshot)
+                      }
+                    >
+                      {truncate(screenshot.meta.name, 20)}
+                    </Name>
+                  ) : (
+                    <NameInput
+                      ref={r => {
+                        this.inputRef = r;
+                      }}
+                      defaultValue={screenshot.meta.name}
+                      onBlur={evt => this.renameScreenshot(evt, screenshot)}
+                      onKeyPress={evt => {
+                        if (evt.keyCode === 0) {
+                          this.renameScreenshot(evt, screenshot);
+                        }
+                      }}
+                    />
+                  )}
+                  <MetaData>{parseDate(screenshot.meta.createdAt)}</MetaData>
+                  <MetaData>
+                    {screenshot.git.branch} - {screenshot.git.lastTag}
+                  </MetaData>
+                </Meta>
                 <Delete onClick={() => deleteScreenshot(screenshot)}>
                   <DeleteIcon />
                 </Delete>
