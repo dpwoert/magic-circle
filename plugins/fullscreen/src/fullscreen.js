@@ -15,9 +15,9 @@ class Debug {
     }
   }
 
-  electron() {
-    return `${__dirname}/electron.js`;
-  }
+  // electron() {
+  //   return `${__dirname}/electron.js`;
+  // }
 
   header(position) {
     if (position === 'left') {
