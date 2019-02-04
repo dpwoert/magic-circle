@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 const { exec } = require('child_process');
+const path = require('path');
+const fs = require('fs');
 const argv = require('minimist')(process.argv.slice(2));
 
 const rollup = require('rollup');
@@ -32,11 +34,20 @@ async function build() {
     // create a bundle
     const bundle = await rollup.rollup({
       input: configFile,
-      plugins: [resolve(), commonjs()],
+      external: ['styled-components', 'fs', 'react', 'react-dom', 'react-is'],
+      plugins: [
+        resolve({
+          browser: true,
+          customResolveOptions: {
+            moduleDirectory: path.join(process.cwd(), 'node_modules'),
+          },
+        }),
+        commonjs(),
+      ],
     });
 
     await bundle.write({
-      file: `${__dirname}/settings.build.js`,
+      file: `${process.cwd()}/.settings.build.js`,
       format: 'cjs',
     });
 
@@ -56,6 +67,9 @@ async function build() {
     // waiting to be done
     run.on('close', () => {
       console.info('👋  closing creative controls');
+
+      // delete sync file again
+      fs.unlinkSync(`${process.cwd()}/.settings.build.js`);
     });
   } catch (e) {
     console.error(e);

@@ -9,8 +9,15 @@ const eventSystem = require('./events.js');
 const resizeHandler = require('./resize.js');
 const loadFiles = require('./load-files.js');
 
+const local = argv.url.indexOf('http') === -1;
 global.cwd = argv.cwd;
-global.url = argv.url;
+global.url = local
+  ? url.format({
+      pathname: path.join(argv.cwd, argv.url),
+      protocol: 'file:',
+      slashes: true,
+    })
+  : argv.url;
 
 let window = null;
 let frame = null;
@@ -52,6 +59,8 @@ app.once('ready', () => {
       slashes: true,
     })
   );
+
+  // Load url for frame
   frame.loadURL(global.url);
 
   window.once('ready-to-show', () => {

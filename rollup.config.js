@@ -21,7 +21,7 @@ export default {
       format: 'esm',
     },
   ],
-  external: ['styled-components', 'fs'],
+  external: ['styled-components', 'fs', 'react', 'react-dom', 'react-is'],
   plugins: [
     peerDepsExternal(),
     replace({
@@ -33,6 +33,7 @@ export default {
     }),
     resolve({
       browser: true,
+      preferBuiltins: true,
     }),
     commonjs({
       // include: 'node_modules/**',

@@ -9,7 +9,6 @@ import PageInfo from '@creative-controls/page-information';
 import Screenshots from '@creative-controls/screenshots';
 import Performance from '@creative-controls/performance';
 
-import Debug from '@creative-controls/debug';
 import Fullscreen from '@creative-controls/fullscreen';
 
 import Layout from './components/layout';
@@ -23,7 +22,6 @@ const settings = {
     Controls,
     Screenshots,
     Performance,
-    Debug,
     Fullscreen,
   ],
   theme: {

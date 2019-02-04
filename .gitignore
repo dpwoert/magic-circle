@@ -46,3 +46,4 @@ jspm_packages/
 # project specific
 dist
 examples/**/screenshots
+.settings.build.js

@@ -1,8 +1,8 @@
 {
-  "name": "@creative-controls/example-simple",
+  "name": "@creative-controls/example-debug",
   "private": true,
   "version": "0.0.0",
-  "description": "Creative controls simple example",
+  "description": "Creative controls debug example",
   "keywords": [
     "controls",
     "creative coding",
@@ -12,12 +12,12 @@
     "editing",
     "GUI",
     "example",
-    "simple"
+    "debug"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/dpwoert/creative-controls.git",
-    "directory": "examples/simple"
+    "directory": "examples/debugs"
   },
   "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
   "license": "MIT",
@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "three": "^0.97.0",
-    "@creative-controls/client": "^0.0.0"
+    "@creative-controls/client": "^0.0.0",
+    "@creative-controls/debug": "^0.0.0"
   }
 }

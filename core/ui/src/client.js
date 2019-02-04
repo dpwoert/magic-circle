@@ -9,10 +9,17 @@ const { ipcRenderer } = require('electron');
 
 export class Client {
   constructor(settings, cwd) {
+    if (settings.plugins) {
+      // eslint-disable-next-line
+      settings.plugins =
+        typeof settings.plugins === 'function'
+          ? settings.plugins(defaultSettings.plugins)
+          : settings.plugins;
+    }
+
     this.isElectron = true;
     this.settings = Object.assign(defaultSettings, settings);
     this.cwd = cwd;
-    console.info('cwd', cwd);
 
     // add plugins
     this.plugins = this.settings.plugins
