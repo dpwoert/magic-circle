@@ -17,12 +17,16 @@
   },
   "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
   "license": "MIT",
-  "main": "index.js",
+  "main": "src/app.js",
   "bin": {
     "controls": "./run.js"
   },
-  "scripts": {},
-  "devDependencies": {},
+  "scripts": {
+    "package": "bash package.sh"
+  },
+  "devDependencies": {
+    "electron-packager": "^13.0.1"
+  },
   "dependencies": {
     "@creative-controls/ui": "^0.0.0",
     "electron": "^3.0.8",

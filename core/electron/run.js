@@ -11,7 +11,8 @@ const commonjs = require('rollup-plugin-commonjs');
 const args = {};
 args.cwd = process.cwd();
 args.url = argv.url || argv.u;
-args.clear = argv.clear || argv.clear;
+args.clear = argv.c || argv.clear;
+args.debug = argv.d || argv.debug;
 
 const argsStr = Object.keys(args)
   .filter(key => args[key])
@@ -29,7 +30,7 @@ async function build() {
     const config = argv.config || argv.c;
     const configFile = config
       ? `${process.cwd()}/${config}`
-      : `${__dirname}/default-settings.js`;
+      : `${__dirname}/src/default-settings.js`;
 
     // create a bundle
     const bundle = await rollup.rollup({
@@ -52,7 +53,13 @@ async function build() {
     });
 
     // execute
-    const run = exec(`electron app.js ${argsStr}`, {
+    // build/Creative Controls-darwin-x64/Creative Controls.app/
+    const cmd =
+      argv.d || argv.debug
+        ? 'electron'
+        : 'build/CreativeControls-darwin-x64/CreativeControls.app/Contents/MacOS/CreativeControls';
+    // const cmd = 'electron';
+    const run = exec(`${cmd} src/app.js ${argsStr}`, {
       cwd: __dirname,
     });
 
