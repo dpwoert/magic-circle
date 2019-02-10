@@ -20,12 +20,11 @@ packager({
     // globToRegExp('data/**/*'),
   ],
 })
-  .then((err, appPaths) => {
+  .then(err => {
     if (err) {
-      console.log(err);
+      console.error(err);
     } else {
       console.info('app created');
-      // console.info(appPaths[2]);
     }
   })
   .catch(e => {

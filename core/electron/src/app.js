@@ -1,4 +1,4 @@
-const { app, BrowserWindow, globalShortcut } = require('electron');
+const { app, BrowserWindow } = require('electron');
 const settings = require('electron-settings');
 const url = require('url');
 const path = require('path');
@@ -11,6 +11,7 @@ const loadFiles = require('./load-files.js');
 
 const local = argv.url.indexOf('http') === -1;
 global.cwd = argv.cwd;
+global.settings = argv.settings;
 global.url = local
   ? url.format({
       pathname: path.join(argv.cwd, argv.url),
@@ -81,13 +82,6 @@ app.once('ready', () => {
 
   // Load plugins
   loadFiles(window, frame);
-
-  //show devtools on shortcut [TODO not a global shortcut]
-  globalShortcut.register('CommandOrControl+D', () => {
-    console.log('D pressed');
-    frame.webContents.openDevTools();
-    window.webContents.openDevTools();
-  });
 });
 
 // Quit when all windows are closed.

@@ -15,7 +15,7 @@ module.exports = function inject(window, frame) {
     // Add ipcRenderer to front-end
     window.webContents.executeJavaScript(`
       try{
-        const settings = require('${global.cwd}/.settings.build.js');
+        const settings = require('${global.settings}');
         const {Client} = require('@creative-controls/ui');
         window.__client = new Client(settings, '${global.cwd}');
       } catch(e){

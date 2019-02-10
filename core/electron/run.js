@@ -8,11 +8,22 @@ const rollup = require('rollup');
 const resolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
 
+const buildDir = 'build/CreativeControls-darwin-x64/CreativeControls.app/';
+const buildPath = path.join(
+  __dirname,
+  buildDir,
+  'Contents/Resources/app',
+  'settings.build.js'
+);
+
 const args = {};
 args.cwd = process.cwd();
 args.url = argv.url || argv.u;
 args.clear = argv.c || argv.clear;
 args.debug = argv.d || argv.debug;
+args.settings = args.debug
+  ? path.join(process.cwd(), '.settings.build.js')
+  : buildPath;
 
 const argsStr = Object.keys(args)
   .filter(key => args[key])
@@ -48,17 +59,14 @@ async function build() {
     });
 
     await bundle.write({
-      file: `${process.cwd()}/.settings.build.js`,
+      file: buildPath,
       format: 'cjs',
     });
 
     // execute
-    // build/Creative Controls-darwin-x64/Creative Controls.app/
-    const cmd =
-      argv.d || argv.debug
-        ? 'electron'
-        : 'build/CreativeControls-darwin-x64/CreativeControls.app/Contents/MacOS/CreativeControls';
-    // const cmd = 'electron';
+    const cmd = args.debug
+      ? 'electron'
+      : path.join(__dirname, buildDir, 'Contents/MacOS/CreativeControls');
     const run = exec(`${cmd} src/app.js ${argsStr}`, {
       cwd: __dirname,
     });
@@ -75,8 +83,10 @@ async function build() {
     run.on('close', () => {
       console.info('👋  closing creative controls');
 
-      // delete sync file again
-      fs.unlinkSync(`${process.cwd()}/.settings.build.js`);
+      // delete sync file again if needed
+      if (args.debug) {
+        fs.unlinkSync(`${process.cwd()}/.settings.build.js`);
+      }
     });
   } catch (e) {
     console.error(e);

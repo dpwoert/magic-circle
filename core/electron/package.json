@@ -22,7 +22,8 @@
     "controls": "./run.js"
   },
   "scripts": {
-    "package": "bash package.sh"
+    "package:dev": "bash package.sh",
+    "package:prod": "NODE_ENV=production bash package.sh"
   },
   "devDependencies": {
     "electron-packager": "^13.0.1"

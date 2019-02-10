@@ -19,7 +19,8 @@
   "main": "dist/bundle.js",
   "module": "dist/bundle.esm.js",
   "scripts": {
-    "start": "rollup --config ../../rollup.config.js"
+    "start": "rollup --config ../../rollup.config.js",
+    "build": "NODE_ENV=production rollup --config ../../rollup.config.js"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",

@@ -25,7 +25,7 @@ export default {
   plugins: [
     peerDepsExternal(),
     replace({
-      ENVIRONMENT: JSON.stringify('development'),
+      ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
       __dirname: id => `'${path.dirname(id)}'`,
     }),
     babel({
@@ -36,8 +36,6 @@ export default {
       preferBuiltins: true,
     }),
     commonjs({
-      // include: 'node_modules/**',
-      // module: false,
       namedExports: {
         'node_modules/react-is/index.js': [
           'isValidElementType',
