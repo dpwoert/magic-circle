@@ -85,7 +85,7 @@ async function build() {
 
       // delete sync file again if needed
       if (args.debug) {
-        fs.unlinkSync(`${process.cwd()}/.settings.build.js`);
+        fs.unlinkSync(path.join(process.cwd(), '.settings.build.js'));
       }
     });
   } catch (e) {

@@ -8,6 +8,7 @@ const inject = require('./inject.js');
 const eventSystem = require('./events.js');
 const resizeHandler = require('./resize.js');
 const loadFiles = require('./load-files.js');
+const menu = require('./menu.js');
 
 const local = argv.url.indexOf('http') === -1;
 global.cwd = argv.cwd;
@@ -82,6 +83,9 @@ app.once('ready', () => {
 
   // Load plugins
   loadFiles(window, frame);
+
+  // Add menu
+  menu(window, frame);
 });
 
 // Quit when all windows are closed.
