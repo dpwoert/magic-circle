@@ -21,9 +21,10 @@ args.cwd = process.cwd();
 args.url = argv.url || argv.u;
 args.clear = argv.c || argv.clear;
 args.debug = argv.d || argv.debug;
-args.settings = args.debug
-  ? path.join(process.cwd(), '.settings.build.js')
-  : buildPath;
+args.settings =
+  process.env.NODE_ENV === 'production'
+    ? buildPath
+    : path.join(process.cwd(), '.settings.build.js');
 
 const argsStr = Object.keys(args)
   .filter(key => args[key])
