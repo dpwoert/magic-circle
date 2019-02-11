@@ -3,12 +3,12 @@ const { ipcMain, Menu, MenuItem } = require('electron');
 module.exports = (window, frame, settings) => {
   const debug = settings.debug || {};
 
-  const toggleTools = w => {
+  const toggleTools = (w, mode) => {
     if (w.webContents.isDevToolsOpened()) {
       w.webContents.closeDevTools();
     } else {
       w.webContents.openDevTools({
-        mode: debug.mode || 'bottom',
+        mode: mode || (debug.mode || 'bottom'),
       });
     }
   };
@@ -32,15 +32,15 @@ module.exports = (window, frame, settings) => {
             {
               label: 'Window',
               accelerator: 'Alt+Command+I',
-              onClick: () => {
+              click: () => {
                 toggleTools(frame);
               },
             },
             {
               label: 'Editor',
               accelerator: 'Alt+Shift+Command+I',
-              onClick: () => {
-                toggleTools(window);
+              click: () => {
+                toggleTools(window, 'detach');
               },
             },
           ],
@@ -50,6 +50,4 @@ module.exports = (window, frame, settings) => {
   );
 
   Menu.setApplicationMenu(menu);
-
-  console.log(Menu.getApplicationMenu());
 };
