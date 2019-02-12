@@ -60,7 +60,25 @@ module.exports = (window, frame) => {
       { role: 'zoomout' },
       { type: 'separator' },
       {
-        label: 'fullscreen',
+        label: 'Sidebar',
+        submenu: [
+          {
+            label: 'Layers',
+            accelerator: 'CmdOrCtrl+1',
+          },
+          {
+            label: 'Screenshots',
+            accelerator: 'CmdOrCtrl+2',
+          },
+          {
+            label: 'Performance',
+            accelerator: 'CmdOrCtrl+2',
+          },
+        ],
+      },
+      { type: 'separator' },
+      {
+        label: 'Fullscreen',
         submenu: [
           {
             label: 'Window',
@@ -73,6 +91,11 @@ module.exports = (window, frame) => {
         ],
       },
     ],
+  });
+
+  template.push({
+    label: 'Plugins',
+    submenu: [],
   });
 
   template.push({

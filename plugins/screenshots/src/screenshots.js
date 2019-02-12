@@ -18,9 +18,11 @@ const memoize = dirName => {
   return async fileName => {
     if (!cache[fileName]) {
       const file = await readFile(`${dirName}/${fileName}`);
-      cache[fileName] = JSON.parse(file);
+      cache[fileName] = JSON.parse(
+        file.toString ? file.toString('utf8') : file
+      );
     }
-    return cache[name];
+    return cache[fileName];
   };
 };
 
@@ -48,6 +50,22 @@ class Screenshots {
 
   electron() {
     return `${__dirname}/electron.js`;
+  }
+
+  applicationMenu() {
+    return [
+      {
+        label: 'Take Screenshot',
+        accelerator: 'Command+S',
+        click: () => this.takeScreenshot(),
+      },
+      {
+        label: 'Show in Finder',
+        click: () => {
+          //todo
+        },
+      },
+    ];
   }
 
   header(position) {

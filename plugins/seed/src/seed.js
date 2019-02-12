@@ -18,6 +18,16 @@ class Seed {
     this.client.addListener('seed', (evt, payload) => this.setSeed(payload));
   }
 
+  applicationMenu() {
+    return [
+      {
+        label: 'Update seed',
+        accelerator: 'Command+D',
+        click: () => this.refresh(),
+      },
+    ];
+  }
+
   setSeed(seed, update) {
     this.store.set('seed', seed);
 

@@ -1,4 +1,8 @@
 const { ipcMain, Menu, MenuItem } = require('electron');
+const getRepoInfo = require('git-repo-info');
+
+const truncate = (string, max) =>
+  string.length > max ? `${string.substring(0, max)}...` : string;
 
 module.exports = (window, frame, settings) => {
   const debug = settings.debug || {};
@@ -17,6 +21,9 @@ module.exports = (window, frame, settings) => {
   ipcMain.on('dev-tools', () => {
     toggleTools(frame);
   });
+
+  // git status
+  const git = getRepoInfo();
 
   // menu
   const menu = Menu.getApplicationMenu();
@@ -44,6 +51,23 @@ module.exports = (window, frame, settings) => {
               },
             },
           ],
+        },
+        { role: 'separator' },
+        {
+          label: `env: ${process.env.NODE_ENV || 'development'}`,
+          enabled: false,
+        },
+        {
+          label: `branch: ${git.branch}`,
+          enabled: false,
+        },
+        {
+          label: `commit: ${truncate(git.commitMessage, 15)}`,
+          enabled: false,
+        },
+        {
+          label: `last tag: ${git.lastTag || 'none'}`,
+          enabled: false,
         },
       ],
     })

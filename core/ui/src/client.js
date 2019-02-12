@@ -2,6 +2,7 @@ import dotProp from 'dot-prop';
 
 import defaultSettings from './default-settings';
 import Store from './store';
+import addPluginMenu from './plugin-menu';
 
 const { ipcRenderer } = require('electron');
 
@@ -40,6 +41,14 @@ export class Client {
           let files = plugin.electron();
           files = Array.isArray(files) ? files : [files];
           this.sendAction('electron-load', { files, settings });
+        }
+
+        // menu for this plugin?
+        if (this.isElectron && plugin.applicationMenu) {
+          addPluginMenu(
+            Plugin.name.charAt(0).toUpperCase() + Plugin.name.slice(1),
+            plugin.applicationMenu()
+          );
         }
 
         return plugin;
