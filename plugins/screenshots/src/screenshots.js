@@ -62,7 +62,7 @@ class Screenshots {
       {
         label: 'Show in Finder',
         click: () => {
-          //todo
+          require('electron').shell.openItem(`${this.client.cwd}/screenshots`);
         },
       },
     ];
