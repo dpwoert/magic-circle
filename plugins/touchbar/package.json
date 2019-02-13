@@ -1,0 +1,33 @@
+{
+  "name": "@creative-controls/touchbar",
+  "version": "0.0.0",
+  "description": "Creative controls touchbar support for macbook pro",
+  "keywords": [
+    "controls",
+    "creative coding",
+    "editor",
+    "editing",
+    "GUI",
+    "touchbar",
+    "macbook"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dpwoert/creative-controls.git",
+    "directory": "plugins/touchbar"
+  },
+  "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
+  "license": "MIT",
+  "main": "dist/bundle.js",
+  "module": "dist/bundle.esm.js",
+  "scripts": {
+    "start": "rollup --config ../../rollup.config.js",
+    "build": "NODE_ENV=production rollup --config ../../rollup.config.js"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-plugin-styled-components": "^1.8.0"
+  }
+}

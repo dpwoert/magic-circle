@@ -141,6 +141,7 @@ export class Client {
 
       // batch messages
       ipcRenderer.on('batch', (evt, payload) => {
+        console.log('batch', evt, payload);
         this.batch(evt, payload);
       });
     }

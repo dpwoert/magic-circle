@@ -8,6 +8,7 @@ import Seed from '@creative-controls/seed';
 import PageInfo from '@creative-controls/page-information';
 import Screenshots from '@creative-controls/screenshots';
 import Performance from '@creative-controls/performance';
+import Touchbar from '@creative-controls/touchbar';
 
 import Fullscreen from '@creative-controls/fullscreen';
 
@@ -23,6 +24,7 @@ const settings = {
     Screenshots,
     Performance,
     Fullscreen,
+    Touchbar,
   ],
   theme: {
     // accent: 'rgb(102, 255, 153)',

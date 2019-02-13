@@ -52,6 +52,12 @@ module.exports = (window, frame, settings) => {
             },
           ],
         },
+        {
+          label: 'reload editor',
+          click: () => {
+            window.reload();
+          },
+        },
         { role: 'separator' },
         {
           label: `env: ${process.env.NODE_ENV || 'development'}`,
