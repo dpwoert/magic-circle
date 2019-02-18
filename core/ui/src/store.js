@@ -24,17 +24,27 @@ const withStore = (WrappedComponent, store) =>
 
     render() {
       const { data } = this.state;
-      return <WrappedComponent set={store.set} {...data} {...this.props} />;
+      const props = !!data && data.constructor === Object ? data : { data };
+      return (
+        <WrappedComponent
+          store={store}
+          set={store.set}
+          {...props}
+          {...this.props}
+        />
+      );
     }
   };
 
 class Store {
   constructor(initialData = {}) {
     this.listeners = [];
+    this.debouncedListeners = [];
     this.data = initialData;
 
     this.set = this.set.bind(this);
     this.get = this.get.bind(this);
+    this.update = this.update.bind(this);
   }
 
   get(key) {
@@ -52,6 +62,18 @@ class Store {
 
   refresh() {
     this.listeners.forEach(l => l(this.data));
+
+    // debounce
+    if (this.nextUpdate) clearTimeout(this.nextUpdate);
+    this.nextUpdate = setTimeout(this.update);
+  }
+
+  update(fn) {
+    if (fn) {
+      this.debouncedListeners.push(fn);
+    } else {
+      this.debouncedListeners.forEach(l => l(this.data));
+    }
   }
 
   addListener(fn) {

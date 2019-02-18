@@ -1,7 +1,3 @@
-import React from 'react';
-
-import Bar from './bar';
-
 class Debug {
   static name = 'debug';
 
@@ -15,14 +11,13 @@ class Debug {
     return `${__dirname}/electron.js`;
   }
 
-  header(position) {
-    if (position === 'left') {
-      return (
-        <Bar toggleDebugger={() => this.devTools()} key="debugger-control" />
-      );
-    }
-
-    return false;
+  buttons(buttons) {
+    buttons.set('debug', {
+      icon: 'Debug',
+      collection: 'debug',
+      onClick: () => this.devTools(),
+      touchbar: false,
+    });
   }
 
   devTools() {

@@ -3,6 +3,7 @@ import dotProp from 'dot-prop';
 import defaultSettings from './default-settings';
 import Store from './store';
 import addPluginMenu from './plugin-menu';
+import * as icons from './icons';
 
 const { ipcRenderer } = require('electron');
 
@@ -22,6 +23,10 @@ export class Client {
     this.settings = Object.assign(defaultSettings, settings);
     this.cwd = cwd;
 
+    this.buttons = new Store();
+    this.buttons.collection = this.getButtons.bind(this);
+    this.icons = icons;
+
     // add plugins
     this.plugins = this.settings.plugins
       .filter(
@@ -35,6 +40,11 @@ export class Client {
         const store = new Store(initialData);
         const plugin = new Plugin(this, store, this.settings);
         plugin._name = Plugin.name; //eslint-disable-line
+
+        // button collections
+        if (plugin.buttons) {
+          plugin.buttons(this.buttons);
+        }
 
         // load electron plugins?
         if (this.isElectron && plugin.electron) {
@@ -111,6 +121,22 @@ export class Client {
 
   getSetting(path, d) {
     return dotProp.get(this.settings, path, d);
+  }
+
+  getButtons() {
+    const buttons = {
+      play: [],
+      frame: [],
+      debug: [],
+    };
+
+    // group
+    Object.values(this.buttons.get()).forEach(b => {
+      buttons[b.collection] = buttons[b.collection] || [];
+      buttons[b.collection].push(b);
+    });
+
+    return buttons;
   }
 
   mapToJSON(map) {

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # reinstall all dependencies
 npm run clean
 npm i

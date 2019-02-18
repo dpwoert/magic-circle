@@ -5,7 +5,6 @@ import React from 'react';
 import fs from 'fs';
 import { promisify } from 'util';
 
-import Bar from './bar';
 import ScreenshotsPanel from './panel';
 
 const readFile = promisify(fs.readFile);
@@ -68,17 +67,12 @@ class Screenshots {
     ];
   }
 
-  header(position) {
-    if (position === 'left') {
-      return (
-        <Bar
-          takeScreenshot={p => this.takeScreenshot(p)}
-          key="screenshot-control"
-        />
-      );
-    }
-
-    return false;
+  buttons(buttons) {
+    buttons.set('screenshot', {
+      icon: 'Screenshot',
+      collection: 'frame',
+      onClick: () => this.takeScreenshot(),
+    });
   }
 
   async refresh() {

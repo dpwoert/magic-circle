@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 const fs = require('fs');
-const { ipcMain, Menu, MenuItem } = require('electron');
+const { ipcMain } = require('electron');
 const getRepoInfo = require('git-repo-info');
 
 module.exports = (window, frame) => {

@@ -1,7 +1,3 @@
-import React from 'react';
-
-import Bar from './bar';
-
 class PlayControls {
   static name = 'play-controls';
 
@@ -37,20 +33,25 @@ class PlayControls {
     this.client.sendMessage('change-play-state', play);
   }
 
-  header(position) {
-    if (position === 'left') {
-      const BarWithStore = this.store.withStore(Bar);
-      return (
-        <BarWithStore
-          changeState={p => this.changeState(p)}
-          refresh={() => this.client.refresh()}
-          reset={() => this.reset()}
-          key="play-controls"
-        />
-      );
-    }
-
-    return false;
+  buttons(buttons) {
+    this.store.addListener(data => {
+      buttons.set('play', {
+        icon: data.play ? 'Pause' : 'Play',
+        collection: 'play',
+        onClick: () => this.changeState(!data.play),
+      });
+      buttons.set('reload', {
+        icon: 'Reload',
+        collection: 'play',
+        onClick: () => this.client.refresh(),
+      });
+      buttons.set('rewind', {
+        icon: 'Rewind',
+        collection: 'play',
+        onClick: () => this.reset(),
+        touchbar: false,
+      });
+    });
   }
 }
 

@@ -17,6 +17,7 @@
     "postinstall": "lerna bootstrap --hoist",
     "build:dev": "lerna run start --parallel --ignore @creative-controls/example-*",
     "build:prod": "lerna run build --ignore @creative-controls/example-*",
+    "build:icons": "lerna run build:icons",
     "build:examples": "lerna run start --parallel --scope @creative-controls/example-*",
     "package:dev": "lerna bootstrap --scope @creative-controls/electron && lerna run package:dev --scope @creative-controls/electron",
     "package:prod": "lerna bootstrap --scope @creative-controls/electron && lerna run package:prod --scope @creative-controls/electron",

@@ -1,7 +1,3 @@
-import React from 'react';
-
-import Bar from './bar';
-
 class Debug {
   static name = 'fullscreen';
 
@@ -19,17 +15,13 @@ class Debug {
   //   return `${__dirname}/electron.js`;
   // }
 
-  header(position) {
-    if (position === 'left') {
-      return (
-        <Bar
-          toggleFullscreen={() => this.toggleFullscreen()}
-          key="fullscreen-control"
-        />
-      );
-    }
-
-    return false;
+  buttons(buttons) {
+    buttons.set('fullscreen', {
+      icon: 'Fullscreen',
+      collection: 'frame',
+      onClick: () => this.toggleFullscreen(),
+      touchbar: false,
+    });
   }
 
   toggleFullscreen() {

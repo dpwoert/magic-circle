@@ -53,7 +53,7 @@ module.exports = (window, frame, settings) => {
           ],
         },
         {
-          label: 'reload editor',
+          label: 'Reload Editor',
           click: () => {
             window.reload();
           },

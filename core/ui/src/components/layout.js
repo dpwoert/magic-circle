@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { ThemeProvider } from 'styled-components';
 import Header from './header';
 import Sidebar from './sidebar';
-import * as icons from '../icons';
 
 class Layout extends Component {
   hook(name, position) {
@@ -17,10 +16,12 @@ class Layout extends Component {
   }
 
   render() {
+    const HeaderWithStore = this.props.client.buttons.withStore(Header);
+    const { icons } = this.props.client;
     return (
       <ThemeProvider theme={{ icons, ...this.props.client.settings.theme }}>
         <div>
-          <Header
+          <HeaderWithStore
             left={this.hook('header', 'left')}
             center={this.hook('header', 'center')}
             right={this.hook('header', 'right')}
