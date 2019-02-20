@@ -26,8 +26,13 @@ const Left = styled.div`
 `;
 
 const Center = styled.div`
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 46px;
   display: flex;
   justify-content: center;
+  align-items: center;
 `;
 
 const Right = styled.div`

@@ -10,14 +10,6 @@ import PerformancePlugin from './plugins/performance';
 // load ipc renderer
 let ipcRenderer = null;
 
-const getNodeEnv = () => {
-  try {
-    return process.env.NODE_ENV;
-  } catch (e) {
-    return 'development';
-  }
-};
-
 export class Client {
   constructor(...plugins) {
     this.frames = 0;
@@ -56,7 +48,6 @@ export class Client {
       // Send page information to front-end
       this.sendMessage('page-information', {
         title: document.title,
-        nodeEnv: getNodeEnv(),
       });
 
       // trigger setup hook

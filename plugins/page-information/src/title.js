@@ -14,9 +14,7 @@ const truncate = (string, max) =>
 const Title = props => {
   const { title, nodeEnv } = props;
   const display =
-    title && title.length > 0
-      ? `${truncate(title || '', 25)} (${nodeEnv})`
-      : 'no page loaded';
+    title && title.length > 0 ? truncate(title || '', 25) : 'no page loaded';
   return <Container>{display}</Container>;
 };
 
