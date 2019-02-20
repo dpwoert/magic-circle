@@ -50,7 +50,10 @@ export class Client {
         if (this.isElectron && plugin.electron) {
           let files = plugin.electron();
           files = Array.isArray(files) ? files : [files];
-          this.sendAction('electron-load', { files, settings });
+          this.sendAction('electron-load', {
+            files,
+            settings: this.settings,
+          });
         }
 
         // menu for this plugin?

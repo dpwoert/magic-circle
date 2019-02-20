@@ -33,6 +33,7 @@ const Center = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  pointer-events: none;
 `;
 
 const Right = styled.div`
@@ -91,7 +92,7 @@ const Buttons = withTheme(props => (
     {props.list.map(b => {
       const Icon = props.theme.icons[b.icon];
       return (
-        <Button onClick={b.onClick}>
+        <Button onClick={b.click}>
           <Icon />
         </Button>
       );

@@ -1,12 +1,13 @@
 /* eslint-disable no-param-reassign */
 const fs = require('fs');
+const path = require('path');
 const { ipcMain } = require('electron');
 const getRepoInfo = require('git-repo-info');
 
-module.exports = (window, frame) => {
+module.exports = (window, frame, settings) => {
   // screenshots
   const screenshotBuffer = {};
-  ipcMain.on('screenshot', (evt, settings = {}) => {
+  ipcMain.on('screenshot', (evt, data = {}) => {
     frame.capturePage(img => {
       // Get date
       const now = new Date();
@@ -25,22 +26,28 @@ module.exports = (window, frame) => {
       }
 
       // Add git info
-      const git = getRepoInfo();
-      settings.git = git || {};
+      let git = {};
+      if (settings.gitInfo) {
+        const git = getRepoInfo();
+        data.git = git || {};
+      }
 
       // Add meta info
-      settings.meta = {
+      data.meta = {
         name: git.commitMessage || `${dateTime}${version}`,
         createdAt: +Date.now(),
       };
 
       // Get path
-      const path = `${global.cwd}/screenshots/screenshot ${dateTime}${version}`;
-      const data = JSON.stringify(settings);
+      const filePath = path.join(
+        settings.screenshots.path,
+        `screenshot ${dateTime}${version}`
+      );
+      const content = JSON.stringify(data);
 
       // Save both files to HDD
-      fs.writeFile(`${path}.png`, img.toPNG(), () => {
-        fs.writeFile(`${path}.json`, data, () => {
+      fs.writeFile(`${filePath}.png`, img.toPNG(), () => {
+        fs.writeFile(`${filePath}.json`, content, () => {
           window.webContents.send('screenshot-taken');
           console.info(`📸  took screenshot`);
         });

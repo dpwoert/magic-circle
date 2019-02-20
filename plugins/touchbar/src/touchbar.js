@@ -35,7 +35,7 @@ class Touchbar {
           const icon = nativeImage.createFromPath(iconPath);
           return new TouchBarButton({
             icon,
-            click: b.onClick,
+            click: b.click,
           });
         });
       return new TouchBarGroup({ items });

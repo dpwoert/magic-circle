@@ -4,6 +4,7 @@
 import React from 'react';
 import fs from 'fs';
 import { promisify } from 'util';
+import path from 'path';
 
 import ScreenshotsPanel from './panel';
 
@@ -34,17 +35,29 @@ class Screenshots {
     return { screenshots: [] };
   }
 
-  constructor(client, store) {
+  constructor(client, store, settings) {
     this.client = client;
     this.store = store;
 
+    // default settings
+    settings.screenshots = Object.assign(
+      {
+        path: path.join(this.client.cwd, 'screenshots'),
+        gitInfo: true,
+      },
+      settings.screenshots
+    );
+
     this.client.addListener('screenshot-taken', () => this.refresh());
+    this.path = this.client.getSetting('screenshots.path');
     this.deleteScreenshot = this.deleteScreenshot.bind(this);
     this.loadScreenshot = this.loadScreenshot.bind(this);
     this.renameScreenshot = this.renameScreenshot.bind(this);
 
-    this.fileCache = memoize(`${this.client.cwd}/screenshots`);
+    this.fileCache = memoize(this.path);
     this.refresh();
+
+    console.log(this.path, settings);
   }
 
   electron() {
@@ -61,7 +74,7 @@ class Screenshots {
       {
         label: 'Show in Finder',
         click: () => {
-          require('electron').shell.openItem(`${this.client.cwd}/screenshots`);
+          require('electron').shell.openItem(this.path);
         },
       },
     ];
@@ -71,14 +84,14 @@ class Screenshots {
     buttons.set('screenshot', {
       icon: 'Screenshot',
       collection: 'frame',
-      onClick: () => this.takeScreenshot(),
+      click: () => this.takeScreenshot(),
     });
   }
 
   async refresh() {
     // load all screenshots
     const screenshots = [];
-    const files = await readdir(`${this.client.cwd}/screenshots`);
+    const files = await readdir(this.path);
 
     for (let i = 0; i < files.length; i += 1) {
       const ext = files[i].substr(files[i].lastIndexOf('.') + 1);
@@ -93,7 +106,7 @@ class Screenshots {
   }
 
   loadScreenshot(file) {
-    let data = fs.readFileSync(`${this.client.cwd}/screenshots/${file}.json`);
+    let data = fs.readFileSync(path.join(this.path, `${file}.json`));
     data = JSON.parse(data);
 
     if (data.changelog) {
@@ -109,9 +122,7 @@ class Screenshots {
 
   deleteScreenshot(screenshot) {
     if (confirm('Are you sure you want to delete this screenshot?')) {
-      fs.unlinkSync(
-        `${this.client.cwd}/screenshots/${screenshot.fileName}.json`
-      );
+      fs.unlinkSync(path.join(this.path, `${screenshot.fileName}.json`));
       this.refresh();
     }
   }
@@ -120,12 +131,13 @@ class Screenshots {
     const data = await this.fileCache(`${fileName}.json`);
     data.meta.name = name;
 
-    const file = `${this.client.cwd}/screenshots/${fileName}.json`;
+    const file = path.join(this.path, `${fileName}.json`);
     await writeFile(file, JSON.stringify(data));
     await this.refresh();
   }
 
   takeScreenshot() {
+    console.log('take screenshot');
     const changelog = this.createChangelog
       ? this.client.mapToJSON(this.client.createChangelog())
       : [];
@@ -142,7 +154,7 @@ class Screenshots {
         renameScreenshot={this.renameScreenshot}
         loadScreenshot={this.loadScreenshot}
         resize={this.client.resize}
-        path={`${this.client.cwd}/screenshots`}
+        path={this.path}
         key="screenshots"
       />
     );

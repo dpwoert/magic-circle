@@ -19,7 +19,7 @@ class Debug {
     buttons.set('fullscreen', {
       icon: 'Fullscreen',
       collection: 'frame',
-      onClick: () => this.toggleFullscreen(),
+      click: () => this.toggleFullscreen(),
       touchbar: false,
     });
   }

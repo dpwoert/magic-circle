@@ -38,17 +38,17 @@ class PlayControls {
       buttons.set('play', {
         icon: data.play ? 'Pause' : 'Play',
         collection: 'play',
-        onClick: () => this.changeState(!data.play),
+        click: () => this.changeState(!data.play),
       });
       buttons.set('reload', {
         icon: 'Reload',
         collection: 'play',
-        onClick: () => this.client.refresh(),
+        click: () => this.client.refresh(),
       });
       buttons.set('rewind', {
         icon: 'Rewind',
         collection: 'play',
-        onClick: () => this.reset(),
+        click: () => this.reset(),
         touchbar: false,
       });
     });

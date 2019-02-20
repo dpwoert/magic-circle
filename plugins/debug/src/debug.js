@@ -15,7 +15,7 @@ class Debug {
     buttons.set('debug', {
       icon: 'Debug',
       collection: 'debug',
-      onClick: () => this.devTools(),
+      click: () => this.devTools(),
       touchbar: false,
     });
   }
