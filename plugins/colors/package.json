@@ -31,5 +31,8 @@
   },
   "dependencies": {
     "color-string": "1.5.3"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

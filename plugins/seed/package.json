@@ -35,5 +35,8 @@
   "peerDependencies": {
     "react": "*",
     "styled-components": "*"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

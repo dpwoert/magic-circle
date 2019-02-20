@@ -9,4 +9,5 @@ npm run build:prod
 npm run package:prod
 
 # publish
-# todo
+lerna version
+lerna publish

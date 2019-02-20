@@ -1,8 +1,9 @@
 {
-  "packages": [
-    "plugins/*",
-    "core/*",
-    "examples/*"
-  ],
-  "version": "0.0.0"
+  "packages": ["plugins/*", "core/*", "examples/*"],
+  "version": "0.0.0",
+  "command": {
+    "version": {
+      "allowBranch": "master"
+    }
+  }
 }
