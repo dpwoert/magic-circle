@@ -1,4 +1,5 @@
-const { ipcMain, Menu, MenuItem } = require('electron');
+const { app, ipcMain, Menu, MenuItem } = require('electron');
+const path = require('path');
 const getRepoInfo = require('git-repo-info');
 
 const truncate = (string, max) =>
@@ -74,6 +75,14 @@ module.exports = (window, frame, settings) => {
         {
           label: `last tag: ${git.lastTag || 'none'}`,
           enabled: false,
+        },
+        { role: 'separator' },
+        {
+          label: 'Show package in Finder',
+          click: () => {
+            const p = path.join(app.getPath('exe'), '../../');
+            require('electron').shell.openItem(p);
+          },
         },
       ],
     })
