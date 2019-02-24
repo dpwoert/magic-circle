@@ -8,7 +8,6 @@ class PageInformation {
   static initStore() {
     return {
       title: '',
-      nodeEnv: 'development',
     };
   }
 

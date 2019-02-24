@@ -19,7 +19,7 @@ const buildPath = path.join(
 const args = {};
 args.cwd = process.cwd();
 args.url = argv.url || argv.u;
-args.clear = argv.c || argv.clear;
+args.clear = argv.clear;
 args.debug = argv.d || argv.debug;
 args.settings =
   process.env.NODE_ENV === 'production'

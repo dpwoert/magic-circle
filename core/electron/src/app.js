@@ -15,7 +15,7 @@ global.cwd = argv.cwd;
 global.settings = argv.settings;
 global.url = local
   ? url.format({
-      pathname: path.join(argv.cwd, argv.url),
+      pathname: path.join(argv.cwd, argv.url || 'index.html'),
       protocol: 'file:',
       slashes: true,
     })
