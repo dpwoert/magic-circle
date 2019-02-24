@@ -1,5 +1,5 @@
 {
-  "name": "@creative-controls/electron",
+  "name": "@creative-controls/editor",
   "version": "0.0.0",
   "description": "Creative controls electron runner",
   "keywords": [
@@ -13,7 +13,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/dpwoert/creative-controls.git",
-    "directory": "core/electron"
+    "directory": "core/editor"
   },
   "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
   "license": "MIT",

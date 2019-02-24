@@ -8,13 +8,13 @@
 ## Install
 Install the packages needed locally by using npm or yarn.
 ```sh
-$ npm install @creative-controls/electron --save-dev
 $ npm install @creative-controls/client --save
+$ npm install @creative-controls/editor --save-dev
 ```
 
 If you're not using a package manager for your project it is also possible to install the shell to run the editor globally.
 ```sh
-$ npm install @creative-controls/electron -g
+$ npm install @creative-controls/editor -g
 ```
 
 ## Load front-end
