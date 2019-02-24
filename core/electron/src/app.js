@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, powerSaveBlocker } = require('electron');
 const settings = require('electron-settings');
 const url = require('url');
 const path = require('path');
@@ -33,14 +33,25 @@ app.once('ready', () => {
     settings.deleteAll();
   }
 
-  const initialSize = settings.get('size') || {};
+  const screen = Object.assign(
+    {
+      size: false,
+      enableResize: true,
+      enableLargerThanScreen: false,
+      preventSleep: false,
+    },
+    require(global.settings).screen || {}
+  );
+
+  const defaultSize = { width: 1400, height: 768 };
+  const initialSize = screen.size || (settings.get('size') || defaultSize);
 
   // Create a new window
   window = new BrowserWindow({
-    width: initialSize.width || 1400,
-    height: initialSize.height || 768,
-    // show: false,
-    resizable: true,
+    width: initialSize.width,
+    height: initialSize.height,
+    resizable: screen.enableResize,
+    enableLargerThanScreen: screen.enableLargerThanScreen,
     useContentSize: true,
     titleBarStyle: 'hiddenInset',
   });
@@ -49,10 +60,13 @@ app.once('ready', () => {
     width: 800,
     height: 768,
     frame: false,
-    // resize: false,
     hasShadow: false,
-    // transparent: true
   });
+
+  // Power sleep
+  if (screen.preventSleep) {
+    powerSaveBlocker.start('prevent-display-sleep');
+  }
 
   // Load a URL in the window to the local index.html path
   window.loadURL(

@@ -92,7 +92,10 @@ module.exports = {
 
   screen: {
     // Size of screen on load, on default will load with saved size of window
-    size: '1024x768',
+    size: {
+      width: 1400,
+      height: 768,
+    },
 
     // Enables resizing of window
     enableResize: true,
