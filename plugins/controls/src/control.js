@@ -75,9 +75,9 @@ class Control extends Component {
   }
 
   render() {
-    const { control } = this.props;
+    const { control, component } = this.props;
     const { value, original } = this.state;
-    const CustomControl = getControl(control.type);
+    const CustomControl = component;
     const changed = !shallowEqual(original, value) && !CustomControl.noReset;
 
     if (!CustomControl) {

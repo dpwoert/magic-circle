@@ -12,5 +12,4 @@ const controls = [
   ButtonControl,
 ];
 
-export const addControl = c => controls.push(c);
-export const getControl = name => controls.find(c => name === c.type);
+export default controls;

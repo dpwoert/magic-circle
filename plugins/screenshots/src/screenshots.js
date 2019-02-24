@@ -56,8 +56,6 @@ class Screenshots {
 
     this.fileCache = memoize(this.path);
     this.refresh();
-
-    console.log(this.path, settings);
   }
 
   electron() {

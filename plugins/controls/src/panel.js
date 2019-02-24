@@ -39,6 +39,7 @@ class ControlsPanel extends Component {
         <ControlList>
           {folder.controls.map(c => (
             <Control
+              component={this.props.getControl(c.type)}
               control={c}
               path={path}
               updateControl={this.props.updateControl}

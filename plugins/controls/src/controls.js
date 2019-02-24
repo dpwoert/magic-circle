@@ -4,13 +4,21 @@ import shallowEqual from 'shallowequal';
 import ControlPanel from './panel';
 import withControls from './with-controls';
 
+import defaultControls from './components';
+
 class Controls {
   static name = 'controls';
 
-  constructor(client) {
+  constructor(client, store, settings) {
     this.client = client;
+    this.getControl = this.getControl.bind(this);
     this.updateControl = this.updateControl.bind(this);
     this.client.createChangelog = this.createChangelog.bind(this);
+
+    // list of controls
+    this.controls = settings.controls
+      ? settings.controls(defaultControls)
+      : defaultControls;
 
     this.client.addListener('connect', () => this.presetup());
   }
@@ -94,6 +102,10 @@ class Controls {
     this.client.sendMessage('resync');
   }
 
+  getControl(name) {
+    return this.controls.find(c => name === c.type);
+  }
+
   updateControl(path, value) {
     this.client.sendMessage('control-set-value', { path, value });
 
@@ -110,7 +122,12 @@ class Controls {
     const { store } = this.client.getPlugin('layers');
     if (store) {
       const Panel = withControls(ControlPanel, store);
-      return <Panel updateControl={this.updateControl} />;
+      return (
+        <Panel
+          getControl={this.getControl}
+          updateControl={this.updateControl}
+        />
+      );
     }
 
     return null;
