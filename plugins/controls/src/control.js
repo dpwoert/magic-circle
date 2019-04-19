@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import shallowEqual from 'shallowequal';
 
-import { getControl } from './components';
-
 const Wrapper = styled.div`
   position: relative;
   overflow: hidden;

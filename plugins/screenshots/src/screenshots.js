@@ -1,5 +1,6 @@
 /* eslint-disable no-restricted-globals */
 /* eslint-disable no-alert */
+/* eslint-disable no-param-reassign */
 
 import React from 'react';
 import fs from 'fs';
@@ -135,7 +136,6 @@ class Screenshots {
   }
 
   takeScreenshot() {
-    console.log('take screenshot');
     const changelog = this.createChangelog
       ? this.client.mapToJSON(this.client.createChangelog())
       : [];

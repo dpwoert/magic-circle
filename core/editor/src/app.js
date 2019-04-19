@@ -33,6 +33,8 @@ app.once('ready', () => {
     settings.deleteAll();
   }
 
+  // eslint-disable-next-line
+  const settingsFile = require(global.settings) || {};
   const screen = Object.assign(
     {
       size: false,
@@ -40,7 +42,7 @@ app.once('ready', () => {
       enableLargerThanScreen: false,
       preventSleep: false,
     },
-    require(global.settings).screen || {}
+    settingsFile.screen || {}
   );
 
   const defaultSize = { width: 1400, height: 768 };

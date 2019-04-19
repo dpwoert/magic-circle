@@ -15,6 +15,7 @@ const buildPath = path.join(
   'Contents/Resources/app',
   'settings.build.js'
 );
+const { mode } = require('./build/mode.json');
 
 const args = {};
 args.cwd = process.cwd();
@@ -22,7 +23,7 @@ args.url = argv.url || argv.u;
 args.clear = argv.clear;
 args.debug = argv.d || argv.debug;
 args.settings =
-  process.env.NODE_ENV === 'production'
+  mode === 'production'
     ? buildPath
     : path.join(process.cwd(), '.settings.build.js');
 
@@ -60,7 +61,7 @@ async function build() {
     });
 
     await bundle.write({
-      file: buildPath,
+      file: args.settings,
       format: 'cjs',
     });
 

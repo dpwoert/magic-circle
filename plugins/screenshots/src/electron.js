@@ -28,7 +28,7 @@ module.exports = (window, frame, settings) => {
       // Add git info
       let git = {};
       if (settings.gitInfo) {
-        const git = getRepoInfo();
+        git = getRepoInfo();
         data.git = git || {};
       }
 
