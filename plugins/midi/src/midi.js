@@ -3,14 +3,14 @@
 /* eslint-disable no-param-reassign */
 
 import React from 'react';
-import fs from 'fs';
-import { promisify } from 'util';
+// import fs frxom 'fs';
+// import { promisify } from 'util';
 import path from 'path';
 
 import MidiPanel from './panel';
 
-const readFile = promisify(fs.readFile);
-const writeFile = promisify(fs.writeFile);
+// const readFile = promisify(fs.readFile);
+// const writeFile = promisify(fs.writeFile);
 
 class Midi {
   static name = 'midi';
@@ -42,13 +42,13 @@ class Midi {
         label: 'Next preset',
         // accelerator: 'Command+A',
         click: () => {
-          //todo
+          // todo
         },
       },
       {
         label: 'Previous preset',
         click: () => {
-          //todo
+          // todo
         },
       },
     ];
