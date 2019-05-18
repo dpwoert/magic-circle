@@ -88,6 +88,8 @@ app.once('ready', () => {
     frame.show();
   });
 
+  window.webContents.openDevTools();
+
   // inject needed data
   inject(window, frame);
 

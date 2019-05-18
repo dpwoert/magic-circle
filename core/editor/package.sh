@@ -7,7 +7,7 @@ rm -rfv build/*
 node package.js
 
 # make alias
-rm -rfv build/CreativeControls-darwin-x64/CreativeControls.app/Contents/Resources/app/node_modules/@creative-controls
+rm -rf build/CreativeControls-darwin-x64/CreativeControls.app/Contents/Resources/app/node_modules/@creative-controls
 # mkdir build/CreativeControls-darwin-x64/CreativeControls.app/Contents/Resources/app/node_modules/@creative-controls
 # mkdir build/CreativeControls-darwin-x64/CreativeControls.app/Contents/Resources/app/node_modules/@creative-controls/ui
 

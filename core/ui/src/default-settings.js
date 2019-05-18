@@ -9,6 +9,7 @@ import PageInfo from '@creative-controls/page-information';
 import Screenshots from '@creative-controls/screenshots';
 import Performance from '@creative-controls/performance';
 import Touchbar from '@creative-controls/touchbar';
+import Midi from '@creative-controls/midi';
 
 import Fullscreen from '@creative-controls/fullscreen';
 
@@ -25,6 +26,7 @@ const settings = {
     Performance,
     Fullscreen,
     Touchbar,
+    Midi,
   ],
   theme: {
     // accent: 'rgb(102, 255, 153)',

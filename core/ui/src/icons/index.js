@@ -14,6 +14,9 @@ import { Performance } from './performance.svg';
 import { Performance2 } from './performance2.svg';
 import { Debug } from './debug.svg';
 import { Fullscreen } from './fullscreen.svg';
+import { Videogame } from './videogame.svg';
+import { Keyboard } from './keyboard.svg';
+import { Usb } from './usb.svg';
 
 CameraRoll.png = path.join(__dirname, 'camera-roll.png');
 Trashbin.png = path.join(__dirname, 'trashbin.png');
@@ -45,4 +48,7 @@ export {
   Performance2,
   Debug,
   Fullscreen,
+  Usb,
+  Keyboard,
+  Videogame,
 };

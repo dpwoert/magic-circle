@@ -45,7 +45,8 @@
     "@creative-controls/debug": "^0.0.0",
     "@creative-controls/fullscreen": "^0.0.0",
     "@creative-controls/colors": "^0.0.0",
-    "@creative-controls/touchbar": "^0.0.0"
+    "@creative-controls/touchbar": "^0.0.0",
+    "@creative-controls/midi": "^0.0.0"
   },
   "peerDependencies": {
     "react": "^16.5.2",

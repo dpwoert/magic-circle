@@ -2,6 +2,7 @@ import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import babel from 'rollup-plugin-babel';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
+import builtins from 'builtin-modules';
 import replace from 'rollup-plugin-replace';
 import path from 'path';
 
@@ -21,7 +22,13 @@ export default {
       format: 'esm',
     },
   ],
-  external: ['styled-components', 'fs', 'react', 'react-dom', 'react-is'],
+  external: [
+    ...builtins,
+    'styled-components',
+    'react',
+    'react-dom',
+    'react-is',
+  ],
   plugins: [
     peerDepsExternal(),
     replace({
