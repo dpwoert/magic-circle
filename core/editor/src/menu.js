@@ -72,7 +72,7 @@ module.exports = (window, frame) => {
           },
           {
             label: 'Performance',
-            accelerator: 'CmdOrCtrl+2',
+            accelerator: 'CmdOrCtrl+3',
           },
         ],
       },

@@ -18,7 +18,13 @@ class Midi {
   static electronOnly = true;
 
   static initStore() {
-    return { presets: [] };
+    return {
+      presets: [{ label: '', config: [] }],
+      active: {
+        preset: 0,
+        row: null,
+      },
+    };
   }
 
   constructor(client, store, settings) {
@@ -35,6 +41,23 @@ class Midi {
 
     this.path = this.client.getSetting('midi.path');
   }
+
+  addRow() {
+    const presets = this.store.get('presets');
+    const active = this.store.get('active').preset;
+    debugger;
+    presets[active].config.push({
+      id: Date.now(),
+      midi: '',
+      key: '',
+    });
+
+    this.store.set('presets', presets);
+  }
+
+  save() {}
+
+  reset() {}
 
   applicationMenu() {
     return [
@@ -56,7 +79,7 @@ class Midi {
 
   sidebar() {
     const Panel = this.store.withStore(MidiPanel);
-    return <Panel path={this.path} key="midi" />;
+    return <Panel path={this.path} addRow={() => this.addRow()} key="midi" />;
   }
 }
 
