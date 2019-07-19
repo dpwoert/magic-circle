@@ -1,7 +1,7 @@
 {
-  "name": "creative-controls",
+  "name": "magic-circle",
   "private": true,
-  "description": "Creative controls main repo",
+  "description": "Magic Circle main repo",
   "keywords": [
     "controls",
     "creative coding",
@@ -9,18 +9,18 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/dpwoert/creative-controls.git"
+    "url": "https://github.com/dpwoert/magic-circle.git"
   },
   "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
   "license": "MIT",
   "scripts": {
     "postinstall": "lerna bootstrap --hoist",
-    "build:dev": "lerna run start --parallel --ignore @creative-controls/example-*",
-    "build:prod": "lerna run build --ignore @creative-controls/example-*",
+    "build:dev": "lerna run start --parallel --ignore @magic-circle/example-*",
+    "build:prod": "lerna run build --ignore @magic-circle/example-*",
     "build:icons": "lerna run build:icons",
-    "build:examples": "lerna run start --parallel --scope @creative-controls/example-*",
-    "package:dev": "lerna bootstrap --scope @creative-controls/editor && lerna run package:dev --scope @creative-controls/editor",
-    "package:prod": "lerna bootstrap --scope @creative-controls/editor && lerna run package:prod --scope @creative-controls/editor",
+    "build:examples": "lerna run start --parallel --scope @magic-circle/example-*",
+    "package:dev": "lerna bootstrap --scope @magic-circle/editor && lerna run package:dev --scope @magic-circle/editor",
+    "package:prod": "lerna bootstrap --scope @magic-circle/editor && lerna run package:prod --scope @magic-circle/editor",
     "publish": "sh publish.sh",
     "start": "nodemon --exec \"npm run build:dev\"",
     "watch:examples": "nodemon --exec \"npm run build:examples\"",

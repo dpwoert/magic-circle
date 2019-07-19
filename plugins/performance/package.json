@@ -1,7 +1,7 @@
 {
-  "name": "@creative-controls/performance",
+  "name": "@magic-circle/performance",
   "version": "0.0.0",
-  "description": "Creative controls performance management",
+  "description": "Magic Circle performance management",
   "keywords": [
     "controls",
     "creative coding",
@@ -15,7 +15,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/dpwoert/creative-controls.git",
+    "url": "https://github.com/dpwoert/magic-circle.git",
     "directory": "plugins/performance"
   },
   "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",

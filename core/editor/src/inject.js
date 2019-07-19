@@ -16,7 +16,7 @@ module.exports = function inject(window, frame) {
     window.webContents.executeJavaScript(`
       try{
         const settings = require('${global.settings}');
-        const {Client} = require('@creative-controls/ui');
+        const {Client} = require('@magic-circle/ui');
         window.__client = new Client(settings, '${global.cwd}');
       } catch(e){
         console.log('⚠️  error during injecting of settings');

@@ -37,7 +37,7 @@ export class Client {
 
   connect() {
     if (window.__IPC) {
-      console.info('🔌 Creative Controls loaded');
+      console.info('🔌 Magic Circle loaded');
       ipcRenderer = window.__IPC;
 
       this.sendMessage('connect');

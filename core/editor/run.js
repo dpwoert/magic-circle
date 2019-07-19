@@ -8,7 +8,7 @@ const rollup = require('rollup');
 const resolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
 
-const buildDir = 'build/CreativeControls-darwin-x64/CreativeControls.app/';
+const buildDir = 'build/MagicCircle-darwin-x64/MagicCircle.app/';
 const buildPath = path.join(
   __dirname,
   buildDir,
@@ -68,7 +68,7 @@ async function build() {
     // execute
     const cmd = args.debug
       ? 'electron'
-      : path.join(__dirname, buildDir, 'Contents/MacOS/CreativeControls');
+      : path.join(__dirname, buildDir, 'Contents/MacOS/MagicCircle');
     const run = exec(`${cmd} src/app.js ${argsStr}`, {
       cwd: __dirname,
     });
@@ -83,7 +83,7 @@ async function build() {
 
     // waiting to be done
     run.on('close', () => {
-      console.info('👋  closing creative controls');
+      console.info('👋  closing Magic Circle');
 
       // delete sync file again if needed
       if (args.debug) {

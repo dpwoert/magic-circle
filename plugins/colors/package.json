@@ -1,7 +1,7 @@
 {
-  "name": "@creative-controls/colors",
+  "name": "@magic-circle/colors",
   "version": "0.0.0",
-  "description": "Creative controls color library",
+  "description": "Magic Circle color library",
   "keywords": [
     "controls",
     "creative coding",
@@ -13,7 +13,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/dpwoert/creative-controls.git",
+    "url": "https://github.com/dpwoert/magic-circle.git",
     "directory": "plugins/colors"
   },
   "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",

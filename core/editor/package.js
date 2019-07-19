@@ -3,8 +3,8 @@ const packager = require('electron-packager');
 // const globToRegExp = require('glob-to-regexp');
 
 packager({
-  name: 'CreativeControls',
-  // executableName: 'Creative Controls',
+  name: 'MagicCircle',
+  // executableName: 'Magic Circle',
   // icon: './src/assets/sn-logo.icns',
   appCopyright: 'Davey van der Woert',
 

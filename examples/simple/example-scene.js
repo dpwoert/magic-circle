@@ -15,7 +15,7 @@ import {
   TextControl,
   ColorControl,
   ButtonControl,
-} from '@creative-controls/client';
+} from '@magic-circle/client';
 
 let renderer;
 let scene;

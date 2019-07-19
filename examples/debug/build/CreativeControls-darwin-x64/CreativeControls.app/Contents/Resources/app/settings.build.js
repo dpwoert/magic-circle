@@ -47,7 +47,7 @@ class Debug {
   }
 
   electron() {
-    return `${'/Users/dpwoert/projects/creative-controls/plugins/debug/src'}/electron.js`;
+    return `${'/Users/dpwoert/projects/magic-circle/plugins/debug/src'}/electron.js`;
   }
 
   header(position) {

@@ -1,7 +1,7 @@
 {
-  "name": "@creative-controls/page-information",
+  "name": "@magic-circle/page-information",
   "version": "0.0.0",
-  "description": "Creative controls page information",
+  "description": "Magic Circle page information",
   "keywords": [
     "controls",
     "creative coding",
@@ -13,7 +13,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/dpwoert/creative-controls.git",
+    "url": "https://github.com/dpwoert/magic-circle.git",
     "directory": "plugins/page-information"
   },
   "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",

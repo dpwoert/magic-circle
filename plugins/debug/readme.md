@@ -3,7 +3,7 @@ Enables the app to be debugged.
 
 ## Settings
 ```js
-import Fullscreen from '@creative-controls/debug';
+import Fullscreen from '@magic-circle/debug';
 
 module.exports = {
   plugins: defaultPlugins => [...defaultPlugins, Debug],

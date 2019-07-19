@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withTheme } from 'styled-components';
-import Color from '@creative-controls/colors';
+import Color from '@magic-circle/colors';
 
 class PerformanceChart extends Component {
   componentDidMount() {

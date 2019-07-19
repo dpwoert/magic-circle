@@ -1,7 +1,7 @@
 {
-  "name": "@creative-controls/screenshots",
+  "name": "@magic-circle/screenshots",
   "version": "0.0.0",
-  "description": "Creative controls screenshots",
+  "description": "Magic Circle screenshots",
   "keywords": [
     "controls",
     "creative coding",
@@ -13,7 +13,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/dpwoert/creative-controls.git",
+    "url": "https://github.com/dpwoert/magic-circle.git",
     "directory": "plugins/screenshots"
   },
   "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",

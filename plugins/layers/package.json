@@ -1,7 +1,7 @@
 {
-  "name": "@creative-controls/layers",
+  "name": "@magic-circle/layers",
   "version": "0.0.0",
-  "description": "Creative controls layers",
+  "description": "Magic Circle layers",
   "keywords": [
     "controls",
     "creative coding",
@@ -13,7 +13,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/dpwoert/creative-controls.git",
+    "url": "https://github.com/dpwoert/magic-circle.git",
     "directory": "plugins/layers"
   },
   "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",

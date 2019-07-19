@@ -1,7 +1,7 @@
 {
-  "name": "@creative-controls/play-controls",
+  "name": "@magic-circle/play-controls",
   "version": "0.0.0",
-  "description": "Creative controls play controls",
+  "description": "Magic Circle play controls",
   "keywords": [
     "controls",
     "creative coding",
@@ -14,7 +14,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/dpwoert/creative-controls.git",
+    "url": "https://github.com/dpwoert/magic-circle.git",
     "directory": "plugins/play-controls"
   },
   "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",

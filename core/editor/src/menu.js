@@ -4,7 +4,7 @@ module.exports = (window, frame) => {
   const template = [];
 
   template.push({
-    label: 'Creative Controls',
+    label: 'Magic Circle',
     submenu: [
       { role: 'about' },
       { type: 'separator' },
@@ -105,7 +105,7 @@ module.exports = (window, frame) => {
         label: 'Learn More',
         click: () => {
           require('electron').shell.openExternal(
-            'https://github.com/dpwoert/creative-controls'
+            'https://github.com/dpwoert/magic-circle'
           );
         },
       },

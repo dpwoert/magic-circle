@@ -1,7 +1,7 @@
 {
-  "name": "@creative-controls/client",
+  "name": "@magic-circle/client",
   "version": "0.0.0",
-  "description": "Creative controls front-end client",
+  "description": "Magic Circle front-end client",
   "keywords": [
     "controls",
     "creative coding",
@@ -13,7 +13,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/dpwoert/creative-controls.git",
+    "url": "https://github.com/dpwoert/magic-circle.git",
     "directory": "core/client"
   },
   "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",

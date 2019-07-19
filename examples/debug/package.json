@@ -1,8 +1,8 @@
 {
-  "name": "@creative-controls/example-debug",
+  "name": "@magic-circle/example-debug",
   "private": true,
   "version": "0.0.0",
-  "description": "Creative controls debug example",
+  "description": "Magic Circle debug example",
   "keywords": [
     "controls",
     "creative coding",
@@ -16,7 +16,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/dpwoert/creative-controls.git",
+    "url": "https://github.com/dpwoert/magic-circle.git",
     "directory": "examples/debugs"
   },
   "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
@@ -31,7 +31,7 @@
     "@babel/core": "^7.2.2",
     "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
-    "@creative-controls/editor": "^0.0.0",
+    "@magic-circle/editor": "^0.0.0",
     "babel-plugin-inline-react-svg": "^1.0.1",
     "babel-plugin-styled-components": "^1.8.0",
     "parcel": "^1.11.0",
@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "three": "^0.97.0",
-    "@creative-controls/client": "^0.0.0",
-    "@creative-controls/debug": "^0.0.0"
+    "@magic-circle/client": "^0.0.0",
+    "@magic-circle/debug": "^0.0.0"
   }
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import ColorPicker from 'rc-color-picker';
 
-import Color from '@creative-controls/colors';
+import Color from '@magic-circle/colors';
 
 import { Row, Label, Center } from './styles';
 import GlobalStyle from './color-control-style';

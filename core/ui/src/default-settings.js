@@ -1,17 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Layers from '@creative-controls/layers';
-import PlayControls from '@creative-controls/play-controls';
-import Controls from '@creative-controls/controls';
-import Seed from '@creative-controls/seed';
-import PageInfo from '@creative-controls/page-information';
-import Screenshots from '@creative-controls/screenshots';
-import Performance from '@creative-controls/performance';
-import Touchbar from '@creative-controls/touchbar';
-import Midi from '@creative-controls/midi';
+import Layers from '@magic-circle/layers';
+import PlayControls from '@magic-circle/play-controls';
+import Controls from '@magic-circle/controls';
+import Seed from '@magic-circle/seed';
+import PageInfo from '@magic-circle/page-information';
+import Screenshots from '@magic-circle/screenshots';
+import Performance from '@magic-circle/performance';
+import Touchbar from '@magic-circle/touchbar';
+import Midi from '@magic-circle/midi';
 
-import Fullscreen from '@creative-controls/fullscreen';
+import Fullscreen from '@magic-circle/fullscreen';
 
 import Layout from './components/layout';
 

@@ -3,7 +3,7 @@ Helper for handling colors used internally by the editor.
 
 ## Example
 ```js
-import Color from '@creative-controls/colors';
+import Color from '@magic-circle/colors';
 
 const red = new Color('#ff0000');
 console.log(red.toObject());

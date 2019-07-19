@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Color from '@creative-controls/colors';
+import Color from '@magic-circle/colors';
 
 import { Row, Label, Center, Value } from './styles';
 

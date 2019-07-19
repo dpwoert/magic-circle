@@ -17,5 +17,5 @@ npm run package:prod
 # publish
 if [[ "$1" == "--confirm" ]]; then
   echo "publishing to NPM"
-  # lerna publish
+  lerna publish
 fi
