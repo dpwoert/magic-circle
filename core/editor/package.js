@@ -1,10 +1,17 @@
 const packager = require('electron-packager');
+const path = require('path');
+const fs = require('fs');
 
 // const globToRegExp = require('glob-to-regexp');
 
+const pkg = require('./package.json');
+const executableName = pkg.executableName;
+const namespace = pkg.name.split('/')[0];
+const name = namespace.replace('@', '');
+
 packager({
-  name: 'MagicCircle',
-  // executableName: 'Magic Circle',
+  name,
+  executableName,
   // icon: './src/assets/sn-logo.icns',
   appCopyright: 'Davey van der Woert',
 
@@ -20,14 +27,19 @@ packager({
     // globToRegExp('data/**/*'),
   ],
 })
-  .then(err => {
-    if (err) {
-      console.error(err);
-    } else {
-      console.info('app created');
-    }
+  .then(path => {
+    // Create reference to app created
+    const app = {
+      name,
+      executableName,
+      namespace: pkg.name.split('/')[0],
+      buildDir: path[0],
+    };
+    fs.writeFileSync('./app.json', JSON.stringify(app));
+
+    console.info('app created');
   })
   .catch(e => {
-    console.error(e);
+    console.error('error during build', e);
     process.exit(1);
   });

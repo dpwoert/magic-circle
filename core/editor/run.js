@@ -8,10 +8,11 @@ const rollup = require('rollup');
 const resolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
 
-const buildDir = 'build/MagicCircle-darwin-x64/MagicCircle.app/';
+const app = require(path.join(__dirname, 'app.json'));
 const buildPath = path.join(
   __dirname,
-  buildDir,
+  app.buildDir,
+  `${app.name}.app`,
   'Contents/Resources/app',
   'settings.build.js'
 );
@@ -68,8 +69,13 @@ async function build() {
     // execute
     const cmd = args.debug
       ? 'electron'
-      : path.join(__dirname, buildDir, 'Contents/MacOS/MagicCircle');
-    const run = exec(`${cmd} src/app.js ${argsStr}`, {
+      : path.join(
+          __dirname,
+          app.buildDir,
+          `${app.name}.app`,
+          `Contents/MacOS/${app.executableName}`
+        );
+    const run = exec(`"${cmd}" src/app.js ${argsStr}`, {
       cwd: __dirname,
     });
 

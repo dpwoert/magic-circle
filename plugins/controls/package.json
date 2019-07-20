@@ -22,24 +22,20 @@
   },
   "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
   "license": "MIT",
-  "main": "dist/bundle.js",
-  "module": "dist/bundle.esm.js",
-  "scripts": {
-    "start": "rollup --config ../../rollup.config.js",
-    "build": "NODE_ENV=production rollup --config ../../rollup.config.js"
-  },
+  "main": "src/index.js",
+  "module": "src/index.js",
   "devDependencies": {
     "@babel/core": "^7.2.0",
     "@babel/plugin-proposal-class-properties": "^7.2.0",
     "@babel/preset-react": "^7.0.0",
     "babel-plugin-styled-components": "^1.8.0",
-    "rc-color-picker": "^1.2.6",
-    "indexof": "0.0.1"
+    "indexof": "0.0.1",
+    "rc-color-picker": "^1.2.6"
   },
   "peerDependencies": {
+    "@magic-circle/colors": "*",
     "react": "*",
-    "styled-components": "*",
-    "@magic-circle/colors": "*"
+    "styled-components": "*"
   },
   "dependencies": {
     "shallowequal": "^1.1.0"

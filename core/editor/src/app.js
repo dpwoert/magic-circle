@@ -4,6 +4,7 @@ const url = require('url');
 const path = require('path');
 const argv = require('minimist')(process.argv.slice(2));
 
+const logger = require('./logger.js');
 const inject = require('./inject.js');
 const eventSystem = require('./events.js');
 const resizeHandler = require('./resize.js');
@@ -87,6 +88,12 @@ app.once('ready', () => {
     window.show();
     frame.show();
   });
+
+  window.webContents.openDevTools();
+  frame.webContents.openDevTools();
+
+  // loggin tool
+  logger(window, frame);
 
   // inject needed data
   inject(window, frame);

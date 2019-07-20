@@ -16,11 +16,15 @@ module.exports = function inject(window, frame) {
     window.webContents.executeJavaScript(`
       try{
         const settings = require('${global.settings}');
+        console.log('settings', settings);
         const {Client} = require('@magic-circle/ui');
         window.__client = new Client(settings, '${global.cwd}');
       } catch(e){
         console.log('⚠️  error during injecting of settings');
         console.error(e);
+
+        const {ipcRenderer} = require('electron');
+        ipcRenderer.send('log', 'error', e);
       }
     `);
     console.info('⚙️  injected settings');

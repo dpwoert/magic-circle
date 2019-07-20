@@ -22,13 +22,7 @@ export default {
       format: 'esm',
     },
   ],
-  external: [
-    ...builtins,
-    'styled-components',
-    'react',
-    'react-dom',
-    'react-is',
-  ],
+  external: [],
   plugins: [
     peerDepsExternal(),
     replace({
@@ -42,24 +36,6 @@ export default {
       browser: true,
       preferBuiltins: true,
     }),
-    commonjs({
-      namedExports: {
-        'node_modules/react-is/index.js': [
-          'isValidElementType',
-          'isElement',
-          'ForwardRef',
-        ],
-        'node_modules/react/index.js': [
-          'Component',
-          'PureComponent',
-          'Fragment',
-          'Children',
-          'createElement',
-          'cloneElement',
-          'createContext',
-        ],
-        'node_modules/react-dom/index.js': ['findDOMNode'],
-      },
-    }),
+    commonjs(),
   ],
 };

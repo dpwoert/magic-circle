@@ -19,36 +19,28 @@
   "main": "dist/bundle.js",
   "module": "dist/bundle.esm.js",
   "scripts": {
-    "start": "rollup --config ../../rollup.config.js",
-    "build": "NODE_ENV=production rollup --config ../../rollup.config.js",
-    "build:icons": "sh icons.sh"
+    "watch": "rollup --watch --config ./rollup.config.js",
+    "build:dev": "rollup --config rollup.config.js",
+    "build:prod": "NODE_ENV=production rollup --config rollup.config.js"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
     "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
-    "babel-plugin-styled-components": "^1.8.0",
     "babel-plugin-inline-react-svg": "^1.0.1",
+    "babel-plugin-styled-components": "^1.8.0",
+    "rollup": "^1.1.0",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-node-resolve": "^4.0.0",
+    "rollup-plugin-peer-deps-external": "^2.2.0",
+    "rollup-plugin-replace": "^2.1.0",
     "svgexport": "0.3.2"
   },
   "dependencies": {
+    "dot-prop": "^4.2.0",
     "is-electron": "^2.1.0",
     "rc-color-picker": "^1.2.6",
-    "dot-prop": "^4.2.0",
-    "@magic-circle/seed": "^0.0.0",
-    "@magic-circle/play-controls": "^0.0.0",
-    "@magic-circle/layers": "^0.0.0",
-    "@magic-circle/controls": "^0.0.0",
-    "@magic-circle/screenshots": "^0.0.0",
-    "@magic-circle/page-information": "^0.0.0",
-    "@magic-circle/performance": "^0.0.0",
-    "@magic-circle/debug": "^0.0.0",
-    "@magic-circle/fullscreen": "^0.0.0",
-    "@magic-circle/colors": "^0.0.0",
-    "@magic-circle/touchbar": "^0.0.0",
-    "@magic-circle/midi": "^0.0.0"
-  },
-  "peerDependencies": {
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "styled-components": "^4.1.2"

@@ -17,12 +17,9 @@
   },
   "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
   "license": "MIT",
-  "main": "dist/bundle.js",
-  "module": "dist/bundle.esm.js",
-  "scripts": {
-    "start": "rollup --config ../../rollup.config.js",
-    "build": "NODE_ENV=production rollup --config ../../rollup.config.js"
-  },
+  "main": "src/index.js",
+  "module": "src/index.js",
+  "scripts": {},
   "dependencies": {
     "git-repo-info": "2.1.0"
   },

@@ -20,14 +20,22 @@
   "license": "MIT",
   "main": "dist/bundle.js",
   "scripts": {
-    "start": "rollup --config ../../rollup.config.js"
+    "watch": "rollup --watch --config ./rollup.config.js",
+    "build:dev": "rollup --config rollup.config.js",
+    "build:prod": "NODE_ENV=production rollup --config rollup.config.js"
   },
   "keywords": [],
   "author": "Davey van der Woert",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.1.5",
-    "@babel/preset-env": "^7.1.5"
+    "@babel/preset-env": "^7.1.5",
+    "rollup": "^1.1.0",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-node-resolve": "^4.0.0",
+    "rollup-plugin-peer-deps-external": "^2.2.0",
+    "rollup-plugin-replace": "^2.1.0"
   },
   "dependencies": {
     "is-electron": "^2.1.0"

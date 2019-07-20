@@ -14,22 +14,20 @@
   "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
   "license": "MIT",
   "scripts": {
-    "postinstall": "lerna bootstrap --hoist",
-    "build:dev": "lerna run start --parallel --ignore @magic-circle/example-*",
-    "build:prod": "lerna run build --ignore @magic-circle/example-*",
-    "build:icons": "lerna run build:icons",
-    "build:examples": "lerna run start --parallel --scope @magic-circle/example-*",
-    "package:dev": "lerna bootstrap --scope @magic-circle/editor && lerna run package:dev --scope @magic-circle/editor",
-    "package:prod": "lerna bootstrap --scope @magic-circle/editor && lerna run package:prod --scope @magic-circle/editor",
+    "postinstall": "lerna bootstrap",
+    "setup:dev": "sh setup-dev.sh",
+    "build:ui": "lerna run build:dev --scope @magic-circle/ui",
+    "build:client": "lerna run build:dev --scope @magic-circle/client",
+    "watch:ui": "lerna run build:dev --scope @magic-circle/ui",
+    "watch:client": "lerna run build:dev --scope @magic-circle/client",
+    "package:dev": "lerna run package:dev --scope @magic-circle/editor",
+    "package:prod": "lerna run package:prod --scope @magic-circle/editor",
+    "example": "sh examples/run.sh",
     "publish": "sh publish.sh",
-    "start": "nodemon --exec \"npm run build:dev\"",
-    "watch:examples": "nodemon --exec \"npm run build:examples\"",
-    "example:simple": "cd examples/simple && npm run electron && cd ../..",
-    "example:debug": "cd examples/debug && npm run electron && cd ../..",
     "prettier": "prettier --config --write \"{core,examples,plugins}/**/*.js\"",
     "lint": "eslint \"{core,examples,plugins}/**/*.js\"",
     "test": "npm run lint",
-    "clean": "find . -name 'node_modules' -type d | xargs rm -rf -v && find . -name 'dist' -type d | xargs rm -rf -v"
+    "clean": "find . -name 'node_modules' -type d | xargs rm -rf && find . -name 'dist' -type d | xargs rm -rf"
   },
   "devDependencies": {
     "@babel/core": "^7.1.5",
@@ -46,12 +44,7 @@
     "lerna": "^3.14.1",
     "lint-staged": "^8.1.0",
     "nodemon": "^1.18.9",
-    "prettier": "^1.15.3",
-    "rollup": "^1.1.0",
-    "rollup-plugin-babel": "^4.3.0",
-    "rollup-plugin-commonjs": "^9.2.0",
-    "rollup-plugin-node-resolve": "^4.0.0",
-    "rollup-plugin-peer-deps-external": "^2.2.0"
+    "prettier": "^1.15.3"
   },
   "lint-staged": {
     "*.{js,jsx,json}": [
@@ -70,8 +63,5 @@
       "dist/*",
       "*.build.js"
     ]
-  },
-  "dependencies": {
-    "rollup-plugin-replace": "^2.1.0"
   }
 }

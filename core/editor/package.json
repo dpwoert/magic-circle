@@ -1,5 +1,6 @@
 {
   "name": "@magic-circle/editor",
+  "executableName": "Magic Circle",
   "version": "0.0.0",
   "description": "Magic Circle electron runner",
   "keywords": [
@@ -33,9 +34,6 @@
     "electron": "^3.0.8",
     "electron-settings": "^3.2.0",
     "minimist": "^1.2.0",
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
-    "styled-components": "^4.1.2",
     "rollup": "^1.1.0",
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-node-resolve": "^4.0.0"

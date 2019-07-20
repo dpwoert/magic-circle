@@ -23,9 +23,9 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "start": "parcel build index.html  --public-url \"../dist\"",
-    "serve": "parcel index.html",
-    "electron": "controls --config controls.config.js --url dist/index.html"
+    "build": "parcel build index.html  --public-url \"../dist\"",
+    "electron": "controls --config controls.config.js --url dist/index.html",
+    "start": "npm run build && npm run electron"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",

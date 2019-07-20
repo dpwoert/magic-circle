@@ -11,6 +11,8 @@ const { ipcRenderer } = require('electron');
 
 export class Client {
   constructor(settings, cwd) {
+    console.log('loading client');
+
     if (settings.plugins) {
       // eslint-disable-next-line
       settings.plugins =
@@ -27,6 +29,8 @@ export class Client {
     this.buttons.collection = this.getButtons.bind(this);
     this.icons = icons;
 
+    console.log('client created', this.settings);
+
     // add plugins
     this.plugins = this.settings.plugins
       .filter(
@@ -34,37 +38,46 @@ export class Client {
           (this.isElectron && Plugin.electronOnly) || !Plugin.electronOnly
       )
       .map(Plugin => {
-        const initialData = Plugin.initStore
-          ? Plugin.initStore(this.settings)
-          : {};
-        const store = new Store(initialData);
-        const plugin = new Plugin(this, store, this.settings);
-        plugin._name = Plugin.name; //eslint-disable-line
+        try {
+          const initialData = Plugin.initStore
+            ? Plugin.initStore(this.settings)
+            : {};
+          const store = new Store(initialData);
+          const plugin = new Plugin(this, store, this.settings);
+          plugin._name = Plugin.name; //eslint-disable-line
 
-        // button collections
-        if (plugin.buttons) {
-          plugin.buttons(this.buttons);
-        }
+          // button collections
+          if (plugin.buttons) {
+            plugin.buttons(this.buttons);
+          }
 
-        // load electron plugins?
-        if (this.isElectron && plugin.electron) {
-          let files = plugin.electron();
-          files = Array.isArray(files) ? files : [files];
-          this.sendAction('electron-load', {
-            files,
-            settings: this.settings,
-          });
-        }
+          // load electron plugins?
+          if (this.isElectron && plugin.electron) {
+            let files = plugin.electron();
+            files = Array.isArray(files) ? files : [files];
+            this.sendAction('electron-load', {
+              files,
+              settings: this.settings,
+            });
+          }
 
-        // menu for this plugin?
-        if (this.isElectron && plugin.applicationMenu) {
-          addPluginMenu(
-            Plugin.name.charAt(0).toUpperCase() + Plugin.name.slice(1),
-            plugin.applicationMenu()
+          // menu for this plugin?
+          if (this.isElectron && plugin.applicationMenu) {
+            addPluginMenu(
+              Plugin.name.charAt(0).toUpperCase() + Plugin.name.slice(1),
+              plugin.applicationMenu()
+            );
+          }
+
+          return plugin;
+        } catch (e) {
+          ipcRenderer.send(
+            'log',
+            'error',
+            `error during initialization of plugin: ${Plugin.name}`
           );
+          ipcRenderer.send('log', 'error', e);
         }
-
-        return plugin;
       });
 
     // send message to front-end
