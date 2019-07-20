@@ -23,6 +23,9 @@
   "main": "src/index.js",
   "module": "src/index.js",
   "scripts": {},
+  "dependencies": {
+    "@magic-circle/colors": "*"
+  },
   "devDependencies": {
     "@babel/core": "^7.1.2",
     "@babel/plugin-proposal-class-properties": "^7.1.0",

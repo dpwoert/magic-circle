@@ -21,7 +21,7 @@
   "module": "src/index.js",
   "scripts": {},
   "dependencies": {
-    "git-repo-info": "2.1.0"
+    "@magic-circle/colors": "*"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",

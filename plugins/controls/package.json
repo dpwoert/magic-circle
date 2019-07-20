@@ -33,11 +33,11 @@
     "rc-color-picker": "^1.2.6"
   },
   "peerDependencies": {
-    "@magic-circle/colors": "*",
     "react": "*",
     "styled-components": "*"
   },
   "dependencies": {
+    "@magic-circle/colors": "*",
     "shallowequal": "^1.1.0"
   },
   "publishConfig": {
