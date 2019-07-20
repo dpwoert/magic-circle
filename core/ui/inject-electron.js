@@ -4,6 +4,8 @@ const build = async build => {
   console.log(build);
 };
 
+const files = [];
+
 export default function injectElectron() {
   return {
     name: 'inject-electron', // this name will show up in warnings and errors
@@ -16,8 +18,16 @@ export default function injectElectron() {
     // }
 
     async generateBundle({ file }, _, isWrite) {
-      if (isWrite) {
-        const txt = fs.readFileSync(file, 'utf8');
+      files.push(file);
+    },
+
+    async writeBundle(output) {
+      const bundles = Object.values(output);
+
+      bundles.forEach(bundle => {
+        const path = files.find(file => file.endsWith(bundle.fileName));
+
+        const txt = fs.readFileSync(path, 'utf8');
         const converted = `
 
           // fix for requiring in electron
@@ -29,8 +39,8 @@ export default function injectElectron() {
         `;
 
         // this is stupid, need to improve this later
-        setTimeout(() => fs.writeFileSync(file, converted), 200);
-      }
+        fs.writeFileSync(path, converted);
+      });
     },
   };
 }
