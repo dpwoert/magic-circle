@@ -43,7 +43,18 @@
     "rc-color-picker": "^1.2.6",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "styled-components": "^4.1.2"
+    "styled-components": "^4.1.2",
+    "@magic-circle/layers": "*",
+    "@magic-circle/play-controls": "*",
+    "@magic-circle/controls": "*",
+    "@magic-circle/seed": "*",
+    "@magic-circle/page-information": "*",
+    "@magic-circle/screenshots": "*",
+    "@magic-circle/performance": "*",
+    "@magic-circle/touchbar": "*",
+    "@magic-circle/midi": "*",
+    "@magic-circle/fullscreen": "*",
+    "@magic-circle/colors": "*"
   },
   "publishConfig": {
     "access": "public"

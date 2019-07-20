@@ -8,10 +8,9 @@ module.exports = function(api) {
     'inline-react-svg',
   ];
 
-  console.log('BABEL');
-
   return {
     presets,
     plugins,
+    ignore: [filename => filename.indexOf('node_modules') > -1],
   };
 };
