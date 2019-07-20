@@ -17,6 +17,7 @@ module.exports = function inject(window, frame) {
       try{
         const settings = require('${global.settings}');
         console.log('settings', settings);
+        window.__REQUIRE = require;
         const {Client} = require('@magic-circle/ui');
         window.__client = new Client(settings, '${global.cwd}');
       } catch(e){

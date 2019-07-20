@@ -1,7 +1,9 @@
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
+import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import babel from 'rollup-plugin-babel';
 import builtins from 'builtin-modules';
+import injectElectron from './inject-electron';
 import replace from 'rollup-plugin-replace';
 import path from 'path';
 
@@ -21,8 +23,15 @@ export default {
       format: 'esm',
     },
   ],
-  external: [...builtins],
+  external: [
+    ...builtins,
+    'styled-components',
+    'react',
+    'react-dom',
+    'react-is',
+  ],
   plugins: [
+    peerDepsExternal(),
     replace({
       ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
       __dirname: id => `'${path.dirname(id)}'`,
@@ -53,12 +62,7 @@ export default {
         ],
         'node_modules/react-dom/index.js': ['findDOMNode'],
       },
-      ignore: id => {
-        if (id.indexOf('magic-circle') > -1) {
-          console.log('MAGIC CIRCLE DETECTED');
-        }
-        return false;
-      },
     }),
+    injectElectron(),
   ],
 };

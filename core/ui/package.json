@@ -41,9 +41,6 @@
     "dot-prop": "^4.2.0",
     "is-electron": "^2.1.0",
     "rc-color-picker": "^1.2.6",
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
-    "styled-components": "^4.1.2",
     "@magic-circle/layers": "*",
     "@magic-circle/play-controls": "*",
     "@magic-circle/controls": "*",
@@ -55,6 +52,11 @@
     "@magic-circle/midi": "*",
     "@magic-circle/fullscreen": "*",
     "@magic-circle/colors": "*"
+  },
+  "peerDependencies": {
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
+    "styled-components": "^4.1.2"
   },
   "publishConfig": {
     "access": "public"
