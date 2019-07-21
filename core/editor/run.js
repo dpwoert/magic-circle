@@ -9,7 +9,7 @@ const resolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
 const babel = require('rollup-plugin-babel');
 
-const app = require('./app.json');
+const app = require('./build.app.json');
 const { mode } = require('./build/mode.json');
 
 const buildPath = path.join(

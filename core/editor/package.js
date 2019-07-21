@@ -32,7 +32,7 @@ packager({
       namespace: pkg.name.split('/')[0],
       buildDir: path[0],
     };
-    fs.writeFileSync('./app.json', JSON.stringify(app));
+    fs.writeFileSync('./build/app.json', JSON.stringify(app));
 
     console.info('app created');
   })
