@@ -1,6 +1,5 @@
 {
   "name": "magic-circle",
-  "executableName": "Magic Circle",
   "namespace": "@magic-circle",
   "buildDir": "build/magic-circle-darwin-x64"
 }
