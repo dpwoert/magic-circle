@@ -30,10 +30,5 @@ npm run lint
 # update version
 lerna version
 
-# git tag?
-
-# publish
-if [[ "$1" == "--confirm" ]]; then
-  echo "publishing to NPM"
-  lerna publish
-fi
+# publish to npm
+lerna publish

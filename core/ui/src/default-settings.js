@@ -9,7 +9,7 @@ import PageInfo from '@magic-circle/page-information';
 import Screenshots from '@magic-circle/screenshots';
 import Performance from '@magic-circle/performance';
 import Touchbar from '@magic-circle/touchbar';
-import Midi from '@magic-circle/midi';
+// import Midi from '@magic-circle/midi';
 import Fullscreen from '@magic-circle/fullscreen';
 
 import Layout from './components/layout';
@@ -25,7 +25,7 @@ const settings = {
     Performance,
     Fullscreen,
     Touchbar,
-    Midi,
+    // Midi,
   ],
   theme: {
     // accent: 'rgb(102, 255, 153)',
