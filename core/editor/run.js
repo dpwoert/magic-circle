@@ -7,6 +7,7 @@ const argv = require('minimist')(process.argv.slice(2));
 const rollup = require('rollup');
 const resolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
+const babel = require('rollup-plugin-babel');
 
 const app = require(path.join(__dirname, 'app.json'));
 const buildPath = path.join(
@@ -56,6 +57,14 @@ async function build() {
           customResolveOptions: {
             moduleDirectory: path.join(process.cwd(), 'node_modules'),
           },
+        }),
+        babel({
+          exclude: '**/node_modules/**',
+          presets: ['@babel/preset-react'],
+          plugins: [
+            '@babel/plugin-proposal-class-properties',
+            'babel-plugin-styled-components',
+          ],
         }),
         commonjs(),
       ],
