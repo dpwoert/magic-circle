@@ -64,7 +64,6 @@ class MidiPanel extends Component {
   };
 
   render() {
-    console.log(this.props);
     const { config } = this.props.presets[this.props.active.preset];
     return (
       <Panel>
@@ -73,7 +72,7 @@ class MidiPanel extends Component {
             <Column>MIDI signal</Column>
             <Column>Control key</Column>
           </Row>
-          {config.map(c => (
+          {config.map(() => (
             <Row>
               <Column>ch1 e5</Column>
               <Column>layers1.x</Column>

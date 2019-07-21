@@ -9,7 +9,9 @@ const resolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
 const babel = require('rollup-plugin-babel');
 
-const app = require(path.join(__dirname, 'app.json'));
+const app = require('./app.json');
+const { mode } = require('./build/mode.json');
+
 const buildPath = path.join(
   __dirname,
   app.buildDir,
@@ -17,7 +19,6 @@ const buildPath = path.join(
   'Contents/Resources/app',
   'settings.build.js'
 );
-const { mode } = require('./build/mode.json');
 
 const args = {};
 args.cwd = process.cwd();

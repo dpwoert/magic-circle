@@ -45,7 +45,6 @@ class Midi {
   addRow() {
     const presets = this.store.get('presets');
     const active = this.store.get('active').preset;
-    debugger;
     presets[active].config.push({
       id: Date.now(),
       midi: '',

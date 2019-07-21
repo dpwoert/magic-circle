@@ -3,11 +3,11 @@ import commonjs from 'rollup-plugin-commonjs';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import babel from 'rollup-plugin-babel';
 import builtins from 'builtin-modules';
-import injectElectron from './inject-electron';
 import replace from 'rollup-plugin-replace';
 import path from 'path';
+import injectElectron from './inject-electron';
 
-const pkg = require(`${process.cwd()}/package.json`);
+const pkg = require('./package.json');
 
 export default {
   input: 'src/index.js',

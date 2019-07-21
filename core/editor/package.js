@@ -1,11 +1,8 @@
 const packager = require('electron-packager');
-const path = require('path');
 const fs = require('fs');
-
-// const globToRegExp = require('glob-to-regexp');
-
 const pkg = require('./package.json');
-const executableName = pkg.executableName;
+
+const { executableName } = pkg.executableName;
 const namespace = pkg.name.split('/')[0];
 const name = namespace.replace('@', '');
 
