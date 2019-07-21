@@ -1,32 +1,21 @@
 {
   "name": "@magic-circle/client",
-  "version": "0.0.0",
+  "version": "0.0.0-alpha.1",
   "description": "Magic Circle front-end client",
-  "keywords": [
-    "controls",
-    "creative coding",
-    "editor",
-    "performance",
-    "layers",
-    "editing",
-    "GUI"
-  ],
+  "keywords": [],
   "repository": {
     "type": "git",
     "url": "https://github.com/dpwoert/magic-circle.git",
     "directory": "core/client"
   },
-  "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
-  "license": "MIT",
+  "author": "Davey van der Woert",
+  "license": "ISC",
   "main": "dist/bundle.js",
   "scripts": {
     "watch": "rollup --watch --config ./rollup.config.js",
     "build:dev": "rollup --config rollup.config.js",
     "build:prod": "NODE_ENV=production rollup --config rollup.config.js"
   },
-  "keywords": [],
-  "author": "Davey van der Woert",
-  "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.1.5",
     "@babel/preset-env": "^7.1.5",
