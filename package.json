@@ -25,7 +25,7 @@
     "package:dev": "lerna run package:dev --scope @magic-circle/editor",
     "package:prod": "lerna run package:prod --scope @magic-circle/editor",
     "example": "sh examples/run.sh",
-    "publish": "sh publish.sh",
+    "npm-publish": "sh publish.sh",
     "prettier": "prettier --config --write \"{core,examples,plugins}/**/*.js\"",
     "lint": "eslint \"{core,examples,plugins}/**/*.js\"",
     "test": "npm run lint",
