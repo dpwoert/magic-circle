@@ -16,6 +16,9 @@
     "url": "https://github.com/dpwoert/magic-circle.git",
     "directory": "plugins/fullscreen"
   },
+  "files": [
+    "src/*.js"
+  ],
   "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
   "license": "MIT",
   "main": "src/index.js",

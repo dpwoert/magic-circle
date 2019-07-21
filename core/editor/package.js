@@ -6,6 +6,10 @@ const { executableName } = pkg.executableName;
 const namespace = pkg.name.split('/')[0];
 const name = namespace.replace('@', '');
 
+if (process.platform !== 'darwin') {
+  throw new Error('⚠️ this editor can only be build on OSX for now...');
+}
+
 packager({
   name,
   executableName,
@@ -20,9 +24,6 @@ packager({
   overwrite: true,
   asar: false,
   prune: false,
-  ignore: [
-    // globToRegExp('data/**/*'),
-  ],
 })
   .then(path => {
     // Create reference to app created

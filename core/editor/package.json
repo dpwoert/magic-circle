@@ -16,6 +16,12 @@
     "url": "https://github.com/dpwoert/magic-circle.git",
     "directory": "core/editor"
   },
+  "files": [
+    "src/*.js",
+    "package.sh",
+    "package.js",
+    "run.js"
+  ],
   "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
   "license": "MIT",
   "main": "src/app.js",
@@ -24,7 +30,8 @@
   },
   "scripts": {
     "package:dev": "bash package.sh",
-    "package:prod": "NODE_ENV=production bash package.sh"
+    "package:prod": "NODE_ENV=production bash package.sh",
+    "postinstall": "npm run package:prod"
   },
   "devDependencies": {
     "electron-packager": "^13.0.1"

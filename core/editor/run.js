@@ -20,6 +20,10 @@ const buildPath = path.join(
   'settings.build.js'
 );
 
+if (process.platform !== 'darwin') {
+  throw new Error('⚠️ this editor can only run on OSX for now...');
+}
+
 const args = {};
 args.cwd = process.cwd();
 args.url = argv.url || argv.u;
