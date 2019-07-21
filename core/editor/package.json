@@ -30,8 +30,7 @@
   },
   "scripts": {
     "package:dev": "bash package.sh",
-    "package:prod": "NODE_ENV=production bash package.sh",
-    "postinstall": "npm run package:prod"
+    "package:prod": "NODE_ENV=production bash package.sh"
   },
   "devDependencies": {
     "electron-packager": "^13.0.1"
@@ -52,7 +51,8 @@
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-node-resolve": "^4.0.0",
-    "styled-components": "^4.1.2"
+    "styled-components": "^4.1.2",
+    "single-line-log": "^1.1.2"
   },
   "publishConfig": {
     "access": "public"

@@ -2,7 +2,7 @@ const packager = require('electron-packager');
 const fs = require('fs');
 const pkg = require('./package.json');
 
-const { executableName } = pkg.executableName;
+const executableName = pkg.executableName; // eslint-disable-line
 const namespace = pkg.name.split('/')[0];
 const name = namespace.replace('@', '');
 
@@ -33,7 +33,7 @@ packager({
       namespace: pkg.name.split('/')[0],
       buildDir: path[0],
     };
-    fs.writeFileSync('./build/app.json', JSON.stringify(app));
+    fs.writeFileSync('build/app.json', JSON.stringify(app));
 
     console.info('app created');
   })

@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # remove old build
-rm -rfv build/*
+rm -rf build/*
 
 # do actual packaging
 node package.js
 
-NAME=$(node -p -e "require('./app.json').name")
-NAMESPACE=$(node -p -e "require('./app.json').namespace")
-BUILD_DIR=$(node -p -e "require('./app.json').buildDir")
+NAME=$(node -p -e "require('./build/app.json').name")
+NAMESPACE=$(node -p -e "require('./build/app.json').namespace")
+BUILD_DIR=$(node -p -e "require('./build/app.json').buildDir")
 
 # make alias
 rm -rf $BUILD_DIR/$NAME.app/Contents/Resources/app/node_modules/$NAMESPACE

@@ -3,49 +3,52 @@ const { exec } = require('child_process');
 const path = require('path');
 const fs = require('fs');
 const argv = require('minimist')(process.argv.slice(2));
+const singleLineLog = require('single-line-log').stdout;
 
 const rollup = require('rollup');
-const resolve = require('rollup-plugin-node-resolve');
+const nodeResolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
 const babel = require('rollup-plugin-babel');
 
-const app = require('./build.app.json');
-const { mode } = require('./build/mode.json');
-
-const buildPath = path.join(
-  __dirname,
-  app.buildDir,
-  `${app.name}.app`,
-  'Contents/Resources/app',
-  'settings.build.js'
-);
-
-if (process.platform !== 'darwin') {
-  throw new Error('⚠️ this editor can only run on OSX for now...');
-}
-
-const args = {};
-args.cwd = process.cwd();
-args.url = argv.url || argv.u;
-args.clear = argv.clear;
-args.debug = argv.d || argv.debug;
-args.settings =
-  mode === 'production'
-    ? buildPath
-    : path.join(process.cwd(), '.settings.build.js');
-
-const argsStr = Object.keys(args)
-  .filter(key => args[key])
-  .map(key => {
-    if (args[key] === true) {
-      return `--${key}`;
-    }
-    return `--${key} ${args[key]}`;
-  })
-  .join(' ');
-
 // compile settings
 async function build() {
+  /* eslint-disable import/no-dynamic-require */
+  const app = require(path.join(__dirname, 'build/app.json'));
+  const { mode } = require(path.join(__dirname, 'build/mode.json'));
+  /* eslint-enable import/no-dynamic-require */
+
+  const buildPath = path.join(
+    __dirname,
+    app.buildDir,
+    `${app.name}.app`,
+    'Contents/Resources/app',
+    'settings.build.js'
+  );
+
+  if (process.platform !== 'darwin') {
+    throw new Error('⚠️ this editor can only run on OSX for now...');
+  }
+
+  const args = {};
+  args.cwd = process.cwd();
+  args.url = argv.url || argv.u;
+  args.clear = argv.clear;
+  args.debug = argv.d || argv.debug;
+  args.settings =
+    mode === 'production'
+      ? buildPath
+      : path.join(process.cwd(), '.settings.build.js');
+
+  const argsStr = Object.keys(args)
+    .filter(key => args[key])
+    .map(key => {
+      if (args[key] === true) {
+        return `--${key}`;
+      }
+      return `--${key} ${args[key]}`;
+    })
+    .join(' ');
+
   try {
     const config = argv.config || argv.c;
     const configFile = config
@@ -57,7 +60,7 @@ async function build() {
       input: configFile,
       external: ['styled-components', 'fs', 'react', 'react-dom', 'react-is'],
       plugins: [
-        resolve({
+        nodeResolve({
           browser: true,
           customResolveOptions: {
             moduleDirectory: path.join(process.cwd(), 'node_modules'),
@@ -89,6 +92,7 @@ async function build() {
           `${app.name}.app`,
           `Contents/MacOS/${app.executableName}`
         );
+
     const run = exec(`"${cmd}" src/app.js ${argsStr}`, {
       cwd: __dirname,
     });
@@ -116,4 +120,38 @@ async function build() {
   }
 }
 
-build();
+function buildApp() {
+  console.info('👷‍  First time running Magic Circle, building the app now');
+
+  return new Promise(resolve => {
+    const run = exec('npm run package:dev', {
+      cwd: __dirname,
+    });
+
+    // log
+    run.stdout.on('data', data => {
+      singleLineLog(data);
+    });
+    run.stderr.on('data', data => {
+      process.stderr.write(`⚠️  ' ${data}`);
+      // reject(data)
+    });
+
+    // waiting to be done
+    run.on('exit', () => {
+      console.info('✅  done!');
+      resolve();
+    });
+  });
+}
+
+async function detectBuild() {
+  // detect if app has been build before
+  if (!fs.existsSync(path.join(__dirname, 'build'))) {
+    await buildApp();
+  }
+
+  build();
+}
+
+detectBuild();
