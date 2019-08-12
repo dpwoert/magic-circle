@@ -18,6 +18,7 @@
   },
   "files": [
     "src/*.js",
+    "src/*.html",
     "package.sh",
     "package.js",
     "run.js"

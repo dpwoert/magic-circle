@@ -123,10 +123,15 @@ async function build() {
 function buildApp() {
   console.info('👷‍  First time running Magic Circle, building the app now');
 
+  const dev = fs.existsSync('./env.json');
+
   return new Promise(resolve => {
-    const run = exec('npm run package:dev', {
-      cwd: __dirname,
-    });
+    const run = exec(
+      `npm run package:${dev ? 'dev' : 'prod'} ${dev ? '' : '-- --install'}`,
+      {
+        cwd: __dirname,
+      }
+    );
 
     // log
     run.stdout.on('data', data => {

@@ -32,6 +32,10 @@ export class Client {
     if (isElectron()) {
       // Add to window global to it can be reached by Electron
       window.__controls = this;
+
+      if (windows.__IPC) {
+        this.connect();
+      }
     }
   }
 

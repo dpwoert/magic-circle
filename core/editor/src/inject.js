@@ -5,7 +5,10 @@ module.exports = function inject(window, frame) {
     // Add ipcRenderer to front-end
     frame.webContents.executeJavaScript(`
       window.__IPC = require('electron').ipcRenderer;
-      window.__controls.connect();
+
+      if(window.__controls){
+        window.__controls.connect();
+      }
     `);
     console.info('🔌  injected IPC');
     initialLoad = false;

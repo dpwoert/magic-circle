@@ -3,6 +3,11 @@
 # remove old build
 rm -rf build/*
 
+if [ "$1" == "--install" ]; then
+  npm i
+fi
+
+
 # do actual packaging
 node package.js
 
