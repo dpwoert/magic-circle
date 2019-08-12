@@ -1,6 +1,6 @@
 {
   "packages": ["core/*", "examples/*", "plugins/*"],
-  "version": "0.0.0-alpha.2",
+  "version": "0.0.0-alpha.3",
   "command": {
     "version": {}
   }
