@@ -31,4 +31,4 @@ npm run lint
 lerna version
 
 # publish to npm
-lerna publish
+lerna publish from-package
