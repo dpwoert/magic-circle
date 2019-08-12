@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/touchbar",
-  "version": "0.0.0-alpha.4",
+  "version": "0.0.0-alpha.5",
   "description": "Magic Circle touchbar support for macbook pro",
   "keywords": [
     "controls",
