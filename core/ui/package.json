@@ -45,7 +45,6 @@
     "@magic-circle/controls": "^0.0.0-alpha.2",
     "@magic-circle/fullscreen": "^0.0.0-alpha.2",
     "@magic-circle/layers": "^0.0.0-alpha.2",
-    "@magic-circle/midi": "^0.0.0-alpha.2",
     "@magic-circle/page-information": "^0.0.0-alpha.2",
     "@magic-circle/performance": "^0.0.0-alpha.2",
     "@magic-circle/play-controls": "^0.0.0-alpha.2",
