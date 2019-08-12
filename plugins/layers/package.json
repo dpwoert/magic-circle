@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/layers",
-  "version": "0.0.0-alpha.3",
+  "version": "0.0.0-alpha.4",
   "description": "Magic Circle layers",
   "keywords": [
     "controls",
@@ -24,7 +24,7 @@
   "main": "src/index.js",
   "module": "src/index.js",
   "dependencies": {
-    "@magic-circle/colors": "^0.0.0-alpha.3"
+    "@magic-circle/colors": "^0.0.0-alpha.4"
   },
   "devDependencies": {
     "@babel/core": "^7.2.0",
