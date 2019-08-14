@@ -5,6 +5,9 @@ export class Folder {
     this.controls = [];
     this.slug = slug(label);
     this.label = label;
+    this.hooks = {
+      change: null,
+    };
 
     if (controls.length > 0) {
       this.addControls(controls);
@@ -24,6 +27,10 @@ export class Folder {
   addTo(layer) {
     layer.addControl(layer);
     return this;
+  }
+
+  forEach(fn) {
+    this.controls.forEach(control => fn(control));
   }
 
   toJSON(basePath) {

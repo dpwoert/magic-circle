@@ -6,6 +6,11 @@ export class Control {
     this.labelValue = key;
     this.options = {};
     this.initialValue = this.reference[this.key];
+
+    this.hooks = {
+      change: null,
+    };
+
     return this;
   }
 
@@ -17,6 +22,11 @@ export class Control {
       });
     } else {
       this.reference[this.key] = value;
+    }
+
+    // run hook
+    if (this.hooks.change) {
+      this.hooks.change(value);
     }
   }
 
@@ -46,6 +56,10 @@ export class Control {
   addTo(parent) {
     parent.addControl(this);
     return this;
+  }
+
+  on(evt, fn) {
+    this.hooks[evt] = fn;
   }
 
   toJSON(basePath) {

@@ -43,7 +43,7 @@ export class Layer {
   folder(...opts) {
     const folder = new Folder(...opts);
     this.addControl(folder);
-    return this;
+    return folder;
   }
 
   toJSON(mapping) {
