@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/midi",
-  "version": "0.0.0-alpha.5",
+  "version": "0.0.0-alpha.6",
   "description": "Magic Circle midi",
   "private": true,
   "keywords": [
@@ -25,7 +25,7 @@
   "module": "src/index.js",
   "scripts": {},
   "dependencies": {
-    "@magic-circle/colors": "^0.0.0-alpha.5"
+    "@magic-circle/colors": "^0.0.0-alpha.6"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
