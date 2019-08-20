@@ -89,8 +89,8 @@ app.once('ready', () => {
     frame.show();
   });
 
-  // window.webContents.openDevTools();
-  // frame.webContents.openDevTools();
+  window.webContents.openDevTools();
+  frame.webContents.openDevTools();
 
   // loggin tool
   logger(window, frame);

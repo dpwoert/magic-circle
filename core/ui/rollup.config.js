@@ -4,8 +4,8 @@ import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import babel from 'rollup-plugin-babel';
 import builtins from 'builtin-modules';
 import replace from 'rollup-plugin-replace';
-import path from 'path';
 import injectElectron from './inject-electron';
+// import path from 'path';
 
 const pkg = require('./package.json');
 
@@ -34,7 +34,7 @@ export default {
     peerDepsExternal(),
     replace({
       ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
-      __dirname: id => `'${path.dirname(id)}'`,
+      // __dirname: id => `'${path.dirname(id)}'`,
     }),
     resolve({
       browser: true,

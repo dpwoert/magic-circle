@@ -250,15 +250,15 @@ class ScreenshotsPanel extends Component {
                       }}
                       defaultValue={screenshot.meta.name}
                       onBlur={evt => this.renameScreenshot(evt, screenshot)}
-                      onKeyPress={evt => {
-                        if (evt.keyCode === 0) {
-                          this.renameScreenshot(evt, screenshot);
-                        }
+                      onKeyPress={() => {
+                        // if (evt.keyCode === 0) {
+                        //   this.renameScreenshot(evt, screenshot);
+                        // }
                       }}
                     />
                   )}
                   <MetaData>{parseDate(screenshot.meta.createdAt)}</MetaData>
-                  {screenshot.git.branch && (
+                  {screenshot.git && (
                     <MetaData>
                       {screenshot.git.branch}
                       {screenshot.git.lastTag && ` - ${screenshot.git.lastTag}`}

@@ -27,7 +27,7 @@ module.exports = (window, frame, settings) => {
 
       // Add git info
       let git = {};
-      if (settings.gitInfo) {
+      if (settings.screenshots.gitInfo) {
         git = getRepoInfo();
         data.git = git || {};
       }

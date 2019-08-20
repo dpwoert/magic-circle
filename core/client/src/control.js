@@ -60,6 +60,7 @@ export class Control {
 
   on(evt, fn) {
     this.hooks[evt] = fn;
+    return this;
   }
 
   toJSON(basePath) {

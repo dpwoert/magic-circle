@@ -36,18 +36,16 @@ class Screenshots {
     return { screenshots: [] };
   }
 
-  constructor(client, store, settings) {
+  static defaultSettings(client) {
+    return {
+      path: path.join(client.cwd, 'screenshots'),
+      gitInfo: true,
+    };
+  }
+
+  constructor(client, store) {
     this.client = client;
     this.store = store;
-
-    // default settings
-    settings.screenshots = Object.assign(
-      {
-        path: path.join(this.client.cwd, 'screenshots'),
-        gitInfo: true,
-      },
-      settings.screenshots
-    );
 
     this.client.addListener('screenshot-taken', () => this.refresh());
     this.path = this.client.getSetting('screenshots.path');
@@ -60,7 +58,8 @@ class Screenshots {
   }
 
   electron() {
-    return `${__dirname}/electron.js`;
+    // return `${__dirname}/electron.js`;
+    return '@magic-circle/screenshots/src/electron.js';
   }
 
   applicationMenu() {

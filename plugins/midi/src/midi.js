@@ -27,18 +27,15 @@ class Midi {
     };
   }
 
-  constructor(client, store, settings) {
+  static defaultSettings(client) {
+    return {
+      path: path.join(client.cwd, 'midi.json'),
+    };
+  }
+
+  constructor(client, store) {
     this.client = client;
     this.store = store;
-
-    // default settings
-    settings.midi = Object.assign(
-      {
-        path: path.join(this.client.cwd, 'midi.json'),
-      },
-      settings.midi
-    );
-
     this.path = this.client.getSetting('midi.path');
   }
 

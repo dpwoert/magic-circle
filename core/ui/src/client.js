@@ -20,12 +20,22 @@ export class Client {
     }
 
     this.isElectron = true;
-    this.settings = Object.assign(defaultSettings, settings);
     this.cwd = cwd;
 
     this.buttons = new Store();
     this.buttons.collection = this.getButtons.bind(this);
     this.icons = icons;
+
+    // create settings
+    this.settings = Object.assign(defaultSettings, settings);
+    this.settings.plugins.forEach(plugin => {
+      if (plugin.defaultSettings) {
+        this.settings[plugin.name] = Object.assign(
+          plugin.defaultSettings(this),
+          settings[plugin.name]
+        );
+      }
+    });
 
     // add plugins
     this.plugins = this.settings.plugins
@@ -53,6 +63,7 @@ export class Client {
           this.sendAction('electron-load', {
             files,
             settings: this.settings,
+            cwd: __dirname,
           });
         }
 
