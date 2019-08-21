@@ -34,6 +34,7 @@ async function build() {
   args.url = argv.url || argv.u;
   args.clear = argv.clear;
   args.debug = argv.d || argv.debug;
+  args.inspect = argv.i || argv.inspect;
   args.settings =
     mode === 'production'
       ? buildPath

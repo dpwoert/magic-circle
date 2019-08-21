@@ -89,8 +89,10 @@ app.once('ready', () => {
     frame.show();
   });
 
-  window.webContents.openDevTools();
-  frame.webContents.openDevTools();
+  if (argv.inspect) {
+    window.webContents.openDevTools();
+    frame.webContents.openDevTools();
+  }
 
   // loggin tool
   logger(window, frame);
