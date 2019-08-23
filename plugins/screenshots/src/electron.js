@@ -45,6 +45,11 @@ module.exports = (window, frame, settings) => {
       );
       const content = JSON.stringify(data);
 
+      //ensure screenshot dir exists
+      if (!fs.existsSync(settings.screenshots.path)) {
+        fs.mkdirSync(settings.screenshots.path, { recursive: true });
+      }
+
       // Save both files to HDD
       fs.writeFile(`${filePath}.png`, img.toPNG(), () => {
         fs.writeFile(`${filePath}.json`, content, () => {
