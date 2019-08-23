@@ -20,6 +20,7 @@
     "build:client": "lerna run build:dev --scope @magic-circle/client",
     "build:ui:prod": "lerna run build:prod --scope @magic-circle/ui",
     "build:client:prod": "lerna run build:prod --scope @magic-circle/client",
+    "build:icons": "cd core/ui && sh icons.sh && cd ../..",
     "watch:ui": "lerna run watch --scope @magic-circle/ui",
     "watch:client": "lerna run watch --scope @magic-circle/client",
     "package:dev": "lerna run package:dev --scope @magic-circle/editor",

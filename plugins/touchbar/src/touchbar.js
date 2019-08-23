@@ -32,7 +32,7 @@ class Touchbar {
         .filter(b => b.touchbar !== false)
         .map(b => {
           const iconPath = this.client.icons[b.icon].png;
-          const icon = nativeImage.createFromPath(iconPath);
+          const icon = nativeImage.createFromDataURL(iconPath);
           return new TouchBarButton({
             icon,
             click: b.click,

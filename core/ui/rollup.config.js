@@ -4,6 +4,7 @@ import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import babel from 'rollup-plugin-babel';
 import builtins from 'builtin-modules';
 import replace from 'rollup-plugin-replace';
+import url from 'rollup-plugin-url';
 import injectElectron from './inject-electron';
 // import path from 'path';
 
@@ -62,6 +63,11 @@ export default {
         ],
         'node_modules/react-dom/index.js': ['findDOMNode'],
       },
+    }),
+    url({
+      limit: 1204 * 1024, // inline files < 10k, copy files > 10k
+      include: ['**/*.png'],
+      emitFiles: true, // defaults to true
     }),
     injectElectron(),
   ],

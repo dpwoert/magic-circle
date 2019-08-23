@@ -1,5 +1,4 @@
-import path from 'path';
-
+/* eslint-disable no-unused-vars */
 import { CameraRoll } from './camera-roll.svg';
 import { Trashbin } from './trashbin.svg';
 import { HardReload } from './hard-reload.svg';
@@ -18,20 +17,38 @@ import { Videogame } from './videogame.svg';
 import { Keyboard } from './keyboard.svg';
 import { Usb } from './usb.svg';
 
-CameraRoll.png = path.join(__dirname, 'camera-roll.png');
-Trashbin.png = path.join(__dirname, 'trashbin.png');
-HardReload.png = path.join(__dirname, 'hard-reload.png');
-Images.png = path.join(__dirname, 'images.png');
-Layers.png = path.join(__dirname, 'layers.png');
-Pause.png = path.join(__dirname, 'pause.png');
-Play.png = path.join(__dirname, 'play.png');
-Reload.png = path.join(__dirname, 'reload.png');
-Rewind.png = path.join(__dirname, 'rewind.png');
-Screenshot.png = path.join(__dirname, 'screenshot.png');
-Performance.png = path.join(__dirname, 'performance.png');
-Performance2.png = path.join(__dirname, 'performance2.png');
-Debug.png = path.join(__dirname, 'debug.png');
-Fullscreen.png = path.join(__dirname, 'fullscreen.png');
+import cameraRoll from './camera-roll.png';
+import trashbin from './trashbin.png';
+import hardReload from './hard-reload.png';
+import images from './images.png';
+import layers from './layers.png';
+import pause from './pause.png';
+import play from './play.png';
+import reload from './reload.png';
+import rewind from './rewind.png';
+import screenshot from './screenshot.png';
+import performance from './performance.png';
+import performance2 from './performance2.png';
+import debug from './debug.png';
+import fullscreen from './fullscreen.png';
+import videogame from './videogame.png';
+import keyboard from './keyboard.png';
+import usb from './usb.png';
+
+CameraRoll.png = cameraRoll;
+Trashbin.png = trashbin;
+HardReload.png = hardReload;
+Images.png = images;
+Layers.png = layers;
+Pause.png = pause;
+Play.png = play;
+Reload.png = reload;
+Rewind.png = rewind;
+Screenshot.png = screenshot;
+Performance.png = performance;
+Performance2.png = performance2;
+Debug.png = debug;
+Fullscreen.png = fullscreen;
 
 export {
   CameraRoll,
