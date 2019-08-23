@@ -70,6 +70,7 @@ async function build() {
         babel({
           exclude: '**/node_modules/**',
           presets: ['@babel/preset-react'],
+          runtimeHelpers: true,
           plugins: [
             '@babel/plugin-proposal-class-properties',
             'babel-plugin-styled-components',
