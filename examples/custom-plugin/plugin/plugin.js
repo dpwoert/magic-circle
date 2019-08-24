@@ -5,7 +5,7 @@ class Test {
 
   constructor(client) {
     this.client = client;
-    console.log('test running');
+    console.info('test running');
   }
 
   electron() {

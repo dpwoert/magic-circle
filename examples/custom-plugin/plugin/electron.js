@@ -1,3 +1,3 @@
-module.exports = (window, frame, settings) => {
-  console.log('test plugin loaded');
+module.exports = () => {
+  console.info('test plugin loaded');
 };

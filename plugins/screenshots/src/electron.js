@@ -45,7 +45,7 @@ module.exports = (window, frame, settings) => {
       );
       const content = JSON.stringify(data);
 
-      //ensure screenshot dir exists
+      // Ensure screenshot dir exists
       if (!fs.existsSync(settings.screenshots.path)) {
         fs.mkdirSync(settings.screenshots.path, { recursive: true });
       }
