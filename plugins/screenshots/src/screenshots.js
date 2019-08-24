@@ -87,16 +87,19 @@ class Screenshots {
   }
 
   async refresh() {
-    // load all screenshots
     const screenshots = [];
-    const files = await readdir(this.path);
 
-    for (let i = 0; i < files.length; i += 1) {
-      const ext = files[i].substr(files[i].lastIndexOf('.') + 1);
-      if (ext === 'json') {
-        const data = await this.fileCache(files[i]);
-        data.fileName = files[i].replace('.json', '');
-        screenshots.push(data);
+    if (fs.existsSync(this.path)) {
+      // load all screenshots
+      const files = await readdir(this.path);
+
+      for (let i = 0; i < files.length; i += 1) {
+        const ext = files[i].substr(files[i].lastIndexOf('.') + 1);
+        if (ext === 'json') {
+          const data = await this.fileCache(files[i]);
+          data.fileName = files[i].replace('.json', '');
+          screenshots.push(data);
+        }
       }
     }
 
