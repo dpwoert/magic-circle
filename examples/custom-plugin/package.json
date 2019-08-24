@@ -1,0 +1,44 @@
+{
+  "name": "@magic-circle/example-custom-plugin",
+  "private": true,
+  "version": "0.0.0-alpha.7",
+  "description": "Magic Circle custom plugin example",
+  "keywords": [
+    "controls",
+    "creative coding",
+    "editor",
+    "performance",
+    "layers",
+    "editing",
+    "GUI",
+    "example",
+    "custom plugin"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dpwoert/magic-circle.git",
+    "directory": "examples/custom-plugin"
+  },
+  "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "build": "parcel build index.html  --public-url \"../dist\"",
+    "electron": "controls --config controls.config.js --url dist/index.html --inspect",
+    "start": "npm run build && npm run electron"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "@magic-circle/editor": "^0.0.0-alpha.7",
+    "babel-plugin-inline-react-svg": "^1.0.1",
+    "babel-plugin-styled-components": "^1.8.0",
+    "parcel": "^1.11.0",
+    "styled-components": "^4.0.3"
+  },
+  "dependencies": {
+    "@magic-circle/client": "^0.0.0-alpha.7",
+    "three": "^0.97.0"
+  }
+}

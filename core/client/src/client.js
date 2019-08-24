@@ -135,10 +135,10 @@ export class Client {
       });
 
       // step frame
-      ipcRenderer.on('step-frame', (evt, payload) => {
-        nextFrame(true);
-        ipcRenderer.sendSync('frame-stepped');
-      });
+      // ipcRenderer.on('step-frame', (evt, payload) => {
+      //   nextFrame(true);
+      //   ipcRenderer.sendSync('frame-stepped');
+      // });
 
       // batch messages
       ipcRenderer.on('batch', (evt, payload) => {
@@ -169,7 +169,7 @@ export class Client {
     // end of FPS measurement
     this.endFrame();
 
-    if (!single) {
+    if (single !== true) {
       // Schedule next frame
       this.frameRequest = requestAnimationFrame(this.nextFrame);
     }

@@ -40,10 +40,12 @@ const SizeRow = styled.div`
 const Axis = styled.div`
   color: ${props => props.theme.accent};
   padding-right: 6px;
+  width: 75px;
+  text-align: right;
 `;
 
 const AxisInput = styled.input`
-  flex: 1;
+  width: 100%;
   background: #191919;
   color: #fff;
   border-radius: 3px;
@@ -211,14 +213,14 @@ class ScreenshotsPanel extends Component {
           </WindowSize>
           <CustomSize show={this.state.customSize}>
             <SizeRow>
-              <Axis>x</Axis>
+              <Axis>width</Axis>
               <AxisInput
                 onChange={evt => this.setCustomAxis('x', evt.target.value)}
                 value={this.state.x}
               />
             </SizeRow>
             <SizeRow>
-              <Axis>y</Axis>
+              <Axis>height</Axis>
               <AxisInput
                 onChange={evt => this.setCustomAxis('y', evt.target.value)}
                 value={this.state.y}
