@@ -135,10 +135,10 @@ export class Client {
       });
 
       // step frame
-      // ipcRenderer.on('step-frame', (evt, payload) => {
-      //   nextFrame(true);
-      //   ipcRenderer.sendSync('frame-stepped');
-      // });
+      ipcRenderer.on('step-frame', (evt, payload) => {
+        nextFrame(true);
+        ipcRenderer.sendSync('frame-stepped');
+      });
 
       // batch messages
       ipcRenderer.on('batch', (evt, payload) => {

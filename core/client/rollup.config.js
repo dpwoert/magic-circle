@@ -3,20 +3,25 @@ import commonjs from 'rollup-plugin-commonjs';
 import babel from 'rollup-plugin-babel';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import replace from 'rollup-plugin-replace';
+import { terser } from 'rollup-plugin-terser';
 import path from 'path';
 
-const pkg = require('./package.json');
+const production = process.env.NODE_ENV === 'production';
 
 export default {
   input: 'src/index.js',
   output: [
     {
-      name: pkg.name,
+      name: 'controls',
       file: 'dist/bundle.js',
       format: 'umd',
     },
     {
-      name: pkg.name,
+      name: 'controls',
+      file: 'dist/bundle.min.js',
+      format: 'umd',
+    },
+    {
       file: 'dist/bundle.esm.js',
       format: 'esm',
     },
@@ -36,5 +41,8 @@ export default {
       preferBuiltins: true,
     }),
     commonjs(),
+    terser({
+      include: production ? [/^.+\.min\.js$/, '*esm*'] : [/^.+\.min\.js$/],
+    }),
   ],
 };
