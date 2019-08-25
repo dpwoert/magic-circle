@@ -135,8 +135,8 @@ export class Client {
       });
 
       // step frame
-      ipcRenderer.on('step-frame', (evt, payload) => {
-        nextFrame(true);
+      ipcRenderer.on('step-frame', () => {
+        this.nextFrame(true);
         ipcRenderer.sendSync('frame-stepped');
       });
 
