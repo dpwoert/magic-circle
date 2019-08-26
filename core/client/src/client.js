@@ -125,6 +125,10 @@ export class Client {
         });
       });
 
+      ipcRenderer.removeAllListeners('change-play-state');
+      ipcRenderer.removeAllListeners('step-frame');
+      ipcRenderer.removeAllListeners('batch');
+
       // play/stop messages
       ipcRenderer.on('change-play-state', (evt, payload) => {
         if (payload === true) {
@@ -135,9 +139,9 @@ export class Client {
       });
 
       // step frame
-      ipcRenderer.on('step-frame', () => {
-        this.nextFrame(true);
-        ipcRenderer.sendSync('frame-stepped');
+      ipcRenderer.on('step-frame', (evt, payload) => {
+        this.nextFrame(true, 1 / payload.fps);
+        ipcRenderer.send('frame-stepped');
       });
 
       // batch messages
@@ -157,13 +161,21 @@ export class Client {
 
   endFrame() {}
 
-  nextFrame(single) {
+  nextFrame(single, customDelta) {
+    // calculate delta
+    const newTime = (typeof performance === 'undefined'
+      ? Date
+      : performance
+    ).now();
+    const delta = this.oldTime ? (newTime - this.oldTime) / 1000 : 0;
+    this.oldTime = newTime;
+
     // measure FPS
     this.startFrame();
 
     // do user action
     if (this.fn.loop) {
-      this.fn.loop();
+      this.fn.loop(customDelta || delta);
     }
 
     // end of FPS measurement
