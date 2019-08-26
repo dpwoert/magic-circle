@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/controls",
-  "version": "0.0.0-alpha.9",
+  "version": "0.0.0-alpha.10",
   "description": "Magic Circle control panel",
   "keywords": [
     "controls",
@@ -40,7 +40,7 @@
     "styled-components": "*"
   },
   "dependencies": {
-    "@magic-circle/colors": "^0.0.0-alpha.9",
+    "@magic-circle/colors": "^0.0.0-alpha.10",
     "shallowequal": "^1.1.0"
   },
   "publishConfig": {
