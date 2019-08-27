@@ -14,9 +14,9 @@ I named this tool **Magic Circle**, which is the place where _play_ takes place.
 
 - **📦 Presets & Seeding** Enables to create the exact same scene by saving the values of controls and a _seeding_ value. When a page is reloaded, the last preset is being reapplied.
 
-- **📸 Screenshots** Take screenshots easily and in high quality. Together with a screenshot, the current preset and seed is saved and can be loaded by loading that screenshot.
+- **📸 Screenshots** Take screenshots easily and in high quality. Together with a screenshot, the current preset and seed is saved and can be loaded by loading that screenshot. Will also save the current git state, so you can always reproduce that screenshot, even if code has changed.
 
-- **⏲ Performance measurement** Measures and displays performance metrics like FPS.
+- **⏲ Performance measurement** Measures and displays performance metrics like Frames Per Second.
 
 - **👐 Touch Bar** Quick actions are possible in the Touch Bar and the live FPS is displayed.
 
@@ -26,11 +26,11 @@ I named this tool **Magic Circle**, which is the place where _play_ takes place.
 
 - **⛓ THREEjs helpers** Automatically create controls based upon the THREE.js scene graph.
 
-- **🎹 MIDI (WIP)** Use a midi controller to play around with variables.
+- **🎹 MIDI** Use a midi controller to play around with variables.
 
 - **🎛 More advanced custom controls** More controls types like images for textures and easing controls.
 
-- **⏰ Animation timeline** Create an animation timeline where controls can be keyframed.
+- **⏰ Animation timeline** Create an animation timeline where controls can be key-framed.
 
 ## Requirements
 
