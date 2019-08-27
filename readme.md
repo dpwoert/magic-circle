@@ -1,8 +1,40 @@
 # Magic Circle
 
+This is my attempt of creating a tool for my creative development needs. It's a multifunctional editor inspired by tools like dat.GUI, Unity and Framer. With this tool I want to enable and promote playfulness and collaboration in creative technology. You don't need to be a coder to improve a piece of creative tech. In fact collaborating with different disciplines might (will!) improve creative tech projects.
+
+I named this tool **Magic Circle**, which is the place where _play_ takes place. In this place the normal rules and reality that guard normal life are suspended. [Read more here](https://uxdesign.cc/why-play-can-improve-the-interdisciplinary-collaboration-in-your-team-8d7fd1ce32f8)
+
+![screenshot here](https://raw.github.com/dpwoert/magic-circle/develop/docs/assets/screenshot.png)
+
+## Features
+
+- **🎛 Custom controls** Enables users to play around with variables. All controls are configurable and adaptable to match (most) data sources.
+
+- **👁‍🗨 Layers** Layers are used to organise all these controls and can mimic the 'scene graph'.
+
+- **📦 Presets & Seeding** Enables to create the exact same scene by saving the values of controls and a _seeding_ value. When a page is reloaded, the last preset is being reapplied.
+
+- **📸 Screenshots** Take screenshots easily and in high quality. Together with a screenshot, the current preset and seed is saved and can be loaded by loading that screenshot.
+
+- **⏲ Performance measurement** Measures and displays performance metrics like FPS.
+
+- **👐 Touch Bar** Quick actions are possible in the Touch Bar and the live FPS is displayed.
+
+- **🛠 Custom plugins** Since all projects are unique, all projects need custom plugins that might not exists yet. Therefore it is possible to make your own.
+
+## Roadmap
+
+- **⛓ THREEjs helpers** Automatically create controls based upon the THREE.js scene graph.
+
+- **🎹 MIDI (WIP)** Use a midi controller to play around with variables.
+
+- **🎛 More advanced custom controls** More controls types like images for textures and easing controls.
+
+- **⏰ Animation timeline** Create an animation timeline where controls can be keyframed.
+
 ## Requirements
 
-- Mac OSX (Windows and Linux versions will come later)
+- Mac OSX (Windows and Linux versions might come later)
 - NodeJS
 - Npm or Yarn
 
@@ -53,7 +85,7 @@ controls
     // Add layer to UI
     gui.addLayer(layer);
   })
-  .loop(() => {
+  .loop(delta => {
     // this code will run every frame
   });
 ```
@@ -77,7 +109,7 @@ $ controls --config controls.config.js --url http://localhost:3000
 ## Settings file
 
 ```js
-module.exports = {
+export default {
   // Load list of plugins, first argument is the default list of plugins
   // This list can be filtered and extended with custom plugins.
   plugins: defaultPlugins => [...defaultPlugins],
@@ -116,6 +148,19 @@ module.exports = {
   ...
 }
 ```
+
+## Core plugins
+
+- **magic-circle/controls** (github / npm)
+- **magic-circle/debug** (github / npm)
+- **magic-circle/fullscreen** (github / npm)
+- **magic-circle/layers** (github / npm)
+- **magic-circle/page-information** (github / npm)
+- **magic-circle/performance** (github / npm)
+- **magic-circle/play-controls** (github / npm)
+- **magic-circle/screenshots** (github / npm)
+- **magic-circle/seed** (github / npm)
+- **magic-circle/touchbar** (github / npm)
 
 ## Creating custom plugins
 
