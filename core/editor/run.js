@@ -15,7 +15,6 @@ const replace = require('rollup-plugin-replace');
 async function build() {
   /* eslint-disable import/no-dynamic-require */
   const app = require(path.join(__dirname, 'build/app.json'));
-  const { mode } = require(path.join(__dirname, 'build/mode.json'));
   /* eslint-enable import/no-dynamic-require */
 
   const buildPath = path.join(
@@ -37,7 +36,7 @@ async function build() {
   args.debug = argv.d || argv.debug;
   args.inspect = argv.i || argv.inspect;
   args.settings =
-    mode === 'production'
+    app.environment === 'production'
       ? buildPath
       : path.join(process.cwd(), '.settings.build.js');
 

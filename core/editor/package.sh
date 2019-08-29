@@ -21,9 +21,7 @@ rm -rf $BUILD_DIR/$NAME.app/Contents/Resources/app/node_modules/$NAMESPACE
 if [[ -z "${NODE_ENV}" ]]; then
   echo "linking dependencies"
   ln -s $PWD/node_modules/$NAMESPACE $BUILD_DIR/$NAME.app/Contents/Resources/app/node_modules/$NAMESPACE
-	echo "{ \"mode\": \"development\" }" > $PWD/build/mode.json
 else
   echo "copying dependencies"
   cp -L -R $PWD/node_modules/$NAMESPACE $BUILD_DIR/$NAME.app/Contents/Resources/app/node_modules
-	echo "{ \"mode\": \"production\" }" > $PWD/build/mode.json
 fi

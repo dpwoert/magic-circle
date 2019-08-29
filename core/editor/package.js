@@ -32,6 +32,7 @@ packager({
       executableName,
       namespace: pkg.name.split('/')[0],
       buildDir: path[0],
+      environment: process.env.NODE_ENV || 'development',
     };
     fs.writeFileSync('build/app.json', JSON.stringify(app));
 
