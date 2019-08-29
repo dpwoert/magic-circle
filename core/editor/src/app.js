@@ -2,8 +2,8 @@ const { app, BrowserWindow, powerSaveBlocker } = require('electron');
 const settings = require('electron-settings');
 const url = require('url');
 const path = require('path');
-const argv = require('minimist')(process.argv.slice(2));
 
+const argv = require('./arguments')();
 const logger = require('./logger.js');
 const inject = require('./inject.js');
 const eventSystem = require('./events.js');
