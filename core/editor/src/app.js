@@ -62,8 +62,12 @@ app.once('ready', () => {
     parent: window,
     width: 800,
     height: 768,
+    enableLargerThanScreen: screen.enableLargerThanScreen,
+    useContentSize: true,
     frame: false,
     hasShadow: false,
+    resizable: false,
+    movable: false,
   });
 
   // Power sleep
