@@ -1,0 +1,38 @@
+name: Node CI
+
+on: [push]
+
+jobs:
+  setup:
+
+    runs-on: macos-latest
+
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: npm install, build, and test
+      run: |
+        npm run setup:dev
+        
+  test:
+  
+    runs-on: macos-latest
+
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x]
+
+    needs: setup
+    steps:
+    - name: linting
+      run: npm run lint
+    - name: run an example
+      run: npm run example simple
+    
