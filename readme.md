@@ -149,6 +149,23 @@ export default {
 }
 ```
 
+## Examples
+
+To run examples:
+
+```sh
+# copy repo and open
+git clone https://github.com/dpwoert/magic-circle.git && cd magic-circle
+
+# install dependencies
+npm run setup:dev
+
+# run examples
+npm run example [name]
+npm run example simple
+npm run example custom-plugin
+```
+
 ## Core plugins
 
 - **magic-circle/controls** (github / npm)
