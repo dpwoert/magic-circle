@@ -115,6 +115,11 @@ app.once('ready', () => {
 
   // Add menu
   menu(window, frame);
+
+  if (argv.CI) {
+    console.info('CI run succesfully');
+    app.quit();
+  }
 });
 
 // Quit when all windows are closed.

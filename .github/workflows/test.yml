@@ -20,4 +20,6 @@ jobs:
       - name: Linting
         run: npm run lint
       - name: Run an example
+        env:
+          CI: true
         run: npm run example simple

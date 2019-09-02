@@ -35,6 +35,7 @@ async function build() {
   args.clear = argv.clear;
   args.debug = argv.d || argv.debug;
   args.inspect = argv.i || argv.inspect;
+  args.CI = !!process.env.CI;
   args.settings =
     app.environment === 'production'
       ? buildPath
