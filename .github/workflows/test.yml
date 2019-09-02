@@ -3,7 +3,7 @@ name: Test
 on: [push]
 
 jobs:
-  setup:
+  test:
     runs-on: macos-latest
     strategy:
       matrix:
@@ -17,14 +17,6 @@ jobs:
       - name: Setup repo (dev mode)
         run: |
           npm run setup:dev -- --yes
-
-  test:
-    runs-on: macos-latest
-    strategy:
-      matrix:
-        node-version: [10.x, 12.x]
-    needs: setup
-    steps:
       - name: Linting
         run: npm run lint
       - name: Run an example
