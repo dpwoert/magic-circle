@@ -54,6 +54,13 @@ module.exports = (window, frame) => {
           frame.reload();
         },
       },
+      {
+        label: 'Resync',
+        accelerator: 'CmdOrCtrl+Y',
+        click() {
+          frame.webContents.send('resync');
+        },
+      },
       { type: 'separator' },
       { role: 'resetzoom' },
       { role: 'zoomin' },
