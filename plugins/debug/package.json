@@ -24,6 +24,9 @@
   "main": "src/index.js",
   "module": "src/index.js",
   "scripts": {},
+  "dependencies": {
+    "git-repo-info": "*"
+  },
   "devDependencies": {
     "@babel/core": "^7.1.2",
     "@babel/plugin-proposal-class-properties": "^7.1.0",

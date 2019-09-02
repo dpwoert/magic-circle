@@ -40,6 +40,14 @@ class Screenshots {
     return {
       path: path.join(client.cwd, 'screenshots'),
       gitInfo: true,
+      resolutions: [
+        '800x600',
+        '1024x768',
+        '1400x768',
+        '1080x720',
+        '1920x1080',
+        '3840×2160',
+      ],
     };
   }
 
@@ -155,6 +163,7 @@ class Screenshots {
         loadScreenshot={this.loadScreenshot}
         resize={this.client.resize}
         path={this.path}
+        resolutions={this.client.getSetting('screenshots.resolutions')}
         key="screenshots"
       />
     );

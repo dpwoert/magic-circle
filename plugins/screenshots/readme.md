@@ -13,6 +13,16 @@ module.exports = {
 
     // Save the current git state into the snapshop
     gitInfo: true,
+
+    // Quick list of resolutions
+    resolutions: [
+      '800x600',
+      '1024x768',
+      '1400x768',
+      '1080x720',
+      '1920x1080',
+      '3840×2160',
+    ]
   }
 }
 ```

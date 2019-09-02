@@ -11,6 +11,7 @@ const Panel = styled.div`
 
 const ResizePanel = styled.div`
   padding: 16px;
+  padding-left: 6px;
   background: #191919;
 `;
 
@@ -41,7 +42,7 @@ const Axis = styled.div`
   color: ${props => props.theme.accent};
   padding-right: 6px;
   width: 75px;
-  text-align: right;
+  padding-left: 8px;
 `;
 
 const AxisInput = styled.input`
@@ -183,7 +184,16 @@ class ScreenshotsPanel extends Component {
   }
 
   render() {
-    const { screenshots, path, loadScreenshot, deleteScreenshot } = this.props;
+    const {
+      screenshots,
+      path,
+      loadScreenshot,
+      deleteScreenshot,
+      resolutions,
+    } = this.props;
+    const currentRes = `${window.innerWidth}x${window.innerHeight}`;
+    const sizeValue =
+      resolutions.indexOf(currentRes) > -1 ? currentRes : 'custom';
 
     const DeleteIcon = this.props.theme.icons.Trashbin;
 
@@ -191,6 +201,7 @@ class ScreenshotsPanel extends Component {
       <Panel>
         <ResizePanel>
           <WindowSize
+            defaultValue={sizeValue}
             onChange={evt => {
               const { value } = evt.target;
 
@@ -203,15 +214,12 @@ class ScreenshotsPanel extends Component {
               }
             }}
           >
-            <option>800x600</option>
-            <option>1024x768</option>
-            <option>1400x768</option>
-            <option>1080x720</option>
-            <option>1920x1080</option>
-            <option>3840×2160</option>
-            <option>custom</option>
+            {resolutions.map(res => (
+              <option value={res}>{res}</option>
+            ))}
+            <option value="custom">custom</option>
           </WindowSize>
-          <CustomSize show={this.state.customSize}>
+          <CustomSize show={this.state.customSize || sizeValue === 'custom'}>
             <SizeRow>
               <Axis>width</Axis>
               <AxisInput
