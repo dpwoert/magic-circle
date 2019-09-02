@@ -19,7 +19,11 @@ jobs:
           npm run setup:dev -- --yes
       - name: Linting
         run: npm run lint
-      - name: Run an example
+      - name: Run simple example
         env:
           CI: true
         run: npm run example simple
+      - name: Run example with custom plugin
+        env:
+          CI: true
+        run: npm run example custom-plugin
