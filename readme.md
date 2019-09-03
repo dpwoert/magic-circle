@@ -8,29 +8,35 @@ I named this tool **Magic Circle**, which is the place where _play_ takes place.
 
 ## Features
 
-- **🎛 Custom controls** Enables users to play around with variables. All controls are configurable and adaptable to match (most) data sources.
+- **🎛 Custom controls** Enables you to play around with variables. All controls are configurable and adaptable to play nicely with most data sources.
 
 - **👁‍🗨 Layers** Layers are used to organise all these controls and can mimic the 'scene graph'.
 
-- **📦 Presets & Seeding** Enables to create the exact same scene by saving the values of controls and a _seeding_ value. When a page is reloaded, the last preset is being reapplied.
+- **📦 Presets & Seeding** Enables you to create the exact same scene by saving the values of your controls and the _seeding_ value. When a page is reloaded, the last preset is being reapplied.
 
-- **📸 Screenshots** Take screenshots easily and in high quality. Together with a screenshot, the current preset and seed is saved and can be loaded by loading that screenshot. Will also save the current git state, so you can always reproduce that screenshot, even if code has changed.
+- **📸 Screenshots** Take screenshots easily and in high quality. Together with a screenshot, the current preset and seed is saved and can be loaded by loading that screenshot. Will also save the current git state, so you can always reproduce that screenshot, even if your code has changed.
 
-- **⏲ Performance measurement** Measures and displays performance metrics like Frames Per Second.
+- **🎥 Screen recordings** Render your content into a screen recording by exporting it frame by frame. Enabling you to export videos in high quality without loss of quality like for example a Quicktime recording would.
 
-- **👐 Touch Bar** Quick actions are possible in the Touch Bar and the live FPS is displayed.
+- **⏲ Performance measurement** Measures and displays performance metrics like Frames Per Second and memory usage.
 
-- **🛠 Custom plugins** Since all projects are unique, all projects need custom plugins that might not exists yet. Therefore it is possible to make your own.
+- **👐 Touch Bar** Enables you to trigger quick actions and view a live Frames per Second meter.
+
+- **🛠 Custom plugins** Since all projects are unique, some projects need custom plugins that might not exists yet. Make your own if needed.
+
+- **🌈 Theming** It is possible and easy to change some colours around.
 
 ## Roadmap
 
 - **⛓ THREEjs helpers** Automatically create controls based upon the THREE.js scene graph.
 
-- **🎹 MIDI** Use a midi controller to play around with variables.
+- **🎹 MIDI** Use a MIDI controller to play around with your variables.
 
-- **🎛 More advanced custom controls** More controls types like images for textures and easing controls.
+- **🎛 More advanced custom controls** More controls types, like setting images for textures and easing controls.
 
-- **⏰ Animation timeline** Create an animation timeline where controls can be key-framed.
+- **⏰ Animation timeline** Create an animation timeline where variables can be key-framed.
+
+- **🧩 Stand-alone** So you won't need the CLI anymore and can share this app with others.
 
 ## Requirements
 
