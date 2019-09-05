@@ -17,6 +17,14 @@ const trailingZeros = (nr, maxNumber) => {
   return output;
 };
 
+const dateTime = () => {
+  // Get date
+  const now = new Date();
+  const date = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
+  const time = `${now.getHours()}.${now.getMinutes()}`;
+  return `${date} ${time}`;
+};
+
 module.exports = (window, frame, settings) => {
   ipcMain.on('record', (_, { duration, fps }) => {
     console.info(`🎥  start recording (${duration}s @ ${fps}fps)`);
@@ -31,6 +39,10 @@ module.exports = (window, frame, settings) => {
     if (!fs.existsSync(settings.recordings.path)) {
       fs.mkdirSync(settings.recordings.path, { recursive: true });
     }
+
+    // create folder
+    const folder = path.join(settings.recordings.path, dateTime());
+    fs.mkdirSync(folder);
 
     // ensure computer doesn't go in power save mode
     const keepAwake = powerSaveBlocker.start('prevent-display-sleep');
@@ -51,7 +63,7 @@ module.exports = (window, frame, settings) => {
       frame.capturePage(img => {
         // save to file
         const filePath = path.join(
-          settings.recordings.path,
+          folder,
           `recording-${trailingZeros(rendered, nrFrames)}.png`
         );
         fs.writeFile(filePath, img.toPNG(), () => {
@@ -85,17 +97,36 @@ module.exports = (window, frame, settings) => {
   ipcMain.on('convert-recording', (evt, { width, height, fps }) => {
     console.info(`♻️  start converting video`);
 
+    const folders = fs.readdirSync(settings.recordings.path);
+    const sorted = folders
+      .map(fileName => ({
+        name: fileName,
+        time: fs
+          .statSync(path.join(settings.recordings.path, fileName))
+          .mtime.getTime(),
+      }))
+      .sort((a, b) => b.time - a.time);
+    const lastFolder = path.join(settings.recordings.path, sorted[0].name);
+
     const run = exec(
-      `ffmpeg -r ${fps} -f image2 -s ${width}x${height} -i recording-%04d.png -vcodec libx264 -crf 15  -pix_fmt yuv420p recording.mp4`,
+      `ffmpeg -r ${fps} -f image2 -s ${width}x${height} -i recording-%04d.png -vcodec libx264 -crf 15  -pix_fmt yuv420p "recording ${dateTime()}.mp4"`,
       {
-        cwd: settings.recordings.path,
+        cwd: lastFolder,
       }
     );
+
+    // log
+    run.stdout.on('data', data => {
+      process.stdout.out.write(data);
+    });
+    run.stderr.on('data', data => {
+      process.stderr.write(`⚠️  ' ${data}`);
+    });
 
     // waiting to be done
     run.on('exit', () => {
       console.info('✅  done converting video');
-      frame.webContents.send('conversion-complete');
+      window.webContents.send('finished-converting');
     });
   });
 };
