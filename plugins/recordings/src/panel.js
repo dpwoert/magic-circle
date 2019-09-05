@@ -54,39 +54,6 @@ const AxisInput = styled.input`
   padding: 6px;
 `;
 
-const Inner = styled.div`
-  padding: 16px;
-  background: #191919;
-`;
-
-const SettingsPanel = styled.div`
-  display: ${props => (props.show ? 'block' : 'none')};
-  padding-top: 12px;
-`;
-
-const Row = styled.div`
-  display: flex;
-  align-items: center;
-  font-size: 12px;
-  margin-bottom: 2px;
-`;
-
-const ColumnName = styled.div`
-  color: ${props => props.theme.accent};
-  padding-right: 6px;
-  width: 75px;
-  text-align: right;
-`;
-
-const Input = styled.input`
-  background: #191919;
-  color: #fff;
-  border-radius: 3px;
-  border: none;
-  padding: 6px;
-  width: 100%;
-`;
-
 const ButtonRow = styled.div`
   display: flex;
   flex-direction: column;

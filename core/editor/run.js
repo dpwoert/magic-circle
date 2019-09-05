@@ -18,14 +18,12 @@ if(typeof window !== 'undefined' && window.__REQUIRE){
 }
 `;
 
-const injectElectron = () => {
-  return {
-    name: 'inject-electron',
-    banner() {
-      return banner;
-    },
-  };
-};
+const injectElectron = () => ({
+  name: 'inject-electron',
+  banner() {
+    return banner;
+  },
+});
 
 // compile settings
 async function build() {

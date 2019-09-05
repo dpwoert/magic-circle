@@ -1,8 +1,6 @@
 import React from 'react';
 import styled, { withTheme } from 'styled-components';
 
-console.log(styled);
-
 const Bar = styled.div`
   position: absolute;
   top: 0;
