@@ -24,7 +24,7 @@
   "main": "index.js",
   "scripts": {
     "build": "parcel build index.html  --public-url \"../dist\"",
-    "electron": "controls --config controls.config.js --url dist/index.html",
+    "electron": "controls --config controls.config.js --url dist/index.html --inspect",
     "start": "npm run build && npm run electron"
   },
   "devDependencies": {
@@ -34,12 +34,12 @@
     "@magic-circle/editor": "^0.0.0-alpha.10",
     "babel-plugin-inline-react-svg": "^1.0.1",
     "babel-plugin-styled-components": "^1.8.0",
-    "parcel": "^1.11.0",
-    "styled-components": "^4.0.3"
+    "parcel": "^1.11.0"
   },
   "dependencies": {
     "@magic-circle/client": "^0.0.0-alpha.10",
     "@magic-circle/debug": "^0.0.0-alpha.10",
+    "@magic-circle/recordings": "^0.0.0-alpha.10",
     "three": "^0.97.0"
   }
 }

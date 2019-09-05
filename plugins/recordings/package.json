@@ -1,0 +1,45 @@
+{
+  "name": "@magic-circle/recordings",
+  "version": "0.0.0-alpha.10",
+  "description": "Magic Circle screen recordings",
+  "keywords": [
+    "controls",
+    "creative coding",
+    "editor",
+    "editing",
+    "GUI",
+    "recording",
+    "recordings",
+    "screen recording",
+    "render",
+    "screenshots"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dpwoert/magic-circle.git",
+    "directory": "plugins/recordings"
+  },
+  "files": [
+    "src/*.js"
+  ],
+  "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
+  "license": "MIT",
+  "main": "src/index.js",
+  "module": "src/index.js",
+  "dependencies": {
+    "@magic-circle/colors": "*"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-plugin-styled-components": "^1.8.0"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "styled-components": "*"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

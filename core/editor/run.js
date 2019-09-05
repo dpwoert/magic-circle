@@ -11,6 +11,22 @@ const commonjs = require('rollup-plugin-commonjs');
 const babel = require('rollup-plugin-babel');
 const replace = require('rollup-plugin-replace');
 
+const banner = `
+// fix for requiring in electron
+if(typeof window !== 'undefined' && window.__REQUIRE){
+  require = window.__REQUIRE;
+}
+`;
+
+const injectElectron = () => {
+  return {
+    name: 'inject-electron',
+    banner() {
+      return banner;
+    },
+  };
+};
+
 // compile settings
 async function build() {
   /* eslint-disable import/no-dynamic-require */
@@ -36,10 +52,9 @@ async function build() {
   args.debug = argv.d || argv.debug;
   args.inspect = argv.i || argv.inspect;
   args.CI = !!process.env.CI;
-  args.settings =
-    app.environment === 'production'
-      ? buildPath
-      : path.join(process.cwd(), '.settings.build.js');
+  args.settings = args.debug
+    ? path.join(process.cwd(), '.settings.build.js')
+    : buildPath;
 
   const argsStr = Object.keys(args)
     .filter(key => args[key])
@@ -81,6 +96,7 @@ async function build() {
           ],
         }),
         commonjs(),
+        injectElectron(),
       ],
     });
 

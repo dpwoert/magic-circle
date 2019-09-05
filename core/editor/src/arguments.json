@@ -2,5 +2,6 @@
   "_": [],
   "cwd": "/Users/dpwoert/projects/creative-controls/examples/debug",
   "url": "dist/index.html",
-  "settings": "/Users/dpwoert/projects/creative-controls/examples/debug/.settings.build.js"
+  "inspect": true,
+  "settings": "/Users/dpwoert/projects/creative-controls/core/editor/build/magic-circle-darwin-x64/magic-circle.app/Contents/Resources/app/settings.build.js"
 }
