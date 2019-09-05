@@ -41,7 +41,7 @@ const SizeRow = styled.div`
 const Axis = styled.div`
   color: ${props => props.theme.accent};
   padding-right: 6px;
-  width: 75px;
+  width: 85px;
   padding-left: 8px;
 `;
 
@@ -131,7 +131,7 @@ class RecordPanel extends Component {
     width: window.innerWidth,
     height: window.innerHeight,
     fps: 60,
-    duration: 30,
+    duration: 15,
   };
 
   changeWindowSize(width, height) {
@@ -157,7 +157,13 @@ class RecordPanel extends Component {
   }
 
   render() {
-    const { done, total, resolutions, finishedRecording } = this.props;
+    const {
+      done,
+      total,
+      resolutions,
+      finishedRecording,
+      enableFFMPEG,
+    } = this.props;
     const percent = total > 0 ? Math.floor((done / total) * 100) : 0;
     const currentRes = `${this.state.width}x${this.state.height}`;
     const sizeValue =
@@ -205,8 +211,8 @@ class RecordPanel extends Component {
           <SizeRow>
             <Axis>duration</Axis>
             <AxisInput
-              onChange={evt => this.changeOption('fps', evt.target.value)}
-              value={this.state.fps}
+              onChange={evt => this.changeOption('duration', evt.target.value)}
+              value={this.state.duration}
             />
           </SizeRow>
           <SizeRow>
@@ -226,12 +232,14 @@ class RecordPanel extends Component {
               ? `${percent}% (${done}/${total})`
               : 'Start recording'}
           </Button>
-          <Button
-            isDisabled={this.props.converting}
-            onClick={() => this.props.convert(this.state)}
-          >
-            Convert to video
-          </Button>
+          {enableFFMPEG && (
+            <Button
+              isDisabled={this.props.converting}
+              onClick={() => this.props.convert(this.state)}
+            >
+              Convert to video
+            </Button>
+          )}
         </ButtonRow>
       </Panel>
     );

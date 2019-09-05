@@ -23,6 +23,7 @@ class Recordings {
     return {
       path: path.join(client.cwd, 'recordings'),
       resolutions: ['1280x720', '1920x1080', '2560x1440', '3840x2160'],
+      enableFFMPEG: false,
     };
   }
 
@@ -85,6 +86,7 @@ class Recordings {
         convert={this.convert}
         resize={this.resize}
         resolutions={this.client.getSetting('recordings.resolutions')}
+        enableFFMPEG={this.client.getSetting('recordings.enableFFMPEG')}
         key="record"
       />
     );
