@@ -83,20 +83,6 @@ module.exports = (window, frame) => {
           },
         ],
       },
-      { type: 'separator' },
-      {
-        label: 'Fullscreen',
-        submenu: [
-          {
-            label: 'Window',
-            accelerator: 'CmdOrCtrl+Shift+F',
-          },
-          {
-            label: 'Editor',
-            accelerator: 'CmdOrCtrl+F',
-          },
-        ],
-      },
     ],
   });
 

@@ -50,20 +50,4 @@ module.exports = (window, frame) => {
   ipcMain.on('resize-window', (evt, windowSize) => {
     setSize(windowSize.width, windowSize.height);
   });
-
-  // fullscreen frame
-  ipcMain.on('fullscreen-frame', () => {
-    frame.setFullScreen(!frame.isFullScreen());
-  });
-
-  // fullscreen window
-  ipcMain.on('fullscreen-window', () => {
-    window.setFullScreen(!window.isFullScreen());
-  });
-
-  // full screen
-  window.on('enter-full-screen', () => {
-    window.setFullScreen(false);
-    frame.setFullScreen(true);
-  });
 };

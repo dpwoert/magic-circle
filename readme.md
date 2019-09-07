@@ -129,7 +129,7 @@ export default {
 
   // Theming settings
   theme: {
-    dark: true,
+    dark: true, //(WIP)
     accent: 'rgb(136, 74, 255)',
   },
 
@@ -140,6 +140,9 @@ export default {
       height: 768,
     },
 
+    // Save window size on resize
+    saveSize: true
+
     // Enables resizing of window
     enableResize: true,
 
@@ -148,6 +151,9 @@ export default {
 
     // When enabled prevents sleeping of display
     preventSleep: false,
+
+    // Hide editor so only
+    hideEditor: false,
   },
 
   // Look at plugin folders for settings of individual plugins

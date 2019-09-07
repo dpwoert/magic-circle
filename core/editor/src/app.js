@@ -42,12 +42,16 @@ app.once('ready', () => {
       enableResize: true,
       enableLargerThanScreen: false,
       preventSleep: false,
+      saveSize: true,
+      hideEditor: false,
     },
     settingsFile.screen || {}
   );
 
   const defaultSize = { width: 1400, height: 768 };
-  const initialSize = screen.size || (settings.get('size') || defaultSize);
+  const initialSize = screen.saveSize
+    ? screen.size || (settings.get('size') || defaultSize)
+    : screen.size || defaultSize;
 
   // Create a new window
   window = new BrowserWindow({
@@ -89,7 +93,9 @@ app.once('ready', () => {
 
   window.once('ready-to-show', () => {
     // Show window when page is ready
-    window.show();
+    if (!screen.hideEditor) {
+      window.show();
+    }
     frame.show();
   });
 

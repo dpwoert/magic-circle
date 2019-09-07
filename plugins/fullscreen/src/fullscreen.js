@@ -1,19 +1,28 @@
-class Debug {
+class Fullscreen {
   static name = 'fullscreen';
 
   static electronOnly = true;
 
+  static defaultSettings(client) {
+    return {
+      button: 'editor',
+      startup: false,
+      frame: true,
+      editor: true,
+    };
+  }
+
   constructor(client) {
     this.client = client;
 
-    if (client.getSetting('fullscreen.startup')) {
+    if (this.client.getSetting('fullscreen.startup')) {
       this.toggleFullscreen();
     }
   }
 
-  // electron() {
-  //   return `${__dirname}/electron.js`;
-  // }
+  electron() {
+    return '@magic-circle/fullscreen/src/electron.js';
+  }
 
   buttons(buttons) {
     buttons.set('fullscreen', {
@@ -25,8 +34,12 @@ class Debug {
   }
 
   toggleFullscreen() {
-    this.client.sendAction('fullscreen-frame');
+    if (this.client.getSetting('fullscreen.button') === 'editor') {
+      this.client.sendAction('fullscreen-window');
+    } else {
+      this.client.sendAction('fullscreen-frame');
+    }
   }
 }
 
-export default Debug;
+export default Fullscreen;
