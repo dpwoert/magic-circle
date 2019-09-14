@@ -5,8 +5,10 @@ const getRepoInfo = require('git-repo-info');
 const truncate = (string, max) =>
   string.length > max ? `${string.substring(0, max)}...` : string;
 
-module.exports = (window, frame, settings) => {
-  const debug = settings.debug || {};
+module.exports = app => {
+  const editor = app.window('editor');
+  const frame = app.window('frame');
+  const debug = app.setting('debug', {});
 
   const toggleTools = (w, mode) => {
     if (w.webContents.isDevToolsOpened()) {
@@ -48,7 +50,7 @@ module.exports = (window, frame, settings) => {
               label: 'Editor',
               accelerator: 'Alt+Shift+Command+I',
               click: () => {
-                toggleTools(window, 'detach');
+                toggleTools(editor, 'detach');
               },
             },
           ],
@@ -56,7 +58,7 @@ module.exports = (window, frame, settings) => {
         {
           label: 'Reload Editor',
           click: () => {
-            window.reload();
+            editor.reload();
           },
         },
         { role: 'separator' },

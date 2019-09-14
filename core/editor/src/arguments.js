@@ -8,10 +8,16 @@ module.exports = () => {
   if (argv.url) {
     // save arguments [cli mode]
     fs.writeFileSync(path, JSON.stringify(argv));
-    return argv;
+    return {
+      ...argv,
+      standalone: false,
+    };
   } else if (fs.existsSync(path)) {
     // read arguments [standalone mode]
-    return JSON.parse(fs.readFileSync(path));
+    return {
+      ...JSON.parse(fs.readFileSync(path)),
+      standalone: true,
+    };
   }
 
   throw new Error('arguments not found');

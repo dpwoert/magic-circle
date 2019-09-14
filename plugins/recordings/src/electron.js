@@ -25,7 +25,11 @@ const dateTime = () => {
   return `${date} ${time}`;
 };
 
-module.exports = (window, frame, settings) => {
+module.exports = app => {
+  const editor = app.window('editor');
+  const frame = app.window('frame');
+  const recPath = app.path(app.setting('recordings.path'), 'recordings');
+
   ipcMain.on('record', (_, { duration, fps }) => {
     console.info(`🎥  start recording (${duration}s @ ${fps}fps)`);
 
@@ -36,12 +40,12 @@ module.exports = (window, frame, settings) => {
     frame.webContents.send('change-play-state', false);
 
     // ensure folder exists
-    if (!fs.existsSync(settings.recordings.path)) {
-      fs.mkdirSync(settings.recordings.path, { recursive: true });
+    if (!fs.existsSync(recPath)) {
+      fs.mkdirSync(recPath, { recursive: true });
     }
 
     // create folder
-    const folder = path.join(settings.recordings.path, dateTime());
+    const folder = path.join(recPath, dateTime());
     fs.mkdirSync(folder);
 
     // ensure computer doesn't go in power save mode
@@ -50,11 +54,11 @@ module.exports = (window, frame, settings) => {
     ipcMain.on('frame-stepped', evt => {
       if (rendered >= nrFrames) {
         console.info(`🎥  finished recording`);
-        window.webContents.send('recording-status', {
+        editor.webContents.send('recording-status', {
           total: nrFrames,
           done: rendered,
         });
-        window.webContents.send('finished-recording');
+        editor.webContents.send('finished-recording');
         powerSaveBlocker.stop(keepAwake);
         return false;
       }
@@ -68,7 +72,7 @@ module.exports = (window, frame, settings) => {
         );
         fs.writeFile(filePath, img.toPNG(), () => {
           // update front-end
-          window.webContents.send('recording-status', {
+          editor.webContents.send('recording-status', {
             total: nrFrames,
             done: rendered,
           });
@@ -97,16 +101,14 @@ module.exports = (window, frame, settings) => {
   ipcMain.on('convert-recording', (evt, { width, height, fps }) => {
     console.info(`♻️  start converting video`);
 
-    const folders = fs.readdirSync(settings.recordings.path);
+    const folders = fs.readdirSync(recPath);
     const sorted = folders
       .map(fileName => ({
         name: fileName,
-        time: fs
-          .statSync(path.join(settings.recordings.path, fileName))
-          .mtime.getTime(),
+        time: fs.statSync(path.join(recPath, fileName)).mtime.getTime(),
       }))
       .sort((a, b) => b.time - a.time);
-    const lastFolder = path.join(settings.recordings.path, sorted[0].name);
+    const lastFolder = path.join(recPath, sorted[0].name);
 
     const run = exec(
       `ffmpeg -r ${fps} -f image2 -s ${width}x${height} -i recording-%04d.png -vcodec libx264 -crf 15  -pix_fmt yuv420p "recording ${dateTime()}.mp4"`,
@@ -126,7 +128,7 @@ module.exports = (window, frame, settings) => {
     // waiting to be done
     run.on('exit', () => {
       console.info('✅  done converting video');
-      window.webContents.send('finished-converting');
+      editor.webContents.send('finished-converting');
     });
   });
 };

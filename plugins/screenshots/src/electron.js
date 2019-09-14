@@ -4,7 +4,14 @@ const path = require('path');
 const { ipcMain } = require('electron');
 const getRepoInfo = require('git-repo-info');
 
-module.exports = (window, frame, settings) => {
+module.exports = app => {
+  const editor = app.window('editor');
+  const frame = app.window('frame');
+  const screenshotPath = app.path(
+    app.setting('screenshots.path'),
+    'screenshots'
+  );
+
   // screenshots
   const screenshotBuffer = {};
   ipcMain.on('screenshot', (evt, data = {}) => {
@@ -40,20 +47,20 @@ module.exports = (window, frame, settings) => {
 
       // Get path
       const filePath = path.join(
-        settings.screenshots.path,
+        screenshotPath,
         `screenshot ${dateTime}${version}`
       );
       const content = JSON.stringify(data);
 
       // Ensure screenshot dir exists
-      if (!fs.existsSync(settings.screenshots.path)) {
-        fs.mkdirSync(settings.screenshots.path, { recursive: true });
+      if (!fs.existsSync(screenshotPath)) {
+        fs.mkdirSync(screenshotPath, { recursive: true });
       }
 
       // Save both files to HDD
       fs.writeFile(`${filePath}.png`, img.toPNG(), () => {
         fs.writeFile(`${filePath}.json`, content, () => {
-          window.webContents.send('screenshot-taken');
+          editor.webContents.send('screenshot-taken');
           console.info(`📸  took screenshot`);
         });
       });

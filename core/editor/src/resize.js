@@ -1,7 +1,10 @@
 const { ipcMain } = require('electron');
 const settings = require('electron-settings');
 
-module.exports = (window, frame) => {
+module.exports = app => {
+  const editor = app.window('editor');
+  const frame = app.window('frame');
+
   const size = {
     top: 46,
     left: 250,
@@ -10,9 +13,9 @@ module.exports = (window, frame) => {
   };
 
   const windowMoveResize = () => {
-    const position = window.getPosition();
-    const windowSize = window.getSize();
-    const contentSize = window.getContentSize();
+    const position = editor.getPosition();
+    const windowSize = editor.getSize();
+    const contentSize = editor.getContentSize();
     const titleBarHeight = windowSize[1] - contentSize[1];
 
     if (frame) {
@@ -31,12 +34,12 @@ module.exports = (window, frame) => {
   };
 
   const setSize = (width, height) => {
-    window.setSize(width, height);
+    editor.setSize(width, height);
     windowMoveResize();
   };
 
-  window.on('move', windowMoveResize);
-  window.on('resize', windowMoveResize);
+  editor.on('move', windowMoveResize);
+  editor.on('resize', windowMoveResize);
   windowMoveResize();
 
   // update frame size

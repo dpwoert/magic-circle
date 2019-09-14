@@ -1,6 +1,6 @@
 {
   "_": [],
-  "cwd": "/Users/dpwoert/projects/creative-controls/examples/debug",
+  "cwd": "/Users/dpwoert/projects/creative-controls/examples/simple",
   "url": "dist/index.html",
   "inspect": true,
   "settings": "/Users/dpwoert/projects/creative-controls/core/editor/build/magic-circle-darwin-x64/magic-circle.app/Contents/Resources/app/settings.build.js"

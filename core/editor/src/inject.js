@@ -1,6 +1,9 @@
 let initialLoad = true;
 
-module.exports = function inject(window, frame) {
+module.exports = app => {
+  const editor = app.window('editor');
+  const frame = app.window('frame');
+
   frame.webContents.on('dom-ready', () => {
     // Add ipcRenderer to front-end
     frame.webContents.executeJavaScript(`
@@ -14,14 +17,14 @@ module.exports = function inject(window, frame) {
     initialLoad = false;
   });
 
-  window.webContents.on('dom-ready', () => {
+  editor.webContents.on('dom-ready', () => {
     // Add ipcRenderer to front-end
-    window.webContents.executeJavaScript(`
+    editor.webContents.executeJavaScript(`
       try{
         window.__REQUIRE = require;
-        const settings = require('${global.settings}');
+        const settings = require('${app.settingsFile}');
         const {Client} = require('@magic-circle/ui');
-        window.__client = new Client(settings, '${global.cwd}');
+        window.__client = new Client(settings, '${app.cwd}');
       } catch(e){
         const {ipcRenderer} = require('electron');
         ipcRenderer.send('log', 'error', 'error during injecting of settings');

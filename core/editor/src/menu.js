@@ -1,6 +1,7 @@
 const { Menu } = require('electron');
 
-module.exports = (window, frame) => {
+module.exports = app => {
+  const frame = app.window('frame');
   const template = [];
 
   template.push({

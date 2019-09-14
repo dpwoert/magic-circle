@@ -1,6 +1,9 @@
 const { app, ipcMain, Menu, MenuItem } = require('electron');
 
-module.exports = (window, frame) => {
+module.exports = app => {
+  const editor = app.window('editor');
+  const frame = app.window('frame');
+
   // fullscreen frame
   ipcMain.on('fullscreen-frame', () => {
     frame.setFullScreen(!frame.isFullScreen());
@@ -8,7 +11,7 @@ module.exports = (window, frame) => {
 
   // fullscreen window
   ipcMain.on('fullscreen-window', () => {
-    window.setFullScreen(!window.isFullScreen());
+    editor.setFullScreen(!editor.isFullScreen());
   });
 
   // menu
@@ -31,7 +34,7 @@ module.exports = (window, frame) => {
           label: 'Editor',
           accelerator: 'CmdOrCtrl+F',
           click() {
-            window.setFullScreen(!window.isFullScreen());
+            editor.setFullScreen(!editor.isFullScreen());
           },
         },
       ],
