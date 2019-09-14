@@ -1,4 +1,4 @@
-const { app, ipcMain, Menu, MenuItem } = require('electron');
+const { app: electron, ipcMain, Menu, MenuItem } = require('electron');
 const path = require('path');
 const getRepoInfo = require('git-repo-info');
 
@@ -82,7 +82,7 @@ module.exports = app => {
         {
           label: 'Show package in Finder',
           click: () => {
-            const p = path.join(app.getPath('exe'), '../../');
+            const p = path.join(electron.getPath('exe'), '../../');
             require('electron').shell.openItem(p);
           },
         },

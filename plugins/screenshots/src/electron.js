@@ -34,7 +34,7 @@ module.exports = app => {
 
       // Add git info
       let git = {};
-      if (settings.screenshots.gitInfo) {
+      if (app.setting('screenshots.gitInfo')) {
         git = getRepoInfo();
         data.git = git || {};
       }

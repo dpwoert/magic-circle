@@ -3,7 +3,7 @@ class Fullscreen {
 
   static electronOnly = true;
 
-  static defaultSettings(client) {
+  static defaultSettings() {
     return {
       button: 'editor',
       startup: false,

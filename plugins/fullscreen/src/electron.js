@@ -1,4 +1,4 @@
-const { app, ipcMain, Menu, MenuItem } = require('electron');
+const { ipcMain, Menu, MenuItem } = require('electron');
 
 module.exports = app => {
   const editor = app.window('editor');

@@ -1,5 +1,5 @@
 const { app, BrowserWindow, powerSaveBlocker } = require('electron');
-const settings = require('electron-settings');
+const electronSettings = require('electron-settings');
 const url = require('url');
 const path = require('path');
 const dotProp = require('dot-prop');
@@ -34,11 +34,11 @@ class App {
     // clear settings if needed
     if (argv.clear) {
       console.info('🗑  cleared app settings');
-      settings.deleteAll();
+      electronSettings.deleteAll();
     }
 
-    // eslint-disable-next-line
     this.settingsFile = argv.settings;
+    // eslint-disable-next-line
     this.settings = require(argv.settings) || {};
     const screen = Object.assign(
       {
@@ -54,7 +54,7 @@ class App {
 
     const defaultSize = { width: 1400, height: 768 };
     const initialSize = screen.saveSize
-      ? screen.size || (settings.get('size') || defaultSize)
+      ? screen.size || (electronSettings.get('size') || defaultSize)
       : screen.size || defaultSize;
 
     const editor = this.openWindow('editor', {
@@ -127,8 +127,8 @@ class App {
     return this.window(name);
   }
 
-  setting(path, d) {
-    return dotProp.get(this.settings, path, d);
+  setting(pathString, d) {
+    return dotProp.get(this.settings, pathString, d);
   }
 
   path(ci, standalone) {
@@ -139,5 +139,10 @@ class App {
 }
 
 app.once('ready', () => {
-  new App();
+  new App(); // eslint-disable-line
+});
+
+// Quit when all windows are closed.
+app.on('window-all-closed', () => {
+  app.quit();
 });

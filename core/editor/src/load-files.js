@@ -2,12 +2,10 @@ const { ipcMain } = require('electron');
 const resolveFrom = require('resolve-from');
 
 module.exports = app => {
-  const editor = app.window('editor');
-  const frame = app.window('frame');
   const loaded = [];
 
   ipcMain.on('electron-load', (evt, { files, settings, cwd }) => {
-    app.settings = settings;
+    app.settings = settings; // eslint-disable-line
     files.forEach(file => {
       if (loaded.indexOf(file) === -1) {
         try {
