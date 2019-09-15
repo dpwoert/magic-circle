@@ -21,7 +21,17 @@ module.exports = app => {
   viewMenu.submenu.insert(
     viewMenu.submenu.items.length,
     new MenuItem({
+      type: 'separator',
+    })
+  );
+
+  viewMenu.submenu.insert(
+    viewMenu.submenu.items.length,
+    new MenuItem({
+      id: 'fullscreen',
       label: 'Fullscreen',
+      after: 'sidebar',
+      before: 'open-files-seperator',
       submenu: [
         {
           label: 'Window',

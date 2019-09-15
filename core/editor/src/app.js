@@ -3,6 +3,7 @@ const electronSettings = require('electron-settings');
 const url = require('url');
 const path = require('path');
 const dotProp = require('dot-prop');
+const fs = require('fs');
 
 const argv = require('./arguments')();
 const logger = require('./logger.js');
@@ -105,6 +106,14 @@ class App {
     if (argv.inspect) {
       editor.webContents.openDevTools();
       frame.webContents.openDevTools();
+    }
+
+    // ensure files folder exists in standalone mode
+    if (this.standalone) {
+      const standalonePath = this.path(null, '');
+      if (!fs.existsSync(standalonePath)) {
+        fs.mkdirSync(standalonePath, { recursive: true });
+      }
     }
 
     // load modules

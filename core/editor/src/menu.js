@@ -68,6 +68,7 @@ module.exports = app => {
       { role: 'zoomout' },
       { type: 'separator' },
       {
+        id: 'sidebar',
         label: 'Sidebar',
         submenu: [
           {
@@ -83,6 +84,20 @@ module.exports = app => {
             accelerator: 'CmdOrCtrl+3',
           },
         ],
+      },
+      {
+        type: 'separator',
+        id: 'open-files-seperator',
+        visible: app.standalone,
+      },
+      {
+        id: 'open-files',
+        label: 'Open files',
+        accelerator: 'CmdOrCtrl+O',
+        visible: app.standalone,
+        click() {
+          require('electron').shell.openItem(app.path(null, ''));
+        },
       },
     ],
   });
