@@ -60,7 +60,7 @@ async function build() {
       if (args[key] === true) {
         return `--${key}`;
       }
-      return `--${key} ${args[key]}`;
+      return `--${key} "${args[key]}"`;
     })
     .join(' ');
 

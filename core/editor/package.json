@@ -1,6 +1,7 @@
 {
   "name": "@magic-circle/editor",
   "executableName": "Magic Circle",
+  "productName": "Magic Circle",
   "version": "0.0.0-alpha.10",
   "description": "Magic Circle electron runner",
   "keywords": [

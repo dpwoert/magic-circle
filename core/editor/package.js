@@ -3,8 +3,7 @@ const fs = require('fs');
 const pkg = require('./package.json');
 
 const executableName = pkg.executableName; // eslint-disable-line
-const namespace = pkg.name.split('/')[0];
-const name = namespace.replace('@', '');
+const name = pkg.executableName;
 
 if (process.platform !== 'darwin') {
   throw new Error('⚠️ this editor can only be build on OSX for now...');

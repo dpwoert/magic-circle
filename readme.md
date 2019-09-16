@@ -26,6 +26,8 @@ I named this tool **Magic Circle**, which is the place where _play_ takes place.
 
 - **🌈 Theming** It is possible and easy to change some colours around.
 
+- **🧩 Stand-alone** So you won't need the CLI anymore and can share this app with others.
+
 ## Roadmap
 
 - **⛓ THREEjs helpers** Automatically create controls based upon the THREE.js scene graph.
@@ -35,8 +37,6 @@ I named this tool **Magic Circle**, which is the place where _play_ takes place.
 - **🎛 More advanced custom controls** More controls types, like setting images for textures and easing controls.
 
 - **⏰ Animation timeline** Create an animation timeline where variables can be key-framed.
-
-- **🧩 Stand-alone** So you won't need the CLI anymore and can share this app with others.
 
 ## Requirements
 
