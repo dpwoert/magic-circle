@@ -42,7 +42,8 @@
     "rollup-plugin-peer-deps-external": "^2.2.0",
     "rollup-plugin-replace": "^2.1.0",
     "rollup-plugin-url": "2.2.2",
-    "svgexport": "0.3.2"
+    "svgexport": "0.3.2",
+    "case": "^1.6.2"
   },
   "dependencies": {
     "@magic-circle/colors": "^0.0.0",
