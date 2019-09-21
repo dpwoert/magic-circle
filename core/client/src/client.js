@@ -140,6 +140,9 @@ export class Client {
 
       // step frame
       ipcRenderer.on('step-frame', (evt, payload) => {
+        if (payload.process) {
+          this.trigger('timeline', evt, payload.process);
+        }
         this.nextFrame(true, 1 / payload.fps);
         ipcRenderer.send('frame-stepped');
       });

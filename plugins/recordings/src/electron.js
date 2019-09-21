@@ -85,7 +85,10 @@ module.exports = app => {
 
           // render next frame
           setTimeout(() => {
-            frame.webContents.send('step-frame', { fps });
+            frame.webContents.send('step-frame', {
+              fps,
+              process: (rendered - 1) / nrFrames,
+            });
           });
         });
       });
