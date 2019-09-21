@@ -20,7 +20,8 @@
     "directory": "plugins/recordings"
   },
   "files": [
-    "src/*.js"
+    "src/*.js",
+    ".babelrc"
   ],
   "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
   "license": "MIT",

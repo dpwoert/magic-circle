@@ -24,7 +24,7 @@
   "main": "index.js",
   "scripts": {
     "build": "parcel build index.html  --public-url \"../dist\"",
-    "electron": "controls --config controls.config.js --url dist/index.html --inspect",
+    "electron": "controls --config controls.config.js --url dist/index.html",
     "start": "npm run build && npm run electron"
   },
   "devDependencies": {

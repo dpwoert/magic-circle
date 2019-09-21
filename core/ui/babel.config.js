@@ -11,6 +11,11 @@ module.exports = api => {
   return {
     presets,
     plugins,
-    ignore: [filename => filename.indexOf('node_modules') > -1],
+    // ignore: [filename => {
+    //   if(filename.indexOf('node_modules') > -1){
+    //     console.log('ignore', filename)
+    //   }
+    //   return filename.indexOf('node_modules') > -1
+    // }],
   };
 };

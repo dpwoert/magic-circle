@@ -85,7 +85,7 @@ async function build() {
           __dirname: id => `'${path.dirname(id)}'`,
         }),
         babel({
-          exclude: '**/node_modules/**',
+          // exclude: '**/node_modules/**',
           presets: ['@babel/preset-react'],
           runtimeHelpers: true,
           plugins: [
