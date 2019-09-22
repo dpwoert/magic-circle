@@ -2,7 +2,7 @@
 
 This is my attempt of creating a tool for my creative development needs. It's a multifunctional editor inspired by tools like dat.GUI, Unity and Framer. With this tool I want to enable and promote playfulness and collaboration in creative technology. You don't need to be a coder to improve a piece of creative tech. In fact collaborating with different disciplines might (will!) improve creative tech projects.
 
-I named this tool **Magic Circle**, which is the place where _play_ takes place. In this place the normal rules and reality that guard normal life are suspended. [Read more here](https://uxdesign.cc/why-play-can-improve-the-interdisciplinary-collaboration-in-your-team-8d7fd1ce32f8)
+<sub><sup>I named this tool **Magic Circle**, which is the place where _play_ takes place. In this place the normal rules and reality that guard normal life are suspended. [Read more here](https://uxdesign.cc/why-play-can-improve-the-interdisciplinary-collaboration-in-your-team-8d7fd1ce32f8)</sub></sup>
 
 ![screenshot here](https://raw.github.com/dpwoert/magic-circle/develop/docs/assets/screenshot.png)
 

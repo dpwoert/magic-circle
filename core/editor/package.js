@@ -12,7 +12,7 @@ if (process.platform !== 'darwin') {
 packager({
   name,
   executableName,
-  // icon: './src/assets/sn-logo.icns',
+  icon: './assets/icon.icns',
   appCopyright: 'Davey van der Woert',
 
   // target OS (darwin = macosx), options: linux, darwin, win32, all
