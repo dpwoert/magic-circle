@@ -1,7 +1,7 @@
 {
   "name": "@magic-circle/example-simple",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Magic Circle simple example",
   "keywords": [
     "controls",
@@ -31,14 +31,14 @@
     "@babel/core": "^7.2.2",
     "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
-    "@magic-circle/editor": "^0.0.0",
+    "@magic-circle/editor": "^0.0.1",
     "babel-plugin-inline-react-svg": "^1.0.1",
     "babel-plugin-styled-components": "^1.8.0",
     "parcel": "^1.11.0",
     "styled-components": "^4.0.3"
   },
   "dependencies": {
-    "@magic-circle/client": "^0.0.0",
+    "@magic-circle/client": "^0.0.1",
     "three": "^0.97.0"
   }
 }

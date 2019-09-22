@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/ui",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Magic Circle UI",
   "keywords": [
     "controls",
@@ -32,6 +32,7 @@
     "@babel/preset-react": "^7.0.0",
     "babel-plugin-inline-react-svg": "^1.0.1",
     "babel-plugin-styled-components": "^1.8.0",
+    "case": "^1.6.2",
     "imagemin": "^7.0.0",
     "imagemin-cli": "^5.0.0",
     "imagemin-pngquant": "^8.0.0",
@@ -42,20 +43,19 @@
     "rollup-plugin-peer-deps-external": "^2.2.0",
     "rollup-plugin-replace": "^2.1.0",
     "rollup-plugin-url": "2.2.2",
-    "svgexport": "0.3.2",
-    "case": "^1.6.2"
+    "svgexport": "0.3.2"
   },
   "dependencies": {
-    "@magic-circle/colors": "^0.0.0",
-    "@magic-circle/controls": "^0.0.0",
-    "@magic-circle/fullscreen": "^0.0.0",
-    "@magic-circle/layers": "^0.0.0",
-    "@magic-circle/page-information": "^0.0.0",
-    "@magic-circle/performance": "^0.0.0",
-    "@magic-circle/play-controls": "^0.0.0",
-    "@magic-circle/screenshots": "^0.0.0",
-    "@magic-circle/seed": "^0.0.0",
-    "@magic-circle/touchbar": "^0.0.0",
+    "@magic-circle/colors": "^0.0.1",
+    "@magic-circle/controls": "^0.0.1",
+    "@magic-circle/fullscreen": "^0.0.1",
+    "@magic-circle/layers": "^0.0.1",
+    "@magic-circle/page-information": "^0.0.1",
+    "@magic-circle/performance": "^0.0.1",
+    "@magic-circle/play-controls": "^0.0.1",
+    "@magic-circle/screenshots": "^0.0.1",
+    "@magic-circle/seed": "^0.0.1",
+    "@magic-circle/touchbar": "^0.0.1",
     "dot-prop": "^4.2.0",
     "is-electron": "^2.1.0",
     "rc-color-picker": "^1.2.6"
