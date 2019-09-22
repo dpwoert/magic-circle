@@ -13,6 +13,18 @@ if [[ `git status --porcelain` ]]; then
   exit 1
 fi
 
+echo "Updating README in core plugins"
+cp readme.md core/client
+cp readme.md core/editor
+cp readme.md core/ui
+
+if [[ `git status --porcelain` ]]; then
+  echo "Commiting update to README files"
+  git add -A
+  git commit -am "updates readme in core folders"
+  exit 1
+fi
+
 case $yn in
     [Yy]* ) echo "\nseting up a developing environment";;
     [Nn]* ) exit;;
