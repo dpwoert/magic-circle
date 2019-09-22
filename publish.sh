@@ -22,7 +22,6 @@ if [[ `git status --porcelain` ]]; then
   echo "Commiting update to README files"
   git add -A
   git commit -am "updates readme in core folders"
-  exit 1
 fi
 
 case $yn in
