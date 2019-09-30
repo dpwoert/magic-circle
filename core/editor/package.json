@@ -18,6 +18,11 @@
     "directory": "core/editor"
   },
   "files": [
+    "assets/*.png",
+    "assets/*.icns",
+    "assets/*.ico",
+    "assets/*.svg",
+    "assets/*.jpg",
     "src/*.js",
     "src/*.html",
     "src/*.css",
