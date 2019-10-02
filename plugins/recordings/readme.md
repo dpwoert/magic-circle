@@ -14,7 +14,7 @@ brew install ffmpeg
 import path from 'path';
 
 module.exports = {
-  screenshots: {
+  recordings: {
 
     // Place to save recordings
     path: path.join(__dirname, 'recordings'),
