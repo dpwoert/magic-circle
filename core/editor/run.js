@@ -50,6 +50,10 @@ async function build() {
   args.debug = argv.d || argv.debug;
   args.inspect = argv.i || argv.inspect;
   args.CI = !!process.env.CI;
+  // args.settings = args.debug
+  //   ? path.join(process.cwd(), '.settings.build.js')
+  //   : '../settings.build.js';
+
   args.settings = args.debug
     ? path.join(process.cwd(), '.settings.build.js')
     : buildPath;

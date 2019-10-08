@@ -19,6 +19,13 @@ class Recordings {
     };
   }
 
+  static standaloneSettings(settings) {
+    return {
+      ...settings,
+      path: null,
+    };
+  }
+
   static defaultSettings(client) {
     return {
       path: path.join(client.cwd, 'recordings'),

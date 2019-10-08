@@ -160,6 +160,12 @@ export class Client {
     }
   }
 
+  sendAction(action, payload) {
+    if (ipcRenderer) {
+      ipcRenderer.send(action, payload);
+    }
+  }
+
   startFrame() {}
 
   endFrame() {}

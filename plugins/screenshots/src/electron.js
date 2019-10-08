@@ -7,10 +7,7 @@ const getRepoInfo = require('git-repo-info');
 module.exports = app => {
   const editor = app.window('editor');
   const frame = app.window('frame');
-  const screenshotPath = app.path(
-    app.setting('screenshots.path'),
-    'screenshots'
-  );
+  const screenshotPath = app.setting('screenshots.path');
 
   // screenshots
   const screenshotBuffer = {};

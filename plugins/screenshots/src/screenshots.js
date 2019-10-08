@@ -36,6 +36,13 @@ class Screenshots {
     return { screenshots: [] };
   }
 
+  static standaloneSettings(settings) {
+    return {
+      ...settings,
+      path: null,
+    };
+  }
+
   static defaultSettings(client) {
     return {
       path: path.join(client.cwd, 'screenshots'),

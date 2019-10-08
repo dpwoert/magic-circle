@@ -27,6 +27,13 @@ class Midi {
     };
   }
 
+  static standaloneSettings(settings) {
+    return {
+      ...settings,
+      path: null,
+    };
+  }
+
   static defaultSettings(client) {
     return {
       path: path.join(client.cwd, 'midi.json'),

@@ -29,6 +29,11 @@ export class Client {
     // create settings
     this.settings = Object.assign(defaultSettings, settings);
     this.settings.plugins.forEach(plugin => {
+      if (plugin.standaloneSettings) {
+        this.settings[plugin.name] = plugin.standaloneSettings(
+          this.settings[plugin.name]
+        );
+      }
       if (plugin.defaultSettings) {
         this.settings[plugin.name] = Object.assign(
           plugin.defaultSettings(this),

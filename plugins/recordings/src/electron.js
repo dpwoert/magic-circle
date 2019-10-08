@@ -28,7 +28,7 @@ const dateTime = () => {
 module.exports = app => {
   const editor = app.window('editor');
   const frame = app.window('frame');
-  const recPath = app.path(app.setting('recordings.path'), 'recordings');
+  const recPath = app.setting('recordings.path');
 
   ipcMain.on('record', (_, { duration, fps }) => {
     console.info(`🎥  start recording (${duration}s @ ${fps}fps)`);

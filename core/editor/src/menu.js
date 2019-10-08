@@ -96,7 +96,7 @@ module.exports = app => {
         accelerator: 'CmdOrCtrl+O',
         visible: app.standalone,
         click() {
-          require('electron').shell.openItem(app.path(null, ''));
+          require('electron').shell.openItem(app.cwd);
         },
       },
     ],

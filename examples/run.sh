@@ -2,7 +2,7 @@
 
 if [ -z "$1" ]
 then
-  echo "running example: $1"
+  echo "running example: simple"
   cd examples/simple
   npm run start
   cd ../..

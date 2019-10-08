@@ -1,21 +1,30 @@
 /* eslint-disable no-else-return */
 const fs = require('fs');
+const path = require('path');
+const { app } = require('electron');
 const argv = require('minimist')(process.argv.slice(2));
 
 module.exports = () => {
-  const path = `${__dirname}/arguments.json`;
+  const file = `${__dirname}/arguments.json`;
 
   if (argv.url) {
     // save arguments [cli mode]
-    fs.writeFileSync(path, JSON.stringify(argv));
+    fs.writeFileSync(
+      file,
+      JSON.stringify({
+        ...argv,
+        settings: '../settings.build.js',
+      })
+    );
     return {
       ...argv,
       standalone: false,
     };
-  } else if (fs.existsSync(path)) {
+  } else if (fs.existsSync(file)) {
     // read arguments [standalone mode]
     return {
-      ...JSON.parse(fs.readFileSync(path)),
+      ...JSON.parse(fs.readFileSync(file)),
+      cwd: path.join(app.getPath('userData'), 'files'),
       standalone: true,
     };
   }

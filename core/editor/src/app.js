@@ -139,12 +139,6 @@ class App {
   setting(pathString, d) {
     return dotProp.get(this.settings, pathString, d);
   }
-
-  path(ci, standalone) {
-    return this.standalone
-      ? path.join(app.getPath('userData'), 'files', standalone)
-      : ci;
-  }
 }
 
 app.once('ready', () => {
