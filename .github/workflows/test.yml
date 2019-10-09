@@ -27,3 +27,7 @@ jobs:
         env:
           CI: true
         run: npm run example custom-plugin
+      - name: Run example with embedded files
+        env:
+          CI: true
+        run: npm run example simple embed

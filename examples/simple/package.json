@@ -25,7 +25,9 @@
   "scripts": {
     "build": "parcel build index.html  --public-url \"../dist\"",
     "electron": "controls --config controls.config.js --url dist/index.html",
-    "start": "npm run build && npm run electron"
+    "electron:embed": "controls --config controls.config.js --url dist/index.html --embed \"dist/*\"",
+    "start": "npm run build && npm run electron",
+    "embed": "npm run build && npm run electron:embed"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",

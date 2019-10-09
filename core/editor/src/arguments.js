@@ -13,7 +13,7 @@ module.exports = () => {
       file,
       JSON.stringify({
         ...argv,
-        settings: '../settings.build.js',
+        settings: null,
       })
     );
     return {

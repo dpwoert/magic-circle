@@ -61,7 +61,8 @@
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-replace": "^2.1.0",
     "single-line-log": "^1.1.2",
-    "styled-components": "^4.1.2"
+    "styled-components": "^4.1.2",
+    "glob": "7.1.4"
   },
   "publishConfig": {
     "access": "public"

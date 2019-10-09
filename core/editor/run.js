@@ -49,10 +49,8 @@ async function build() {
   args.clear = argv.clear;
   args.debug = argv.d || argv.debug;
   args.inspect = argv.i || argv.inspect;
+  args.embed = argv.e || argv.embed;
   args.CI = !!process.env.CI;
-  // args.settings = args.debug
-  //   ? path.join(process.cwd(), '.settings.build.js')
-  //   : '../settings.build.js';
 
   args.settings = args.debug
     ? path.join(process.cwd(), '.settings.build.js')

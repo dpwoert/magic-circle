@@ -4,6 +4,8 @@ const url = require('url');
 const path = require('path');
 const dotProp = require('dot-prop');
 const fs = require('fs');
+const { exec } = require('child_process');
+const glob = require('glob');
 
 const argv = require('./arguments')();
 const logger = require('./logger.js');
@@ -20,17 +22,26 @@ class App {
       editor: null,
     };
 
-    const local = argv.url.indexOf('http') === -1;
     this.cwd = argv.cwd;
+    this.debug = argv.debug;
+    this.standalone = argv.standalone;
+
+    // embed files if needed
+    if (argv.embed) {
+      this.embed();
+    }
+
+    const local = argv.url.indexOf('http') === -1;
+    const workPath = this.standalone
+      ? path.join(app.getPath('exe'), '../../Resources/app/embed')
+      : this.cwd;
     this.url = local
       ? url.format({
-          pathname: path.join(argv.cwd, argv.url || 'index.html'),
+          pathname: path.join(workPath, argv.url || 'index.html'),
           protocol: 'file:',
           slashes: true,
         })
       : argv.url;
-    this.debug = argv.debug;
-    this.standalone = argv.standalone;
 
     // clear settings if needed
     if (argv.clear) {
@@ -38,9 +49,10 @@ class App {
       electronSettings.deleteAll();
     }
 
-    this.settingsFile = argv.settings;
-    // eslint-disable-next-line
-    this.settings = require(argv.settings) || {};
+    this.settingsFile =
+      argv.settings ||
+      path.join(app.getPath('exe'), '../../Resources/app/settings.build.js');
+    this.settings = require(this.settingsFile) || {}; // eslint-disable-line
     const screen = Object.assign(
       {
         size: false,
@@ -110,7 +122,7 @@ class App {
 
     // ensure files folder exists in standalone mode
     if (this.standalone) {
-      const standalonePath = this.path(null, '');
+      const standalonePath = path.join(app.getPath('userData'), 'files');
       if (!fs.existsSync(standalonePath)) {
         fs.mkdirSync(standalonePath, { recursive: true });
       }
@@ -125,6 +137,43 @@ class App {
       console.info('CI run succesfully');
       app.quit();
     }
+  }
+
+  embed() {
+    if (this.standalone) {
+      return false;
+    }
+
+    const embed = argv.embed.length > 0 ? argv.embed : '*';
+    const target = path.join(app.getPath('exe'), '../../Resources/app/embed');
+    if (!fs.existsSync(target)) {
+      fs.mkdirSync(target, { recursive: true });
+    }
+
+    return new Promise(resolve => {
+      glob(embed, { cwd: this.cwd }, (er, files) => {
+        const commands = files
+          .map(file => {
+            const targetDir = path.join(target, path.dirname(file));
+            return `mkdir -p "${targetDir}/" && cp "${file}" "${targetDir}/"`;
+          })
+          .join('\n');
+        const run = exec(`rm -rf ${target}/{*,.*}\n${commands}`, {
+          cwd: this.cwd,
+        });
+
+        if (this.debug) {
+          run.stdout.on('data', data => process.stdout.write(data));
+          run.stderr.on('data', data => process.stderr.write(data));
+        }
+
+        // waiting to be done
+        run.on('exit', () => {
+          console.info('✅  done embedding app');
+          resolve();
+        });
+      });
+    });
   }
 
   window(name) {
