@@ -55,7 +55,7 @@ class App {
 
     this.settingsFile =
       argv.settings ||
-      path.join(app.getPath('exe'), '../../Resources/app/settings.build.js');
+      path.join(app.getPath('exe'), '../../Resources/app/.settings.build.js');
     this.settings = require(this.settingsFile) || {}; // eslint-disable-line
     const screen = Object.assign(
       {

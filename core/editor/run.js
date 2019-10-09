@@ -36,7 +36,7 @@ async function build() {
     app.buildDir,
     `${app.name}.app`,
     'Contents/Resources/app',
-    'settings.build.js'
+    '.settings.build.js'
   );
 
   if (process.platform !== 'darwin') {
