@@ -2,7 +2,7 @@
   "name": "@magic-circle/editor",
   "executableName": "Magic Circle",
   "productName": "Magic Circle",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Magic Circle electron runner",
   "keywords": [
     "controls",
@@ -44,13 +44,14 @@
     "@babel/core": "^7.1.2",
     "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
-    "@magic-circle/ui": "^0.0.1",
+    "@magic-circle/ui": "^0.0.2",
     "babel-plugin-inline-react-svg": "^1.0.1",
     "babel-plugin-styled-components": "^1.8.0",
     "dot-prop": "5.1.0",
     "electron": "^3.0.8",
     "electron-packager": "^13.0.1",
     "electron-settings": "^3.2.0",
+    "glob": "7.1.4",
     "minimist": "^1.2.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
@@ -61,8 +62,7 @@
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-replace": "^2.1.0",
     "single-line-log": "^1.1.2",
-    "styled-components": "^4.1.2",
-    "glob": "7.1.4"
+    "styled-components": "^4.1.2"
   },
   "publishConfig": {
     "access": "public"

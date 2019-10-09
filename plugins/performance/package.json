@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/performance",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Magic Circle performance management",
   "keywords": [
     "controls",
@@ -27,7 +27,7 @@
   "module": "src/index.js",
   "scripts": {},
   "dependencies": {
-    "@magic-circle/colors": "^0.0.1"
+    "@magic-circle/colors": "^0.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
