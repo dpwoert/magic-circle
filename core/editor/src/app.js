@@ -17,6 +17,10 @@ const menu = require('./menu.js');
 
 class App {
   constructor() {
+    this.initialize();
+  }
+
+  async initialize() {
     this.windows = {
       frame: null,
       editor: null,
@@ -28,7 +32,7 @@ class App {
 
     // embed files if needed
     if (argv.embed) {
-      this.embed();
+      await this.embed();
     }
 
     const local = argv.url.indexOf('http') === -1;

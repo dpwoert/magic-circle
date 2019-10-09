@@ -2,5 +2,6 @@
   "_": [],
   "cwd": "/Users/dpwoert/projects/creative-controls/examples/simple",
   "url": "dist/index.html",
+  "embed": "dist/*",
   "settings": null
 }
