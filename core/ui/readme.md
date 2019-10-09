@@ -180,16 +180,16 @@ npm run example custom-plugin
 
 ## Core plugins
 
-- **magic-circle/controls** (github / npm)
-- **magic-circle/debug** (github / npm)
-- **magic-circle/fullscreen** (github / npm)
-- **magic-circle/layers** (github / npm)
-- **magic-circle/page-information** (github / npm)
-- **magic-circle/performance** (github / npm)
-- **magic-circle/play-controls** (github / npm)
-- **magic-circle/screenshots** (github / npm)
-- **magic-circle/seed** (github / npm)
-- **magic-circle/touchbar** (github / npm)
+- **magic-circle/controls** ([readme](https://github.com/dpwoert/magic-circle/tree/develop/plugins/controls))
+- **magic-circle/debug** ([readme](https://github.com/dpwoert/magic-circle/tree/develop/plugins/debug))
+- **magic-circle/fullscreen** ([readme](https://github.com/dpwoert/magic-circle/tree/develop/plugins/fullscreen))
+- **magic-circle/layers** ([readme](https://github.com/dpwoert/magic-circle/tree/develop/plugins/layers))
+- **magic-circle/page-information** ([readme](https://github.com/dpwoert/magic-circle/tree/develop/plugins/page-information))
+- **magic-circle/performance** ([readme](https://github.com/dpwoert/magic-circle/tree/develop/plugins/performance))
+- **magic-circle/play-controls** ([readme](https://github.com/dpwoert/magic-circle/tree/develop/plugins/play-controls))
+- **magic-circle/screenshots** ([readme](https://github.com/dpwoert/magic-circle/tree/develop/plugins/screenshots))
+- **magic-circle/seed** ([readme](https://github.com/dpwoert/magic-circle/tree/develop/plugins/seed))
+- **magic-circle/touchbar** ([readme](https://github.com/dpwoert/magic-circle/tree/develop/plugins/touchbar))
 
 ## Creating custom plugins
 
