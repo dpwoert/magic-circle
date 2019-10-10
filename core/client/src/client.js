@@ -7,9 +7,6 @@ import PerformancePlugin from './plugins/performance';
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable class-methods-use-this */
 
-// load ipc renderer
-let ipcRenderer = null;
-
 export class Client {
   constructor(...plugins) {
     this.frames = 0;
@@ -34,46 +31,44 @@ export class Client {
       window.__controls = this;
 
       if (window.__IPC) {
-        this.connect();
+        this.connect(window.__IPC);
       }
     }
   }
 
-  connect() {
-    if (window.__IPC) {
-      console.info('🔌 Magic Circle loaded');
-      ipcRenderer = window.__IPC;
+  connect(ipc) {
+    console.info('🔌 Magic Circle loaded');
+    this.ipc = ipc;
 
-      this.sendMessage('connect');
+    this.sendMessage('connect');
 
-      // create all plugins
-      this.plugins.forEach(p => (p.connect ? p.connect() : null));
+    // create all plugins
+    this.plugins.forEach(p => (p.connect ? p.connect() : null));
 
-      // Send page information to front-end
-      this.sendMessage('page-information', {
-        title: document.title,
-      });
+    // Send page information to front-end
+    this.sendMessage('page-information', {
+      title: document.title,
+    });
 
-      // trigger setup hook
-      this.sendMessage('setup');
-      ipcRenderer.once('setup-response', (evt, payload) => {
-        // run setup script
-        if (this.fn.setup) {
-          this.fn.setup(this);
-        }
+    // trigger setup hook
+    this.sendMessage('setup');
+    this.ipc.once('setup-response', (evt, payload) => {
+      // run setup script
+      if (this.fn.setup) {
+        this.fn.setup(this);
+      }
 
-        // run actions after setup is done
-        this.batch(evt, payload);
+      // run actions after setup is done
+      this.batch(evt, payload);
 
-        // make sure all is synced
-        if (this.regenerate) {
-          this.regenerate();
-        }
+      // make sure all is synced
+      if (this.regenerate) {
+        this.regenerate();
+      }
 
-        // start rendering
-        this.play();
-      });
-    }
+      // start rendering
+      this.play();
+    });
   }
 
   trigger(channel, evt, payload) {
@@ -106,9 +101,9 @@ export class Client {
   }
 
   resetListeners() {
-    if (ipcRenderer) {
+    if (this.ipc) {
       // delete all listeners
-      this.channels.forEach(channel => ipcRenderer.removeAllListeners(channel));
+      this.channels.forEach(channel => this.ipc.removeAllListeners(channel));
       this.channels = [];
 
       // get all channels
@@ -120,17 +115,17 @@ export class Client {
 
       // recreate listeners
       this.channels.forEach(channel => {
-        ipcRenderer.on(channel, (evt, payload) => {
+        this.ipc.on(channel, (evt, payload) => {
           this.trigger(channel, evt, payload);
         });
       });
 
-      ipcRenderer.removeAllListeners('change-play-state');
-      ipcRenderer.removeAllListeners('step-frame');
-      ipcRenderer.removeAllListeners('batch');
+      this.ipc.removeAllListeners('change-play-state');
+      this.ipc.removeAllListeners('step-frame');
+      this.ipc.removeAllListeners('batch');
 
       // play/stop messages
-      ipcRenderer.on('change-play-state', (evt, payload) => {
+      this.ipc.on('change-play-state', (evt, payload) => {
         if (payload === true) {
           this.play();
         } else {
@@ -139,30 +134,30 @@ export class Client {
       });
 
       // step frame
-      ipcRenderer.on('step-frame', (evt, payload) => {
+      this.ipc.on('step-frame', (evt, payload) => {
         if (payload.process) {
           this.trigger('timeline', evt, payload.process);
         }
         this.nextFrame(true, 1 / payload.fps);
-        ipcRenderer.send('frame-stepped');
+        this.ipc.send('frame-stepped');
       });
 
       // batch messages
-      ipcRenderer.on('batch', (evt, payload) => {
+      this.ipc.on('batch', (evt, payload) => {
         this.batch(evt, payload);
       });
     }
   }
 
   sendMessage(channel, payload) {
-    if (ipcRenderer) {
-      ipcRenderer.send('intercom', { channel, payload, to: 'editor' });
+    if (this.ipc) {
+      this.ipc.send('intercom', { channel, payload, to: 'editor' });
     }
   }
 
   sendAction(action, payload) {
-    if (ipcRenderer) {
-      ipcRenderer.send(action, payload);
+    if (this.ipc) {
+      this.ipc.send(action, payload);
     }
   }
 

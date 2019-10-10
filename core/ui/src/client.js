@@ -5,8 +5,6 @@ import Store from './store';
 import addPluginMenu from './plugin-menu';
 import * as icons from './icons';
 
-const { ipcRenderer } = require('electron');
-
 /* eslint-disable class-methods-use-this */
 
 export class Client {
@@ -19,6 +17,7 @@ export class Client {
           : settings.plugins;
     }
 
+    this.ipc = settings.ipc;
     this.isElectron = true;
     this.cwd = cwd;
 
@@ -115,23 +114,23 @@ export class Client {
   }
 
   addListener(channel, fn) {
-    ipcRenderer.on(channel, fn);
+    this.ipc.on(channel, fn);
   }
 
   removeListener(channel, fn) {
-    ipcRenderer.removeListener(channel, fn);
+    this.ipc.removeListener(channel, fn);
   }
 
   sendMessage(channel, payload) {
-    ipcRenderer.send('intercom', { channel, payload, to: 'frame' });
+    this.ipc.send('intercom', { channel, payload, to: 'frame' });
   }
 
   sendAction(action, payload) {
-    ipcRenderer.send(action, payload);
+    this.ipc.send(action, payload);
   }
 
   refresh() {
-    ipcRenderer.send('refresh');
+    this.ipc.send('refresh');
   }
 
   getPlugin(name) {
@@ -177,6 +176,6 @@ export class Client {
   }
 
   resize(window, width, height) {
-    ipcRenderer.send(`resize-${window}`, { width, height });
+    this.ipc.send(`resize-${window}`, { width, height });
   }
 }

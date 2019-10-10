@@ -10,7 +10,7 @@ module.exports = app => {
       window.__IPC = require('electron').ipcRenderer;
 
       if(window.__controls){
-        window.__controls.connect();
+        window.__controls.connect(window.__IPC);
       }
     `);
     console.info('🔌  injected IPC');
@@ -23,8 +23,9 @@ module.exports = app => {
       try{
         window.__REQUIRE = require;
         const settings = require('${app.settingsFile}');
+        const {ipcRenderer} = require('electron');
         const {Client} = require('@magic-circle/ui');
-        window.__client = new Client(settings, '${app.cwd}');
+        window.__client = new Client(ipcRenderer, settings, '${app.cwd}');
       } catch(e){
         const {ipcRenderer} = require('electron');
         ipcRenderer.send('log', 'error', 'error during injecting of settings');

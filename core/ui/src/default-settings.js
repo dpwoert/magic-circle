@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { ipcRenderer } from 'electron';
+
 import Layers from '@magic-circle/layers';
 import PlayControls from '@magic-circle/play-controls';
 import Controls from '@magic-circle/controls';
@@ -15,6 +17,7 @@ import Fullscreen from '@magic-circle/fullscreen';
 import Layout from './components/layout';
 
 const settings = {
+  ipc: ipcRenderer,
   plugins: [
     PageInfo,
     Seed,
