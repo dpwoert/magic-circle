@@ -1,0 +1,52 @@
+{
+  "name": "@magic-circle/online",
+  "version": "0.0.2",
+  "description": "Magic Circle online",
+  "private": true,
+  "keywords": [
+    "controls",
+    "creative coding",
+    "editor",
+    "editing",
+    "GUI",
+    "online"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dpwoert/magic-circle.git",
+    "directory": "core/online"
+  },
+  "files": [
+    "dist/*.js"
+  ],
+  "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
+  "license": "MIT",
+  "main": "dist/bundle.js",
+  "module": "dist/bundle.esm.js",
+  "scripts": {
+    "watch": "parcel src/index.html",
+    "build": "parcel build src/index.html  --public-url \"../dist\""
+  },
+  "devDependencies": {
+    "parcel": "^1.11.0",
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-plugin-inline-react-svg": "^1.0.1",
+    "babel-plugin-styled-components": "^1.8.0"
+  },
+  "dependencies": {
+    "@magic-circle/ui": "^0.0.2",
+    "dot-prop": "^4.2.0",
+    "rc-color-picker": "^1.2.6",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
+    "styled-components": "^4.1.2"
+  },
+  "alias": {
+    "electron": "src/index.js",
+    "fs": "src/index.js",
+    "path": "src/index.js",
+    "utils": "src/index.js"
+  }
+}

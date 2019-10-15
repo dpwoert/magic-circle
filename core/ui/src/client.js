@@ -1,4 +1,5 @@
 import dotProp from 'dot-prop';
+import isElectron from 'is-electron';
 
 import defaultSettings from './default-settings';
 import Store from './store';
@@ -18,7 +19,7 @@ export class Client {
     }
 
     this.ipc = settings.ipc;
-    this.isElectron = true;
+    this.isElectron = isElectron();
     this.cwd = cwd;
 
     this.buttons = new Store();

@@ -1,4 +1,9 @@
+/*#if _WEB
+const Menu = {};
+const MenuItem = {};
+//#else */
 const { Menu, MenuItem } = require('electron').remote;
+//#endif
 
 export default function addPluginMenu(name, list) {
   // menu

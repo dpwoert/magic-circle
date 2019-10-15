@@ -1,4 +1,10 @@
+/*#if _WEB
+const BrowserWindow = {};
+const TouchBar = {}
+const nativeImage = {};
+//#else */
 const { BrowserWindow, TouchBar, nativeImage } = require('electron').remote;
+//#endif
 
 const {
   TouchBarLabel,

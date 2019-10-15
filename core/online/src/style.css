@@ -9,3 +9,12 @@ body{
   font-size: 14px;
   font-family: sans-serif;
 }
+
+iframe{
+  position: absolute;
+  top: 46px;
+  left: 250px;
+  width: calc(100% - 475px);
+  height: calc(100% - 46px);
+  border: none;
+}

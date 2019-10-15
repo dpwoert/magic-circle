@@ -5,25 +5,35 @@ import babel from 'rollup-plugin-babel';
 import builtins from 'builtin-modules';
 import replace from 'rollup-plugin-replace';
 import url from 'rollup-plugin-url';
+import jscc from 'rollup-plugin-jscc';
 import injectElectron from './inject-electron';
 // import path from 'path';
 
 const pkg = require('./package.json');
+const WEB = process.env.WEB === '1';
 
 export default {
   input: 'src/index.js',
-  output: [
-    {
-      name: pkg.name,
-      file: 'dist/bundle.js',
-      format: 'umd',
-    },
-    {
-      name: pkg.name,
-      file: 'dist/bundle.esm.js',
-      format: 'esm',
-    },
-  ],
+  output: WEB
+    ? [
+        {
+          name: pkg.name,
+          file: 'dist/bundle.web.js',
+          format: 'umd',
+        },
+      ]
+    : [
+        {
+          name: pkg.name,
+          file: 'dist/bundle.js',
+          format: 'umd',
+        },
+        {
+          name: pkg.name,
+          file: 'dist/bundle.esm.js',
+          format: 'esm',
+        },
+      ],
   external: [
     ...builtins,
     'styled-components',
@@ -33,6 +43,9 @@ export default {
   ],
   plugins: [
     peerDepsExternal(),
+    jscc({
+      values: { _WEB: WEB },
+    }),
     replace({
       ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
       // __dirname: id => `'${path.dirname(id)}'`,

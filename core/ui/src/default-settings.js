@@ -1,7 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+/*#if _WEB
+const ipcRenderer = {};
+//#else */
 import { ipcRenderer } from 'electron';
+//#endif
 
 import Layers from '@magic-circle/layers';
 import PlayControls from '@magic-circle/play-controls';

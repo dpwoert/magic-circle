@@ -24,7 +24,8 @@
   "scripts": {
     "watch": "rollup --watch --config ./rollup.config.js",
     "build:dev": "rollup --config rollup.config.js",
-    "build:prod": "NODE_ENV=production rollup --config rollup.config.js"
+    "build:prod": "NODE_ENV=production rollup --config rollup.config.js",
+    "build:web": "NODE_ENV=production WEB=1 rollup --config rollup.config.js"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
@@ -42,7 +43,8 @@
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-peer-deps-external": "^2.2.0",
     "rollup-plugin-replace": "^2.1.0",
-    "rollup-plugin-url": "2.2.2",
+    "rollup-plugin-url": "^2.2.2",
+    "rollup-plugin-jscc": "^1.0.0",
     "svgexport": "0.3.2"
   },
   "dependencies": {

@@ -3,9 +3,16 @@
 /* eslint-disable no-param-reassign */
 
 import React from 'react';
+
+/*#if _WEB
+const fs = {};
+const promisify = () => {};
+const path = {};
+//#else */
 import fs from 'fs';
 import { promisify } from 'util';
 import path from 'path';
+//#endif
 
 import ScreenshotsPanel from './panel';
 
@@ -87,7 +94,9 @@ class Screenshots {
       {
         label: 'Show in Finder',
         click: () => {
+          //#if !_WEB
           require('electron').shell.openItem(this.path);
+          //#endif
         },
       },
     ];
