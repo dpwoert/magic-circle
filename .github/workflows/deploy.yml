@@ -19,3 +19,6 @@ jobs:
         run: npm install surge --global
       - name: Deploy to surge
         run: surge --project ./core/online/dist --domain magic-circle.surge.sh
+        env:
+          SURGE_EMAIL: ${{ secrets.SURGE_EMAIL }}
+          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
