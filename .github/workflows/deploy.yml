@@ -9,7 +9,7 @@ on: [push]
 
 jobs:
   install:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - name: Use Node.js
@@ -22,6 +22,16 @@ jobs:
         run: npm run setup:web
       - name: Install Surge CI tool
         run: npm install surge --global
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Linting
+        run: npm run lint
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy to surge
         run: surge --project ./core/online/dist --domain magic-circle.surge.sh
         env:

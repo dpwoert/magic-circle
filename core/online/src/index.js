@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import { Client, Layout } from '@magic-circle/ui/web';
 import { IframeIPC } from '@magic-circle/client';
 
+document.querySelector('iframe').src = 'examples/simple/index.html';
+
 const ipc = new IframeIPC();
 ipc.selector('iframe');
 
