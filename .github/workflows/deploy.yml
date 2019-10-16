@@ -1,0 +1,19 @@
+name: Deploy
+
+on: [push]
+
+jobs:
+  install:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: Setup repo (prod mode)
+        run: npm run setup:prod -- --yes
+      - name: Setup web specific parts
+        run: npm run setup:web
+      - name: Deploy to surge
+        run: surge --project ./core/online/dist --domain magic-circle.surge.sh

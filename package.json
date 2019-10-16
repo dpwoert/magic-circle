@@ -16,6 +16,7 @@
   "scripts": {
     "postinstall": "lerna bootstrap",
     "setup:dev": "sh setup-dev.sh",
+    "setup:prod": "sh setup-prod.sh",
     "setup:web": "sh setup-web.sh",
     "build:ui": "lerna run build:dev --scope @magic-circle/ui",
     "build:client": "lerna run build:dev --scope @magic-circle/client",
