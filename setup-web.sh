@@ -27,6 +27,5 @@ do
 done
 
 replace-in-file "../dist" "" "core/online/dist/examples/**/*.html"
-replace-in-file "http://localhost:1234/" "https://magic-circle.surge.sh/" "core/online/dist/index.html"
 
 echo "done!"
