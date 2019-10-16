@@ -15,7 +15,8 @@
     "directory": "core/ui"
   },
   "files": [
-    "dist/*.js"
+    "dist/*.js",
+    "web.js"
   ],
   "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
   "license": "MIT",
