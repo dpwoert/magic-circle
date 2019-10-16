@@ -22,18 +22,8 @@ jobs:
         run: npm run setup:web
       - name: Install Surge CI tool
         run: npm install surge --global
-
-  test:
-    runs-on: ubuntu-latest
-    needs: [install]
-    steps:
       - name: Linting
         run: npm run lint
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: [install, test]
-    steps:
       - name: Deploy to surge
         run: surge --project ./core/online/dist --domain magic-circle.surge.sh
         env:
