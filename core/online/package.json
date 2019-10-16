@@ -25,7 +25,7 @@
   "module": "dist/bundle.esm.js",
   "scripts": {
     "watch": "parcel src/index.html",
-    "build": "parcel build src/index.html  --public-url \"../dist\""
+    "build": "NODE_ENV=production parcel build src/index.html  --public-url \"../dist\""
   },
   "devDependencies": {
     "parcel": "^1.11.0",
@@ -36,7 +36,9 @@
     "babel-plugin-styled-components": "^1.8.0"
   },
   "dependencies": {
+    "@magic-circle/client": "0.0.0",
     "@magic-circle/ui": "^0.0.2",
+    "@magic-circle/client": "^0.0.2",
     "dot-prop": "^4.2.0",
     "rc-color-picker": "^1.2.6",
     "react": "^16.5.2",

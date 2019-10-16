@@ -1,4 +1,4 @@
-class IframeIPC {
+export class IframeIPC {
   constructor() {
     this.listeners = [];
 
@@ -29,20 +29,26 @@ class IframeIPC {
       }
 
       this.connection = iframe.contentWindow;
+
+      setTimeout(() => {
+        this.send('load', true);
+      }, 3000);
     });
   }
 
   send(channel, payload) {
-    console.log('send', channel, payload, this.mode);
     if (this.connection) {
-      this.connection.postMessage({ channel, payload });
+      if (channel === 'intercom') {
+        this.connection.postMessage({ ...payload });
+      } else {
+        this.connection.postMessage({ channel, payload });
+      }
     } else {
       console.warn('could not send message', channel, payload);
     }
   }
 
   trigger(channel, evt, payload) {
-    console.log('trigger', channel, this.listeners, this.mode);
     this.listeners = this.listeners
       .map(l => {
         if (l.channel === channel) {
@@ -77,5 +83,3 @@ class IframeIPC {
 
   removeAllListeners(channel) {}
 }
-
-export default IframeIPC;

@@ -1,10 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Client, Layout } from '@magic-circle/ui/web';
-import IframeIPC from './iframe-ipc';
+import { Controls, IframeIPC } from '@magic-circle/client';
+
+const ipc = new IframeIPC();
+ipc.selector('iframe');
 
 const settings = {
-  ipc: new IframeIPC(),
+  ipc,
   plugins: defaultPlugins =>
     defaultPlugins.filter(p => p.name !== 'screenshots'),
   render: client => {
@@ -15,4 +18,4 @@ const settings = {
   },
 };
 
-export default new Client(settings, '/');
+new Client(settings, '/');

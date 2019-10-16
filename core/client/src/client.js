@@ -4,6 +4,8 @@ import LayersPlugin from './plugins/layers';
 import SeedPlugin from './plugins/seed';
 import PerformancePlugin from './plugins/performance';
 
+import { IframeIPC } from './iframe-ipc';
+
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable class-methods-use-this */
 
@@ -33,6 +35,19 @@ export class Client {
       if (window.__IPC) {
         this.connect(window.__IPC);
       }
+    } else {
+      // load iframe ipc if needed
+      window.addEventListener('message', evt => {
+        if (evt.data && !this.ipc) {
+          console.log('create ipc in FE');
+
+          const ipc = new IframeIPC();
+          ipc.findParent();
+
+          // trigger connection
+          this.connect(ipc);
+        }
+      });
     }
   }
 
@@ -207,8 +222,8 @@ export class Client {
   setup(fn) {
     this.fn.setup = fn;
 
-    // if it isn't run by electron, make sure to run it now
-    if (!isElectron()) {
+    // if it isn't run by electron or an iframe, make sure to run it now
+    if (!isElectron() && window.location === window.parent.location) {
       this.fn.setup(this);
     }
 
