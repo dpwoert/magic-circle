@@ -1,6 +1,5 @@
 # stop when one of these commands fail
 set -e
-set -o pipefail
 
 echo "removing old bundle"
 rm -rf core/online/dist
