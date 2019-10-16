@@ -1,3 +1,4 @@
+/* eslint-disable spaced-comment */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable no-alert */
 /* eslint-disable no-param-reassign */

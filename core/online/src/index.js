@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Client, Layout } from '@magic-circle/ui/web';
-import { Controls, IframeIPC } from '@magic-circle/client';
+import { IframeIPC } from '@magic-circle/client';
 
 const ipc = new IframeIPC();
 ipc.selector('iframe');
@@ -18,4 +18,5 @@ const settings = {
   },
 };
 
+// eslint-disable-next-line
 new Client(settings, '/');

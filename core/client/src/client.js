@@ -39,8 +39,6 @@ export class Client {
       // load iframe ipc if needed
       window.addEventListener('message', evt => {
         if (evt.data && !this.ipc) {
-          console.log('create ipc in FE');
-
           const ipc = new IframeIPC();
           ipc.findParent();
 

@@ -1,3 +1,5 @@
+/* eslint-disable spaced-comment */
+
 /*#if _WEB
 const Menu = {};
 const MenuItem = {};

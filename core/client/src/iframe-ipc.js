@@ -29,10 +29,7 @@ export class IframeIPC {
       }
 
       this.connection = iframe.contentWindow;
-
-      setTimeout(() => {
-        this.send('load', true);
-      }, 3000);
+      // this.send('load', true);
     });
   }
 
@@ -54,9 +51,8 @@ export class IframeIPC {
         if (l.channel === channel) {
           l.fn(evt, payload);
           return l.once ? { ...l, remove: true } : l;
-        } else {
-          return l;
         }
+        return l;
       })
       .filter(l => !l.remove);
   }
@@ -78,8 +74,10 @@ export class IframeIPC {
   }
 
   removeListener(channel, fn) {
-    // todo
+    console.error('removeListener not working yet', channel, fn);
   }
 
-  removeAllListeners(channel) {}
+  removeAllListeners(channel) {
+    console.error('removeAllListeners not working yet', channel);
+  }
 }

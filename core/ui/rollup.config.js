@@ -7,9 +7,10 @@ import replace from 'rollup-plugin-replace';
 import url from 'rollup-plugin-url';
 import jscc from 'rollup-plugin-jscc';
 import injectElectron from './inject-electron';
-// import path from 'path';
 
 const pkg = require('./package.json');
+
+// create web safe bundle?
 const WEB = process.env.WEB === '1';
 
 export default {
@@ -48,7 +49,6 @@ export default {
     }),
     replace({
       ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
-      // __dirname: id => `'${path.dirname(id)}'`,
     }),
     resolve({
       browser: true,
