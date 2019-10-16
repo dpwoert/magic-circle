@@ -26,6 +26,6 @@ do
     cd ../..
 done
 
-# todo loop
+replace-in-file "../dist" "" "core/online/dist/examples/**/*.html"
 
 echo "done!"
