@@ -16,6 +16,6 @@ jobs:
       - name: Setup web specific parts
         run: npm run setup:web
       - name: Install Surge CI tool
-        run: npm install surge
+        run: npm install surge --global
       - name: Deploy to surge
         run: surge --project ./core/online/dist --domain magic-circle.surge.sh
