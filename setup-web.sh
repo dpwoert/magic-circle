@@ -25,6 +25,6 @@ do
     cd ../..
 done
 
-replace-in-file "../dist" "" "core/online/dist/examples/**/*.html"
+replace-in-file "/\.\.\/dist\//g" "" "core/online/dist/examples/**/*.html" --verbose --isRegex
 
 echo "done!"
