@@ -7,6 +7,7 @@ import replace from 'rollup-plugin-replace';
 import url from 'rollup-plugin-url';
 import jscc from 'rollup-plugin-jscc';
 import injectElectron from './inject-electron';
+import json from 'rollup-plugin-json';
 
 const pkg = require('./package.json');
 
@@ -83,5 +84,10 @@ export default {
       emitFiles: true, // defaults to true
     }),
     injectElectron(),
+    json({
+      exclude: ['node_modules/**'],
+      compact: true,
+      namedExports: true,
+    }),
   ],
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Title from './title';
+import URL from './url';
 
 class PageInformation {
   static name = 'page-information';
@@ -8,12 +9,15 @@ class PageInformation {
   static initStore() {
     return {
       title: '',
+      location: {},
     };
   }
 
   constructor(client, store) {
     this.client = client;
     this.store = store;
+
+    this.changeUrl = this.changeUrl.bind(this);
     this.client.addListener('page-information', (evt, payload) =>
       this.setPageInfo(payload)
     );
@@ -23,10 +27,16 @@ class PageInformation {
     this.store.set(info);
   }
 
+  changeUrl(url) {
+    this.client.sendAction('change-url', url);
+  }
+
   header(position) {
     if (position === 'center') {
-      const TitleWithStore = this.store.withStore(Title);
-      return <TitleWithStore key="title" />;
+      const TitleWithStore = this.store.withStore(
+        this.client.isElectron ? Title : URL
+      );
+      return <TitleWithStore changeUrl={this.changeUrl} key="title" />;
     }
 
     return false;

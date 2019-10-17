@@ -4,8 +4,10 @@ import { Client, Layout } from '@magic-circle/ui/web';
 import { IframeIPC } from '@magic-circle/client';
 
 const iframe = document.querySelector('iframe');
+const ipc = new IframeIPC();
+ipc.selector('iframe');
 
-const hashChange = () => {
+const hashChange = evt => {
   const hash = window.location.hash || '';
   iframe.src =
     hash !== '' && hash !== '#'
@@ -13,13 +15,16 @@ const hashChange = () => {
       : 'examples/simple/index.html';
 
   console.info('🌍 load url', iframe.src);
+
+  if (evt) {
+    iframe.onload = () => {
+      ipc.send('editor-ready', true);
+    };
+  }
 };
 
 window.addEventListener('hashchange', hashChange);
 hashChange();
-
-const ipc = new IframeIPC();
-ipc.selector('iframe');
 
 const settings = {
   ipc,

@@ -40,7 +40,7 @@ export function setup(gui) {
   // Create scene
   scene = new Scene();
   const geometry = new BoxBufferGeometry(200, 200, 200);
-  const material = new MeshBasicMaterial({ color: new Color('#ff0000') });
+  const material = new MeshBasicMaterial({ color: new Color('#00ff00') });
   mesh = new Mesh(geometry, material);
   scene.add(mesh);
 

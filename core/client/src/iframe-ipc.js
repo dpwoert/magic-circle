@@ -37,6 +37,8 @@ export class IframeIPC {
     if (this.connection) {
       if (channel === 'intercom') {
         this.connection.postMessage({ ...payload });
+      } else if (channel === 'change-url') {
+        window.location.hash = payload;
       } else {
         this.connection.postMessage({ channel, payload });
       }

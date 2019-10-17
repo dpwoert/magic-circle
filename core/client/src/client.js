@@ -27,6 +27,7 @@ export class Client {
 
     // event binding
     this.nextFrame = this.nextFrame.bind(this);
+    this.__loadIframeIPC = this.__loadIframeIPC.bind(this);
 
     if (isElectron()) {
       // Add to window global to it can be reached by Electron
@@ -37,14 +38,17 @@ export class Client {
       }
     } else {
       // load iframe ipc if needed
-      this._loadIframeIPC = this._loadIframeIPC.bind(this);
       window.addEventListener('message', this.__loadIframeIPC);
     }
   }
 
   __loadIframeIPC(evt) {
     // load iframe ipc if needed
-    if (evt.data && !this.ipc && evt.data.channel === 'editor-ready') {
+    if (evt.data && evt.data.channel === 'editor-ready') {
+      if (this.ipc && this.ipc.destroy) {
+        this.ipc.destroy();
+      }
+
       const ipc = new IframeIPC();
       ipc.findParent();
 
@@ -65,6 +69,7 @@ export class Client {
     // Send page information to front-end
     this.sendMessage('page-information', {
       title: document.title,
+      location: JSON.parse(JSON.stringify(window.location)),
     });
 
     // trigger setup hook
@@ -140,6 +145,7 @@ export class Client {
       this.ipc.removeAllListeners('change-play-state');
       this.ipc.removeAllListeners('step-frame');
       this.ipc.removeAllListeners('batch');
+      this.ipc.removeAllListeners('change-url');
 
       // play/stop messages
       this.ipc.on('change-play-state', (evt, payload) => {

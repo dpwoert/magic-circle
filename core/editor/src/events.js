@@ -17,4 +17,9 @@ module.exports = app => {
   ipcMain.on('refresh', () => {
     frame.reload();
   });
+
+  // change urls
+  ipcMain.on('change-url', (evt, url) => {
+    frame.loadURL(url);
+  });
 };
