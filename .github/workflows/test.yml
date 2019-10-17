@@ -20,7 +20,7 @@ jobs:
       - name: Linting
         run: npm run lint
 
-  example:simple:
+  example_simple:
     runs-on: macos-latest
     strategy:
       matrix:
@@ -39,7 +39,7 @@ jobs:
           CI: true
         run: npm run example simple
 
-  example:custom-plugin:
+  example_custom-plugin:
     runs-on: macos-latest
     strategy:
       matrix:
@@ -58,7 +58,7 @@ jobs:
           CI: true
         run: npm run example custom-plugin
 
-  example:embed:
+  example_embed:
     runs-on: macos-latest
     strategy:
       matrix:
