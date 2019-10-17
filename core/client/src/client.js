@@ -37,15 +37,19 @@ export class Client {
       }
     } else {
       // load iframe ipc if needed
-      window.addEventListener('message', evt => {
-        if (evt.data && !this.ipc && evt.data.channel === 'editor-ready') {
-          const ipc = new IframeIPC();
-          ipc.findParent();
+      this._loadIframeIPC = this._loadIframeIPC.bind(this);
+      window.addEventListener('message', this.__loadIframeIPC);
+    }
+  }
 
-          // trigger connection
-          this.connect(ipc);
-        }
-      });
+  __loadIframeIPC(evt) {
+    // load iframe ipc if needed
+    if (evt.data && !this.ipc && evt.data.channel === 'editor-ready') {
+      const ipc = new IframeIPC();
+      ipc.findParent();
+
+      // trigger connection
+      this.connect(ipc);
     }
   }
 
@@ -237,5 +241,22 @@ export class Client {
     }
 
     return this;
+  }
+
+  destroy() {
+    this.stop();
+    this.frames = null;
+    this.listeners = null;
+    this.channels = null;
+    this.fn = {
+      setup: null,
+      loop: null,
+    };
+    window.removeEventListener('message', this.__loadIframeIPC);
+
+    if (this.ipc.destroy) {
+      this.ipc.destroy();
+      this.ipc = null;
+    }
   }
 }

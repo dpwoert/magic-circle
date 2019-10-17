@@ -82,4 +82,9 @@ export class IframeIPC {
   removeAllListeners(channel) {
     this.listeners = this.listeners.filter(l => l.channel !== channel);
   }
+
+  destroy() {
+    this.listeners = [];
+    this.connection = null;
+  }
 }
