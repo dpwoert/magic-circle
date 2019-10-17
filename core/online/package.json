@@ -36,7 +36,6 @@
     "babel-plugin-styled-components": "^1.8.0"
   },
   "dependencies": {
-    "@magic-circle/client": "0.0.0",
     "@magic-circle/ui": "^0.0.2",
     "@magic-circle/client": "^0.0.2",
     "dot-prop": "^4.2.0",

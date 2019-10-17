@@ -231,8 +231,8 @@ export class Client {
   loop(fn) {
     this.fn.loop = fn;
 
-    // start playing if it isn't run by electron, no need to wait
-    if (!isElectron()) {
+    // start playing if it isn't run by electron or in an iframe, no need to wait
+    if (!isElectron() && window.location === window.parent.location) {
       this.play();
     }
 
