@@ -24,7 +24,7 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        stage: [develop, prod]
+        stage: [dev, prod]
     steps:
       - uses: actions/checkout@v1
       - name: Use Node.js
@@ -43,7 +43,7 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        stage: [develop, prod]
+        stage: [dev, prod]
     steps:
       - uses: actions/checkout@v1
       - name: Use Node.js
@@ -62,7 +62,7 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        stage: [develop, prod]
+        stage: [dev, prod]
     steps:
       - uses: actions/checkout@v1
       - name: Use Node.js
