@@ -8,7 +8,7 @@ on: [push]
 #       - v*
 
 jobs:
-  install:
+  online:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v1

@@ -3,30 +3,75 @@ name: Test
 on: [push]
 
 jobs:
-  test:
+  linting:
     runs-on: macos-latest
     strategy:
       matrix:
-        node-version: [10.x, 12.x]
+        stage: [dev, prod]
     steps:
       - uses: actions/checkout@v1
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 12.x
       - name: Setup repo (dev mode)
         run: |
-          npm run setup:dev -- --yes
+          npm run setup:${{ matrix.stage }} -- --yes
       - name: Linting
         run: npm run lint
+
+  example:simple:
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        stage: [develop, prod]
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: Setup repo (dev mode)
+        run: |
+          npm run setup:${{ matrix.stage }} -- --yes
       - name: Run simple example
         env:
           CI: true
         run: npm run example simple
+
+  example:custom-plugin:
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        stage: [develop, prod]
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: Setup repo (dev mode)
+        run: |
+          npm run setup:${{ matrix.stage }} -- --yes
       - name: Run example with custom plugin
         env:
           CI: true
         run: npm run example custom-plugin
+
+  example:embed:
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        stage: [develop, prod]
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: Setup repo (dev mode)
+        run: |
+          npm run setup:${{ matrix.stage }} -- --yes
       - name: Run example with embedded files
         env:
           CI: true
