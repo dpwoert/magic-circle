@@ -29,6 +29,7 @@ class App {
     this.cwd = argv.cwd;
     this.debug = argv.debug;
     this.standalone = argv.standalone;
+    this.CI = argv.CI;
 
     // embed files if needed
     if (argv.embed) {
@@ -137,9 +138,11 @@ class App {
       fn(this)
     );
 
-    if (argv.CI) {
-      console.info('CI run succesfully');
-      app.quit();
+    if (this.CI) {
+      setTimeout(() => {
+        console.info('CI run succesfully');
+        app.quit();
+      }, 1000 * 10);
     }
   }
 
