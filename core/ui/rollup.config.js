@@ -6,8 +6,8 @@ import builtins from 'builtin-modules';
 import replace from 'rollup-plugin-replace';
 import url from 'rollup-plugin-url';
 import jscc from 'rollup-plugin-jscc';
-import injectElectron from './inject-electron';
 import json from 'rollup-plugin-json';
+import injectElectron from './inject-electron';
 
 const pkg = require('./package.json');
 
