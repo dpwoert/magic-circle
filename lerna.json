@@ -2,6 +2,11 @@
   "packages": ["core/*", "examples/*", "plugins/*"],
   "version": "0.0.2",
   "command": {
-    "version": {}
+    "version": {
+      "allowBranch": "master"
+    },
+    "publish": {
+      "allowBranch": "master"
+    }
   }
 }
