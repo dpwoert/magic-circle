@@ -3,7 +3,20 @@ import ReactDOM from 'react-dom';
 import { Client, Layout } from '@magic-circle/ui/web';
 import { IframeIPC } from '@magic-circle/client';
 
-document.querySelector('iframe').src = 'examples/simple/index.html';
+const iframe = document.querySelector('iframe');
+
+const hashChange = () => {
+  const hash = window.location.hash || '';
+  iframe.src =
+    hash !== '' && hash !== '#'
+      ? window.location.hash.replace('#', '')
+      : 'examples/simple/index.html';
+
+  console.info('🌍 load url', iframe.src);
+};
+
+window.addEventListener('hashchange', hashChange);
+hashChange();
 
 const ipc = new IframeIPC();
 ipc.selector('iframe');
