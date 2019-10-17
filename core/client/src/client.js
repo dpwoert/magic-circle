@@ -38,7 +38,7 @@ export class Client {
     } else {
       // load iframe ipc if needed
       window.addEventListener('message', evt => {
-        if (evt.data && !this.ipc) {
+        if (evt.data && !this.ipc && evt.data.channel === 'editor-ready') {
           const ipc = new IframeIPC();
           ipc.findParent();
 

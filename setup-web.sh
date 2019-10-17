@@ -1,7 +1,7 @@
 # stop when one of these commands fail
 set -e
 
-echo "removing old bundle"
+echo "removing old online bundle"
 rm -rf core/online/dist
 
 echo "building web safe version of UI package"

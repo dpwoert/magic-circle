@@ -29,7 +29,7 @@ export class IframeIPC {
       }
 
       this.connection = iframe.contentWindow;
-      // this.send('load', true);
+      this.send('editor-ready', true);
     });
   }
 
@@ -74,10 +74,12 @@ export class IframeIPC {
   }
 
   removeListener(channel, fn) {
-    console.error('removeListener not working yet', channel, fn);
+    this.listeners = this.listeners.filter(
+      l => !(l.fn === fn && l.channel === channel)
+    );
   }
 
   removeAllListeners(channel) {
-    console.error('removeAllListeners not working yet', channel);
+    this.listeners = this.listeners.filter(l => l.channel !== channel);
   }
 }
