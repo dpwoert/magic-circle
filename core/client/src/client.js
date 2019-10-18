@@ -54,6 +54,10 @@ export class Client {
 
       // trigger connection
       this.connect(ipc);
+
+      ipc.on('refresh', () => {
+        location.reload();
+      });
     }
   }
 
