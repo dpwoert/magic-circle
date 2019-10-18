@@ -25,7 +25,7 @@ module.exports = app => {
         const settings = require('${app.settingsFile}');
         const {ipcRenderer} = require('electron');
         const {Client} = require('@magic-circle/ui');
-        window.__client = new Client(ipcRenderer, settings, '${app.cwd}');
+        window.__client = new Client(settings, '${app.cwd}');
       } catch(e){
         const {ipcRenderer} = require('electron');
         ipcRenderer.send('log', 'error', 'error during injecting of settings');

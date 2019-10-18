@@ -27,6 +27,7 @@ export class Client {
 
     // event binding
     this.nextFrame = this.nextFrame.bind(this);
+    this.__loadIframeIPC = this.__loadIframeIPC.bind(this);
 
     if (isElectron()) {
       // Add to window global to it can be reached by Electron
@@ -37,14 +38,25 @@ export class Client {
       }
     } else {
       // load iframe ipc if needed
-      window.addEventListener('message', evt => {
-        if (evt.data && !this.ipc && evt.data.channel === 'editor-ready') {
-          const ipc = new IframeIPC();
-          ipc.findParent();
+      window.addEventListener('message', this.__loadIframeIPC);
+    }
+  }
 
-          // trigger connection
-          this.connect(ipc);
-        }
+  __loadIframeIPC(evt) {
+    // load iframe ipc if needed
+    if (evt.data && evt.data.channel === 'editor-ready') {
+      if (this.ipc && this.ipc.destroy) {
+        this.ipc.destroy();
+      }
+
+      const ipc = new IframeIPC();
+      ipc.findParent();
+
+      // trigger connection
+      this.connect(ipc);
+
+      ipc.on('refresh', () => {
+        window.location.reload();
       });
     }
   }
@@ -61,6 +73,7 @@ export class Client {
     // Send page information to front-end
     this.sendMessage('page-information', {
       title: document.title,
+      location: JSON.parse(JSON.stringify(window.location)),
     });
 
     // trigger setup hook
@@ -136,6 +149,7 @@ export class Client {
       this.ipc.removeAllListeners('change-play-state');
       this.ipc.removeAllListeners('step-frame');
       this.ipc.removeAllListeners('batch');
+      this.ipc.removeAllListeners('change-url');
 
       // play/stop messages
       this.ipc.on('change-play-state', (evt, payload) => {
@@ -237,5 +251,22 @@ export class Client {
     }
 
     return this;
+  }
+
+  destroy() {
+    this.stop();
+    this.frames = null;
+    this.listeners = null;
+    this.channels = null;
+    this.fn = {
+      setup: null,
+      loop: null,
+    };
+    window.removeEventListener('message', this.__loadIframeIPC);
+
+    if (this.ipc.destroy) {
+      this.ipc.destroy();
+      this.ipc = null;
+    }
   }
 }

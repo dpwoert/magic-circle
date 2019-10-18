@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { ThemeProvider } from 'styled-components';
+import isElectron from 'is-electron';
+
 import Header from './header';
 import Sidebar from './sidebar';
 
@@ -25,6 +27,7 @@ class Layout extends Component {
             left={this.hook('header', 'left')}
             center={this.hook('header', 'center')}
             right={this.hook('header', 'right')}
+            isElectron={isElectron()}
           />
           <Sidebar>{this.hook('sidebar')}</Sidebar>
           {this.hook('layout')}

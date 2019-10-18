@@ -44,7 +44,7 @@ const Right = styled.div`
 const ButtonsContainer = styled.div`
   display: flex;
   flex-direction: row;
-  margin-left: 80px;
+  margin-left: ${props => (props.isElectron ? 80 : 16)}px;
 `;
 
 const ButtonCollection = styled.ul`
@@ -100,18 +100,18 @@ const Buttons = withTheme(props => (
   </ButtonCollection>
 ));
 
-const Header = props => (
+const Header = ({ isElectron, store, left, center, right }) => (
   <Bar>
     <Left>
-      <ButtonsContainer>
-        {Object.values(props.store.collection()).map(list => (
+      <ButtonsContainer isElectron={isElectron}>
+        {Object.values(store.collection()).map(list => (
           <Buttons list={list} />
         ))}
       </ButtonsContainer>
-      {props.left}
+      {left}
     </Left>
-    <Center>{props.center}</Center>
-    <Right>{props.right}</Right>
+    <Center>{center}</Center>
+    <Right>{right}</Right>
   </Bar>
 );
 

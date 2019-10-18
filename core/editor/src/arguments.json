@@ -1,7 +1,7 @@
 {
   "_": [],
-  "cwd": "/Users/dpwoert/projects/creative-controls/examples/simple",
+  "cwd": "/Users/dpwoert/projects/creative-controls/examples/debug",
   "url": "dist/index.html",
-  "embed": "dist/*",
+  "inspect": true,
   "settings": null
 }

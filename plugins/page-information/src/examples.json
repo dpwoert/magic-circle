@@ -1,0 +1,10 @@
+[
+  {
+    "label": "example: simple",
+    "url": "/examples/simple/index.html"
+  },
+  {
+    "label": "example: debug",
+    "url": "/examples/debug/index.html"
+  }
+]

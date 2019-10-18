@@ -9,6 +9,7 @@ then
 else
   echo "running example: $1"
   cd examples/$1
-  npm run ${2:start}
+  CMD=${2:-start}
+  npm run ${CMD}
   cd ../..
 fi

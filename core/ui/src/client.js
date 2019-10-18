@@ -18,7 +18,6 @@ export class Client {
           : settings.plugins;
     }
 
-    this.ipc = settings.ipc;
     this.isElectron = isElectron();
     this.cwd = cwd;
 
@@ -41,6 +40,9 @@ export class Client {
         );
       }
     });
+
+    // set ipc
+    this.ipc = this.settings.ipc;
 
     // add plugins
     this.plugins = this.settings.plugins
