@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/online",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Magic Circle online",
   "private": true,
   "keywords": [
@@ -28,16 +28,16 @@
     "build": "NODE_ENV=production parcel build src/index.html"
   },
   "devDependencies": {
-    "parcel": "^1.11.0",
     "@babel/core": "^7.1.2",
     "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
     "babel-plugin-inline-react-svg": "^1.0.1",
-    "babel-plugin-styled-components": "^1.8.0"
+    "babel-plugin-styled-components": "^1.8.0",
+    "parcel": "^1.11.0"
   },
   "dependencies": {
-    "@magic-circle/ui": "^0.0.2",
-    "@magic-circle/client": "^0.0.2",
+    "@magic-circle/client": "^0.0.3",
+    "@magic-circle/ui": "^0.0.3",
     "dot-prop": "^4.2.0",
     "rc-color-picker": "^1.2.6",
     "react": "^16.5.2",
