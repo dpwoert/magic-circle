@@ -36,17 +36,19 @@ class LayersPanel extends Component {
   };
 
   renderLayer(layers, layer, depth) {
-    layers.push(
-      <Item
-        key={layer.path}
-        depth={depth}
-        i={layers.length}
-        selected={this.props.activeLayer === layer.path}
-        onClick={() => this.props.set('activeLayer', layer.path)}
-      >
-        {layer.label}
-      </Item>
-    );
+    if (layer.isLayer) {
+      layers.push(
+        <Item
+          key={layer.path}
+          depth={depth}
+          i={layers.length}
+          selected={this.props.activeLayer === layer.path}
+          onClick={() => this.props.set('activeLayer', layer.path)}
+        >
+          {layer.label}
+        </Item>
+      );
+    }
 
     if (layer.children) {
       layer.children.forEach(l => this.renderLayer(layers, l, depth + 1));
@@ -56,7 +58,6 @@ class LayersPanel extends Component {
   render() {
     const layers = [];
     this.props.layers.forEach(l => this.renderLayer(layers, l, 0));
-
     return <Panel>{layers.map(layer => layer)}</Panel>;
   }
 }

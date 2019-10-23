@@ -33,6 +33,7 @@ const ControlList = styled.div``;
 class ControlsPanel extends Component {
   renderFolder(folder) {
     const path = `${this.props.path}.${folder.slug}`;
+    console.log(folder.controls[0]);
     return (
       <Folder key={path}>
         <FolderLabel>{folder.label}</FolderLabel>
@@ -51,8 +52,23 @@ class ControlsPanel extends Component {
   }
 
   render() {
-    const { controls } = this.props;
-    return <Container>{controls.map(f => this.renderFolder(f))}</Container>;
+    const { controls, children } = this.props;
+    console.log(children);
+    return (
+      <Container>
+        <ControlList>
+          {controls.map(c => (
+            <Control
+              component={this.props.getControl(c.type)}
+              control={c}
+              path={path}
+              updateControl={this.props.updateControl}
+            />
+          ))}
+        </ControlList>
+        {children.map(f => f.isFolder && this.renderFolder(f))}
+      </Container>
+    );
   }
 }
 

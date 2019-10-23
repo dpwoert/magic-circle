@@ -1,4 +1,3 @@
-import { Folder } from './folder';
 import slug from './utils/slug';
 
 const slugs = [];
@@ -18,15 +17,23 @@ const ensureUnique = str => {
 };
 
 export class Layer {
-  constructor(label) {
+  constructor(label, controls = []) {
     this.label = label;
     this.slug = ensureUnique(slug(label));
     this.children = [];
-    this.controls = [];
+    this.controls = controls;
+    this.isLayer = true;
+    this.isFolder = false;
   }
 
   add(child) {
-    this.children.push(child);
+    if (Array.isArray(child)) {
+      child.forEach(c => this.add(c));
+    } else if (child.reference) {
+      this.controls.push(child);
+    } else {
+      this.children.push(child);
+    }
     return this;
   }
 
@@ -35,32 +42,33 @@ export class Layer {
     return this;
   }
 
-  addControl(control) {
-    this.controls.push(control);
-    return this;
+  layer(...opts) {
+    return new Layer(...opts).addTo(this);
   }
 
   folder(...opts) {
-    const folder = new Folder(...opts);
-    this.addControl(folder);
+    const folder = new Layer.__Folder(...opts);
+    this.add(folder);
     return folder;
   }
 
   toJSON(mapping) {
     const recursiveGenerate = (layer, basePath) => {
       const path = basePath ? `${basePath}.${layer.slug}` : layer.slug;
+
       if (mapping) {
-        layer.controls.map(f =>
-          f.controls.map(c => mapping.set(`${path}.${f.slug}.${c.key}`, c))
-        );
+        layer.controls.forEach(c => mapping.set(`${path}.${c.key}`, c));
       }
 
       return {
-        isLayer: true,
+        isLayer: layer.isLayer,
+        isFolder: layer.isFolder,
         label: layer.label,
         slug: layer.slug,
         path,
-        children: layer.children.map(c => recursiveGenerate(c, path)),
+        children: layer.children
+          ? layer.children.map(c => recursiveGenerate(c, path))
+          : [],
         controls: layer.controls.map(f => f.toJSON(path)),
       };
     };

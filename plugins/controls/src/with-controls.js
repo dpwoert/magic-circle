@@ -4,7 +4,7 @@ const withControls = (WrappedComponent, store) =>
   class ControlsProvider extends Component {
     constructor(props, context) {
       super(props, context);
-      this.state = { controls: [] };
+      this.state = { controls: [], children: [] };
       this.update = this.update.bind(this);
     }
 
@@ -21,20 +21,27 @@ const withControls = (WrappedComponent, store) =>
       if (active && active.controls) {
         this.setState({
           controls: active.controls,
+          children: active.children,
           path: active.path,
         });
       } else {
         this.setState({
           controls: [],
+          children: [],
           path: '',
         });
       }
     }
 
     render() {
-      const { controls, path } = this.state;
+      const { controls, path, children } = this.state;
       return (
-        <WrappedComponent controls={controls} path={path} {...this.props} />
+        <WrappedComponent
+          controls={controls}
+          children={children}
+          path={path}
+          {...this.props}
+        />
       );
     }
   };

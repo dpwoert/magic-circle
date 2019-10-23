@@ -54,7 +54,7 @@ export class Control {
 
   /** Add to folder */
   addTo(parent) {
-    parent.addControl(this);
+    parent.add(this);
     return this;
   }
 
@@ -80,25 +80,13 @@ export class Control {
 
 export class TextControl extends Control {
   values(values) {
+    this.type = 'text';
     this.options.values = values;
     return this;
   }
 
   labels(labels) {
     this.options.labels = labels;
-    return this;
-  }
-}
-
-export class IntControl extends Control {
-  constructor(reference, key) {
-    super(reference, key);
-    this.type = 'int';
-    return this;
-  }
-
-  stepSize(stepSize) {
-    this.options.stepSize = stepSize;
     return this;
   }
 }
