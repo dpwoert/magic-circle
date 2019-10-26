@@ -51,20 +51,20 @@ class ControlsPanel extends Component {
   }
 
   render() {
-    const { controls, children } = this.props;
+    const { controls, layers, getControl, updateControl, path } = this.props;
     return (
       <Container>
         <ControlList>
           {controls.map(c => (
             <Control
-              component={this.props.getControl(c.type)}
+              component={getControl(c.type)}
               control={c}
               path={path}
-              updateControl={this.props.updateControl}
+              updateControl={updateControl}
             />
           ))}
         </ControlList>
-        {children.map(f => f.isFolder && this.renderFolder(f))}
+        {layers.map(f => f.isFolder && this.renderFolder(f))}
       </Container>
     );
   }

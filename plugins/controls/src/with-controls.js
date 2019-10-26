@@ -38,7 +38,7 @@ const withControls = (WrappedComponent, store) =>
       return (
         <WrappedComponent
           controls={controls}
-          children={children}
+          layers={children}
           path={path}
           {...this.props}
         />

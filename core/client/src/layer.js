@@ -47,7 +47,8 @@ export class Layer {
   }
 
   folder(...opts) {
-    const folder = new Layer.__Folder(...opts);
+    // needs this weird constructor due to circular referencing
+    const folder = new Layer.__Folder(...opts); //eslint-disable-line
     this.add(folder);
     return folder;
   }

@@ -13,4 +13,5 @@ export class Folder extends Layer {
   }
 }
 
-Layer.__Folder = Folder;
+// Prevents circular reference when importing
+Layer.__Folder = Folder; //eslint-disable-line

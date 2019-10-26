@@ -9,18 +9,16 @@ import {
 } from 'three';
 
 import {
-  Layer,
   NumberControl,
   BooleanControl,
-  TextControl,
   ColorControl,
-  ButtonControl,
 } from '@magic-circle/client';
 
 let renderer;
 let scene;
 let camera;
-let animation = { x: 0.005, y: 0.01 };
+
+const animation = { x: 0.005, y: 0.01 };
 
 export function setup(gui) {
   // Create renderer
@@ -42,9 +40,9 @@ export function setup(gui) {
   const sceneLayer = gui.layer('Scene');
 
   let i = 1;
-  for (let x = 0; x < 2; x++) {
-    for (let y = 0; y < 2; y++) {
-      for (let z = 0; z < 2; z++) {
+  for (let x = 0; x < 2; x += 1) {
+    for (let y = 0; y < 2; y += 1) {
+      for (let z = 0; z < 2; z += 1) {
         const geometry = new BoxBufferGeometry(50, 50, 50);
         const material = new MeshBasicMaterial({ color: new Color('#ff0000') });
         const mesh = new Mesh(geometry, material);

@@ -9,7 +9,6 @@ import {
 } from 'three';
 
 import {
-  Layer,
   NumberControl,
   BooleanControl,
   TextControl,
@@ -54,9 +53,9 @@ export function setup(gui) {
 
   // controls
   const layer1 = gui.layer('World');
-  const layer2 = gui.layer('Scene');
   const layer3 = layer1.layer('Box');
-  const layer4 = layer1.layer('Box2');
+  layer1.layer('Box2');
+  gui.layer('Scene');
 
   layer3.folder('Global', [
     new TextControl(glob, 'name'),
