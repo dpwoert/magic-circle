@@ -84,13 +84,13 @@ export class Client {
         this.fn.setup(this);
       }
 
-      // run actions after setup is done
-      this.batch(evt, payload);
-
       // make sure all is synced
       if (this.regenerate) {
-        this.regenerate();
+        this.regenerate(true);
       }
+
+      // run actions after setup is done
+      this.batch(evt, payload);
 
       // start rendering
       this.play();

@@ -133,6 +133,9 @@ export default {
     accent: 'rgb(136, 74, 255)',
   },
 
+  // Stops maintaining state when refreshing
+  noHydrate: false,
+
   screen: {
     // Size of screen on load, on default will load with saved size of window
     size: {

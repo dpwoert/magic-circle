@@ -45,7 +45,7 @@ class Controls {
       this.changelog = undefined;
     }
 
-    return updates;
+    return this.client.getSetting('noHydrate') ? [] : updates;
   }
 
   createChangelog() {

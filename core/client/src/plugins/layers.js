@@ -40,16 +40,22 @@ class LayersPlugin {
     return layer;
   }
 
-  regenerate() {
+  regenerate(now) {
     if (this.regenerateFrame) {
       window.clearTimeout(this.regenerateFrame);
     }
 
-    this.regenerateFrame = window.setTimeout(() => {
+    const regenerate = () => {
       this.mapping.clear();
       const data = this.layers.map(l => l.toJSON(this.mapping));
       this.client.sendMessage('layers', data);
-    });
+    };
+
+    if (now) {
+      regenerate();
+    } else {
+      this.regenerateFrame = window.setTimeout(() => now);
+    }
   }
 
   setValue(path, value) {

@@ -27,6 +27,7 @@ class PlayControls {
     if (controls) {
       controls.reset();
     }
+    this.client.refresh();
   }
 
   changeState(play) {
