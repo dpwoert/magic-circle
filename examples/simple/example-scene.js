@@ -20,7 +20,7 @@ import {
 let renderer;
 let scene;
 let camera;
-let mesh;
+let animation = { x: 0.005, y: 0.01 };
 
 export function setup(gui) {
   // Create renderer
@@ -39,56 +39,57 @@ export function setup(gui) {
 
   // Create scene
   scene = new Scene();
-  const geometry = new BoxBufferGeometry(200, 200, 200);
-  const material = new MeshBasicMaterial({ color: new Color('#ff0000') });
-  mesh = new Mesh(geometry, material);
-  scene.add(mesh);
+  const sceneLayer = gui.layer('Scene');
 
-  const glob = {
-    name: 'Test name',
-    subtitle: 'Test subtitle',
-    subtitle2: 'Subtitle to test 2',
-    number: '2000',
-    alert: () => alert(`name: ${glob.name}`), //eslint-disable-line
-  };
+  let i = 1;
+  for (let x = 0; x < 2; x++) {
+    for (let y = 0; y < 2; y++) {
+      for (let z = 0; z < 2; z++) {
+        const geometry = new BoxBufferGeometry(50, 50, 50);
+        const material = new MeshBasicMaterial({ color: new Color('#ff0000') });
+        const mesh = new Mesh(geometry, material);
+        scene.add(mesh);
 
-  // controls
-  const layer1 = gui.layer('World');
-  const layer2 = gui.layer('Scene');
-  const layer3 = layer1.layer('Box');
-  const layer4 = layer1.layer('Box2');
+        mesh.position.x = x * 100;
+        mesh.position.y = y * 100;
+        mesh.position.z = z * 100;
 
-  layer3.folder('Global', [
-    new TextControl(glob, 'name'),
-    new TextControl(glob, 'subtitle'),
-    new TextControl(glob, 'subtitle2').values(['test1', 'test2', 'test3']),
-    new NumberControl(glob, 'number'),
-    new ButtonControl(glob, 'alert').label('Trigger alert'),
-  ]);
+        const meshLayer = sceneLayer.layer(`Box ${i}`);
 
-  layer3.folder('Position', [
-    new NumberControl(mesh.position, 'x').range(-100, 100),
-    new NumberControl(mesh.position, 'y').range(-100, 100),
-    new NumberControl(mesh.position, 'z').range(-100, 100),
-  ]);
+        meshLayer.folder('Position', [
+          new NumberControl(mesh.position, 'x').range(-200, 200),
+          new NumberControl(mesh.position, 'y').range(-200, 200),
+          new NumberControl(mesh.position, 'z').range(-200, 200),
+        ]);
 
-  layer3.folder('Scale', [
-    new NumberControl(mesh.scale, 'x').range(-3, 3),
-    new NumberControl(mesh.scale, 'y').range(-3, 3),
-    new NumberControl(mesh.scale, 'z').range(-3, 3),
-  ]);
+        meshLayer.folder('Scale', [
+          new NumberControl(mesh.scale, 'x').range(-3, 3),
+          new NumberControl(mesh.scale, 'y').range(-3, 3),
+          new NumberControl(mesh.scale, 'z').range(-3, 3),
+        ]);
 
-  layer3
-    .folder('Material')
+        meshLayer.folder('Material', [
+          new ColorControl(mesh.material, 'color').range(1),
+          new NumberControl(mesh.material, 'opacity').range(0, 1),
+          new BooleanControl(mesh.material, 'transparent'),
+        ]);
+
+        i += 1;
+      }
+    }
+  }
+
+  const animationLayer = gui.layer('Animation');
+  animationLayer
+    .folder('Rotation')
     .add([
-      new ColorControl(mesh.material, 'color').range(1),
-      new NumberControl(mesh.material, 'opacity').range(0, 1),
-      new BooleanControl(mesh.material, 'transparent'),
+      new NumberControl(animation, 'x').range(-0.1, 0.1).stepSize(0.001),
+      new NumberControl(animation, 'y').range(-0.1, 0.1).stepSize(0.001),
     ]);
 }
 
 export function loop() {
-  mesh.rotation.x += 0.005;
-  mesh.rotation.y += 0.01;
+  scene.rotation.x += animation.x;
+  scene.rotation.y += animation.y;
   renderer.render(scene, camera);
 }

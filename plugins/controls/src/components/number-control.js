@@ -138,8 +138,8 @@ const ContiousControl = props => {
               updateControl(+evt.target.value);
             }}
             type="range"
-            min={parseInt(range[0], 10)}
-            max={parseInt(range[1], 10)}
+            min={parseFloat(range[0], 10)}
+            max={parseFloat(range[1], 10)}
             step={step}
           />
         </InputContainer>

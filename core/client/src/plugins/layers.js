@@ -48,7 +48,6 @@ class LayersPlugin {
     this.regenerateFrame = window.setTimeout(() => {
       this.mapping.clear();
       const data = this.layers.map(l => l.toJSON(this.mapping));
-      console.log('send', data);
       this.client.sendMessage('layers', data);
     });
   }
