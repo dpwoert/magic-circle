@@ -19,7 +19,7 @@ const Item = styled.li`
   font-size: 12px;
   line-height: 42px;
   padding-left: ${props => (props.depth + 1) * 12}px;
-  color: white;
+  color: ${props => (props.hasControls ? 'white' : 'rgba(255,255,255, 0.5)')};
   list-style: none;
   background: ${props =>
     getBackgroundColor(props.selected, props.i, props.theme.accent)};
@@ -37,13 +37,23 @@ class LayersPanel extends Component {
 
   renderLayer(layers, layer, depth) {
     if (layer.isLayer) {
+      const hasChildControls = layer.children.reduce(
+        (a, b) => ((b.controls || []).length > 0 && b.isFolder) || a,
+        false
+      );
+      const hasControls = layer.controls.length > 0 || !!hasChildControls;
+      console.log(layer, hasControls, hasChildControls);
+
       layers.push(
         <Item
           key={layer.path}
           depth={depth}
           i={layers.length}
           selected={this.props.activeLayer === layer.path}
-          onClick={() => this.props.set('activeLayer', layer.path)}
+          onClick={() =>
+            hasControls && this.props.set('activeLayer', layer.path)
+          }
+          hasControls={hasControls}
         >
           {layer.label}
         </Item>

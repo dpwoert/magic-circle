@@ -40,7 +40,7 @@ export function setup(gui) {
   // Create scene
   scene = new Scene();
   const geometry = new BoxBufferGeometry(200, 200, 200);
-  const material = new MeshBasicMaterial({ color: new Color('#ff0000') });
+  const material = new MeshBasicMaterial({ color: new Color('#0000ff') });
   mesh = new Mesh(geometry, material);
   scene.add(mesh);
 
@@ -53,40 +53,38 @@ export function setup(gui) {
   };
 
   // controls
-  const layer1 = new Layer('World');
-  const layer2 = new Layer('Scene');
-  const layer3 = new Layer('Box').addTo(layer1);
-  const layer4 = new Layer('Box2').addTo(layer1); //eslint-disable-line
+  const layer1 = gui.layer('World');
+  const layer2 = gui.layer('Scene');
+  const layer3 = layer1.layer('Box');
+  const layer4 = layer1.layer('Box2');
 
-  layer3.folder(
-    'Global',
+  layer3.folder('Global', [
     new TextControl(glob, 'name'),
     new TextControl(glob, 'subtitle'),
     new TextControl(glob, 'subtitle2').values(['test1', 'test2', 'test3']),
     new NumberControl(glob, 'number'),
-    new ButtonControl(glob, 'alert').label('Trigger alert')
-  );
-  layer3.folder(
-    'Position',
+    new ButtonControl(glob, 'alert').label('Trigger alert'),
+  ]);
+
+  layer3.folder('Position', [
     new NumberControl(mesh.position, 'x').range(-100, 100),
     new NumberControl(mesh.position, 'y').range(-100, 100),
-    new NumberControl(mesh.position, 'z').range(-100, 100)
-  );
-  layer3.folder(
-    'Scale',
+    new NumberControl(mesh.position, 'z').range(-100, 100),
+  ]);
+
+  layer3.folder('Scale', [
     new NumberControl(mesh.scale, 'x').range(-3, 3),
     new NumberControl(mesh.scale, 'y').range(-3, 3),
-    new NumberControl(mesh.scale, 'z').range(-3, 3)
-  );
-  layer3.folder(
-    'Material',
-    new ColorControl(mesh.material, 'color').range(1),
-    new NumberControl(mesh.material, 'opacity').range(0, 1),
-    new BooleanControl(mesh.material, 'transparent')
-  );
+    new NumberControl(mesh.scale, 'z').range(-3, 3),
+  ]);
 
-  gui.addLayer(layer1);
-  gui.addLayer(layer2);
+  layer3
+    .folder('Material')
+    .add([
+      new ColorControl(mesh.material, 'color').range(1),
+      new NumberControl(mesh.material, 'opacity').range(0, 1),
+      new BooleanControl(mesh.material, 'transparent'),
+    ]);
 }
 
 export function loop() {
