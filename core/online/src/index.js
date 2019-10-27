@@ -15,13 +15,11 @@ const hashChange = evt => {
       : 'examples/simple/index.html';
 
   console.info('🌍 load url', iframe.src);
-
-  if (evt) {
-    iframe.onload = () => {
-      ipc.send('editor-ready', true);
-    };
-  }
 };
+
+iframe.addEventListener('load', () => {
+  ipc.send('editor-ready', true);
+});
 
 window.addEventListener('hashchange', hashChange);
 hashChange();
