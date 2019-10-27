@@ -70,7 +70,12 @@ var controls = window.controls;
 const { Controls, Layer, NumberControl } = require('@magic-circle/client');
 
 // ES6:
-import { Controls, Layer, NumberControl } from '@magic-circle/client';
+import {
+  Controls,
+  Layer,
+  NumberControl,
+  ColorControl,
+} from '@magic-circle/client';
 
 // Create instance of Magic Circle client
 const controls = new Controls();
@@ -78,18 +83,20 @@ const controls = new Controls();
 controls
   .setup(gui => {
     // Create layer
-    const layer = new Layer('Main');
+    const layer = gui.layer('Main');
+
+    // Create sublayer
+    const sublayer = layer.layer('child');
 
     // Add folder with controls
-    layer3.folder(
-      'Position',
+    layer.folder('Position', [
       new NumberControl(obj3d, 'x').range(-100, 100),
       new NumberControl(obj3d, 'y').range(-100, 100),
-      new NumberControl(obj3d, 'z').range(-100, 100)
-    );
+      new NumberControl(obj3d, 'z').range(-100, 100),
+    ]);
 
-    // Add layer to UI
-    gui.addLayer(layer);
+    // Add control without folder
+    sublayer.add(new ColorControl(obj3d, 'color'));
   })
   .loop(delta => {
     // this code will run every frame
