@@ -95,6 +95,8 @@ class Controls {
       });
     });
 
+    console.log('reset', updates);
+
     this.client.sendMessage('batch', {
       batch: updates,
     });

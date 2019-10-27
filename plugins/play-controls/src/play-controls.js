@@ -25,9 +25,8 @@ class PlayControls {
   reset() {
     const controls = this.client.getPlugin('controls');
     if (controls) {
-      controls.reset();
+      controls.reset(); // is this correct function?
     }
-    this.client.refresh();
   }
 
   changeState(play) {

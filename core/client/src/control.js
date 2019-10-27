@@ -43,7 +43,7 @@ export class Control {
 
   /** Reset to initial value */
   reset() {
-    this.reference[this.key] = this.initialValue;
+    this.setValue(this.initialValue);
   }
 
   /** Sets the label for this control */
@@ -121,6 +121,21 @@ export class ColorControl extends Control {
       alpha: false,
       range: 255,
     };
+
+    const value = reference[key];
+    const validKeys = ['r', 'g', 'b', 'a', 'red', 'green', 'blue', 'alpha'];
+    if (typeof value === 'object' && !Array.isArray(value)) {
+      const initial = {};
+      Object.keys(value).forEach(key => {
+        if (validKeys.indexOf(key) > -1) {
+          initial[key] = value[key];
+        }
+      });
+
+      this.initialValue = initial;
+      console.log('initial', initial);
+    }
+
     return this;
   }
 
