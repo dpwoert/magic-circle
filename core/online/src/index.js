@@ -7,7 +7,7 @@ const iframe = document.querySelector('iframe');
 const ipc = new IframeIPC();
 ipc.selector('iframe');
 
-const hashChange = evt => {
+const hashChange = () => {
   const hash = window.location.hash || '';
   iframe.src =
     hash !== '' && hash !== '#'
