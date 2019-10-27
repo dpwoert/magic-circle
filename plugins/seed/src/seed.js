@@ -14,7 +14,6 @@ class Seed {
   constructor(client, store) {
     this.client = client;
     this.store = store;
-    this.client.getSeed = this.getSeed.bind(this);
     this.client.addListener('seed', (evt, payload) => this.setSeed(payload));
   }
 
