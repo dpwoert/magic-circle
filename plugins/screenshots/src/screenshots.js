@@ -137,12 +137,17 @@ class Screenshots {
 
     if (data.changelog) {
       const controls = this.client.getPlugin('controls');
-      controls.reset();
-      controls.applyChangelog(this.client.JSONToMap(data.changelog));
+
+      if (controls) {
+        controls.reset();
+        controls.applyChangelog(this.client.JSONToMap(data.changelog));
+      }
     }
     if (data.seed) {
       const seed = this.client.getPlugin('seed');
-      seed.setSeed(data.seed, true);
+      if (seed) {
+        seed.setSeed(data.seed, true);
+      }
     }
   }
 
@@ -163,10 +168,14 @@ class Screenshots {
   }
 
   takeScreenshot() {
-    const changelog = this.createChangelog
-      ? this.client.mapToJSON(this.client.createChangelog())
+    const controls = this.client.getPlugin('controls');
+    const seedPlugin = this.client.getPlugin('seed');
+
+    const changelog = controls
+      ? this.client.mapToJSON(controls.createChangelog(true))
       : [];
-    const seed = this.getSeed ? this.getSeed() : null;
+
+    const seed = seedPlugin ? seedPlugin.getSeed() : null;
     const data = { changelog, seed };
     this.client.sendAction('screenshot', data);
   }

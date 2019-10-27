@@ -41,7 +41,7 @@ class LayersPlugin {
   }
 
   regenerate(now) {
-    if (this.regenerateFrame) {
+    if (this.regenerateFrame && !now) {
       window.clearTimeout(this.regenerateFrame);
     }
 
@@ -54,7 +54,7 @@ class LayersPlugin {
     if (now) {
       regenerate();
     } else {
-      this.regenerateFrame = window.setTimeout(() => now);
+      this.regenerateFrame = window.setTimeout(() => regenerate());
     }
   }
 
@@ -63,6 +63,7 @@ class LayersPlugin {
 
     if (control) {
       control.setValue(value);
+      // this.regenerate();
     } else {
       console.error('could not update control', path, value);
     }

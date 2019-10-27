@@ -13,7 +13,6 @@ class Controls {
     this.client = client;
     this.getControl = this.getControl.bind(this);
     this.updateControl = this.updateControl.bind(this);
-    this.client.createChangelog = this.createChangelog.bind(this);
 
     // list of controls
     this.controls = settings.controls
@@ -45,10 +44,16 @@ class Controls {
       this.changelog = undefined;
     }
 
+    // ensures editor syncs again after
+    updates.push({
+      channel: 'resync',
+      payload: {},
+    });
+
     return this.client.getSetting('noHydrate') ? [] : updates;
   }
 
-  createChangelog() {
+  createChangelog(full) {
     const { store } = this.client.getPlugin('layers');
     const mapping = store.get('mapping');
 
@@ -57,7 +62,11 @@ class Controls {
 
     // diff
     mapping.forEach(c => {
-      if (c.isControl && !shallowEqual(c.value, c.initialValue)) {
+      if (
+        c.isControl &&
+        (!shallowEqual(c.value, c.initialValue) || full) &&
+        !c.noHydrate
+      ) {
         changelog.set(c.path, c.value);
       }
     });
@@ -94,8 +103,6 @@ class Controls {
         payload: { path },
       });
     });
-
-    console.log('reset', updates);
 
     this.client.sendMessage('batch', {
       batch: updates,

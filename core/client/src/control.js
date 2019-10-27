@@ -6,6 +6,7 @@ export class Control {
     this.labelValue = key;
     this.options = {};
     this.initialValue = this.reference[this.key];
+    this.noHydrate = false;
 
     this.hooks = {
       change: null,
@@ -74,6 +75,7 @@ export class Control {
       options: this.options,
       value: this.getValue(),
       initialValue: this.initialValue,
+      noHydrate: this.noHydrate,
     };
   }
 }
@@ -122,18 +124,18 @@ export class ColorControl extends Control {
       range: 255,
     };
 
+    // set initial value when object
     const value = reference[key];
     const validKeys = ['r', 'g', 'b', 'a', 'red', 'green', 'blue', 'alpha'];
     if (typeof value === 'object' && !Array.isArray(value)) {
       const initial = {};
-      Object.keys(value).forEach(key => {
-        if (validKeys.indexOf(key) > -1) {
-          initial[key] = value[key];
+      Object.keys(value).forEach(k => {
+        if (validKeys.indexOf(k) > -1) {
+          initial[k] = value[k];
         }
       });
 
       this.initialValue = initial;
-      console.log('initial', initial);
     }
 
     return this;
@@ -163,6 +165,7 @@ export class ButtonControl extends Control {
     super(reference, key);
     this.type = 'button';
     this.initialValue = '';
+    this.noHydrate = true;
     return this;
   }
 
