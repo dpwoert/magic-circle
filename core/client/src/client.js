@@ -19,11 +19,10 @@ export class Client {
       loop: () => {},
     };
 
+    const standardPlugins = [LayersPlugin, SeedPlugin, PerformancePlugin];
+
     // add plugins
-    plugins.push(LayersPlugin);
-    plugins.push(SeedPlugin);
-    plugins.push(PerformancePlugin);
-    this.plugins = plugins.map(P => new P(this));
+    this.plugins = standardPlugins.concat(plugins).map(P => new P(this));
 
     // event binding
     this.nextFrame = this.nextFrame.bind(this);
