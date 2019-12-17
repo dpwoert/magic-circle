@@ -10,6 +10,7 @@ class LayersPlugin {
     this.client.add = this.addLayer.bind(this);
     this.client.layer = this.createLayer.bind(this);
     this.client.regenerate = this.regenerate.bind(this);
+    this.client.setStateAsDefault = this.setStateAsDefault.bind(this);
   }
 
   connect() {
@@ -38,6 +39,30 @@ class LayersPlugin {
     this.layers.push(layer);
     this.regenerate();
     return layer;
+  }
+
+  setStateAsDefault() {
+    this.forEachControl(c => {
+      if (c.setStateAsDefault) {
+        c.setStateAsDefault();
+      }
+    });
+    this.regenerate();
+  }
+
+  forEach(fn) {
+    const read = list => {
+      list.forEach(layer => {
+        fn(layer);
+        if (layer.controls) {
+          layer.controls.forEach(fn);
+        }
+        if (layer.children) {
+          read(layer.children);
+        }
+      });
+    };
+    read(this.layers);
   }
 
   regenerate(now) {

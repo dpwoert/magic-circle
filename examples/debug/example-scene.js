@@ -84,6 +84,8 @@ export function setup(gui) {
       new NumberControl(mesh.material, 'opacity').range(0, 1),
       new BooleanControl(mesh.material, 'transparent'),
     ]);
+
+  gui.setStateAsDefault();
 }
 
 export function loop() {

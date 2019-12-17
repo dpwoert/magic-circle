@@ -78,6 +78,10 @@ export class Control {
       noHydrate: this.noHydrate,
     };
   }
+
+  setStateAsDefault() {
+    this.initialValue = this.getValue();
+  }
 }
 
 export class TextControl extends Control {
