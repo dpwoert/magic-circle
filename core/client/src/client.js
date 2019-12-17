@@ -8,6 +8,7 @@ import { IframeIPC } from './iframe-ipc';
 
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable class-methods-use-this */
+/* eslint-disable no-lonely-if */
 
 export class Client {
   constructor(...plugins) {
@@ -19,15 +20,13 @@ export class Client {
       loop: () => {},
     };
 
+    const standardPlugins = [LayersPlugin, SeedPlugin, PerformancePlugin];
+
     // add plugins
-    plugins.push(LayersPlugin);
-    plugins.push(SeedPlugin);
-    plugins.push(PerformancePlugin);
-    this.plugins = plugins.map(P => new P(this));
+    this.plugins = standardPlugins.concat(plugins).map(P => new P(this));
 
     // event binding
     this.nextFrame = this.nextFrame.bind(this);
-    this.__loadIframeIPC = this.__loadIframeIPC.bind(this);
 
     if (isElectron()) {
       // Add to window global to it can be reached by Electron
@@ -38,27 +37,27 @@ export class Client {
       }
     } else {
       // load iframe ipc if needed
-      window.addEventListener('message', this.__loadIframeIPC);
+      if (window.location !== window.parent.location) {
+        this.__loadIframeIPC();
+      }
     }
   }
 
-  __loadIframeIPC(evt) {
-    // load iframe ipc if needed
-    if (evt.data && evt.data.channel === 'editor-ready') {
-      if (this.ipc && this.ipc.destroy) {
-        this.ipc.destroy();
-      }
-
-      const ipc = new IframeIPC();
-      ipc.findParent();
-
-      // trigger connection
-      this.connect(ipc);
-
-      ipc.on('refresh', () => {
-        window.location.reload();
-      });
+  __loadIframeIPC() {
+    // destory previous ipc if needed
+    if (this.ipc && this.ipc.destroy) {
+      this.ipc.destroy();
     }
+
+    const ipc = new IframeIPC();
+    ipc.findParent();
+
+    // trigger connection
+    this.connect(ipc);
+
+    ipc.on('refresh', () => {
+      window.location.reload();
+    });
   }
 
   connect(ipc) {

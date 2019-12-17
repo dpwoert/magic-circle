@@ -71,7 +71,7 @@ module.exports = app => {
           enabled: false,
         },
         {
-          label: `commit: ${truncate(git.commitMessage, 15)}`,
+          label: `commit: ${truncate(git.commitMessage || 'none', 15)}`,
           enabled: false,
         },
         {
