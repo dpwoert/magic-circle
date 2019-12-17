@@ -8,6 +8,7 @@ import { IframeIPC } from './iframe-ipc';
 
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable class-methods-use-this */
+/* eslint-disable no-lonely-if */
 
 export class Client {
   constructor(...plugins) {
@@ -42,7 +43,7 @@ export class Client {
     }
   }
 
-  __loadIframeIPC(evt) {
+  __loadIframeIPC() {
     // destory previous ipc if needed
     if (this.ipc && this.ipc.destroy) {
       this.ipc.destroy();

@@ -19,7 +19,6 @@ const ensureUnique = str => {
 export class Layer {
   constructor(label, controls = []) {
     this.label = label;
-    console.log('label', label);
     this.slug = ensureUnique(slug(label));
     this.children = [];
     this.controls = controls;
