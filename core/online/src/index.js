@@ -17,10 +17,6 @@ const hashChange = () => {
   console.info('🌍 load url', iframe.src);
 };
 
-iframe.addEventListener('load', () => {
-  ipc.send('editor-ready', true);
-});
-
 window.addEventListener('hashchange', hashChange);
 hashChange();
 

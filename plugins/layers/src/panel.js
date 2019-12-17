@@ -5,6 +5,7 @@ import Color from '@magic-circle/colors';
 const Panel = styled.ul`
   width: 100%;
   height: 100%;
+  overflow: auto;
 `;
 
 const getBackgroundColor = (selected, i, accent) => {

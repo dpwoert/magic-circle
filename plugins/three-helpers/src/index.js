@@ -8,6 +8,8 @@ import {
 } from '@magic-circle/client';
 import * as THREE from 'three';
 
+import * as Geometries from 'three/src/geometries/Geometries.js';
+
 export class SceneControls extends Layer {
   constructor(name, scene, needsName = true) {
     super(name);
@@ -31,7 +33,7 @@ export class MeshControls extends Layer {
     this.mesh = mesh;
 
     if (mesh.geometry) {
-      // this.add(new GeometryControls(mesh.geometry));
+      this.add(new GeometryControls(mesh.geometry));
     }
     if (mesh.material) {
       this.add(new MaterialControls(mesh.material));
@@ -76,12 +78,25 @@ export class MaterialControls extends Layer {
     super(material.type || 'Camera');
     this.material = material;
 
-    // this.folder('Colors', [
-    //   new NumberControl(camera.position, 'x'),
-    //
-    //
-    //
-    // ]);
+    this.folder('Colors', [new ColorControl(material, 'color').range(1)]);
+  }
+}
+
+export class GeometryControls extends Layer {
+  constructor(material) {
+    super('Geometry');
+    this.material = material;
+
+    this.type = material.type;
+    const geometries = Object.keys(Geometries);
+
+    this.folder('Geometry', [
+      new TextControl(this, 'type').values(geometries),
+    ]).forEach(c => c.on('change', this.changeGeometry.bind(this)));
+  }
+
+  changeGeometry() {
+    // todo
   }
 }
 

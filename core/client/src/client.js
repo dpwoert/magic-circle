@@ -26,7 +26,6 @@ export class Client {
 
     // event binding
     this.nextFrame = this.nextFrame.bind(this);
-    this.__loadIframeIPC = this.__loadIframeIPC.bind(this);
 
     if (isElectron()) {
       // Add to window global to it can be reached by Electron
@@ -37,27 +36,27 @@ export class Client {
       }
     } else {
       // load iframe ipc if needed
-      window.addEventListener('message', this.__loadIframeIPC);
+      if (window.location !== window.parent.location) {
+        this.__loadIframeIPC();
+      }
     }
   }
 
   __loadIframeIPC(evt) {
-    // load iframe ipc if needed
-    if (evt.data && evt.data.channel === 'editor-ready') {
-      if (this.ipc && this.ipc.destroy) {
-        this.ipc.destroy();
-      }
-
-      const ipc = new IframeIPC();
-      ipc.findParent();
-
-      // trigger connection
-      this.connect(ipc);
-
-      ipc.on('refresh', () => {
-        window.location.reload();
-      });
+    // destory previous ipc if needed
+    if (this.ipc && this.ipc.destroy) {
+      this.ipc.destroy();
     }
+
+    const ipc = new IframeIPC();
+    ipc.findParent();
+
+    // trigger connection
+    this.connect(ipc);
+
+    ipc.on('refresh', () => {
+      window.location.reload();
+    });
   }
 
   connect(ipc) {
