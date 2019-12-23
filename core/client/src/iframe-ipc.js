@@ -13,6 +13,7 @@ export class IframeIPC {
     if (window.parent) {
       this.mode = 'child';
       this.connection = window.parent;
+      console.info('iframe parent found', window.parent);
     }
   }
 
@@ -22,14 +23,26 @@ export class IframeIPC {
     this.parent = null;
 
     window.addEventListener('load', () => {
-      const iframe = document.querySelector(selector);
+      setTimeout(() => {
+        console.info('connecting to child');
+        const iframe = document.querySelector(selector);
 
-      if (!iframe) {
-        throw new Error("can't find iframe element");
-      }
+        if (!iframe) {
+          throw new Error("can't find iframe element");
+        }
 
-      this.connection = iframe.contentWindow;
-      this.send('editor-ready', true);
+        console.info('child iframe', iframe);
+
+        window.setTimeout(() => {
+          console.info('connection?', iframe.contentWindow);
+        });
+
+        iframe.addEventListener('load', () => {
+          this.connection = iframe.contentWindow;
+          this.send('editor-ready', true);
+          console.info('connection?', this.connection);
+        });
+      }, 3000);
     });
   }
 
