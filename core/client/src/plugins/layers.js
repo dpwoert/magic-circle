@@ -42,7 +42,7 @@ class LayersPlugin {
   }
 
   setStateAsDefault() {
-    this.forEachControl(c => {
+    this.forEach(c => {
       if (c.setStateAsDefault) {
         c.setStateAsDefault();
       }
