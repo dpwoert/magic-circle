@@ -24,6 +24,7 @@
   "main": "index.js",
   "scripts": {
     "build": "parcel build index.html  --public-url \"../dist\"",
+    "watch": "parcel index.html --port 2345 ",
     "electron": "controls --config controls.config.js --url dist/index.html --inspect",
     "start": "npm run build && npm run electron"
   },

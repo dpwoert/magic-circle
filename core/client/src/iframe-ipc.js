@@ -21,13 +21,14 @@ export class IframeIPC {
     this.iframe = null;
     this.parent = null;
 
-    window.addEventListener('load', () => {
-      const iframe = document.querySelector(selector);
+    const iframe = document.querySelector(selector);
 
-      if (!iframe) {
-        throw new Error("can't find iframe element");
-      }
+    if (!iframe) {
+      throw new Error("can't find iframe element");
+    }
 
+    // wait until ready
+    iframe.addEventListener('load', () => {
       this.connection = iframe.contentWindow;
       this.send('editor-ready', true);
     });

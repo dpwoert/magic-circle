@@ -52,11 +52,14 @@ export class Client {
     const ipc = new IframeIPC();
     ipc.findParent();
 
-    // trigger connection
-    this.connect(ipc);
+    // wait until everything is loaded
+    window.addEventListener('load', () => {
+      // trigger connection
+      this.connect(ipc);
 
-    ipc.on('refresh', () => {
-      window.location.reload();
+      ipc.on('refresh', () => {
+        window.location.reload();
+      });
     });
   }
 
