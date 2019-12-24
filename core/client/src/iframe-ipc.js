@@ -13,7 +13,6 @@ export class IframeIPC {
     if (window.parent) {
       this.mode = 'child';
       this.connection = window.parent;
-      console.info('iframe parent found', window.parent);
     }
   }
 
@@ -23,40 +22,38 @@ export class IframeIPC {
     this.parent = null;
 
     window.addEventListener('load', () => {
-      setTimeout(() => {
-        console.info('connecting to child');
-        const iframe = document.querySelector(selector);
+      const iframe = document.querySelector(selector);
 
-        if (!iframe) {
-          throw new Error("can't find iframe element");
-        }
+      if (!iframe) {
+        throw new Error("can't find iframe element");
+      }
 
-        console.info('child iframe', iframe);
-
-        window.setTimeout(() => {
-          console.info('connection?', iframe.contentWindow);
-        });
-
-        iframe.addEventListener('load', () => {
-          this.connection = iframe.contentWindow;
-          this.send('editor-ready', true);
-          console.info('connection?', this.connection);
-        });
-      }, 3000);
+      this.connection = iframe.contentWindow;
+      this.send('editor-ready', true);
     });
   }
 
   send(channel, payload) {
-    if (this.connection) {
-      if (channel === 'intercom') {
-        this.connection.postMessage({ ...payload });
-      } else if (channel === 'change-url') {
-        window.location.hash = payload;
+    try {
+      if (this.connection) {
+        if (channel === 'intercom') {
+          this.connection.postMessage({ ...payload }, '*');
+        } else if (channel === 'change-url') {
+          window.location.hash = payload;
+        } else {
+          this.connection.postMessage({ channel, payload }, '*');
+        }
       } else {
-        this.connection.postMessage({ channel, payload });
+        console.warn(
+          'not connected to editor or frame',
+          channel,
+          payload,
+          this.mode
+        );
       }
-    } else {
-      console.warn('could not send message', channel, payload);
+    } catch (e) {
+      console.error('could not send message', channel, payload, this.mode);
+      console.error(e);
     }
   }
 
