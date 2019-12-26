@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/ui",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Magic Circle UI",
   "keywords": [
     "controls",
@@ -50,16 +50,16 @@
     "svgexport": "0.3.2"
   },
   "dependencies": {
-    "@magic-circle/colors": "^0.0.5",
-    "@magic-circle/controls": "^0.0.5",
-    "@magic-circle/fullscreen": "^0.0.5",
-    "@magic-circle/layers": "^0.0.5",
-    "@magic-circle/page-information": "^0.0.5",
-    "@magic-circle/performance": "^0.0.5",
-    "@magic-circle/play-controls": "^0.0.5",
-    "@magic-circle/screenshots": "^0.0.5",
-    "@magic-circle/seed": "^0.0.5",
-    "@magic-circle/touchbar": "^0.0.5",
+    "@magic-circle/colors": "^0.0.6",
+    "@magic-circle/controls": "^0.0.6",
+    "@magic-circle/fullscreen": "^0.0.6",
+    "@magic-circle/layers": "^0.0.6",
+    "@magic-circle/page-information": "^0.0.6",
+    "@magic-circle/performance": "^0.0.6",
+    "@magic-circle/play-controls": "^0.0.6",
+    "@magic-circle/screenshots": "^0.0.6",
+    "@magic-circle/seed": "^0.0.6",
+    "@magic-circle/touchbar": "^0.0.6",
     "dot-prop": "^4.2.0",
     "is-electron": "^2.1.0",
     "rc-color-picker": "^1.2.6"
