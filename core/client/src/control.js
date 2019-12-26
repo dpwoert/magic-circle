@@ -1,5 +1,9 @@
 export class Control {
   constructor(reference, key) {
+    if (reference[key] === null || reference[key] === undefined) {
+      throw new Error('Control has no value');
+    }
+
     this.type = 'text';
     this.reference = reference;
     this.key = key;
