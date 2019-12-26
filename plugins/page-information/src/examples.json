@@ -4,6 +4,10 @@
     "url": "/examples/simple/index.html"
   },
   {
+    "label": "example: regl",
+    "url": "/examples/regl/index.html"
+  },
+  {
     "label": "example: neverbland",
     "url": "https://neverbland.com/brand"
   }
