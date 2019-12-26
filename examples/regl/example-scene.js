@@ -1,12 +1,6 @@
 import Regl from 'regl';
 
-import {
-  NumberControl,
-  BooleanControl,
-  TextControl,
-  ColorControl,
-  ButtonControl,
-} from '@magic-circle/client';
+import { NumberControl, ColorControl } from '@magic-circle/client';
 
 import noiseVert from './shaders/noise.vert.glsl';
 import noiseFrag from './shaders/noise.frag.glsl';
@@ -100,8 +94,6 @@ export default function create() {
     setup: gui => {
       const fx = gui.layer('Isoline');
 
-      console.log('bg', document.body.style);
-
       fx.folder('Colors', [
         new ColorControl(settings, 'backgroundColor'),
         new ColorControl(settings, 'color').label('Line color'),
@@ -129,8 +121,6 @@ export default function create() {
       settings.offset += (delta * settings.speed) / 10;
 
       document.body.style.backgroundColor = settings.backgroundColor;
-
-      console.log('c', settings.color);
 
       // renders noise to a buffer
       setFBO(() => {
