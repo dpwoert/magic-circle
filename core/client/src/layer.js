@@ -24,6 +24,7 @@ export class Layer {
     this.controls = controls;
     this.isLayer = true;
     this.isFolder = false;
+    this.disabled = false;
   }
 
   add(child) {

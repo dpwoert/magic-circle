@@ -42,7 +42,8 @@ class LayersPanel extends Component {
         (a, b) => ((b.controls || []).length > 0 && b.isFolder) || a,
         false
       );
-      const hasControls = layer.controls.length > 0 || !!hasChildControls;
+      const hasControls =
+        layer.controls.length > 0 || !!hasChildControls || layer.disabled;
 
       layers.push(
         <Item
