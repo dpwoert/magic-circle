@@ -6,6 +6,7 @@ import { HardReload } from './hard-reload.svg';
 import { Images } from './images.svg';
 import { Keyboard } from './keyboard.svg';
 import { Layers } from './layers.svg';
+import { OpenInBrowser } from './open-in-browser.svg';
 import { Pause } from './pause.svg';
 import { Performance } from './performance.svg';
 import { Performance2 } from './performance2.svg';
@@ -25,6 +26,7 @@ import hardReload from './hard-reload.png';
 import images from './images.png';
 import keyboard from './keyboard.png';
 import layers from './layers.png';
+import openInBrowser from './open-in-browser.png';
 import pause from './pause.png';
 import performance from './performance.png';
 import performance2 from './performance2.png';
@@ -44,6 +46,7 @@ HardReload.png = hardReload;
 Images.png = images;
 Keyboard.png = keyboard;
 Layers.png = layers;
+OpenInBrowser.png = openInBrowser;
 Pause.png = pause;
 Performance.png = performance;
 Performance2.png = performance2;
@@ -64,6 +67,7 @@ export {
   Images,
   Keyboard,
   Layers,
+  OpenInBrowser,
   Pause,
   Performance,
   Performance2,

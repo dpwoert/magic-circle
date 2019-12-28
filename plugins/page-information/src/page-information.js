@@ -1,3 +1,4 @@
+/* global window */
 import React from 'react';
 
 import Title from './title';
@@ -21,6 +22,22 @@ class PageInformation {
     this.client.addListener('page-information', (evt, payload) =>
       this.setPageInfo(payload)
     );
+  }
+
+  buttons(buttons) {
+    if (!this.client.isElectron) {
+      buttons.set('breakFream', {
+        icon: 'OpenInBrowser',
+        collection: 'frame',
+        click: () => this.openFrame(),
+        touchbar: false,
+      });
+    }
+  }
+
+  openFrame() {
+    const location = this.store.get('location');
+    window.location.href = location.href;
   }
 
   setPageInfo(info) {
