@@ -1,7 +1,10 @@
 name: Staging
 
 # only deploy on release
-on: [push]
+on:
+  push:
+    branches:
+      - develop
 
 jobs:
   online:
