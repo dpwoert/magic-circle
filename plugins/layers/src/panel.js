@@ -43,7 +43,7 @@ class LayersPanel extends Component {
         false
       );
       const hasControls =
-        layer.controls.length > 0 || !!hasChildControls || layer.disabled;
+        (layer.controls.length > 0 || !!hasChildControls) && !layer.disabled;
 
       layers.push(
         <Item

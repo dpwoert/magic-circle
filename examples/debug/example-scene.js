@@ -55,7 +55,11 @@ export function setup(gui) {
   const layer1 = gui.layer('World');
   const layer3 = layer1.layer('Box');
   layer1.layer('Box2');
-  gui.layer('Scene');
+
+  // Disabled layer
+  const layer2 = gui.layer('Scene');
+  layer2.folder('Test', [new TextControl(glob, 'name')]);
+  layer2.disable();
 
   layer3.folder('Global', [
     new TextControl(glob, 'name'),
