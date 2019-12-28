@@ -41,6 +41,7 @@
     "@magic-circle/client": "^0.0.6",
     "@magic-circle/debug": "^0.0.6",
     "@magic-circle/recordings": "^0.0.6",
+    "@magic-circle/midi": "^0.0.6",
     "three": "^0.97.0"
   }
 }

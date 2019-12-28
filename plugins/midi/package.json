@@ -2,7 +2,6 @@
   "name": "@magic-circle/midi",
   "version": "0.0.6",
   "description": "Magic Circle midi",
-  "private": true,
   "keywords": [
     "controls",
     "creative coding",
