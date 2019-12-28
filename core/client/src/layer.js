@@ -27,6 +27,10 @@ export class Layer {
     this.disabled = false;
   }
 
+  disable(disable) {
+    this.disabled = disable === undefined ? true : disable;
+  }
+
   add(child) {
     if (Array.isArray(child)) {
       child.forEach(c => this.add(c));
@@ -67,6 +71,7 @@ export class Layer {
         isFolder: layer.isFolder,
         label: layer.label,
         slug: layer.slug,
+        disabled: layer.disabled,
         path,
         children: layer.children
           ? layer.children.map(c => recursiveGenerate(c, path))
