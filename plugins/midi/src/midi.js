@@ -47,6 +47,9 @@ class Midi {
     this.store = store;
     this.path = this.client.getSetting('midi.path');
 
+    this.addRow = this.addRow.bind(this);
+    this.updateRow = this.updateRow.bind(this);
+
     // start listening to midi messages
     this.midiStart();
   }
@@ -62,8 +65,6 @@ class Midi {
 
       WebMidi.inputs.forEach(input => {
         input.addListener('noteon', 'all', e => {
-          console.log("Received 'noteon' message", e);
-
           const command = {
             device: e.target.name,
             note: e.note,
@@ -81,7 +82,7 @@ class Midi {
               row.midi.channel === e.channel &&
               row.midi.note.number === e.note.number
             ) {
-              // todo
+              // get control from path
               const control = controls.getFromPath(row.path);
 
               // trigger button
@@ -125,7 +126,7 @@ class Midi {
     this.store.set('presets', presets);
   }
 
-  updateRow(id, key, value, path) {
+  updateRow(id, key, value) {
     const presets = this.store.get('presets');
     const active = this.store.get('active');
 
@@ -163,8 +164,8 @@ class Midi {
     return (
       <Panel
         path={this.path}
-        addRow={() => this.addRow()}
-        updateRow={this.updateRow.bind(this)}
+        addRow={this.addRow}
+        updateRow={this.updateRow}
         connect={connect}
         key="midi"
       />
