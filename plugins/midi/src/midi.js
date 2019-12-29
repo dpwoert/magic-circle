@@ -1,17 +1,23 @@
 /* eslint-disable no-restricted-globals */
-/* eslint-disable no-alert */
-/* eslint-disable no-param-reassign */
+/* eslint-disable spaced-comment */
 
 import React from 'react';
-// import fs frxom 'fs';
-// import { promisify } from 'util';
-import path from 'path';
 import WebMidi from 'webmidi';
+
+/*#if _WEB
+const fs = {};
+const promisify = () => {};
+const path = {};
+//#else */
+import fs from 'fs';
+import { promisify } from 'util';
+import path from 'path';
+//#endif
 
 import MidiPanel from './panel';
 
-// const readFile = promisify(fs.readFile);
-// const writeFile = promisify(fs.writeFile);
+const readFile = promisify(fs.readFile);
+const writeFile = promisify(fs.writeFile);
 
 const mapLinear = (x, a1, a2, b1, b2) =>
   b1 + ((x - a1) * (b2 - b1)) / (a2 - a1);
@@ -26,6 +32,7 @@ class Midi {
       presets: [{ label: '', config: [], input: null }],
       active: 0,
       inputs: [],
+      unsavedChanges: false,
     };
   }
 
@@ -49,9 +56,13 @@ class Midi {
 
     this.addRow = this.addRow.bind(this);
     this.updateRow = this.updateRow.bind(this);
+    this.save = this.save.bind(this);
 
     // start listening to midi messages
     this.midiStart();
+
+    // open file with presets
+    this.readFile();
   }
 
   midiStart() {
@@ -124,6 +135,7 @@ class Midi {
     });
 
     this.store.set('presets', presets);
+    this.store.set('unsavedChanges', true);
   }
 
   updateRow(id, key, value) {
@@ -134,9 +146,26 @@ class Midi {
     row[key] = value;
 
     this.store.set('presets', presets);
+    this.store.set('unsavedChanges', true);
   }
 
-  save() {}
+  async readFile() {
+    try {
+      const file = await readFile(this.path);
+
+      if (file) {
+        this.store.set('presets', JSON.parse(file));
+      }
+    } catch (e) {
+      console.info('No presets for MIDI saved yet');
+    }
+  }
+
+  async save() {
+    const presets = this.store.get('presets');
+    await writeFile(this.path, JSON.stringify(presets));
+    this.store.set('unsavedChanges', false);
+  }
 
   reset() {}
 
@@ -167,6 +196,7 @@ class Midi {
         addRow={this.addRow}
         updateRow={this.updateRow}
         connect={connect}
+        save={this.save}
         key="midi"
       />
     );

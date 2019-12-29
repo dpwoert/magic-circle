@@ -1,0 +1,19 @@
+[
+  {
+    "label": "",
+    "config": [
+      {
+        "id": 1577646002322,
+        "midi": {
+          "device": "IAC-besturingsbestand IAC Bus 3",
+          "note": { "number": 61, "name": "C#", "octave": 4 },
+          "channel": 1,
+          "velocity": 1,
+          "type": "noteon"
+        },
+        "path": "world.box.position.x"
+      }
+    ],
+    "input": null
+  }
+]

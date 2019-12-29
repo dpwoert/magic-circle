@@ -52,6 +52,12 @@ const Column = styled.div`
   background: ${props => (props.edit ? props.theme.accent : 'none')};
 `;
 
+const Buttons = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const Button = styled.button`
   border: 1px solid ${props => props.theme.accent};
   color: ${props => props.theme.accent};
@@ -61,9 +67,13 @@ const Button = styled.button`
   font-size: 12px;
   padding: 6px 12px;
   border-radius: 3px;
-  margin: 0 auto;
   background: none;
   outline: none;
+  margin-right: 6px;
+
+  &:last-of-type {
+    margin-right: 0;
+  }
 `;
 
 const truncate = (string, max) =>
@@ -109,6 +119,8 @@ class MidiPanel extends Component {
 
   stopChange() {
     this.setState({ changing: false, mode: null, id: null });
+    this.props.connect(null);
+    this.props.store.set('once', null);
   }
 
   render() {
@@ -145,11 +157,16 @@ class MidiPanel extends Component {
             );
           })}
         </Table>
-        {this.state.changing ? (
-          <Button onClick={() => this.stopChange()}>save</Button>
-        ) : (
-          <Button onClick={() => this.props.addRow()}>add row</Button>
-        )}
+        <Buttons>
+          {this.props.unsavedChanges && (
+            <Button onClick={() => this.props.save()}>save</Button>
+          )}
+          {this.state.changing ? (
+            <Button onClick={() => this.stopChange()}>stop edit</Button>
+          ) : (
+            <Button onClick={() => this.props.addRow()}>add row</Button>
+          )}
+        </Buttons>
       </Panel>
     );
   }
