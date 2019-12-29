@@ -84,6 +84,8 @@ class MidiPanel extends Component {
   };
 
   change(id, mode) {
+    const { connect, updateRow, store } = this.props;
+
     this.setState({
       changing: true,
       id,
@@ -91,12 +93,17 @@ class MidiPanel extends Component {
     });
 
     if (mode === 'path') {
-      this.props.connect(path => {
-        this.props.updateRow(id, 'path', path);
+      connect(path => {
+        updateRow(id, 'path', path);
         this.stopChange();
       });
+      this.store.set('once', null);
     } else {
-      this.props.connect(null);
+      connect(null);
+      store.set('once', command => {
+        updateRow(id, 'midi', command);
+        this.stopChange();
+      });
     }
   }
 
@@ -122,7 +129,11 @@ class MidiPanel extends Component {
                   edit={editing && mode === 'midi'}
                   onDoubleClick={() => this.change(row.id, 'midi')}
                 >
-                  ch1 e5
+                  {row.midi
+                    ? `ch.${row.midi.channel} ${row.midi.note.octave}.${
+                        row.midi.note.name
+                      }`
+                    : '--'}
                 </Column>
                 <Column
                   edit={editing && mode === 'path'}

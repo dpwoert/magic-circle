@@ -6,6 +6,7 @@ import React from 'react';
 // import fs frxom 'fs';
 // import { promisify } from 'util';
 import path from 'path';
+import WebMidi from 'webmidi';
 
 import MidiPanel from './panel';
 
@@ -47,27 +48,30 @@ class Midi {
     this.midiStart();
   }
 
-  async midiStart() {
-    this.midi = await navigator.requestMIDIAccess();
-    this.store.set('inputs', this.midi.inputs);
+  midiStart() {
+    WebMidi.enable(err => {
+      if (err) {
+        console.error('Error when enabling midi', err);
+      }
 
-    for (var input of this.midi.inputs.values()) {
-      input.onmidimessage = evt => {
-        const command = [evt.srcElement.id, ...evt.data];
-        console.log('MIDI', command);
-      };
-    }
-  }
+      WebMidi.inputs.forEach(input => {
+        input.addListener('noteon', 'all', e => {
+          console.log("Received 'noteon' message", e);
 
-  changeInput(key) {
-    // save input
-    const presets = this.store.get('presets');
-    const active = this.store.get('active');
-    const inputs = this.store.get('inputs');
-    presets[active].input = key;
-    // this.store.set('presets', presets);
+          const command = {
+            note: e.note,
+            channel: e.channel,
+            velocity: e.velocity,
+            type: e.type,
+          };
 
-    // input.onmidimessage = getMIDIMessage;
+          if (this.store.get('once')) {
+            this.store.get('once')(command);
+            this.store.set('once', null);
+          }
+        });
+      });
+    });
   }
 
   addRow() {
