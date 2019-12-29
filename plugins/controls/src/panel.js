@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 import Control from './control';
 
@@ -30,6 +30,37 @@ const FolderLabel = styled.div`
 
 const ControlList = styled.div``;
 
+const flicker = keyframes`
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`;
+
+const Connect = styled.div`
+  width: 100%;
+  height: 32px;
+  background: ${props => props.theme.accent};
+  max-height: ${props => (props.connect ? '100%' : 0)};
+  transition: max-height 0.4s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  font-size: 11px;
+  overflow: hidden;
+
+  span {
+    animation: ${flicker} 1s ease;
+    animation-iteration-count: infinite;
+  }
+`;
+
 class ControlsPanel extends Component {
   renderFolder(folder) {
     const path = `${this.props.path}.${folder.slug}`;
@@ -43,6 +74,8 @@ class ControlsPanel extends Component {
               control={c}
               path={path}
               updateControl={this.props.updateControl}
+              connect={this.props.connect}
+              connectEnd={this.props.connectEnd}
             />
           ))}
         </ControlList>
@@ -51,9 +84,20 @@ class ControlsPanel extends Component {
   }
 
   render() {
-    const { controls, layers, getControl, updateControl, path } = this.props;
+    const {
+      connect,
+      connectEnd,
+      controls,
+      layers,
+      getControl,
+      updateControl,
+      path,
+    } = this.props;
     return (
       <Container>
+        <Connect connect={connect}>
+          <span>Click to connect control</span>
+        </Connect>
         <ControlList>
           {controls.map(c => (
             <Control
@@ -61,6 +105,8 @@ class ControlsPanel extends Component {
               control={c}
               path={path}
               updateControl={updateControl}
+              connect={connect}
+              connectEnd={connectEnd}
             />
           ))}
         </ControlList>

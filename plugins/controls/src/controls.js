@@ -9,10 +9,18 @@ import defaultControls from './components';
 class Controls {
   static name = 'controls';
 
+  static initStore() {
+    return {
+      connect: null,
+    };
+  }
+
   constructor(client, store, settings) {
     this.client = client;
+    this.store = store;
     this.getControl = this.getControl.bind(this);
     this.updateControl = this.updateControl.bind(this);
+    this.connect = this.connect.bind(this);
 
     // list of controls
     this.controls = settings.controls
@@ -127,14 +135,32 @@ class Controls {
     store.set('mapping', mapping);
   }
 
+  connect(fn) {
+    if (typeof fn === 'string') {
+      const cb = this.store.get('connect');
+
+      // execute callback
+      if (cb) {
+        cb(fn);
+      }
+
+      // hide conencting interface again
+      this.store.set('connect', false);
+    } else {
+      // show connecting interface again
+      this.store.set('connect', fn);
+    }
+  }
+
   layout() {
     const { store } = this.client.getPlugin('layers');
     if (store) {
-      const Panel = withControls(ControlPanel, store);
+      const Panel = this.store.withStore(withControls(ControlPanel, store));
       return (
         <Panel
           getControl={this.getControl}
           updateControl={this.updateControl}
+          connectEnd={this.connect}
         />
       );
     }

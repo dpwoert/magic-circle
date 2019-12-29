@@ -19,11 +19,9 @@ class Midi {
 
   static initStore() {
     return {
-      presets: [{ label: '', config: [] }],
-      active: {
-        preset: 0,
-        row: null,
-      },
+      presets: [{ label: '', config: [], input: null }],
+      active: 0,
+      inputs: [],
     };
   }
 
@@ -44,16 +42,52 @@ class Midi {
     this.client = client;
     this.store = store;
     this.path = this.client.getSetting('midi.path');
+
+    // start listening to midi messages
+    this.midiStart();
+  }
+
+  async midiStart() {
+    this.midi = await navigator.requestMIDIAccess();
+    this.store.set('inputs', this.midi.inputs);
+
+    for (var input of this.midi.inputs.values()) {
+      input.onmidimessage = evt => {
+        const command = [evt.srcElement.id, ...evt.data];
+        console.log('MIDI', command);
+      };
+    }
+  }
+
+  changeInput(key) {
+    // save input
+    const presets = this.store.get('presets');
+    const active = this.store.get('active');
+    const inputs = this.store.get('inputs');
+    presets[active].input = key;
+    // this.store.set('presets', presets);
+
+    // input.onmidimessage = getMIDIMessage;
   }
 
   addRow() {
     const presets = this.store.get('presets');
-    const active = this.store.get('active').preset;
+    const active = this.store.get('active');
     presets[active].config.push({
       id: Date.now(),
-      midi: '',
-      key: '',
+      midi: null,
+      path: null,
     });
+
+    this.store.set('presets', presets);
+  }
+
+  updateRow(id, key, value, path) {
+    const presets = this.store.get('presets');
+    const active = this.store.get('active');
+
+    const row = presets[active].config.find(r => r.id === id);
+    row[key] = value;
 
     this.store.set('presets', presets);
   }
@@ -82,7 +116,16 @@ class Midi {
 
   sidebar() {
     const Panel = this.store.withStore(MidiPanel);
-    return <Panel path={this.path} addRow={() => this.addRow()} key="midi" />;
+    const { connect } = this.client.getPlugin('controls');
+    return (
+      <Panel
+        path={this.path}
+        addRow={() => this.addRow()}
+        updateRow={this.updateRow.bind(this)}
+        connect={connect}
+        key="midi"
+      />
+    );
   }
 }
 
