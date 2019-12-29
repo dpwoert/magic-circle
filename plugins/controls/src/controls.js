@@ -20,6 +20,7 @@ class Controls {
     this.store = store;
     this.getControl = this.getControl.bind(this);
     this.updateControl = this.updateControl.bind(this);
+    this.getFromPath = this.getFromPath.bind(this);
     this.connect = this.connect.bind(this);
 
     // list of controls
@@ -121,6 +122,12 @@ class Controls {
 
   getControl(name) {
     return this.controls.find(c => name === c.type);
+  }
+
+  getFromPath(path) {
+    const { store } = this.client.getPlugin('layers');
+    const mapping = store.get('mapping');
+    return mapping.get(path);
   }
 
   updateControl(path, value) {

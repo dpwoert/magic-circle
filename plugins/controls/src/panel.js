@@ -32,13 +32,13 @@ const ControlList = styled.div``;
 
 const flicker = keyframes`
   0% {
-    opacity: 0;
+    opacity: 0.3;
   }
   50% {
     opacity: 1;
   }
   100% {
-    opacity: 0;
+    opacity: 0.3;
   }
 `;
 

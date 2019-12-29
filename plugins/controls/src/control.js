@@ -146,9 +146,9 @@ class Control extends Component {
           <Reset changed={changed}>↻</Reset>
           <Indicator changed={changed} />
         </Hitbox>
-        <LinkIndicator connect={connect} />
+        <LinkIndicator connect={connect && CustomControl.connect} />
         <Link
-          connect={connect}
+          connect={connect && CustomControl.connect}
           onClick={() => {
             if (connect) {
               connectEnd(control.path);

@@ -97,7 +97,7 @@ class MidiPanel extends Component {
         updateRow(id, 'path', path);
         this.stopChange();
       });
-      this.store.set('once', null);
+      store.set('once', null);
     } else {
       connect(null);
       store.set('once', command => {

@@ -20,4 +20,5 @@ const ButtonControl = props => {
 
 ButtonControl.type = 'button';
 ButtonControl.noReset = true;
+ButtonControl.connect = true;
 export default ButtonControl;
