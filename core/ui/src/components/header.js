@@ -83,7 +83,7 @@ const Button = styled.li`
 
   &:last-of-type {
     border-right: 1px solid ${props => props.theme.accent};
-    border-radius: 0px 3px 3px 0px;
+    border-radius: ${props => (props.single ? '3px' : '0px 3px 3px 0px')};
   }
 `;
 
@@ -92,7 +92,7 @@ const Buttons = withTheme(props => (
     {props.list.map(b => {
       const Icon = props.theme.icons[b.icon];
       return (
-        <Button onClick={b.click}>
+        <Button single={props.list.length === 1} onClick={b.click}>
           <Icon />
         </Button>
       );
