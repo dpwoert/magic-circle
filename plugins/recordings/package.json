@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/recordings",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Magic Circle screen recordings",
   "keywords": [
     "controls",
@@ -28,7 +28,7 @@
   "main": "src/index.js",
   "module": "src/index.js",
   "dependencies": {
-    "@magic-circle/colors": "^0.0.6"
+    "@magic-circle/colors": "^0.0.7"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",

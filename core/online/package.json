@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/online",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Magic Circle online",
   "private": true,
   "keywords": [
@@ -36,8 +36,8 @@
     "parcel": "^1.11.0"
   },
   "dependencies": {
-    "@magic-circle/client": "^0.0.6",
-    "@magic-circle/ui": "^0.0.6",
+    "@magic-circle/client": "^0.0.7",
+    "@magic-circle/ui": "^0.0.7",
     "dot-prop": "^4.2.0",
     "rc-color-picker": "^1.2.6",
     "react": "^16.5.2",

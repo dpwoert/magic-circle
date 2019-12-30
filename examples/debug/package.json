@@ -1,7 +1,7 @@
 {
   "name": "@magic-circle/example-debug",
   "private": true,
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Magic Circle debug example",
   "keywords": [
     "controls",
@@ -32,16 +32,16 @@
     "@babel/core": "^7.2.2",
     "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
-    "@magic-circle/editor": "^0.0.6",
+    "@magic-circle/editor": "^0.0.7",
     "babel-plugin-inline-react-svg": "^1.0.1",
     "babel-plugin-styled-components": "^1.8.0",
     "parcel": "^1.11.0"
   },
   "dependencies": {
-    "@magic-circle/client": "^0.0.6",
-    "@magic-circle/debug": "^0.0.6",
-    "@magic-circle/recordings": "^0.0.6",
-    "@magic-circle/midi": "^0.0.6",
+    "@magic-circle/client": "^0.0.7",
+    "@magic-circle/debug": "^0.0.7",
+    "@magic-circle/midi": "^0.0.7",
+    "@magic-circle/recordings": "^0.0.7",
     "three": "^0.97.0"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/page-information",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Magic Circle page information",
   "keywords": [
     "controls",
@@ -25,7 +25,7 @@
   "module": "src/index.js",
   "scripts": {},
   "dependencies": {
-    "@magic-circle/colors": "^0.0.6"
+    "@magic-circle/colors": "^0.0.7"
   },
   "devDependencies": {
     "@babel/core": "^7.2.0",
