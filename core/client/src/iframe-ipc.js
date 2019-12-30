@@ -27,6 +27,9 @@ export class IframeIPC {
       throw new Error("can't find iframe element");
     }
 
+    this.connection = iframe.contentWindow;
+    this.send('editor-ready', true);
+
     // wait until ready
     iframe.addEventListener('load', () => {
       this.connection = iframe.contentWindow;
