@@ -163,4 +163,5 @@ const NumberControl = props => (
 //   ContiousControl(props) : StepControl(props);
 
 NumberControl.type = 'number';
+NumberControl.connect = true;
 export default NumberControl;
