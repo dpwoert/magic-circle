@@ -35,6 +35,17 @@ const Options = styled.select`
   outline: none;
 `;
 
+const Arrow = styled.div`
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 5px 5px 0 5px;
+  border-color: ${props => props.theme.accent} transparent transparent
+    transparent;
+  margin-right: 3px;
+`;
+
 const Input = styled.input`
   color: ${props => props.theme.accent};
   background: none;
@@ -66,6 +77,7 @@ const URL = ({ location, changeUrl }) => {
             <option value={ex.url}>{ex.label}</option>
           ))}
         </Options>
+        <Arrow />
       </OptionWrapper>
       <Input
         onBlur={evt => changeUrl(evt.target.value)}

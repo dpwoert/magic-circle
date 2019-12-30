@@ -3,12 +3,13 @@ name: Deploy
 # only deploy on release
 on:
   push:
-    tags:
-      - v*
+    branches:
+      - master
 
 jobs:
   online:
     runs-on: macos-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v1
       - name: Use Node.js

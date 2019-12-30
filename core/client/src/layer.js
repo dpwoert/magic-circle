@@ -24,6 +24,11 @@ export class Layer {
     this.controls = controls;
     this.isLayer = true;
     this.isFolder = false;
+    this.disabled = false;
+  }
+
+  disable(disable) {
+    this.disabled = disable === undefined ? true : disable;
   }
 
   add(child) {
@@ -66,6 +71,7 @@ export class Layer {
         isFolder: layer.isFolder,
         label: layer.label,
         slug: layer.slug,
+        disabled: layer.disabled,
         path,
         children: layer.children
           ? layer.children.map(c => recursiveGenerate(c, path))

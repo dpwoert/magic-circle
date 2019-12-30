@@ -8,6 +8,10 @@
     "url": "/examples/regl/index.html"
   },
   {
+    "label": "example: 3D city",
+    "url": "https://gentrification-3d.surge.sh"
+  },
+  {
     "label": "example: neverbland",
     "url": "https://neverbland.com/brand"
   }

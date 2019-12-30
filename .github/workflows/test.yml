@@ -5,6 +5,7 @@ on: [push]
 jobs:
   linting:
     runs-on: macos-latest
+    timeout-minutes: 10
     strategy:
       matrix:
         stage: [dev, prod]
@@ -22,6 +23,7 @@ jobs:
 
   example_simple:
     runs-on: macos-latest
+    timeout-minutes: 10
     strategy:
       matrix:
         stage: [dev, prod]
@@ -41,6 +43,7 @@ jobs:
 
   example_custom-plugin:
     runs-on: macos-latest
+    timeout-minutes: 10
     strategy:
       matrix:
         stage: [dev, prod]
@@ -60,6 +63,7 @@ jobs:
 
   example_embed:
     runs-on: macos-latest
+    timeout-minutes: 10
     strategy:
       matrix:
         stage: [dev, prod]

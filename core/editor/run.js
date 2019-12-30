@@ -79,9 +79,9 @@ async function build() {
       plugins: [
         nodeResolve({
           browser: true,
-          customResolveOptions: {
-            moduleDirectory: path.join(process.cwd(), 'node_modules'),
-          },
+          // customResolveOptions: {
+          //   moduleDirectory: path.join(process.cwd(), 'node_modules'),
+          // },
         }),
         replace({
           __dirname: id => `'${path.dirname(id)}'`,
