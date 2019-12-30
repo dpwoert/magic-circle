@@ -6,6 +6,8 @@ This is my attempt of creating a tool for my creative development needs. It's a 
 
 ![screenshot here](https://raw.github.com/dpwoert/magic-circle/develop/docs/assets/screenshot.png)
 
+**An online demo with limited functionality can be found [here](https://magic-circle.surge.sh/)**
+
 ## Features
 
 - **🎛 Custom controls** Enables you to play around with variables. All controls are configurable and adaptable to play nicely with most data sources.
@@ -190,16 +192,22 @@ npm run example custom-plugin
 
 ## Core plugins
 
-- **magic-circle/controls** ([readme](https://github.com/dpwoert/magic-circle/tree/develop/plugins/controls))
-- **magic-circle/debug** ([readme](https://github.com/dpwoert/magic-circle/tree/develop/plugins/debug))
-- **magic-circle/fullscreen** ([readme](https://github.com/dpwoert/magic-circle/tree/develop/plugins/fullscreen))
-- **magic-circle/layers** ([readme](https://github.com/dpwoert/magic-circle/tree/develop/plugins/layers))
-- **magic-circle/page-information** ([readme](https://github.com/dpwoert/magic-circle/tree/develop/plugins/page-information))
-- **magic-circle/performance** ([readme](https://github.com/dpwoert/magic-circle/tree/develop/plugins/performance))
-- **magic-circle/play-controls** ([readme](https://github.com/dpwoert/magic-circle/tree/develop/plugins/play-controls))
-- **magic-circle/screenshots** ([readme](https://github.com/dpwoert/magic-circle/tree/develop/plugins/screenshots))
-- **magic-circle/seed** ([readme](https://github.com/dpwoert/magic-circle/tree/develop/plugins/seed))
-- **magic-circle/touchbar** ([readme](https://github.com/dpwoert/magic-circle/tree/develop/plugins/touchbar))
+**Default**:
+
+- **magic-circle/controls** ([readme](https://github.com/dpwoert/magic-circle/tree/master/plugins/controls))
+- **magic-circle/fullscreen** ([readme](https://github.com/dpwoert/magic-circle/tree/master/plugins/fullscreen))
+- **magic-circle/layers** ([readme](https://github.com/dpwoert/magic-circle/tree/master/plugins/layers))
+- **magic-circle/page-information** ([readme](https://github.com/dpwoert/magic-circle/tree/master/plugins/page-information))
+- **magic-circle/performance** ([readme](https://github.com/dpwoert/magic-circle/tree/master/plugins/performance))
+- **magic-circle/play-controls** ([readme](https://github.com/dpwoert/magic-circle/tree/master/plugins/play-controls))
+- **magic-circle/screenshots** ([readme](https://github.com/dpwoert/magic-circle/tree/master/plugins/screenshots))
+- **magic-circle/seed** ([readme](https://github.com/dpwoert/magic-circle/tree/master/plugins/seed))
+- **magic-circle/touchbar** ([readme](https://github.com/dpwoert/magic-circle/tree/master/plugins/touchbar))
+
+**Non-default:**
+
+- **magic-circle/debug** ([readme](https://github.com/dpwoert/magic-circle/tree/master/plugins/debug))
+- **magic-circle/recordings** ([readme](https://github.com/dpwoert/magic-circle/tree/master/plugins/recordings))
 
 ## Creating custom plugins
 
