@@ -2,6 +2,15 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import Color from '@magic-circle/colors';
 
+// class Color {
+//   alpha(){
+//     return this;
+//   }
+//   toCSS(){
+//     return '';
+//   }
+// }
+
 const Panel = styled.div`
   width: 100%;
   height: 100%;
@@ -40,6 +49,13 @@ const Column = styled.div`
   box-sizing: border-box;
   cursor: default;
   width: 50%;
+  background: ${props => (props.edit ? props.theme.accent : 'none')};
+`;
+
+const Buttons = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Button = styled.button`
@@ -49,13 +65,21 @@ const Button = styled.button`
   text-align: center;
   user-select: none;
   font-size: 12px;
-  font-size: 14px;
-  padding: 3px 12px;
+  padding: 6px 12px;
   border-radius: 3px;
-  margin: 0 auto;
   background: none;
   outline: none;
+  margin-right: 6px;
+
+  &:last-of-type {
+    margin-right: 0;
+  }
 `;
+
+const truncate = (string, max) =>
+  string.length > max
+    ? `…${string.substring(string.length - max, string.length)}`
+    : string;
 
 class MidiPanel extends Component {
   static navigation = {
@@ -63,8 +87,45 @@ class MidiPanel extends Component {
     icon: 'Usb',
   };
 
+  state = {
+    changing: false,
+    mode: null,
+    id: null,
+  };
+
+  change(id, mode) {
+    const { connect, updateRow, store } = this.props;
+
+    this.setState({
+      changing: true,
+      id,
+      mode,
+    });
+
+    if (mode === 'path') {
+      connect(path => {
+        updateRow(id, 'path', path);
+        this.stopChange();
+      });
+      store.set('once', null);
+    } else {
+      connect(null);
+      store.set('once', command => {
+        updateRow(id, 'midi', command);
+        this.stopChange();
+      });
+    }
+  }
+
+  stopChange() {
+    this.setState({ changing: false, mode: null, id: null });
+    this.props.connect(null);
+    this.props.store.set('once', null);
+  }
+
   render() {
-    const { config } = this.props.presets[this.props.active.preset];
+    const { config } = this.props.presets[this.props.active];
+    const { changing, id, mode } = this.state;
     return (
       <Panel>
         <Table>
@@ -72,14 +133,40 @@ class MidiPanel extends Component {
             <Column>MIDI signal</Column>
             <Column>Control key</Column>
           </Row>
-          {config.map(() => (
-            <Row>
-              <Column>ch1 e5</Column>
-              <Column>layers1.x</Column>
-            </Row>
-          ))}
+          {config.map(row => {
+            const editing = changing && id === row.id;
+            return (
+              <Row>
+                <Column
+                  edit={editing && mode === 'midi'}
+                  onDoubleClick={() => this.change(row.id, 'midi')}
+                >
+                  {row.midi
+                    ? `ch.${row.midi.channel} ${row.midi.note.octave}.${
+                        row.midi.note.name
+                      }`
+                    : '--'}
+                </Column>
+                <Column
+                  edit={editing && mode === 'path'}
+                  onDoubleClick={() => this.change(row.id, 'path')}
+                >
+                  {row.path ? truncate(row.path, 12) : '--'}
+                </Column>
+              </Row>
+            );
+          })}
         </Table>
-        <Button onClick={() => this.props.addRow()}>add row</Button>
+        <Buttons>
+          {this.props.unsavedChanges && (
+            <Button onClick={() => this.props.save()}>save</Button>
+          )}
+          {this.state.changing ? (
+            <Button onClick={() => this.stopChange()}>stop edit</Button>
+          ) : (
+            <Button onClick={() => this.props.addRow()}>add row</Button>
+          )}
+        </Buttons>
       </Panel>
     );
   }
