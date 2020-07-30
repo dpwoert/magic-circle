@@ -60,7 +60,7 @@
     "@magic-circle/screenshots": "^0.0.7",
     "@magic-circle/seed": "^0.0.7",
     "@magic-circle/touchbar": "^0.0.7",
-    "dot-prop": "^4.2.0",
+    "dot-prop": "^5.1.1",
     "is-electron": "^2.1.0",
     "rc-color-picker": "^1.2.6"
   },
