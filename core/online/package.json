@@ -38,7 +38,7 @@
   "dependencies": {
     "@magic-circle/client": "^0.0.7",
     "@magic-circle/ui": "^0.0.7",
-    "dot-prop": "^4.2.0",
+    "dot-prop": "^5.1.1",
     "rc-color-picker": "^1.2.6",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
