@@ -1,4 +1,35 @@
 'use strict';
+var __extends =
+  (this && this.__extends) ||
+  (function() {
+    var extendStatics = function(d, b) {
+      extendStatics =
+        Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array &&
+          function(d, b) {
+            d.__proto__ = b;
+          }) ||
+        function(d, b) {
+          for (var p in b)
+            if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+        };
+      return extendStatics(d, b);
+    };
+    return function(d, b) {
+      if (typeof b !== 'function' && b !== null)
+        throw new TypeError(
+          'Class extends value ' + String(b) + ' is not a constructor or null'
+        );
+      extendStatics(d, b);
+      function __() {
+        this.constructor = d;
+      }
+      d.prototype =
+        b === null
+          ? Object.create(b)
+          : ((__.prototype = b.prototype), new __());
+    };
+  })();
 var __awaiter =
   (this && this.__awaiter) ||
   function(thisArg, _arguments, P, generator) {
@@ -132,98 +163,100 @@ var __generator =
       return { value: op[0] ? op[1] : void 0, done: true };
     }
   };
-var __spreadArray =
-  (this && this.__spreadArray) ||
-  function(to, from, pack) {
-    if (pack || arguments.length === 2)
-      for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-          if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-          ar[i] = from[i];
-        }
-      }
-    return to.concat(ar || Array.prototype.slice.call(from));
-  };
 exports.__esModule = true;
-var layer_1 = require('./layer');
-var ipc_1 = require('./ipc');
-var layers_1 = require('./plugins/layers');
-var seed_1 = require('./plugins/seed');
-var MagicCircle = /** @class */ (function() {
-  function MagicCircle(plugins) {
-    var _this = this;
-    var standardPlugins = [layers_1['default'], seed_1['default']];
-    this.layer = new layer_1['default']('base');
-    this.plugins = __spreadArray(
-      __spreadArray([], standardPlugins, true),
-      plugins,
-      true
-    ).map(function(plugin) {
-      return new plugin(_this);
-    });
-    this.ipc = new ipc_1.IpcIframe();
-    // start
-    this.connect();
+exports.IpcIframe = exports.IpcBase = void 0;
+var IpcBase = /** @class */ (function() {
+  function IpcBase() {
+    this.listeners = {};
   }
-  MagicCircle.prototype.connect = function() {
+  IpcBase.prototype.connect = function() {
     return __awaiter(this, void 0, void 0, function() {
       return __generator(this, function(_a) {
-        switch (_a.label) {
-          case 0:
-            return [4 /*yield*/, this.ipc.connect()];
-          case 1:
-            _a.sent();
-            // Send page information to UI
-            this.ipc.send('page-information', {
-              title: document.title,
-              location: JSON.parse(JSON.stringify(window.location)),
-            });
-            // run setup hooks
-            if (this.hooks.setup) {
-              this.hooks.setup();
-            }
-            // run plugins
-            this.plugins.forEach(function(p) {
-              if (p.connect) {
-                p.connect();
-              }
-            });
-            return [2 /*return*/];
-        }
+        return [2 /*return*/, true];
       });
     });
   };
-  MagicCircle.prototype.setup = function(fn) {
-    this.hooks.setup = fn;
-    return this;
+  IpcBase.prototype.send = function(channel, payload) {
+    console.error(
+      'trying to send message on channel '.concat(channel),
+      payload
+    );
   };
-  MagicCircle.prototype.loop = function(fn) {
-    this.hooks.loop = fn;
-    return this;
-  };
-  MagicCircle.prototype.start = function() {
-    this.ipc.send('play', true);
-    // update plugins
-    this.plugins.forEach(function(p) {
-      if (p.playState) {
-        p.playState(true);
-      }
+  IpcBase.prototype.trigger = function(channel, payload) {
+    // channel does not exist
+    if (!this.listeners[channel]) {
+      return;
+    }
+    // trigger events
+    this.listeners[channel].forEach(function(fn) {
+      return fn(payload, channel);
     });
-    return this;
   };
-  MagicCircle.prototype.stop = function() {
-    this.ipc.send('play', false);
-    // update plugins
-    this.plugins.forEach(function(p) {
-      if (p.playState) {
-        p.playState(false);
-      }
+  IpcBase.prototype.screenshot = function() {
+    console.error('Screenshot implementation not implemented yet');
+  };
+  IpcBase.prototype.on = function(channel, fn) {
+    if (!this.listeners[channel]) {
+      this.listeners[channel] = [];
+    }
+    this.listeners[channel].push(fn);
+  };
+  IpcBase.prototype.once = function(channel, fn) {
+    var _this = this;
+    var handler = function(payload) {
+      fn(payload, channel);
+      _this.removeListener('channel', handler);
+    };
+    this.on('channel', handler);
+  };
+  IpcBase.prototype.removeListener = function(channel, fn) {
+    // channel does not exist
+    if (!this.listeners[channel]) {
+      return;
+    }
+    // remove by filtering
+    this.listeners[channel] = this.listeners[channel].filter(function(hook) {
+      return fn === hook;
     });
-    return this;
   };
-  MagicCircle.prototype.tick = function(delta) {
-    //todo
+  IpcBase.prototype.removeAllListeners = function(channel) {
+    this.listeners[channel] = [];
   };
-  return MagicCircle;
+  IpcBase.prototype.destroy = function() {};
+  return IpcBase;
 })();
-exports['default'] = MagicCircle;
+exports.IpcBase = IpcBase;
+var IpcIframe = /** @class */ (function(_super) {
+  __extends(IpcIframe, _super);
+  function IpcIframe() {
+    var _this = _super.call(this) || this;
+    _this.connection = window.parent;
+    window.addEventListener('message', function(evt) {
+      if (evt.data && evt.data.channel) {
+        _this.trigger(evt.data.channel, evt.data.payload);
+      }
+    });
+    return _this;
+  }
+  IpcIframe.prototype.connect = function() {
+    return __awaiter(this, void 0, void 0, function() {
+      var _this = this;
+      return __generator(this, function(_a) {
+        return [
+          2 /*return*/,
+          new Promise(function(resolve) {
+            _this.send('connect', true);
+            _this.once('connect', function() {
+              resolve(true);
+            });
+          }),
+        ];
+      });
+    });
+  };
+  IpcIframe.prototype.send = function(channel, payload) {
+    this.connection.postMessage({ channel: channel, payload: payload }, '*');
+  };
+  return IpcIframe;
+})(IpcBase);
+exports.IpcIframe = IpcIframe;

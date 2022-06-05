@@ -1,86 +1,60 @@
-import slug from './utils/slug';
-
-const slugs = [];
-
-const ensureUnique = str => {
-  if (slugs.indexOf(str) > -1) {
-    let newName = str;
-    let i = 1;
-    while (slugs.indexOf(newName) > -1) {
-      newName = `${str}-${i}`;
-      i += 1;
-    }
-    return newName;
-  }
-
-  return str;
+'use strict';
+exports.__esModule = true;
+var nanoid = function() {
+  return '';
 };
-
-export class Layer {
-  constructor(label, controls = []) {
-    this.label = label;
-    this.slug = ensureUnique(slug(label));
+var Layer = /** @class */ (function() {
+  function Layer(name) {
+    this.id = nanoid();
+    this.name = name;
     this.children = [];
-    this.controls = controls;
-    this.isLayer = true;
-    this.isFolder = false;
-    this.disabled = false;
+    this.folder = false;
   }
-
-  disable(disable) {
-    this.disabled = disable === undefined ? true : disable;
-  }
-
-  add(child) {
+  Layer.prototype.forEach = function(fn) {
+    this.children.forEach(function(child) {
+      fn(child);
+    });
+  };
+  Layer.prototype.forEachRecursive = function(fn) {
+    // todo
+  };
+  Layer.prototype.add = function(child) {
+    var _a;
     if (Array.isArray(child)) {
-      child.forEach(c => this.add(c));
-    } else if (child.reference) {
-      this.controls.push(child);
+      (_a = this.children).push.apply(_a, child);
     } else {
       this.children.push(child);
     }
-    return this;
-  }
-
-  addTo(layer) {
+  };
+  Layer.prototype.addTo = function(layer) {
     layer.add(this);
-    return this;
-  }
-
-  layer(...opts) {
-    return new Layer(...opts).addTo(this);
-  }
-
-  folder(...opts) {
-    // needs this weird constructor due to circular referencing
-    const folder = new Layer.__Folder(...opts); //eslint-disable-line
-    this.add(folder);
-    return folder;
-  }
-
-  toJSON(mapping) {
-    const recursiveGenerate = (layer, basePath) => {
-      const path = basePath ? `${basePath}.${layer.slug}` : layer.slug;
-
-      if (mapping) {
-        layer.controls.forEach(c => mapping.set(`${path}.${c.key}`, c));
-      }
-
-      return {
-        isLayer: layer.isLayer,
-        isFolder: layer.isFolder,
-        label: layer.label,
-        slug: layer.slug,
-        disabled: layer.disabled,
-        path,
-        children: layer.children
-          ? layer.children.map(c => recursiveGenerate(c, path))
-          : [],
-        controls: layer.controls.map(f => f.toJSON(path)),
-      };
+  };
+  Layer.prototype.find = function(id) {
+    var found;
+    // recursively try to find this element
+    var recursive = function(children) {
+      children.forEach(function(child) {
+        if (child.id === id) {
+          found = child;
+        }
+        if ('children' in child && !found) {
+          recursive(child.children);
+        }
+      });
     };
-
-    // Get tree in json
-    return recursiveGenerate(this);
-  }
-}
+    // start
+    recursive(this.children);
+    return found;
+  };
+  Layer.prototype.toJSON = function() {
+    return {
+      name: this.name,
+      folder: this.folder,
+      children: this.children.map(function(child) {
+        return child.toJSON();
+      }),
+    };
+  };
+  return Layer;
+})();
+exports['default'] = Layer;
