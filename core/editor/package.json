@@ -32,9 +32,9 @@
   ],
   "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
   "license": "MIT",
-  "main": "src/app.js",
+  "main": "src/index.js",
   "bin": {
-    "controls": "./run.js"
+    "controls": "./src/build.js"
   },
   "scripts": {
     "package:dev": "bash package.sh",
@@ -66,5 +66,8 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "devDependencies": {
+    "typescript": "^4.7.3"
   }
 }

@@ -1,1 +1,3 @@
-module.exports = {};
+import magicCircle from '@magic-circle/editor';
+
+module.exports = magicCircle({});
