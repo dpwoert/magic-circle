@@ -2,10 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 
-import Icon from './Icon';
-
-import SPACING from '../styles/spacing';
-import COLORS from '../styles/colors';
+import { SPACING, COLORS, Icon } from '@magic-circle/styles';
 
 import * as store from '../store/buttons';
 

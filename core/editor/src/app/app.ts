@@ -4,6 +4,7 @@ import type {
   Config,
   UserConfig,
   ButtonCollections,
+  SidebarOpts,
 } from '@magic-circle/schema';
 import Store from './store'
 
@@ -12,6 +13,7 @@ import userConfig from './user-config';
 
 class App implements AppBase {
   plugins: Plugin[];
+  sidebar: Store<SidebarOpts[]>;
   config: Config;
   buttons: Store<ButtonCollections>;
 
@@ -21,7 +23,8 @@ class App implements AppBase {
 
     // Set initial values
     this.plugins = [];
-    let buttons = {};
+    const sidebar:SidebarOpts[] = [];
+    let buttons:ButtonCollections = {};
 
     this.config.plugins.forEach(P => {
       const plugin = new P();
@@ -33,12 +36,17 @@ class App implements AppBase {
       if (plugin.buttons) {
         buttons = plugin.buttons(buttons);
       }
+
+      // set sidebar
+      if(plugin.sidebar){
+        sidebar.push(plugin.sidebar())
+      }
     });
 
-    // store buttons in an effect
+    // store data in effects
     this.buttons = new Store<ButtonCollections>(buttons);
+    this.sidebar = new Store<SidebarOpts[]>(sidebar);
     
-    console.log(this)
   }
 
   getPlugin(name: string) {

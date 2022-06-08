@@ -1,24 +1,24 @@
 {
-  "name": "@magic-circle/play-controls",
+  "name": "@magic-circle/styles",
   "version": "0.0.7",
-  "description": "Magic Circle play controls",
+  "description": "Magic Circle style helpers",
   "keywords": [
     "controls",
     "creative coding",
     "editor",
     "layers",
     "editing",
-    "GUI",
-    "play",
-    "pause"
+    "GUI"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/dpwoert/magic-circle.git",
-    "directory": "plugins/play-controls"
+    "directory": "core/styles"
   },
   "files": [
-    "src/*.js"
+    "dist/*.js",
+    "dist/*.d.ts",
+    "dist/*.svg"
   ],
   "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
   "license": "MIT",
@@ -29,8 +29,10 @@
     "build:dev": "tsc",
     "build:prod": "NODE_ENV=production tsc"
   },
+  "dependencies": {
+    "color-string": "1.9.1"
+  },
   "devDependencies": {
-    "@magic-circle/schema": "^0.0.7",
     "typescript": "^4.7.3"
   },
   "peerDependencies": {

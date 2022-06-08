@@ -18,6 +18,7 @@
     "setup:dev": "sh setup-dev.sh",
     "setup:prod": "sh setup-prod.sh",
     "setup:web": "sh setup-web.sh",
+    "watch": "lerna run watch",
     "build:ui": "lerna run build:dev --scope @magic-circle/ui",
     "build:client": "lerna run build:dev --scope @magic-circle/client",
     "build:ui:prod": "lerna run build:prod --scope @magic-circle/ui",

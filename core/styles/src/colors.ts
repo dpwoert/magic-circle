@@ -1,5 +1,8 @@
 import colorString from 'color-string';
-import { lerp } from '../utils/math';
+
+const lerp = (start: number, end: number, t: number): number => {
+  return start * (1 - t) + end * t;
+};
 
 // convert color in RGB color space [255, 255, 255, 1] to HSL [1, 1, 1, 1]
 const rgbToHsl = (color: number[]): number[] => {

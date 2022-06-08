@@ -21,8 +21,8 @@ export enum LayoutPlacement {
 }
 
 export interface SidebarOpts {
-  icon: string;
-  render: () => ReactNode;
+  icon: icons;
+  render: ReactNode;
 }
 
 export type Hydration = Record<string, any>;
@@ -68,6 +68,7 @@ export interface App {
   plugins: Plugin[];
   config: Config;
   buttons: Store<ButtonCollections>;
+  sidebar: Store<SidebarOpts[]>;
   getPlugin: (name: string) => Plugin | undefined;
   getSetting: (name: string) => unknown;
 }

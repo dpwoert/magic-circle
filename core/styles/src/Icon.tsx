@@ -1,6 +1,6 @@
 import React from 'react';
 
-import * as Icons from '../assets/icons/index';
+import * as Icons from './assets/icons/index';
 
 export type IconName = Icons.list;
 

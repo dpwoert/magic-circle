@@ -49,6 +49,8 @@
     "@magic-circle/ui": "^0.0.7",
     "@magic-circle/play-controls": "^0.0.7",
     "@magic-circle/schema": "^0.0.7",
+    "@magic-circle/layers": "^0.0.7",
+    "@magic-circle/styles": "^0.0.7",
     "@types/color-string": "^1.5.2",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
