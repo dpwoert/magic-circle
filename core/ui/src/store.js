@@ -61,7 +61,7 @@ class Store {
   }
 
   refresh() {
-    this.listeners.forEach(l => l(this.data));
+    this.listeners.forEach((l) => l(this.data));
 
     // debounce
     if (this.nextUpdate) clearTimeout(this.nextUpdate);
@@ -72,7 +72,7 @@ class Store {
     if (fn) {
       this.debouncedListeners.push(fn);
     } else {
-      this.debouncedListeners.forEach(l => l(this.data));
+      this.debouncedListeners.forEach((l) => l(this.data));
     }
   }
 

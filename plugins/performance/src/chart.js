@@ -63,7 +63,7 @@ class PerformanceChart extends Component {
     return (
       <canvas
         style={{ width: '100%', height: '50px' }}
-        ref={r => {
+        ref={(r) => {
           this.canvas = r;
         }}
       />

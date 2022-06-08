@@ -4,13 +4,13 @@
   box-sizing: border-box;
 }
 
-body{
+body {
   background: #1c1c1c;
   font-size: 14px;
   font-family: sans-serif;
 }
 
-iframe{
+iframe {
   position: absolute;
   top: 46px;
   left: 250px;

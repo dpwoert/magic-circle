@@ -4,7 +4,7 @@ const path = require('path');
 const { ipcMain } = require('electron');
 const getRepoInfo = require('git-repo-info');
 
-module.exports = app => {
+module.exports = (app) => {
   const editor = app.window('editor');
   const frame = app.window('frame');
   const screenshotPath = app.setting('screenshots.path');
@@ -12,11 +12,12 @@ module.exports = app => {
   // screenshots
   const screenshotBuffer = {};
   ipcMain.on('screenshot', (evt, data = {}) => {
-    frame.capturePage(img => {
+    frame.capturePage((img) => {
       // Get date
       const now = new Date();
-      const date = `${now.getFullYear()}-${now.getMonth() +
-        1}-${now.getDate()}`;
+      const date = `${now.getFullYear()}-${
+        now.getMonth() + 1
+      }-${now.getDate()}`;
       const time = `${now.getHours()}.${now.getMinutes()}`;
       const dateTime = `${date} ${time}`;
 

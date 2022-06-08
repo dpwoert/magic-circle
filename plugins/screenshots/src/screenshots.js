@@ -21,10 +21,10 @@ const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
 const readdir = promisify(fs.readdir);
 
-const memoize = dirName => {
+const memoize = (dirName) => {
   const cache = {};
 
-  return async fileName => {
+  return async (fileName) => {
     if (!cache[fileName]) {
       const file = await readFile(`${dirName}/${fileName}`);
       cache[fileName] = JSON.parse(

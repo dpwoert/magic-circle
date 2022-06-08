@@ -5,7 +5,7 @@ const getRepoInfo = require('git-repo-info');
 const truncate = (string, max) =>
   string.length > max ? `${string.substring(0, max)}...` : string;
 
-module.exports = app => {
+module.exports = (app) => {
   const editor = app.window('editor');
   const frame = app.window('frame');
   const debug = app.setting('debug', {});
@@ -15,7 +15,7 @@ module.exports = app => {
       w.webContents.closeDevTools();
     } else {
       w.webContents.openDevTools({
-        mode: mode || (debug.mode || 'bottom'),
+        mode: mode || debug.mode || 'bottom',
       });
     }
   };

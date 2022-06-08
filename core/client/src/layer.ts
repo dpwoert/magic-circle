@@ -1,11 +1,10 @@
-import type Control from "./control";
+import type Control from './control';
 
-type Child = Layer| Control<any>;
+type Child = Layer | Control<any>;
 
 const nanoid = () => '';
 
 export default class Layer {
-
   id: string;
   name: string;
   children: Child[];
@@ -13,26 +12,26 @@ export default class Layer {
 
   constructor(name: string) {
     this.id = nanoid();
-    this.name =name;
+    this.name = name;
     this.children = [];
     this.folder = false;
   }
 
-  forEach(fn:(child: Child) => void) {
+  forEach(fn: (child: Child) => void) {
     this.children.forEach((child) => {
       fn(child);
-    })
+    });
   }
 
-  forEachRecursive(fn:(child: Child) => void){
+  forEachRecursive(fn: (child: Child) => void) {
     // todo
   }
 
   add(child: Child | Child[]) {
-    if(Array.isArray(child)){
-      this.children.push(...child)
+    if (Array.isArray(child)) {
+      this.children.push(...child);
     } else {
-      this.children.push(child)
+      this.children.push(child);
     }
   }
 
@@ -40,20 +39,20 @@ export default class Layer {
     layer.add(this);
   }
 
-  find(id: string){
+  find(id: string) {
     let found: Child;
 
     // recursively try to find this element
-    const recursive = (children: Child[]) =>{
+    const recursive = (children: Child[]) => {
       children.forEach((child) => {
-        if(child.id === id){
+        if (child.id === id) {
           found = child;
         }
-        if('children' in child && !found){
+        if ('children' in child && !found) {
           recursive(child.children);
         }
       });
-    }
+    };
 
     // start
     recursive(this.children);
@@ -64,7 +63,7 @@ export default class Layer {
     return {
       name: this.name,
       folder: this.folder,
-      children: this.children.map((child) => child.toJSON())
+      children: this.children.map((child) => child.toJSON()),
     };
   }
 }

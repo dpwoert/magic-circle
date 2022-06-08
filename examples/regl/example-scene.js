@@ -80,7 +80,7 @@ export default function create() {
       minAlpha: () => settings.minAlpha,
       persistence: () => settings.persistence,
       antialiasing: () => settings.antialiasing,
-      color: () => settings.color.map(c => c / 255).splice(0, 3),
+      color: () => settings.color.map((c) => c / 255).splice(0, 3),
       screenShape: ({ viewportWidth, viewportHeight }) => [
         viewportWidth,
         viewportHeight,
@@ -91,7 +91,7 @@ export default function create() {
   });
 
   return {
-    setup: gui => {
+    setup: (gui) => {
       const fx = gui.layer('Isoline');
 
       fx.folder('Colors', [
@@ -117,7 +117,7 @@ export default function create() {
         new NumberControl(settings, 'speed').range(0, 1),
       ]);
     },
-    loop: delta => {
+    loop: (delta) => {
       settings.offset += (delta * settings.speed) / 10;
 
       document.body.style.backgroundColor = settings.backgroundColor;

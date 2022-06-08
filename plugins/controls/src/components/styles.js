@@ -24,7 +24,7 @@ export const Center = styled.div`
   display: flex;
   flex: 1;
   align-items: center;
-  justify-content: ${props => (props.right ? 'flex-end' : 'flex-start')};
+  justify-content: ${(props) => (props.right ? 'flex-end' : 'flex-start')};
   font-size: 12px;
 `;
 

@@ -28,12 +28,12 @@ const Icons = styled.ul`
 const Button = styled.li`
   width: 54px;
   height: 54px;
-  background: ${props =>
+  background: ${(props) =>
     props.selected
       ? new Color(props.theme.accent).alpha(0.15).toCSS()
       : 'none'};
 
-  fill: ${props => props.theme.accent};
+  fill: ${(props) => props.theme.accent};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -44,9 +44,9 @@ const Button = styled.li`
   }
 `;
 
-const IconBar = withTheme(props => (
+const IconBar = withTheme((props) => (
   <Icons>
-    {props.panels.map(panel => {
+    {props.panels.map((panel) => {
       const Icon =
         typeof panel.icon === 'string'
           ? props.theme.icons[panel.icon]
@@ -84,9 +84,9 @@ class Sidebar extends Component {
 
   render() {
     const children = React.Children.toArray(this.props.children);
-    const panels = children.map(c => c.type.navigation);
+    const panels = children.map((c) => c.type.navigation);
     const active = children.find(
-      c => c.type.navigation.name === this.state.active
+      (c) => c.type.navigation.name === this.state.active
     );
     return (
       <Container>

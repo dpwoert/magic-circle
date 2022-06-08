@@ -1,13 +1,13 @@
 import { atom, selector } from 'recoil';
 
-import type {  SidebarOpts } from '@magic-circle/schema';
+import type { SidebarOpts } from '@magic-circle/schema';
 
 import app from '../app/app';
 
 export const sidebar = atom<SidebarOpts[]>({
   key: 'sidebar_all',
   default: [],
-  effects: [app.sidebar.effect()]
+  effects: [app.sidebar.effect()],
 });
 
 export const current = atom<number>({
@@ -21,5 +21,5 @@ export const selected = selector<SidebarOpts['render']>({
     const all = get(sidebar);
     const now = get(current);
     return all[now].render;
-  }
-})
+  },
+});

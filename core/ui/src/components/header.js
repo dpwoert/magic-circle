@@ -44,7 +44,7 @@ const Right = styled.div`
 const ButtonsContainer = styled.div`
   display: flex;
   flex-direction: row;
-  margin-left: ${props => (props.isElectron ? 80 : 16)}px;
+  margin-left: ${(props) => (props.isElectron ? 80 : 16)}px;
 `;
 
 const ButtonCollection = styled.ul`
@@ -54,8 +54,8 @@ const ButtonCollection = styled.ul`
 `;
 
 const Button = styled.li`
-  border: 1px solid ${props => props.theme.accent};
-  color: ${props => props.theme.accent};
+  border: 1px solid ${(props) => props.theme.accent};
+  color: ${(props) => props.theme.accent};
   display: block;
   text-align: center;
   user-select: none;
@@ -67,7 +67,7 @@ const Button = styled.li`
   border-right: none;
   cursor: pointer;
 
-  fill: ${props => props.theme.accent};
+  fill: ${(props) => props.theme.accent};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -82,14 +82,14 @@ const Button = styled.li`
   }
 
   &:last-of-type {
-    border-right: 1px solid ${props => props.theme.accent};
-    border-radius: ${props => (props.single ? '3px' : '0px 3px 3px 0px')};
+    border-right: 1px solid ${(props) => props.theme.accent};
+    border-radius: ${(props) => (props.single ? '3px' : '0px 3px 3px 0px')};
   }
 `;
 
-const Buttons = withTheme(props => (
+const Buttons = withTheme((props) => (
   <ButtonCollection>
-    {props.list.map(b => {
+    {props.list.map((b) => {
       const Icon = props.theme.icons[b.icon];
       return (
         <Button single={props.list.length === 1} onClick={b.click}>
@@ -104,7 +104,7 @@ const Header = ({ isElectron, store, left, center, right }) => (
   <Bar>
     <Left>
       <ButtonsContainer isElectron={isElectron}>
-        {Object.values(store.collection()).map(list => (
+        {Object.values(store.collection()).map((list) => (
           <Buttons list={list} />
         ))}
       </ButtonsContainer>

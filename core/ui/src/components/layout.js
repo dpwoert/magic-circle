@@ -8,7 +8,7 @@ import Sidebar from './sidebar';
 class Layout extends Component {
   hook(name, position) {
     const { plugins } = this.props.client;
-    return plugins.map(p => {
+    return plugins.map((p) => {
       if (p[name]) {
         return p[name](position);
       }

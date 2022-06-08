@@ -37,14 +37,14 @@ export default class PluginLayers extends Plugin {
   }
 
   setAll(values: Record<string, any>) {
-    Object.keys(values).forEach(key => {
+    Object.keys(values).forEach((key) => {
       this.set(key, values[key]);
     });
   }
 
   resetAll() {
     const { layer } = this.client;
-    layer.forEachRecursive(control => {
+    layer.forEachRecursive((control) => {
       if (control && 'value' in control) {
         control.reset();
       }

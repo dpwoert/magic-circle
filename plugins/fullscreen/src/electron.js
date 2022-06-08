@@ -1,6 +1,6 @@
 const { ipcMain, Menu, MenuItem } = require('electron');
 
-module.exports = app => {
+module.exports = (app) => {
   const editor = app.window('editor');
   const frame = app.window('frame');
 

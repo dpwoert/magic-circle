@@ -27,7 +27,7 @@ export class Client {
 
     // create settings
     this.settings = Object.assign(defaultSettings, settings);
-    this.settings.plugins.forEach(plugin => {
+    this.settings.plugins.forEach((plugin) => {
       if (plugin.standaloneSettings) {
         this.settings[plugin.name] = plugin.standaloneSettings(
           this.settings[plugin.name]
@@ -47,10 +47,10 @@ export class Client {
     // add plugins
     this.plugins = this.settings.plugins
       .filter(
-        Plugin =>
+        (Plugin) =>
           (this.isElectron && Plugin.electronOnly) || !Plugin.electronOnly
       )
-      .map(Plugin => {
+      .map((Plugin) => {
         const initialData = Plugin.initStore
           ? Plugin.initStore(this.settings)
           : {};
@@ -97,7 +97,7 @@ export class Client {
 
   async setup() {
     let actions = [];
-    await this.plugins.forEach(async s => {
+    await this.plugins.forEach(async (s) => {
       if (s.setup) {
         const action = await s.setup(this);
 
@@ -137,7 +137,7 @@ export class Client {
   }
 
   getPlugin(name) {
-    return this.plugins.find(p => p._name === name); //eslint-disable-line
+    return this.plugins.find((p) => p._name === name); //eslint-disable-line
   }
 
   getSetting(path, d) {
@@ -152,7 +152,7 @@ export class Client {
     };
 
     // group
-    Object.values(this.buttons.get()).forEach(b => {
+    Object.values(this.buttons.get()).forEach((b) => {
       buttons[b.collection] = buttons[b.collection] || [];
       buttons[b.collection].push(b);
     });
@@ -172,7 +172,7 @@ export class Client {
 
   JSONToMap(list) {
     const map = new Map();
-    list.forEach(i => {
+    list.forEach((i) => {
       map.set(i.key, i.value);
     });
     return map;

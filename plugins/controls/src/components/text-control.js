@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Row, Label, Center, TextBox, Selection } from './styles';
 
-const TextControl = props => {
+const TextControl = (props) => {
   const { values, labels } = props.options;
   const labelList = labels && values.length === labels.length ? labels : values;
   return (
@@ -12,14 +12,14 @@ const TextControl = props => {
         {!values ? (
           <TextBox
             value={props.value}
-            onChange={evt => {
+            onChange={(evt) => {
               props.updateControl(evt.target.value);
             }}
           />
         ) : (
           <Selection
             value={props.value}
-            onChange={evt => {
+            onChange={(evt) => {
               props.updateControl(evt.target.value);
             }}
           >

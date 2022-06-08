@@ -6,10 +6,10 @@ import { Row, Label } from './styles';
 const Button = styled(Label)`
   width: auto;
   cursor: pointer;
-  color: ${props => props.theme.accent};
+  color: ${(props) => props.theme.accent};
 `;
 
-const ButtonControl = props => {
+const ButtonControl = (props) => {
   const { label, updateControl } = props;
   return (
     <Row>

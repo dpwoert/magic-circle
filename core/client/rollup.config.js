@@ -29,7 +29,7 @@ export default [
       replace({
         preventAssignment: true,
         ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
-        __dirname: id => `'${path.dirname(id)}'`,
+        __dirname: (id) => `'${path.dirname(id)}'`,
       }),
       typescript({ tsconfig: './tsconfig.json' }),
     ],

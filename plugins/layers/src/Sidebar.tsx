@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { ReactNode } from 'react';
 import styled from 'styled-components';
 import { SPACING, COLORS, Icon } from '@magic-circle/styles';
 
@@ -10,13 +10,13 @@ const Container = styled.div`
 
 type LayerProps = {
   depth: number;
-}
+};
 
 const Layer = styled.div<LayerProps>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-left ${props => SPACING(props.depth * 2) + SPACING(1)}px;
+  padding-left ${(props) => SPACING(props.depth * 2) + SPACING(1)}px;
   padding-right ${SPACING(1)}px;
   align-items: center;
   height: ${SPACING(4)}px;

@@ -57,8 +57,8 @@ async function build() {
     : buildPath;
 
   const argsStr = Object.keys(args)
-    .filter(key => args[key])
-    .map(key => {
+    .filter((key) => args[key])
+    .map((key) => {
       if (args[key] === true) {
         return `--${key}`;
       }
@@ -84,7 +84,7 @@ async function build() {
           // },
         }),
         replace({
-          __dirname: id => `'${path.dirname(id)}'`,
+          __dirname: (id) => `'${path.dirname(id)}'`,
         }),
         babel({
           // exclude: '**/node_modules/**',
@@ -120,10 +120,10 @@ async function build() {
     });
 
     // log
-    run.stdout.on('data', data => {
+    run.stdout.on('data', (data) => {
       process.stdout.write(data);
     });
-    run.stderr.on('data', data => {
+    run.stderr.on('data', (data) => {
       process.stdout.write(`⚠️  ${data}`);
     });
 
@@ -147,7 +147,7 @@ function buildApp() {
 
   const dev = fs.existsSync('./env.json');
 
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     const run = exec(
       `npm run package:${dev ? 'dev' : 'prod'} ${dev ? '' : '-- --install'}`,
       {
@@ -156,10 +156,10 @@ function buildApp() {
     );
 
     // log
-    run.stdout.on('data', data => {
+    run.stdout.on('data', (data) => {
       singleLineLog(data);
     });
-    run.stderr.on('data', data => {
+    run.stderr.on('data', (data) => {
       process.stderr.write(`⚠️  ' ${data}`);
       // reject(data)
     });

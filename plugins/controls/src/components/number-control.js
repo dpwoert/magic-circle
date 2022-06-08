@@ -31,7 +31,7 @@ const Slider = styled.input`
     appearance: none;
     width: 2px;
     height: 20px;
-    background: ${props => props.theme.accent};
+    background: ${(props) => props.theme.accent};
     cursor: grab;
   }
 
@@ -48,10 +48,10 @@ const Slider = styled.input`
 const Progress = styled.div`
   position: absolute;
   top: 0;
-  left: ${props => props.left};
-  width: ${props => props.width}%;
+  left: ${(props) => props.left};
+  width: ${(props) => props.width}%;
   height: 100%;
-  background: ${props => new Color(props.theme.accent).alpha(0.2).toCSS()};
+  background: ${(props) => new Color(props.theme.accent).alpha(0.2).toCSS()};
   cursor: grab;
 `;
 
@@ -99,8 +99,8 @@ class StepControl extends Component {
         <Center>
           <NumberBox
             value={value}
-            onMouseDown={e => this.startDrag(e)}
-            onChange={evt => {
+            onMouseDown={(e) => this.startDrag(e)}
+            onChange={(evt) => {
               updateControl(evt.target.value);
             }}
           />
@@ -110,7 +110,7 @@ class StepControl extends Component {
   }
 }
 
-const ContiousControl = props => {
+const ContiousControl = (props) => {
   const { value, options, updateControl } = props;
   const { range, stepSize } = options;
   const biDirectional = Math.abs(range[0]) === Math.abs(range[1]);
@@ -134,7 +134,7 @@ const ContiousControl = props => {
           <Progress left={left} width={width} />
           <Slider
             value={value}
-            onChange={evt => {
+            onChange={(evt) => {
               updateControl(+evt.target.value);
             }}
             type="range"
@@ -149,7 +149,7 @@ const ContiousControl = props => {
   );
 };
 
-const NumberControl = props => (
+const NumberControl = (props) => (
   <>
     {props.options.range ? (
       <ContiousControl {...props} />

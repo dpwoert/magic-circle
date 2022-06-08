@@ -1,21 +1,21 @@
 'use strict';
 var __extends =
   (this && this.__extends) ||
-  (function() {
-    var extendStatics = function(d, b) {
+  (function () {
+    var extendStatics = function (d, b) {
       extendStatics =
         Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array &&
-          function(d, b) {
+          function (d, b) {
             d.__proto__ = b;
           }) ||
-        function(d, b) {
+        function (d, b) {
           for (var p in b)
             if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
         };
       return extendStatics(d, b);
     };
-    return function(d, b) {
+    return function (d, b) {
       if (typeof b !== 'function' && b !== null)
         throw new TypeError(
           'Class extends value ' + String(b) + ' is not a constructor or null'
@@ -32,15 +32,15 @@ var __extends =
   })();
 var __awaiter =
   (this && this.__awaiter) ||
-  function(thisArg, _arguments, P, generator) {
+  function (thisArg, _arguments, P, generator) {
     function adopt(value) {
       return value instanceof P
         ? value
-        : new P(function(resolve) {
+        : new P(function (resolve) {
             resolve(value);
           });
     }
-    return new (P || (P = Promise))(function(resolve, reject) {
+    return new (P || (P = Promise))(function (resolve, reject) {
       function fulfilled(value) {
         try {
           step(generator.next(value));
@@ -65,10 +65,10 @@ var __awaiter =
   };
 var __generator =
   (this && this.__generator) ||
-  function(thisArg, body) {
+  function (thisArg, body) {
     var _ = {
         label: 0,
-        sent: function() {
+        sent: function () {
           if (t[0] & 1) throw t[1];
           return t[1];
         },
@@ -82,13 +82,13 @@ var __generator =
     return (
       (g = { next: verb(0), throw: verb(1), return: verb(2) }),
       typeof Symbol === 'function' &&
-        (g[Symbol.iterator] = function() {
+        (g[Symbol.iterator] = function () {
           return this;
         }),
       g
     );
     function verb(n) {
-      return function(v) {
+      return function (v) {
         return step([n, v]);
       };
     }
@@ -165,88 +165,88 @@ var __generator =
   };
 exports.__esModule = true;
 exports.IpcIframe = exports.IpcBase = void 0;
-var IpcBase = /** @class */ (function() {
+var IpcBase = /** @class */ (function () {
   function IpcBase() {
     this.listeners = {};
   }
-  IpcBase.prototype.connect = function() {
-    return __awaiter(this, void 0, void 0, function() {
-      return __generator(this, function(_a) {
+  IpcBase.prototype.connect = function () {
+    return __awaiter(this, void 0, void 0, function () {
+      return __generator(this, function (_a) {
         return [2 /*return*/, true];
       });
     });
   };
-  IpcBase.prototype.send = function(channel, payload) {
+  IpcBase.prototype.send = function (channel, payload) {
     console.error(
       'trying to send message on channel '.concat(channel),
       payload
     );
   };
-  IpcBase.prototype.trigger = function(channel, payload) {
+  IpcBase.prototype.trigger = function (channel, payload) {
     // channel does not exist
     if (!this.listeners[channel]) {
       return;
     }
     // trigger events
-    this.listeners[channel].forEach(function(fn) {
+    this.listeners[channel].forEach(function (fn) {
       return fn(payload, channel);
     });
   };
-  IpcBase.prototype.screenshot = function() {
+  IpcBase.prototype.screenshot = function () {
     console.error('Screenshot implementation not implemented yet');
   };
-  IpcBase.prototype.on = function(channel, fn) {
+  IpcBase.prototype.on = function (channel, fn) {
     if (!this.listeners[channel]) {
       this.listeners[channel] = [];
     }
     this.listeners[channel].push(fn);
   };
-  IpcBase.prototype.once = function(channel, fn) {
+  IpcBase.prototype.once = function (channel, fn) {
     var _this = this;
-    var handler = function(payload) {
+    var handler = function (payload) {
       fn(payload, channel);
       _this.removeListener('channel', handler);
     };
     this.on('channel', handler);
   };
-  IpcBase.prototype.removeListener = function(channel, fn) {
+  IpcBase.prototype.removeListener = function (channel, fn) {
     // channel does not exist
     if (!this.listeners[channel]) {
       return;
     }
     // remove by filtering
-    this.listeners[channel] = this.listeners[channel].filter(function(hook) {
+    this.listeners[channel] = this.listeners[channel].filter(function (hook) {
       return fn === hook;
     });
   };
-  IpcBase.prototype.removeAllListeners = function(channel) {
+  IpcBase.prototype.removeAllListeners = function (channel) {
     this.listeners[channel] = [];
   };
-  IpcBase.prototype.destroy = function() {};
+  IpcBase.prototype.destroy = function () {};
   return IpcBase;
 })();
 exports.IpcBase = IpcBase;
-var IpcIframe = /** @class */ (function(_super) {
+var IpcIframe = /** @class */ (function (_super) {
   __extends(IpcIframe, _super);
   function IpcIframe() {
     var _this = _super.call(this) || this;
     _this.connection = window.parent;
-    window.addEventListener('message', function(evt) {
+    window.addEventListener('message', function (evt) {
       if (evt.data && evt.data.channel) {
         _this.trigger(evt.data.channel, evt.data.payload);
       }
     });
     return _this;
   }
-  IpcIframe.prototype.connect = function() {
-    return __awaiter(this, void 0, void 0, function() {
+  IpcIframe.prototype.connect = function () {
+    return __awaiter(this, void 0, void 0, function () {
       var _this = this;
-      return __generator(this, function(_a) {
+      return __generator(this, function (_a) {
         return [
           2 /*return*/,
-          new Promise(function(resolve) {
+          new Promise(function (resolve) {
             _this.send('connect', true);
-            _this.once('connect', function() {
+            _this.once('connect', function () {
               resolve(true);
             });
           }),
@@ -254,7 +254,7 @@ var IpcIframe = /** @class */ (function(_super) {
       });
     });
   };
-  IpcIframe.prototype.send = function(channel, payload) {
+  IpcIframe.prototype.send = function (channel, payload) {
     this.connection.postMessage({ channel: channel, payload: payload }, '*');
   };
   return IpcIframe;

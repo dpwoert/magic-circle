@@ -33,7 +33,7 @@
     "example": "sh examples/run.sh",
     "publish:npm": "sh publish.sh",
     "publish:online": "echo \"TODO\"",
-    "prettier": "prettier --config --write \"{core,examples,plugins}/**/*.js\"",
+    "prettier": "prettier --config --write \"{core,examples,plugins}/**/*.{js,jsx,ts,tsx,json,css}\"",
     "lint": "eslint \"{core,examples,plugins}/**/*.js\"",
     "test": "npm run lint",
     "clean": "find . -name 'node_modules' -type d | xargs rm -rf && find . -name 'dist' -type d | xargs rm -rf && find . -name '.cache' -type d | xargs rm -rf && rm -rf core/editor/build/"
@@ -52,7 +52,7 @@
     "husky": "^1.3.1",
     "lerna": "^3.14.1",
     "lint-staged": "^8.1.0",
-    "prettier": "^1.15.3",
+    "prettier": "^2.5.1",
     "replace-in-file": "^4.1.3"
   },
   "lint-staged": {

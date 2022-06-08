@@ -27,7 +27,7 @@ const WindowSize = styled.select`
 `;
 
 const CustomSize = styled.div`
-  display: ${props => (props.show ? 'block' : 'none')};
+  display: ${(props) => (props.show ? 'block' : 'none')};
   padding-top: 12px;
 `;
 
@@ -39,7 +39,7 @@ const SizeRow = styled.div`
 `;
 
 const Axis = styled.div`
-  color: ${props => props.theme.accent};
+  color: ${(props) => props.theme.accent};
   padding-right: 6px;
   width: 85px;
   padding-left: 8px;
@@ -62,9 +62,9 @@ const ButtonRow = styled.div`
 
 const Button = styled.div`
   position: relative;
-  border: 1px solid ${props => props.theme.accent};
+  border: 1px solid ${(props) => props.theme.accent};
   border-radius: 2px;
-  color: ${props => props.theme.accent};
+  color: ${(props) => props.theme.accent};
   display: block;
   text-align: center;
   user-select: none;
@@ -73,16 +73,16 @@ const Button = styled.div`
   cursor: pointer;
   background: none;
   margin-top: 12px;
-  opacity: ${props => (props.isDisabled ? 0.5 : 1)};
+  opacity: ${(props) => (props.isDisabled ? 0.5 : 1)};
 
   &:before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
-    width: ${props => (props.procent || 0) * 100}%;
+    width: ${(props) => (props.procent || 0) * 100}%;
     height: 100%;
-    background: ${props => props.theme.accent};
+    background: ${(props) => props.theme.accent};
     opacity: 0.2;
   }
 `;
@@ -124,13 +124,8 @@ class RecordPanel extends Component {
   }
 
   render() {
-    const {
-      done,
-      total,
-      resolutions,
-      finishedRecording,
-      enableFFMPEG,
-    } = this.props;
+    const { done, total, resolutions, finishedRecording, enableFFMPEG } =
+      this.props;
     const percent = total > 0 ? Math.floor((done / total) * 100) : 0;
     const currentRes = `${this.state.width}x${this.state.height}`;
     const sizeValue =
@@ -142,7 +137,7 @@ class RecordPanel extends Component {
         <ResizePanel>
           <WindowSize
             defaultValue={sizeValue}
-            onChange={evt => {
+            onChange={(evt) => {
               const { value } = evt.target;
 
               if (value !== 'custom') {
@@ -154,7 +149,7 @@ class RecordPanel extends Component {
               }
             }}
           >
-            {resolutions.map(res => (
+            {resolutions.map((res) => (
               <option value={res}>{res}</option>
             ))}
             <option value="custom">custom</option>
@@ -163,14 +158,14 @@ class RecordPanel extends Component {
             <SizeRow>
               <Axis>width</Axis>
               <AxisInput
-                onChange={evt => this.setCustomAxis('x', evt.target.value)}
+                onChange={(evt) => this.setCustomAxis('x', evt.target.value)}
                 value={this.state.width}
               />
             </SizeRow>
             <SizeRow>
               <Axis>height</Axis>
               <AxisInput
-                onChange={evt => this.setCustomAxis('y', evt.target.value)}
+                onChange={(evt) => this.setCustomAxis('y', evt.target.value)}
                 value={this.state.height}
               />
             </SizeRow>
@@ -178,14 +173,16 @@ class RecordPanel extends Component {
           <SizeRow>
             <Axis>duration</Axis>
             <AxisInput
-              onChange={evt => this.changeOption('duration', evt.target.value)}
+              onChange={(evt) =>
+                this.changeOption('duration', evt.target.value)
+              }
               value={this.state.duration}
             />
           </SizeRow>
           <SizeRow>
             <Axis>fps</Axis>
             <AxisInput
-              onChange={evt => this.changeOption('fps', evt.target.value)}
+              onChange={(evt) => this.changeOption('fps', evt.target.value)}
               value={this.state.fps}
             />
           </SizeRow>

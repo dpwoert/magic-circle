@@ -11,7 +11,7 @@ const Container = styled.div`
   color: #eee;
   text-align: center;
   width: 480px;
-  border: 1px solid ${props => props.theme.accent};
+  border: 1px solid ${(props) => props.theme.accent};
   border-radius: 3px;
   background: none;
   display: flex;
@@ -20,7 +20,7 @@ const Container = styled.div`
 `;
 
 const OptionWrapper = styled.div`
-  background: ${props => new Color(props.theme.accent).alpha(0.15).toCSS()};
+  background: ${(props) => new Color(props.theme.accent).alpha(0.15).toCSS()};
 `;
 
 const Options = styled.select`
@@ -30,7 +30,7 @@ const Options = styled.select`
   width: 100px;
   appearance: none;
   padding: 5px;
-  color: ${props => props.theme.accent};
+  color: ${(props) => props.theme.accent};
   font-size: 10px;
   outline: none;
 `;
@@ -41,13 +41,13 @@ const Arrow = styled.div`
   height: 0;
   border-style: solid;
   border-width: 5px 5px 0 5px;
-  border-color: ${props => props.theme.accent} transparent transparent
+  border-color: ${(props) => props.theme.accent} transparent transparent
     transparent;
   margin-right: 3px;
 `;
 
 const Input = styled.input`
-  color: ${props => props.theme.accent};
+  color: ${(props) => props.theme.accent};
   background: none;
   border: none;
   flex: 1;
@@ -69,19 +69,19 @@ const URL = ({ location, changeUrl }) => {
     <Container>
       <OptionWrapper>
         <Options
-          onChange={evt => {
+          onChange={(evt) => {
             changeUrl(evt.target.value);
           }}
         >
-          {EXAMPLES.map(ex => (
+          {EXAMPLES.map((ex) => (
             <option value={ex.url}>{ex.label}</option>
           ))}
         </Options>
         <Arrow />
       </OptionWrapper>
       <Input
-        onBlur={evt => changeUrl(evt.target.value)}
-        onKeyDown={evt => {
+        onBlur={(evt) => changeUrl(evt.target.value)}
+        onKeyDown={(evt) => {
           if (evt.key === 'Enter') {
             changeUrl(evt.target.value);
             evt.target.blur();

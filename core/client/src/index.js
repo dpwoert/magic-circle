@@ -2,7 +2,7 @@
 var __createBinding =
   (this && this.__createBinding) ||
   (Object.create
-    ? function(o, m, k, k2) {
+    ? function (o, m, k, k2) {
         if (k2 === undefined) k2 = k;
         var desc = Object.getOwnPropertyDescriptor(m, k);
         if (
@@ -11,19 +11,24 @@ var __createBinding =
         ) {
           desc = {
             enumerable: true,
-            get: function() {
+            get: function () {
               return m[k];
             },
           };
         }
         Object.defineProperty(o, k2, desc);
       }
-    : function(o, m, k, k2) {
+    : function (o, m, k, k2) {
         if (k2 === undefined) k2 = k;
         o[k2] = m[k];
       });
 exports.__esModule = true;
-exports.Plugin = exports.Control = exports.Folder = exports.Layer = exports.MagicCircle = void 0;
+exports.Plugin =
+  exports.Control =
+  exports.Folder =
+  exports.Layer =
+  exports.MagicCircle =
+    void 0;
 var client_1 = require('./client');
 __createBinding(exports, client_1, 'default', 'MagicCircle');
 var layer_1 = require('./layer');

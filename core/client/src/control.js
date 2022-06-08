@@ -1,9 +1,9 @@
 'use strict';
 exports.__esModule = true;
-var nanoid = function() {
+var nanoid = function () {
   return '';
 };
-var Control = /** @class */ (function() {
+var Control = /** @class */ (function () {
   function Control(type, reference, key) {
     this.id = nanoid();
     this.type = type;
@@ -15,26 +15,26 @@ var Control = /** @class */ (function() {
     this.setDefault();
   }
   Object.defineProperty(Control.prototype, 'value', {
-    get: function() {
+    get: function () {
       return this.reference[this.key];
     },
-    set: function(value) {
+    set: function (value) {
       this.reference[this.key] = value;
     },
     enumerable: false,
     configurable: true,
   });
-  Control.prototype.label = function(label) {
+  Control.prototype.label = function (label) {
     this.options.label = label;
     return this;
   };
-  Control.prototype.reset = function() {
+  Control.prototype.reset = function () {
     this.value = this.initialValue;
   };
-  Control.prototype.setDefault = function() {
+  Control.prototype.setDefault = function () {
     this.initialValue = this.value;
   };
-  Control.prototype.toJSON = function() {
+  Control.prototype.toJSON = function () {
     return {
       id: this.id,
       label: this.options.label || this.key,

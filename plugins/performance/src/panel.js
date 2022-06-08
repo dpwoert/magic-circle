@@ -30,16 +30,16 @@ const Content = styled.div`
 const Value = styled.div`
   font-size: 18px;
   font-weight: bold;
-  color: ${props => props.theme.accent};
+  color: ${(props) => props.theme.accent};
 `;
 
 const Chart = styled.div`
   flex: 1;
 `;
 
-const getLast = arr => arr[arr.length - 1];
+const getLast = (arr) => arr[arr.length - 1];
 
-const displayMetric = value => (value >= 0 ? value : 'N/A');
+const displayMetric = (value) => (value >= 0 ? value : 'N/A');
 
 class PerformancePanel extends Component {
   static navigation = {

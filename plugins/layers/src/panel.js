@@ -19,14 +19,14 @@ const Item = styled.li`
   position: relative;
   font-size: 12px;
   line-height: 42px;
-  padding-left: ${props => (props.depth + 1) * 12}px;
-  color: ${props => (props.hasControls ? 'white' : 'rgba(255,255,255, 0.5)')};
+  padding-left: ${(props) => (props.depth + 1) * 12}px;
+  color: ${(props) => (props.hasControls ? 'white' : 'rgba(255,255,255, 0.5)')};
   list-style: none;
-  background: ${props =>
+  background: ${(props) =>
     getBackgroundColor(props.selected, props.i, props.theme.accent)};
   box-sizing: border-box;
-  border-radius: ${props => (props.selected ? 3 : 0)}px;
-  font-weight: ${props => (props.selected ? 'bold' : 'normal')};
+  border-radius: ${(props) => (props.selected ? 3 : 0)}px;
+  font-weight: ${(props) => (props.selected ? 'bold' : 'normal')};
   cursor: default;
 `;
 
@@ -62,14 +62,14 @@ class LayersPanel extends Component {
     }
 
     if (layer.children) {
-      layer.children.forEach(l => this.renderLayer(layers, l, depth + 1));
+      layer.children.forEach((l) => this.renderLayer(layers, l, depth + 1));
     }
   }
 
   render() {
     const layers = [];
-    this.props.layers.forEach(l => this.renderLayer(layers, l, 0));
-    return <Panel>{layers.map(layer => layer)}</Panel>;
+    this.props.layers.forEach((l) => this.renderLayer(layers, l, 0));
+    return <Panel>{layers.map((layer) => layer)}</Panel>;
   }
 }
 

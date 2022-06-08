@@ -25,7 +25,7 @@ const dateTime = () => {
   return `${date} ${time}`;
 };
 
-module.exports = app => {
+module.exports = (app) => {
   const editor = app.window('editor');
   const frame = app.window('frame');
   const recPath = app.setting('recordings.path');
@@ -51,7 +51,7 @@ module.exports = app => {
     // ensure computer doesn't go in power save mode
     const keepAwake = powerSaveBlocker.start('prevent-display-sleep');
 
-    ipcMain.on('frame-stepped', evt => {
+    ipcMain.on('frame-stepped', (evt) => {
       if (rendered >= nrFrames) {
         console.info(`🎥  finished recording`);
         editor.webContents.send('recording-status', {
@@ -64,7 +64,7 @@ module.exports = app => {
       }
 
       // capture frame
-      frame.capturePage(img => {
+      frame.capturePage((img) => {
         // save to file
         const filePath = path.join(
           folder,
@@ -106,7 +106,7 @@ module.exports = app => {
 
     const folders = fs.readdirSync(recPath);
     const sorted = folders
-      .map(fileName => ({
+      .map((fileName) => ({
         name: fileName,
         time: fs.statSync(path.join(recPath, fileName)).mtime.getTime(),
       }))
@@ -121,10 +121,10 @@ module.exports = app => {
     );
 
     // log
-    run.stdout.on('data', data => {
+    run.stdout.on('data', (data) => {
       process.stdout.out.write(data);
     });
-    run.stderr.on('data', data => {
+    run.stderr.on('data', (data) => {
       process.stderr.write(`⚠️  ' ${data}`);
     });
 

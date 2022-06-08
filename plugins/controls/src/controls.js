@@ -70,7 +70,7 @@ class Controls {
     const changelog = new Map();
 
     // diff
-    mapping.forEach(c => {
+    mapping.forEach((c) => {
       if (
         c.isControl &&
         (!shallowEqual(c.value, c.initialValue) || full) &&
@@ -121,7 +121,7 @@ class Controls {
   }
 
   getControl(name) {
-    return this.controls.find(c => name === c.type);
+    return this.controls.find((c) => name === c.type);
   }
 
   getFromPath(path) {

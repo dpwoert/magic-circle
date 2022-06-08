@@ -12,7 +12,7 @@ const ColorValue = styled.div`
   opacity: 0.5;
 `;
 
-const ColorControl = props => {
+const ColorControl = (props) => {
   const { value, options, label, updateControl } = props;
   const { alpha, range } = options;
   const color = new Color(value, range);
@@ -26,7 +26,7 @@ const ColorControl = props => {
         <ColorPicker
           color={color.toHex()}
           alpha={alpha ? color.toArray()[3] * (100 / 255) : 100}
-          onChange={c => {
+          onChange={(c) => {
             const newColor = new Color(c.color);
             color.copyFrom(newColor);
             updateControl(color.get());

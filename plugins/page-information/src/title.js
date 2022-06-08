@@ -11,7 +11,7 @@ const Container = styled.div`
 const truncate = (string, max) =>
   string.length > max ? `${string.substring(0, max)}...` : string;
 
-const Title = props => {
+const Title = (props) => {
   const { title } = props;
   const display =
     title && title.length > 0 ? truncate(title || '', 25) : 'no page loaded';

@@ -16,7 +16,7 @@ export default class Store<T> implements StoreSchema<T> {
     this.value = value;
 
     // run all hooks
-    this.hooks.forEach(h => h(value));
+    this.hooks.forEach((h) => h(value));
   }
 
   onChange(hook: Hook<T>) {
@@ -24,7 +24,7 @@ export default class Store<T> implements StoreSchema<T> {
   }
 
   removeListener(hook: Hook<T>) {
-    this.hooks = this.hooks.filter(t => t !== hook);
+    this.hooks = this.hooks.filter((t) => t !== hook);
   }
 
   effect(): AtomEffect<T> {

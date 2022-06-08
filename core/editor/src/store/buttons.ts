@@ -7,5 +7,5 @@ import app from '../app/app';
 export const buttons = atom<ButtonCollections>({
   key: 'buttons_all',
   default: {},
-  effects: [app.buttons.effect()]
+  effects: [app.buttons.effect()],
 });

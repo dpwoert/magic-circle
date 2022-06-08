@@ -1,24 +1,24 @@
 'use strict';
 exports.__esModule = true;
-var nanoid = function() {
+var nanoid = function () {
   return '';
 };
-var Layer = /** @class */ (function() {
+var Layer = /** @class */ (function () {
   function Layer(name) {
     this.id = nanoid();
     this.name = name;
     this.children = [];
     this.folder = false;
   }
-  Layer.prototype.forEach = function(fn) {
-    this.children.forEach(function(child) {
+  Layer.prototype.forEach = function (fn) {
+    this.children.forEach(function (child) {
       fn(child);
     });
   };
-  Layer.prototype.forEachRecursive = function(fn) {
+  Layer.prototype.forEachRecursive = function (fn) {
     // todo
   };
-  Layer.prototype.add = function(child) {
+  Layer.prototype.add = function (child) {
     var _a;
     if (Array.isArray(child)) {
       (_a = this.children).push.apply(_a, child);
@@ -26,14 +26,14 @@ var Layer = /** @class */ (function() {
       this.children.push(child);
     }
   };
-  Layer.prototype.addTo = function(layer) {
+  Layer.prototype.addTo = function (layer) {
     layer.add(this);
   };
-  Layer.prototype.find = function(id) {
+  Layer.prototype.find = function (id) {
     var found;
     // recursively try to find this element
-    var recursive = function(children) {
-      children.forEach(function(child) {
+    var recursive = function (children) {
+      children.forEach(function (child) {
         if (child.id === id) {
           found = child;
         }
@@ -46,11 +46,11 @@ var Layer = /** @class */ (function() {
     recursive(this.children);
     return found;
   };
-  Layer.prototype.toJSON = function() {
+  Layer.prototype.toJSON = function () {
     return {
       name: this.name,
       folder: this.folder,
-      children: this.children.map(function(child) {
+      children: this.children.map(function (child) {
         return child.toJSON();
       }),
     };

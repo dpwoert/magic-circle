@@ -22,9 +22,9 @@ hashChange();
 
 const settings = {
   ipc,
-  plugins: defaultPlugins =>
-    defaultPlugins.filter(p => p.name !== 'screenshots'),
-  render: client => {
+  plugins: (defaultPlugins) =>
+    defaultPlugins.filter((p) => p.name !== 'screenshots'),
+  render: (client) => {
     ReactDOM.render(
       <Layout client={client} />,
       document.getElementById('root')

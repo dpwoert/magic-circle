@@ -1,4 +1,4 @@
-const slug = str =>
+const slug = (str) =>
   str
     .replace(/\s/g, '-')
     .replace(/[%()=:.,!#$@"'/\\|?*+&]/g, '')

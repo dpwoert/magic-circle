@@ -27,7 +27,7 @@ const WindowSize = styled.select`
 `;
 
 const CustomSize = styled.div`
-  display: ${props => (props.show ? 'block' : 'none')};
+  display: ${(props) => (props.show ? 'block' : 'none')};
   padding-top: 12px;
 `;
 
@@ -39,7 +39,7 @@ const SizeRow = styled.div`
 `;
 
 const Axis = styled.div`
-  color: ${props => props.theme.accent};
+  color: ${(props) => props.theme.accent};
   padding-right: 6px;
   width: 75px;
   padding-left: 8px;
@@ -68,7 +68,7 @@ const Screenshot = styled.li`
 const ImageFrame = styled.div`
   width: 100%;
   padding-top: 56%;
-  background: url('${props => props.image}');
+  background: url('${(props) => props.image}');
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -93,7 +93,7 @@ const Name = styled.div`
 `;
 
 const NameInput = styled.input`
-  color: ${props => props.theme.accent};
+  color: ${(props) => props.theme.accent};
   margin-top: 8px;
   font-size: 12px;
   border: none;
@@ -115,7 +115,7 @@ const Delete = styled.div`
   height: 25px;
   cursor: pointer;
 
-  fill: ${props => props.theme.accent};
+  fill: ${(props) => props.theme.accent};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -129,7 +129,7 @@ const Delete = styled.div`
 const truncate = (string, max) =>
   string.length > max ? `${string.substring(0, max)}...` : string;
 
-const parseDate = str => {
+const parseDate = (str) => {
   const d = new Date(str);
   const date = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
   const time = `${d.getHours()}:${d.getMinutes()}`;
@@ -184,13 +184,8 @@ class ScreenshotsPanel extends Component {
   }
 
   render() {
-    const {
-      screenshots,
-      path,
-      loadScreenshot,
-      deleteScreenshot,
-      resolutions,
-    } = this.props;
+    const { screenshots, path, loadScreenshot, deleteScreenshot, resolutions } =
+      this.props;
     const currentRes = `${window.innerWidth}x${window.innerHeight}`;
     const sizeValue =
       resolutions.indexOf(currentRes) > -1 ? currentRes : 'custom';
@@ -202,7 +197,7 @@ class ScreenshotsPanel extends Component {
         <ResizePanel>
           <WindowSize
             defaultValue={sizeValue}
-            onChange={evt => {
+            onChange={(evt) => {
               const { value } = evt.target;
 
               if (value !== 'custom') {
@@ -214,7 +209,7 @@ class ScreenshotsPanel extends Component {
               }
             }}
           >
-            {resolutions.map(res => (
+            {resolutions.map((res) => (
               <option value={res}>{res}</option>
             ))}
             <option value="custom">custom</option>
@@ -223,21 +218,21 @@ class ScreenshotsPanel extends Component {
             <SizeRow>
               <Axis>width</Axis>
               <AxisInput
-                onChange={evt => this.setCustomAxis('x', evt.target.value)}
+                onChange={(evt) => this.setCustomAxis('x', evt.target.value)}
                 value={this.state.x}
               />
             </SizeRow>
             <SizeRow>
               <Axis>height</Axis>
               <AxisInput
-                onChange={evt => this.setCustomAxis('y', evt.target.value)}
+                onChange={(evt) => this.setCustomAxis('y', evt.target.value)}
                 value={this.state.y}
               />
             </SizeRow>
           </CustomSize>
         </ResizePanel>
         <Screenshots>
-          {screenshots.map(screenshot => (
+          {screenshots.map((screenshot) => (
             <Screenshot key={screenshot.fileName}>
               <ImageFrame
                 image={`${path}/${screenshot.fileName}.png`}
@@ -247,7 +242,7 @@ class ScreenshotsPanel extends Component {
                 <Meta>
                   {this.state.editName !== screenshot.fileName ? (
                     <Name
-                      onDoubleClick={evt =>
+                      onDoubleClick={(evt) =>
                         this.toggleRenaming(evt, screenshot)
                       }
                     >
@@ -255,11 +250,11 @@ class ScreenshotsPanel extends Component {
                     </Name>
                   ) : (
                     <NameInput
-                      ref={r => {
+                      ref={(r) => {
                         this.inputRef = r;
                       }}
                       defaultValue={screenshot.meta.name}
-                      onBlur={evt => this.renameScreenshot(evt, screenshot)}
+                      onBlur={(evt) => this.renameScreenshot(evt, screenshot)}
                       onKeyPress={() => {
                         // if (evt.keyCode === 0) {
                         //   this.renameScreenshot(evt, screenshot);

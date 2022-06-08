@@ -66,7 +66,7 @@ class Midi {
   }
 
   midiStart() {
-    WebMidi.enable(err => {
+    WebMidi.enable((err) => {
       if (err) {
         console.error('Error when enabling midi', err);
       }
@@ -74,8 +74,8 @@ class Midi {
       // get controls plugin
       const controls = this.client.getPlugin('controls');
 
-      WebMidi.inputs.forEach(input => {
-        input.addListener('noteon', 'all', e => {
+      WebMidi.inputs.forEach((input) => {
+        input.addListener('noteon', 'all', (e) => {
           const command = {
             device: e.target.name,
             note: e.note,
@@ -87,7 +87,7 @@ class Midi {
           // trigger?
           const presets = this.store.get('presets');
           const active = this.store.get('active');
-          presets[active].config.forEach(row => {
+          presets[active].config.forEach((row) => {
             if (
               row.midi &&
               row.midi.channel === e.channel &&
@@ -142,7 +142,7 @@ class Midi {
     const presets = this.store.get('presets');
     const active = this.store.get('active');
 
-    const row = presets[active].config.find(r => r.id === id);
+    const row = presets[active].config.find((r) => r.id === id);
     row[key] = value;
 
     this.store.set('presets', presets);

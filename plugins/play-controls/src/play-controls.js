@@ -34,7 +34,7 @@ class PlayControls {
   }
 
   buttons(buttons) {
-    this.store.addListener(data => {
+    this.store.addListener((data) => {
       buttons.set('play', {
         icon: data.play ? 'Pause' : 'Play',
         collection: 'play',

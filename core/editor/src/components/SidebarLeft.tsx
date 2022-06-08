@@ -32,9 +32,9 @@ const Tab = styled.div<TabProps>`
   width: ${SPACING(5)}px;
   height: ${SPACING(5)}px;
   border-bottom: 1px solid
-    ${props => (props.selected ? COLORS.accent.css : COLORS.shades.s300.css)};
+    ${(props) => (props.selected ? COLORS.accent.css : COLORS.shades.s300.css)};
   color: ${COLORS.accent.css};
-  background: ${props =>
+  background: ${(props) =>
     props.selected
       ? String(COLORS.accent.opacity(0.1))
       : String(COLORS.accent.opacity(0))};

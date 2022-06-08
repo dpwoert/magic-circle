@@ -8,12 +8,8 @@ const nativeImage = {};
 const { BrowserWindow, TouchBar, nativeImage } = require('electron').remote;
 //#endif
 
-const {
-  TouchBarLabel,
-  TouchBarButton,
-  TouchBarSpacer,
-  TouchBarGroup,
-} = TouchBar;
+const { TouchBarLabel, TouchBarButton, TouchBarSpacer, TouchBarGroup } =
+  TouchBar;
 
 const BARS = ['▁', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
 
@@ -35,10 +31,10 @@ class Touchbar {
 
   create() {
     const buttons = Object.values(this.client.buttons.collection());
-    const buttonsGrouped = buttons.map(group => {
+    const buttonsGrouped = buttons.map((group) => {
       const items = group
-        .filter(b => b.touchbar !== false)
-        .map(b => {
+        .filter((b) => b.touchbar !== false)
+        .map((b) => {
           const iconPath = this.client.icons[b.icon].png;
           const icon = nativeImage.createFromDataURL(iconPath);
           return new TouchBarButton({
@@ -74,7 +70,7 @@ class Touchbar {
 
     this.touchBar = new TouchBar(bar);
 
-    BrowserWindow.getAllWindows().forEach(w => w.setTouchBar(this.touchBar));
+    BrowserWindow.getAllWindows().forEach((w) => w.setTouchBar(this.touchBar));
 
     this.update();
   }
@@ -88,7 +84,7 @@ class Touchbar {
     const performance = this.client.getPlugin('performance').store;
     const fps = performance.get('FPS') || [];
     const last5 = fps.slice(-5);
-    const bars = last5.map(v =>
+    const bars = last5.map((v) =>
       v > 0 ? BARS[Math.round((BARS.length - 1) * (v / 60))] : '▁'
     );
     const barsStr = bars.join('');

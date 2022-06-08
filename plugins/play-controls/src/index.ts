@@ -1,4 +1,4 @@
-import type {ButtonCollections, Plugin, } from '@magic-circle/schema';
+import type { ButtonCollections, Plugin } from '@magic-circle/schema';
 
 export default class PlayControls implements Plugin {
   playing: boolean;
@@ -14,36 +14,33 @@ export default class PlayControls implements Plugin {
       play: [
         {
           label: 'play',
-          icon: "Play",
+          icon: 'Play',
           onClick: () => {
             this.play();
-          }
+          },
         },
         {
           label: 'reload',
           icon: 'Refresh',
           onClick: () => {
             // todo
-          }
+          },
         },
         {
           label: 'reset',
           icon: 'Rewind',
           onClick: () => {
             // todo
-          }
+          },
         },
-        ...(buttons.play || [])
-      ]
-    }
+        ...(buttons.play || []),
+      ],
+    };
   }
 
-  play(){
+  play() {
     // todo
   }
 
-  pause(){
-
-  }
-
+  pause() {}
 }

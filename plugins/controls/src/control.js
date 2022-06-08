@@ -23,7 +23,7 @@ const Indicator = styled.div`
   height: 100%;
   left: 0;
   top: 0;
-  background: ${props => (props.changed ? props.theme.accent : 'none')};
+  background: ${(props) => (props.changed ? props.theme.accent : 'none')};
 `;
 
 const Link = styled.div`
@@ -32,17 +32,17 @@ const Link = styled.div`
   top: 0;
   height: 100%;
   width: 100%;
-  background: ${props => new Color(props.theme.accent).alpha(0.7).toCSS()};
+  background: ${(props) => new Color(props.theme.accent).alpha(0.7).toCSS()};
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 5;
   box-shadow: 0px 0px 6px 0px black;
   opacity: 0;
-  pointer-events: ${props => (props.connect ? 'all' : 'none')};
+  pointer-events: ${(props) => (props.connect ? 'all' : 'none')};
 
   ${Wrapper}:hover & {
-    opacity: ${props => (props.connect ? 1 : 0)};
+    opacity: ${(props) => (props.connect ? 1 : 0)};
   }
 
   svg {
@@ -75,7 +75,7 @@ const LinkIndicator = styled.div`
   animation-iteration-count: infinite;
   z-index: 4;
   pointer-events: none;
-  display: ${props => (props.connect ? 'block' : 'none')};
+  display: ${(props) => (props.connect ? 'block' : 'none')};
 
   ${Wrapper}:nth-of-type(2n) & {
     animation-delay: 0.5s;
@@ -88,9 +88,9 @@ const Reset = styled.div`
   height: 100%;
   left: 0;
   top: 0;
-  background: ${props => props.theme.accent};
+  background: ${(props) => props.theme.accent};
   transform: translateX(-100%);
-  display: ${props => (props.changed ? 'flex' : 'none')};
+  display: ${(props) => (props.changed ? 'flex' : 'none')};
   transition: transform 0.2s ease;
   justify-content: center;
   align-items: center;

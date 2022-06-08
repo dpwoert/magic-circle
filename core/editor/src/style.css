@@ -4,14 +4,16 @@
   box-sizing: border-box;
 }
 
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
 }
 
-body{
+body {
   background: #1c1c1c;
   font-size: 14px;
-  font-family: "inter", sans-serif;
+  font-family: 'inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overscroll-behavior: none;

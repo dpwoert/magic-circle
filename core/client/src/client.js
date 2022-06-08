@@ -1,15 +1,15 @@
 'use strict';
 var __awaiter =
   (this && this.__awaiter) ||
-  function(thisArg, _arguments, P, generator) {
+  function (thisArg, _arguments, P, generator) {
     function adopt(value) {
       return value instanceof P
         ? value
-        : new P(function(resolve) {
+        : new P(function (resolve) {
             resolve(value);
           });
     }
-    return new (P || (P = Promise))(function(resolve, reject) {
+    return new (P || (P = Promise))(function (resolve, reject) {
       function fulfilled(value) {
         try {
           step(generator.next(value));
@@ -34,10 +34,10 @@ var __awaiter =
   };
 var __generator =
   (this && this.__generator) ||
-  function(thisArg, body) {
+  function (thisArg, body) {
     var _ = {
         label: 0,
-        sent: function() {
+        sent: function () {
           if (t[0] & 1) throw t[1];
           return t[1];
         },
@@ -51,13 +51,13 @@ var __generator =
     return (
       (g = { next: verb(0), throw: verb(1), return: verb(2) }),
       typeof Symbol === 'function' &&
-        (g[Symbol.iterator] = function() {
+        (g[Symbol.iterator] = function () {
           return this;
         }),
       g
     );
     function verb(n) {
-      return function(v) {
+      return function (v) {
         return step([n, v]);
       };
     }
@@ -134,7 +134,7 @@ var __generator =
   };
 var __spreadArray =
   (this && this.__spreadArray) ||
-  function(to, from, pack) {
+  function (to, from, pack) {
     if (pack || arguments.length === 2)
       for (var i = 0, l = from.length, ar; i < l; i++) {
         if (ar || !(i in from)) {
@@ -149,7 +149,7 @@ var layer_1 = require('./layer');
 var ipc_1 = require('./ipc');
 var layers_1 = require('./plugins/layers');
 var seed_1 = require('./plugins/seed');
-var MagicCircle = /** @class */ (function() {
+var MagicCircle = /** @class */ (function () {
   function MagicCircle(plugins) {
     var _this = this;
     var standardPlugins = [layers_1['default'], seed_1['default']];
@@ -158,16 +158,16 @@ var MagicCircle = /** @class */ (function() {
       __spreadArray([], standardPlugins, true),
       plugins,
       true
-    ).map(function(plugin) {
+    ).map(function (plugin) {
       return new plugin(_this);
     });
     this.ipc = new ipc_1.IpcIframe();
     // start
     this.connect();
   }
-  MagicCircle.prototype.connect = function() {
-    return __awaiter(this, void 0, void 0, function() {
-      return __generator(this, function(_a) {
+  MagicCircle.prototype.connect = function () {
+    return __awaiter(this, void 0, void 0, function () {
+      return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
             return [4 /*yield*/, this.ipc.connect()];
@@ -183,7 +183,7 @@ var MagicCircle = /** @class */ (function() {
               this.hooks.setup();
             }
             // run plugins
-            this.plugins.forEach(function(p) {
+            this.plugins.forEach(function (p) {
               if (p.connect) {
                 p.connect();
               }
@@ -193,35 +193,35 @@ var MagicCircle = /** @class */ (function() {
       });
     });
   };
-  MagicCircle.prototype.setup = function(fn) {
+  MagicCircle.prototype.setup = function (fn) {
     this.hooks.setup = fn;
     return this;
   };
-  MagicCircle.prototype.loop = function(fn) {
+  MagicCircle.prototype.loop = function (fn) {
     this.hooks.loop = fn;
     return this;
   };
-  MagicCircle.prototype.start = function() {
+  MagicCircle.prototype.start = function () {
     this.ipc.send('play', true);
     // update plugins
-    this.plugins.forEach(function(p) {
+    this.plugins.forEach(function (p) {
       if (p.playState) {
         p.playState(true);
       }
     });
     return this;
   };
-  MagicCircle.prototype.stop = function() {
+  MagicCircle.prototype.stop = function () {
     this.ipc.send('play', false);
     // update plugins
-    this.plugins.forEach(function(p) {
+    this.plugins.forEach(function (p) {
       if (p.playState) {
         p.playState(false);
       }
     });
     return this;
   };
-  MagicCircle.prototype.tick = function(delta) {
+  MagicCircle.prototype.tick = function (delta) {
     //todo
   };
   return MagicCircle;

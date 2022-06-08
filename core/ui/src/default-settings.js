@@ -43,7 +43,7 @@ const settings = {
   standalone: {
     path: '{userData}/',
   },
-  render: client => {
+  render: (client) => {
     ReactDOM.render(
       <Layout client={client} />,
       document.getElementById('root')

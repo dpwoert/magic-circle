@@ -8,9 +8,10 @@ const Box = styled.div`
   position: relative;
   width: 18px;
   height: 18px;
-  border: 1px solid ${props => new Color(props.theme.accent).alpha(0.5).toCSS()};
+  border: 1px solid
+    ${(props) => new Color(props.theme.accent).alpha(0.5).toCSS()};
   border-radius: 3px;
-  background: ${props => new Color(props.theme.accent).alpha(0).toCSS()};
+  background: ${(props) => new Color(props.theme.accent).alpha(0).toCSS()};
 
   transition: border 0.2s ease, background 0.2s ease;
 
@@ -23,12 +24,12 @@ const Input = styled.input`
   visibility: hidden;
 
   &:checked + ${Box} {
-    border: 1px solid ${props => props.theme.accent};
-    background: ${props => new Color(props.theme.accent).alpha(0.25).toCSS()};
+    border: 1px solid ${(props) => props.theme.accent};
+    background: ${(props) => new Color(props.theme.accent).alpha(0.25).toCSS()};
   }
 `;
 
-const BooleanControl = props => {
+const BooleanControl = (props) => {
   const { value, label, updateControl } = props;
   return (
     <Row>

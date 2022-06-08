@@ -24,7 +24,7 @@ export default class MagicCircle {
 
     this.layer = new Layer('base');
     this.plugins = [...standardPlugins, ...plugins].map(
-      plugin => new plugin(this)
+      (plugin) => new plugin(this)
     );
     this.ipc = new IpcIframe();
 
@@ -47,7 +47,7 @@ export default class MagicCircle {
     }
 
     // run plugins
-    this.plugins.forEach(p => {
+    this.plugins.forEach((p) => {
       if (p.connect) {
         p.connect();
       }
@@ -71,7 +71,7 @@ export default class MagicCircle {
     this.ipc.send('play', true);
 
     // update plugins
-    this.plugins.forEach(p => {
+    this.plugins.forEach((p) => {
       if (p.playState) {
         p.playState(true);
       }
@@ -84,7 +84,7 @@ export default class MagicCircle {
     this.ipc.send('play', false);
 
     // update plugins
-    this.plugins.forEach(p => {
+    this.plugins.forEach((p) => {
       if (p.playState) {
         p.playState(false);
       }

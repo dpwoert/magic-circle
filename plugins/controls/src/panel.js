@@ -45,8 +45,8 @@ const flicker = keyframes`
 const Connect = styled.div`
   width: 100%;
   height: 32px;
-  background: ${props => props.theme.accent};
-  max-height: ${props => (props.connect ? '100%' : 0)};
+  background: ${(props) => props.theme.accent};
+  max-height: ${(props) => (props.connect ? '100%' : 0)};
   transition: max-height 0.4s ease;
   display: flex;
   align-items: center;
@@ -68,7 +68,7 @@ class ControlsPanel extends Component {
       <Folder key={path}>
         <FolderLabel>{folder.label}</FolderLabel>
         <ControlList>
-          {folder.controls.map(c => (
+          {folder.controls.map((c) => (
             <Control
               component={this.props.getControl(c.type)}
               control={c}
@@ -99,7 +99,7 @@ class ControlsPanel extends Component {
           <span>Click to connect control</span>
         </Connect>
         <ControlList>
-          {controls.map(c => (
+          {controls.map((c) => (
             <Control
               component={getControl(c.type)}
               control={c}
@@ -110,7 +110,7 @@ class ControlsPanel extends Component {
             />
           ))}
         </ControlList>
-        {layers.map(f => f.isFolder && this.renderFolder(f))}
+        {layers.map((f) => f.isFolder && this.renderFolder(f))}
       </Container>
     );
   }

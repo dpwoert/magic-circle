@@ -48,7 +48,7 @@ export default class Color {
 
     // do range stuff
     if (range !== 255) {
-      this.color = this.color.map(c => (255 / range) * c);
+      this.color = this.color.map((c) => (255 / range) * c);
     }
   }
 
@@ -77,7 +77,7 @@ export default class Color {
     const { color } = this;
 
     // range conversion
-    const converted = color.map(c => (c * this.range) / 255);
+    const converted = color.map((c) => (c * this.range) / 255);
 
     let obj;
     if (this.type === 'object2') {
@@ -114,7 +114,7 @@ export default class Color {
   }
 
   toArray() {
-    return this.color.map(c => (c * this.range) / 255);
+    return this.color.map((c) => (c * this.range) / 255);
   }
 
   copyFrom(c) {
