@@ -1,3 +1,3 @@
-import magicCircle from '@magic-circle/editor';
-
-module.exports = magicCircle({});
+export default {
+  url: 'http://localhost:4000',
+};

@@ -7,6 +7,10 @@ export class IpcBase {
     this.listeners = {};
   }
 
+  setup() {
+    // to overwrite
+  }
+
   async connect() {
     return true;
   }
@@ -22,7 +26,7 @@ export class IpcBase {
     }
 
     // trigger events
-    this.listeners[channel].forEach((fn) => fn(payload, channel));
+    this.listeners[channel].forEach(fn => fn(payload, channel));
   }
 
   screenshot() {
@@ -43,7 +47,7 @@ export class IpcBase {
       this.removeListener('channel', handler);
     };
 
-    this.on('channel', handler);
+    this.on(channel, handler);
   }
 
   removeListener(channel: string, fn: hook) {
@@ -54,7 +58,7 @@ export class IpcBase {
 
     // remove by filtering
     this.listeners[channel] = this.listeners[channel].filter(
-      (hook) => fn === hook
+      hook => fn === hook
     );
   }
 
@@ -65,15 +69,48 @@ export class IpcBase {
   destroy() {}
 }
 
+enum IframeMode {
+  CHILD,
+  PARENT,
+}
+
 export class IpcIframe extends IpcBase {
+  mode: IframeMode;
   connection: HTMLIFrameElement['contentWindow'] | Window['parent'];
+  isConnected: boolean;
 
   constructor() {
     super();
 
-    this.connection = window.parent;
+    if (window.parent) {
+      this.mode = IframeMode.CHILD;
+      this.connection = window.parent;
+    } else {
+      this.mode = IframeMode.PARENT;
+    }
+  }
 
-    window.addEventListener('message', (evt) => {
+  setup(selector = 'iframe') {
+    // connect to either
+    if (window.location !== window.parent.location) {
+      this.mode = IframeMode.CHILD;
+      this.connection = window.parent;
+    } else {
+      this.mode = IframeMode.PARENT;
+
+      const iframe: HTMLIFrameElement = document.querySelector(
+        selector || 'iframe'
+      );
+
+      if (!iframe) {
+        throw new Error('can not find iframe element');
+      }
+
+      this.connection = iframe.contentWindow;
+    }
+
+    // setup events
+    window.addEventListener('message', evt => {
       if (evt.data && evt.data.channel) {
         this.trigger(evt.data.channel, evt.data.payload);
       }
@@ -81,11 +118,25 @@ export class IpcIframe extends IpcBase {
   }
 
   async connect() {
-    return new Promise<boolean>((resolve) => {
-      this.send('connect', true);
-      this.once('connect', () => {
-        resolve(true);
-      });
+    return new Promise<boolean>(resolve => {
+      if (this.mode === IframeMode.CHILD) {
+        if (this.isConnected) {
+          resolve(true);
+          return;
+        }
+
+        this.once('connect', () => {
+          this.isConnected = true;
+          resolve(true);
+          this.send('connect', true);
+        });
+      } else {
+        this.send('connect', true);
+        this.once('connect', () => {
+          this.isConnected = true;
+          resolve(true);
+        });
+      }
     });
   }
 

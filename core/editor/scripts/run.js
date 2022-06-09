@@ -9,6 +9,7 @@ const nodeResolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
 const babel = require('rollup-plugin-babel');
 const replace = require('rollup-plugin-replace');
+const { config } = require('process');
 
 const generateConfig = async () => {
   const config = argv.config || argv.C;
@@ -16,11 +17,7 @@ const generateConfig = async () => {
     ? path.join(process.cwd(), config)
     : path.join(process.cwd(), 'controls.config.js');
 
-  console.log({ configFile });
-
   const tmpName = await tmp.tmpName({ postfix: '.js' });
-
-  console.log({ tmpName });
 
   // create a bundle
   const bundle = await rollup.rollup({
@@ -40,26 +37,28 @@ const generateConfig = async () => {
     ],
   });
 
-  await bundle.write({
-    file: path.join(process.cwd(), '.settings.build.js'),
-    format: 'cjs',
-  });
+  // Write to HDD
+  await bundle.write({ file: tmpName, format: 'esm' });
 
-  // to do copy other files over?
+  return tmpName;
 };
 
 const run = async () => {
   // check if config file is present, if so it needs to be build
-  await generateConfig();
+  const configPath = await generateConfig();
 
   await vite.build({
-    root: path.resolve(__dirname, '../'),
-    // base: '/foo/',
+    root: path.resolve(__dirname, '../'), // base: '/foo/',
     // build: {
     //   rollupOptions: {
     //     // ...
     //   },
     // },
+    resolve: {
+      alias: {
+        './user-config': configPath,
+      },
+    },
   });
 
   // run build with vite

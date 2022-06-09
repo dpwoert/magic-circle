@@ -1,6 +1,6 @@
 import PlayControls from '@magic-circle/play-controls';
 import Layers from '@magic-circle/layers';
-import type { Config } from '@magic-circle/schema';
+import { Config, BuildTarget } from '@magic-circle/schema';
 
 const config: Config = {
   url: '',
@@ -9,6 +9,7 @@ const config: Config = {
     accent: 'string',
   },
   settings: {},
+  target: BuildTarget.IFRAME,
 };
 
 export default config;

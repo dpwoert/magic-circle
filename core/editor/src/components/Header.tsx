@@ -52,9 +52,14 @@ const Button = styled.div`
   height: ${SPACING(3)}px;
   border-right: 1px solid ${COLORS.accent.css};
   cursor: pointer;
+  transition: background 0.2s ease;
 
   &:last-child {
     border-right: none;
+  }
+
+  &:hover {
+    background: ${String(COLORS.accent.opacity(0.2))};
   }
 `;
 
@@ -69,10 +74,10 @@ const Header = () => {
     <Container>
       <Logo />
       <ButtonCollections>
-        {Object.values(buttons).map((collection) => (
+        {Object.values(buttons).map(collection => (
           <ButtonCollection>
-            {collection.map((button) => (
-              <Button>
+            {collection.map(button => (
+              <Button onClick={() => button.onClick(button)}>
                 <Icon
                   name={button.icon}
                   width={SPACING(2)}

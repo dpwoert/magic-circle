@@ -20,6 +20,6 @@ export const selected = selector<SidebarOpts['render']>({
   get: ({ get }) => {
     const all = get(sidebar);
     const now = get(current);
-    return all[now].render;
+    return all[now]?.render;
   },
 });

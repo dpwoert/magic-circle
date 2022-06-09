@@ -5,6 +5,9 @@ import { RecoilRoot } from 'recoil';
 import Header from './Header';
 import SidebarLeft from './SidebarLeft';
 
+import APP from '../app/app';
+
+import { BuildTarget } from '@magic-circle/schema';
 import { SPACING, COLORS } from '@magic-circle/styles';
 
 const Container = styled.div`
@@ -25,6 +28,12 @@ const Iframe = styled.iframe`
   border: none;
 `;
 
+const SpacerFrame = styled.div`
+  flex: 1;
+  height: 100%;
+  background: ${COLORS.white.css};
+`;
+
 export default function App() {
   return (
     <RecoilRoot>
@@ -32,7 +41,11 @@ export default function App() {
         <Header />
         <Inside>
           <SidebarLeft />
-          <Iframe />
+          {APP.config.target === BuildTarget.IFRAME ? (
+            <Iframe src={APP.config.url} onLoad={() => APP.connect()} />
+          ) : (
+            <SpacerFrame />
+          )}
         </Inside>
       </Container>
     </RecoilRoot>

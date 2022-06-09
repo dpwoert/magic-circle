@@ -26,6 +26,9 @@
     "build:dev": "tsc",
     "build:prod": "NODE_ENV=production tsc"
   },
+  "dependencies": {
+    "@magic-circle/client": "^0.0.7"
+  },
   "devDependencies": {
     "typescript": "^4.7.3"
   },

@@ -14,7 +14,8 @@
   ],
   "author": "Davey van der Woert",
   "license": "ISC",
-  "main": "dist/bundle.js",
+  "main": "dist/magic-circle.js",
+  "module": "dist/magic-circle.esm.js",
   "types": "dist/magic-circle.d.ts",
   "scripts": {
     "watch": "rollup --watch --config ./rollup.config.js",

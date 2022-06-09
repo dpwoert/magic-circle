@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react';
 import type { AtomEffect } from 'recoil';
 
+import type { IpcBase } from '@magic-circle/client'
+
 export type icons =
   | 'AirplayToTv'
   | 'AnnotationDots'
@@ -186,6 +188,7 @@ export type icons =
 export type StoreHook<T> = (newValue: T) => void;
 
 export interface Store<T> {
+  value: T;
   set(value: T): void;
   onChange(hook: StoreHook<T>): void;
   removeListener(hook: StoreHook<T>): void;
@@ -233,6 +236,11 @@ export interface PluginConstructor {
   new (): Plugin;
 }
 
+export enum BuildTarget {
+    ELECTRON = 'electron',
+    IFRAME = 'iframe'
+}
+
 export interface Config {
   url: string;
   plugins: PluginConstructor[];
@@ -240,6 +248,7 @@ export interface Config {
     accent: string;
   };
   settings: {};
+  target: BuildTarget;
 }
 
 export type UserConfig = Partial<Config>;
@@ -247,6 +256,7 @@ export type UserConfig = Partial<Config>;
 export interface App {
   plugins: Plugin[];
   config: Config;
+  ipc: IpcBase;
   buttons: Store<ButtonCollections>;
   sidebar: Store<SidebarOpts[]>;
   getPlugin: (name: string) => Plugin | undefined;
