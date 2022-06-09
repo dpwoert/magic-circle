@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import type { AtomEffect } from 'recoil';
 
-import type { IpcBase } from '@magic-circle/client'
+import type { IpcBase } from '@magic-circle/client';
 
 export type icons =
   | 'AirplayToTv'
@@ -213,7 +213,7 @@ export type Hydration = Record<string, any>;
 export type Button = {
   label: string;
   icon: icons;
-  onClick: () =>  void;
+  onClick: () => void;
 };
 
 export type Buttons = Button[];
@@ -237,8 +237,8 @@ export interface PluginConstructor {
 }
 
 export enum BuildTarget {
-    ELECTRON = 'electron',
-    IFRAME = 'iframe'
+  ELECTRON = 'electron',
+  IFRAME = 'iframe',
 }
 
 export interface Config {
@@ -258,18 +258,18 @@ export type ControlExport = {
   label: string;
   value: any;
   initialValue: any;
-}
+};
 
 export type LayerExport = {
-  name:string;
+  name: string;
   folder: boolean;
-  children: LayerExport;
-}
+  children: LayerExport[];
+};
 
 export type MainLayerExport = {
   controls: Record<string, ControlExport[]>;
   layers: LayerExport[];
-}
+};
 
 export interface App {
   plugins: Plugin[];
@@ -279,4 +279,5 @@ export interface App {
   sidebar: Store<SidebarOpts[]>;
   getPlugin: (name: string) => Plugin | undefined;
   getSetting: (name: string) => unknown;
+  createStore<T>(initialValue: T): Store<T>;
 }

@@ -26,7 +26,7 @@ export class IpcBase {
     }
 
     // trigger events
-    this.listeners[channel].forEach(fn => fn(payload, channel));
+    this.listeners[channel].forEach((fn) => fn(payload, channel));
   }
 
   screenshot() {
@@ -58,7 +58,7 @@ export class IpcBase {
 
     // remove by filtering
     this.listeners[channel] = this.listeners[channel].filter(
-      hook => fn === hook
+      (hook) => fn === hook
     );
   }
 
@@ -110,7 +110,7 @@ export class IpcIframe extends IpcBase {
     }
 
     // setup events
-    window.addEventListener('message', evt => {
+    window.addEventListener('message', (evt) => {
       if (evt.data && evt.data.channel) {
         this.trigger(evt.data.channel, evt.data.payload);
       }
@@ -118,7 +118,7 @@ export class IpcIframe extends IpcBase {
   }
 
   async connect() {
-    return new Promise<boolean>(resolve => {
+    return new Promise<boolean>((resolve) => {
       if (this.mode === IframeMode.CHILD) {
         if (this.isConnected) {
           resolve(true);

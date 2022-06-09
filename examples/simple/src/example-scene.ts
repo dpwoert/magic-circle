@@ -10,6 +10,8 @@ import {
 
 import {
   MagicCircle,
+  Layer,
+  Folder,
   //   NumberControl,
   //   BooleanControl,
   //   ColorControl,
@@ -38,7 +40,7 @@ export function setup(gui: MagicCircle) {
 
   // Create scene
   scene = new Scene();
-  // const sceneLayer = gui.layer('Scene');
+  const sceneLayer = new Layer('Scene').addTo(gui.layer);
 
   let i = 1;
   for (let x = 0; x < 2; x += 1) {
@@ -53,7 +55,7 @@ export function setup(gui: MagicCircle) {
         mesh.position.y = y * 100;
         mesh.position.z = z * 100;
 
-        // const meshLayesr = sceneLayer.layer(`Box ${i}`);
+        const meshLayer = new Layer(`Box ${i}`).addTo(sceneLayer);
 
         // meshLayer.folder('Position', [
         //   new NumberControl(mesh.position, 'x').range(-200, 200),

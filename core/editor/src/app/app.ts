@@ -6,7 +6,7 @@ import type {
   ButtonCollections,
   SidebarOpts,
 } from '@magic-circle/schema';
-import { IpcIframe, IpcBase } from '@magic-circle/client'
+import { IpcIframe, IpcBase } from '@magic-circle/client';
 import Store from './store';
 
 import defaultConfig from './default-config';
@@ -30,10 +30,9 @@ class App implements AppBase {
     this.plugins = [];
     this.buttons = new Store<ButtonCollections>({});
     this.sidebar = new Store<SidebarOpts[]>([]);
-
   }
-  
-  async connect(){
+
+  async connect() {
     this.ipc.setup();
     await this.ipc.connect();
 
@@ -41,24 +40,26 @@ class App implements AppBase {
     let buttons: ButtonCollections = {};
 
     // Load all plugins
-    await Promise.all(this.config.plugins.map(async (P) => {
-      const plugin = new P();
+    await Promise.all(
+      this.config.plugins.map(async (P) => {
+        const plugin = new P();
 
-      await plugin.setup(this);
+        await plugin.setup(this);
 
-      // load plugins
-      this.plugins.push(plugin);
+        // load plugins
+        this.plugins.push(plugin);
 
-      // Set buttons
-      if (plugin.buttons) {
-        buttons = plugin.buttons(buttons);
-      }
+        // Set buttons
+        if (plugin.buttons) {
+          buttons = plugin.buttons(buttons);
+        }
 
-      // set sidebar
-      if (plugin.sidebar) {
-        sidebar.push(plugin.sidebar());
-      }
-    }));
+        // set sidebar
+        if (plugin.sidebar) {
+          sidebar.push(plugin.sidebar());
+        }
+      })
+    );
 
     // store data in effects
     this.buttons.set(buttons);
@@ -66,7 +67,7 @@ class App implements AppBase {
 
     // ready now
     this.plugins.forEach((p) => {
-      if(p.ready) p.ready();
+      if (p.ready) p.ready();
     });
   }
 
@@ -75,6 +76,10 @@ class App implements AppBase {
   }
 
   getSetting(name: string) {}
+
+  createStore<T>(initialValue: T) {
+    return new Store<T>(initialValue);
+  }
 }
 
 const app = new App(userConfig);

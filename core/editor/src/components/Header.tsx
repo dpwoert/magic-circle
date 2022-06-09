@@ -88,9 +88,9 @@ const Header = () => {
     <Container>
       <Logo />
       <ButtonCollections>
-        {Object.values(buttons).map(collection => (
+        {Object.values(buttons).map((collection) => (
           <ButtonCollection>
-            {collection.map(button => (
+            {collection.map((button) => (
               <Button onClick={() => button.onClick(button)}>
                 <Icon
                   name={button.icon}

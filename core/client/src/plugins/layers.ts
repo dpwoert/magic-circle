@@ -1,6 +1,9 @@
+import type Control from '../control';
 import Plugin from '../plugin';
 
 export default class PluginLayers extends Plugin {
+  cache: Record<string, Control<any>>;
+
   connect() {
     const { ipc } = this.client;
 
@@ -15,7 +18,23 @@ export default class PluginLayers extends Plugin {
 
   sync() {
     const layers = this.client.layer.toJSON().children;
-    this.client.ipc.send('layers', layers);
+
+    // Create cache of controls
+    const controls: typeof this.cache = {};
+    this.client.layer.forEachRecursive((child) => {
+      if ('value' in child) {
+        controls[child.id] = child;
+      }
+    });
+
+    // Send to back-end
+    this.client.ipc.send('layers', {
+      controls: Object.values(controls).map((c) => c.toJSON()),
+      layers,
+    });
+
+    // save to cache
+    this.cache = controls;
   }
 
   set(id: string, value: any) {

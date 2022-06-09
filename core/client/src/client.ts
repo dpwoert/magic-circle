@@ -11,7 +11,7 @@ type loopFn = (delta: number) => void;
 
 const warnOnTrigger = (name: string) => () => {
   console.warn(`The hook '${name}' is not set`);
-}
+};
 
 export default class MagicCircle {
   private hooks: {
@@ -24,7 +24,7 @@ export default class MagicCircle {
   layer: Layer;
 
   private lastTime: number;
-  private frameRequest: ReturnType<typeof requestAnimationFrame>
+  private frameRequest: ReturnType<typeof requestAnimationFrame>;
   isPlaying: boolean;
 
   constructor(plugins: typeof Plugin[] = []) {
@@ -53,10 +53,10 @@ export default class MagicCircle {
     this.stop = this.stop.bind(this);
 
     // listen to events
-    this.ipc.on('play', (playing) =>{
-      if(playing) this.start();
+    this.ipc.on('play', (playing) => {
+      if (playing) this.start();
       else this.stop();
-    })
+    });
   }
 
   async connect() {
@@ -64,7 +64,7 @@ export default class MagicCircle {
 
     await this.ipc.connect();
 
-    console.log('connected client')
+    console.log('connected client');
 
     // Send page information to UI
     this.ipc.send('page-information', {
@@ -83,7 +83,6 @@ export default class MagicCircle {
         p.connect();
       }
     });
-
 
     // Receive default values by hydrating
     // todo
@@ -140,9 +139,8 @@ export default class MagicCircle {
 
   tick(customDelta?: number) {
     // calculate delta
-    const newTime = (typeof performance === 'undefined'
-      ? Date
-      : performance
+    const newTime = (
+      typeof performance === 'undefined' ? Date : performance
     ).now();
     const delta = this.lastTime ? (newTime - this.lastTime) / 1000 : 0;
     this.lastTime = newTime;
@@ -151,9 +149,8 @@ export default class MagicCircle {
     this.hooks.loop(customDelta ?? delta);
 
     // playing?
-    if(this.isPlaying){
+    if (this.isPlaying) {
       this.frameRequest = requestAnimationFrame(this.tick);
     }
   }
-
 }

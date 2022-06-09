@@ -25,6 +25,17 @@ export default class Layer {
 
   forEachRecursive(fn: (child: Child) => void) {
     // todo
+    const recursive = (children: Child[]) => {
+      children.forEach((child) => {
+        fn(child);
+
+        if ('children' in child) {
+          recursive(child.children);
+        }
+      });
+    };
+
+    recursive(this.children);
   }
 
   add(child: Child | Child[]) {
@@ -33,10 +44,14 @@ export default class Layer {
     } else {
       this.children.push(child);
     }
+
+    return this;
   }
 
   addTo(layer: Layer) {
     layer.add(this);
+
+    return this;
   }
 
   find(id: string) {
