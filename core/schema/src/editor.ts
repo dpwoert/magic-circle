@@ -213,7 +213,7 @@ export type Hydration = Record<string, any>;
 export type Button = {
   label: string;
   icon: icons;
-  onClick: (button: Button) => Button | void;
+  onClick: () =>  void;
 };
 
 export type Buttons = Button[];
@@ -252,6 +252,24 @@ export interface Config {
 }
 
 export type UserConfig = Partial<Config>;
+
+export type ControlExport = {
+  id: string;
+  label: string;
+  value: any;
+  initialValue: any;
+}
+
+export type LayerExport = {
+  name:string;
+  folder: boolean;
+  children: LayerExport;
+}
+
+export type MainLayerExport = {
+  controls: Record<string, ControlExport[]>;
+  layers: LayerExport[];
+}
 
 export interface App {
   plugins: Plugin[];

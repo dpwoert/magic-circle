@@ -1,3 +1,5 @@
+@import '@magic-circle/styles/src/fonts.css';
+
 * {
   margin: 0;
   padding: 0;
@@ -8,11 +10,11 @@ html,
 body,
 #root {
   height: 100%;
+  font-size: 14px;
 }
 
 body {
   background: #1c1c1c;
-  font-size: 14px;
   font-family: 'inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

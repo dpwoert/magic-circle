@@ -2,11 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 
-import { SPACING, COLORS, Icon } from '@magic-circle/styles';
+import { SPACING, COLORS, TYPO, Icon } from '@magic-circle/styles';
 
-import * as store from '../store/buttons';
+import { buttons as buttonStore } from '../store/buttons';
+import { title as titleStore } from '../store/pageInfo';
 
 const Container = styled.div`
+  position: relative;
   display: flex;
   height: ${SPACING(5)}px;
   background: ${COLORS.shades.s700.css};
@@ -63,12 +65,24 @@ const Button = styled.div`
   }
 `;
 
+const Title = styled.div`
+  ${TYPO.title}
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${COLORS.white.css};
+  pointer-events: none;
+`;
+
 const Header = () => {
-  // create buttons
-
-  const buttons = useRecoilValue(store.buttons);
-
-  console.log({ buttons });
+  const buttons = useRecoilValue(buttonStore);
+  const title = useRecoilValue(titleStore);
 
   return (
     <Container>
@@ -88,6 +102,7 @@ const Header = () => {
           </ButtonCollection>
         ))}
       </ButtonCollections>
+      <Title>{title}</Title>
     </Container>
   );
 };
