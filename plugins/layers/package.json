@@ -29,7 +29,8 @@
     "build:prod": "NODE_ENV=production tsc"
   },
   "dependencies": {
-    "@magic-circle/styles": "^0.0.7"
+    "@magic-circle/styles": "^0.0.7",
+    "@magic-circle/state": "^0.0.7"
   },
   "devDependencies": {
     "@magic-circle/schema": "^0.0.7",
@@ -38,8 +39,7 @@
   },
   "peerDependencies": {
     "react": "*",
-    "styled-components": "*",
-    "recoil": "*"
+    "styled-components": "*"
   },
   "publishConfig": {
     "access": "public"

@@ -5,19 +5,23 @@ import type {
   UserConfig,
   ButtonCollections,
   SidebarOpts,
+  Sidebar,
+  PageInfo,
 } from '@magic-circle/schema';
 import { IpcIframe, IpcBase } from '@magic-circle/client';
-import Store from './store';
+import { Store } from '@magic-circle/state';
 
 import defaultConfig from './default-config';
 import userConfig from './user-config';
 
 class App implements AppBase {
   plugins: Plugin[];
-  sidebar: Store<SidebarOpts[]>;
   config: Config;
   ipc: IpcBase;
+
+  sidebar: Store<Sidebar>;
   buttons: Store<ButtonCollections>;
+  pageInfo: Store<PageInfo>;
 
   constructor(userConf: UserConfig) {
     // merge with default config
@@ -29,7 +33,8 @@ class App implements AppBase {
     // Set initial values
     this.plugins = [];
     this.buttons = new Store<ButtonCollections>({});
-    this.sidebar = new Store<SidebarOpts[]>([]);
+    this.sidebar = new Store<Sidebar>({ current: 0, panels: [] });
+    this.pageInfo = new Store<PageInfo>({ title: 'No title' });
   }
 
   async connect() {
@@ -63,12 +68,17 @@ class App implements AppBase {
 
     // store data in effects
     this.buttons.set(buttons);
-    this.sidebar.set(sidebar);
+    this.sidebar.set({ ...this.sidebar.value, panels: sidebar });
 
     // ready now
     this.plugins.forEach((p) => {
       if (p.ready) p.ready();
     });
+
+    // Update page information when needed
+    this.ipc.on('page-information', (info:PageInfo) => {
+      this.pageInfo.set(info)
+    })
   }
 
   getPlugin(name: string) {
@@ -76,10 +86,6 @@ class App implements AppBase {
   }
 
   getSetting(name: string) {}
-
-  createStore<T>(initialValue: T) {
-    return new Store<T>(initialValue);
-  }
 }
 
 const app = new App(userConfig);

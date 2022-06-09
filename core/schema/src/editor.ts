@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react';
-import type { AtomEffect } from 'recoil';
 
 import type { IpcBase } from '@magic-circle/client';
 
@@ -192,7 +191,6 @@ export interface Store<T> {
   set(value: T): void;
   onChange(hook: StoreHook<T>): void;
   removeListener(hook: StoreHook<T>): void;
-  effect(): AtomEffect<T>;
 }
 
 export interface StoreConstructor<T> {
@@ -207,6 +205,11 @@ export interface SidebarOpts {
   icon: icons;
   render: ReactNode;
 }
+
+export type Sidebar = {
+  current: number;
+  panels: SidebarOpts[];
+};
 
 export type Hydration = Record<string, any>;
 
@@ -261,9 +264,10 @@ export type ControlExport = {
 };
 
 export type LayerExport = {
+  id: string;
   name: string;
   folder: boolean;
-  children: LayerExport[];
+  children: Array<LayerExport | ControlExport>;
 };
 
 export type MainLayerExport = {
@@ -271,13 +275,20 @@ export type MainLayerExport = {
   layers: LayerExport[];
 };
 
+export type PageInfo = {
+  title: string;
+  location?: Location;
+}
+
 export interface App {
   plugins: Plugin[];
   config: Config;
   ipc: IpcBase;
+
   buttons: Store<ButtonCollections>;
-  sidebar: Store<SidebarOpts[]>;
+  sidebar: Store<Sidebar>;
+  pageInfo: Store<PageInfo>;
+
   getPlugin: (name: string) => Plugin | undefined;
   getSetting: (name: string) => unknown;
-  createStore<T>(initialValue: T): Store<T>;
 }

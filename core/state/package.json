@@ -1,7 +1,7 @@
 {
-  "name": "@magic-circle/schema",
+  "name": "@magic-circle/state",
   "version": "0.0.7",
-  "description": "Magic Circle shares typescript schemas",
+  "description": "Magic Circle state management solution for React",
   "keywords": [
     "controls",
     "creative coding",
@@ -12,7 +12,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/dpwoert/magic-circle.git",
-    "directory": "core/schema"
+    "directory": "core/state"
   },
   "files": [
     "dist/*.js",
@@ -26,11 +26,10 @@
     "build:dev": "tsc",
     "build:prod": "NODE_ENV=production tsc"
   },
-  "dependencies": {
-    "@magic-circle/client": "^0.0.7"
-  },
   "devDependencies": {
-    "typescript": "^4.7.3"
+    "typescript": "^4.7.3",
+    "@types/react": "*",
+    "@magic-circle/schema": "^0.0.7"
   },
   "peerDependencies": {
     "react": "^18.0.0"

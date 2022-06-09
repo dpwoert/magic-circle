@@ -1,6 +1,6 @@
-type Reference = Record<string, any>;
+import { nanoid } from 'nanoid';
 
-const nanoid = () => '';
+type Reference = Record<string, any>;
 
 export default class Control<T> {
   id: string;

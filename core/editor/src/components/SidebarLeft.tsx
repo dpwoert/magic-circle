@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useRecoilValue } from 'recoil';
 
-import * as store from '../store/sidebar';
-
+import { useStore } from '@magic-circle/state';
 import { SPACING, COLORS, Icon } from '@magic-circle/styles';
+
+import APP from '../app/app';
 
 const Container = styled.div`
   display: flex;
@@ -54,20 +54,18 @@ const Inside = styled.div`
 `;
 
 const SidebarLeft = () => {
-  const sidebar = useRecoilValue(store.sidebar);
-  const current = useRecoilValue(store.current);
-  const selected = useRecoilValue(store.selected);
+  const { panels, current } = useStore(APP.sidebar);
 
   return (
     <Container>
       <Tabs>
-        {sidebar.map((s, key) => (
+        {panels.map((s, key) => (
           <Tab selected={key === current}>
             <Icon name={s.icon} width={SPACING(2)} height={SPACING(2)} />
           </Tab>
         ))}
       </Tabs>
-      <Inside>{selected}</Inside>
+      <Inside>{panels[current]?.render}</Inside>
     </Container>
   );
 };

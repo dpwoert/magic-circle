@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { RecoilRoot } from 'recoil';
 
 import Header from './Header';
 import SidebarLeft from './SidebarLeft';
+import SidebarRight from './SidebarRight';
 
 import APP from '../app/app';
 
@@ -36,18 +36,17 @@ const SpacerFrame = styled.div`
 
 export default function App() {
   return (
-    <RecoilRoot>
-      <Container>
-        <Header />
-        <Inside>
-          <SidebarLeft />
-          {APP.config.target === BuildTarget.IFRAME ? (
-            <Iframe src={APP.config.url} onLoad={() => APP.connect()} />
-          ) : (
-            <SpacerFrame />
-          )}
-        </Inside>
-      </Container>
-    </RecoilRoot>
+    <Container>
+      <Header />
+      <Inside>
+        <SidebarLeft />
+        {APP.config.target === BuildTarget.IFRAME ? (
+          <Iframe src={APP.config.url} onLoad={() => APP.connect()} />
+        ) : (
+          <SpacerFrame />
+        )}
+        <SidebarRight />
+      </Inside>
+    </Container>
   );
 }

@@ -1,8 +1,8 @@
+import { nanoid } from 'nanoid';
+
 import type Control from './control';
 
 type Child = Layer | Control<any>;
-
-const nanoid = () => '';
 
 export default class Layer {
   id: string;
@@ -76,6 +76,7 @@ export default class Layer {
 
   toJSON() {
     return {
+      id: this.id,
       name: this.name,
       folder: this.folder,
       children: this.children.map((child) => child.toJSON()),

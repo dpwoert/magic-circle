@@ -1,0 +1,76 @@
+import styled from 'styled-components';
+
+import { useStore } from '@magic-circle/state';
+import { SPACING, COLORS, TYPO, Icon } from '@magic-circle/styles';
+
+import type Layers from './index';
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+
+type LayerProps = {
+  depth: number;
+  selected?: boolean;
+};
+
+const Layer = styled.div<LayerProps>`
+  ${TYPO.regular}
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left ${(props) => SPACING(props.depth * 2) + SPACING(1)}px;
+  padding-right ${SPACING(1)}px;
+  align-items: center;
+  height: ${SPACING(4)}px;
+  color: ${COLORS.white.css};
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  background: ${(props) =>
+    props.selected
+      ? String(COLORS.shades.s500.mix(COLORS.accent, 0.75))
+      : 'none'};
+  font-weight: ${props => props.selected ? 700: 400};
+
+  &:nth-child(2n) {
+    background: ${(props) =>
+      props.selected
+        ? String(COLORS.shades.s500.mix(COLORS.accent, 0.75))
+        : COLORS.shades.s500.css};
+  }
+
+  &:hover {
+    background: ${(props) =>
+      props.selected
+        ? String(COLORS.shades.s500.mix(COLORS.accent, 0.75))
+        : String(COLORS.shades.s500.mix(COLORS.accent, 0.1))};
+  }
+`;
+
+type SidebarProps = {
+  layers: Layers;
+};
+
+const Sidebar = ({ layers }: SidebarProps) => {
+  const list = useStore(layers.flat);
+  const selected = useStore(layers.selected);
+
+  return (
+    <Container>
+      {list.map((layer) => (
+        <Layer depth={layer.depth} selected={selected === layer.id} onClick={() => {
+          layers.selected.set(layer.id)
+        }}>
+          <span>{layer.name}</span>
+          {layer.hasChildren && (
+            <Icon name="ChevronDown" width={SPACING(2)} height={SPACING(2)} />
+          )}
+        </Layer>
+      ))}
+    </Container>
+  );
+};
+
+export default Sidebar;

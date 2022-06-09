@@ -1,11 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useRecoilValue } from 'recoil';
 
+import { useStore } from '@magic-circle/state';
 import { SPACING, COLORS, TYPO, Icon } from '@magic-circle/styles';
 
-import { buttons as buttonStore } from '../store/buttons';
-import { title as titleStore } from '../store/pageInfo';
+import APP from '../app/app';
 
 const Container = styled.div`
   position: relative;
@@ -81,17 +80,17 @@ const Title = styled.div`
 `;
 
 const Header = () => {
-  const buttons = useRecoilValue(buttonStore);
-  const title = useRecoilValue(titleStore);
+  const buttons = useStore(APP.buttons);
+  const { title } = useStore(APP.pageInfo);
 
   return (
     <Container>
       <Logo />
       <ButtonCollections>
-        {Object.values(buttons).map((collection) => (
+        {Object.values(buttons).map(collection => (
           <ButtonCollection>
-            {collection.map((button) => (
-              <Button onClick={() => button.onClick(button)}>
+            {collection.map(button => (
+              <Button onClick={() => button.onClick()}>
                 <Icon
                   name={button.icon}
                   width={SPACING(2)}
