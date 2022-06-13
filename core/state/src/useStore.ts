@@ -9,7 +9,13 @@ export default function useStore<T>(store: Store<T>): T {
       setValue(newValue);
     };
 
+    // Listen to updates
     store.onChange(listener);
+
+    // make sure we're in sync if changing stores
+    if (value !== store.value) {
+      setValue(store.value);
+    }
 
     return () => {
       store.removeListener(listener);

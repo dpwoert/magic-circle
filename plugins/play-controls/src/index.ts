@@ -17,8 +17,7 @@ export default class PlayControls implements Plugin {
     this.client = client;
     this.playing = false;
 
-    this.ipc.on('play', (playing: boolean) => {
-      console.log('play', playing);
+    this.ipc.on('play', (_, playing: boolean) => {
       this.setPlayButton(playing);
     });
   }
@@ -81,12 +80,10 @@ export default class PlayControls implements Plugin {
   }
 
   play() {
-    console.log('play clicked');
     this.ipc.send('play', true);
   }
 
   pause() {
-    console.log('pause clicked');
     this.ipc.send('play', false);
   }
 }

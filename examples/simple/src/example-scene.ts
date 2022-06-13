@@ -12,7 +12,7 @@ import {
   MagicCircle,
   Layer,
   Folder,
-  //   NumberControl,
+  NumberControl,
   //   BooleanControl,
   //   ColorControl,
 } from '@magic-circle/client';
@@ -56,36 +56,34 @@ export function setup(gui: MagicCircle) {
         mesh.position.z = z * 100;
 
         const meshLayer = new Layer(`Box ${i}`).addTo(sceneLayer);
+        const positionFolder = new Folder('Position').addTo(meshLayer);
+        const scaleFolder = new Folder('Scale').addTo(meshLayer);
+        // const materialFolder = new Folder('Material').addTo(meshLayer);
 
-        // meshLayer.folder('Position', [
-        //   new NumberControl(mesh.position, 'x').range(-200, 200),
-        //   new NumberControl(mesh.position, 'y').range(-200, 200),
-        //   new NumberControl(mesh.position, 'z').range(-200, 200),
-        // ]);
+        positionFolder.add([
+          new NumberControl(mesh.position, 'x').range(-200, 200),
+          new NumberControl(mesh.position, 'y').range(-200, 200),
+          new NumberControl(mesh.position, 'z').range(-200, 200),
+        ]);
 
-        // meshLayer.folder('Scale', [
-        //   new NumberControl(mesh.scale, 'x').range(-3, 3),
-        //   new NumberControl(mesh.scale, 'y').range(-3, 3),
-        //   new NumberControl(mesh.scale, 'z').range(-3, 3),
-        // ]);
-
-        // meshLayer.folder('Material', [
-        //   new ColorControl(mesh.material, 'color').range(1),
-        //   new NumberControl(mesh.material, 'opacity').range(0, 1),
-        //   new BooleanControl(mesh.material, 'transparent'),
-        // ]);
+        scaleFolder.add([
+          new NumberControl(mesh.scale, 'x').range(-3, 3),
+          new NumberControl(mesh.scale, 'y').range(-3, 3),
+          new NumberControl(mesh.scale, 'z').range(-3, 3),
+        ]);
 
         i += 1;
       }
     }
   }
 
-  // const animationLayer = gui.layer('Animation');
-  // animationLayer.folder('Rotation');
-  // .add([
-  //   new NumberControl(animation, 'x').range(-0.1, 0.1).stepSize(0.001),
-  //   new NumberControl(animation, 'y').range(-0.1, 0.1).stepSize(0.001),
-  // ]);
+  const animationLayer = new Layer('Animation').addTo(gui.layer);
+  const animationFolder = new Folder('Rotation').addTo(animationLayer);
+
+  animationFolder.add([
+    new NumberControl(animation, 'x').stepSize(0.001),
+    new NumberControl(animation, 'y').stepSize(0.001),
+  ]);
 }
 
 export function loop() {

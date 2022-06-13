@@ -7,7 +7,7 @@ export default class PluginSeed extends Plugin {
     const { ipc } = this.client;
 
     // listen to events
-    ipc.on('seed:set', this.set.bind(this));
+    ipc.on('seed:set', (_, seed) => this.set(seed));
   }
 
   set(seed: number) {

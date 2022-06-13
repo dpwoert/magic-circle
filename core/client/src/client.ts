@@ -53,7 +53,7 @@ export default class MagicCircle {
     this.stop = this.stop.bind(this);
 
     // listen to events
-    this.ipc.on('play', (playing) => {
+    this.ipc.on('play', (_, playing) => {
       if (playing) this.start();
       else this.stop();
     });

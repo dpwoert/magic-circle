@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 import type {
   App as AppBase,
   Plugin,
@@ -7,6 +9,7 @@ import type {
   SidebarOpts,
   Sidebar,
   PageInfo,
+  layoutHooks,
 } from '@magic-circle/schema';
 import { IpcIframe, IpcBase } from '@magic-circle/client';
 import { Store } from '@magic-circle/state';
@@ -16,12 +19,14 @@ import userConfig from './user-config';
 
 class App implements AppBase {
   plugins: Plugin[];
+  controls: AppBase['controls'];
   config: Config;
   ipc: IpcBase;
 
   sidebar: Store<Sidebar>;
   buttons: Store<ButtonCollections>;
   pageInfo: Store<PageInfo>;
+  layoutHooks: Store<layoutHooks>;
 
   constructor(userConf: UserConfig) {
     // merge with default config
@@ -35,6 +40,11 @@ class App implements AppBase {
     this.buttons = new Store<ButtonCollections>({});
     this.sidebar = new Store<Sidebar>({ current: 0, panels: [] });
     this.pageInfo = new Store<PageInfo>({ title: 'No title' });
+    this.layoutHooks = new Store<layoutHooks>({});
+    this.controls = {};
+    this.config.controls.forEach((control) => {
+      this.controls[control.name] = control;
+    });
   }
 
   async connect() {
@@ -76,16 +86,27 @@ class App implements AppBase {
     });
 
     // Update page information when needed
-    this.ipc.on('page-information', (info:PageInfo) => {
-      this.pageInfo.set(info)
-    })
+    this.ipc.on('page-information', (info: PageInfo) => {
+      this.pageInfo.set(info);
+    });
   }
 
   getPlugin(name: string) {
     return this.plugins.find((p) => p.name === name);
   }
 
+  getControl(name: string) {
+    return this.controls[name];
+  }
+
   getSetting(name: string) {}
+
+  setLayoutHook(name: string, value: ReactNode) {
+    this.layoutHooks.set({
+      ...this.layoutHooks.value,
+      [name]: value,
+    });
+  }
 }
 
 const app = new App(userConfig);

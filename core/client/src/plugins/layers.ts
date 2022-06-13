@@ -1,4 +1,5 @@
 import type Control from '../control';
+import Paths from '../paths';
 import Plugin from '../plugin';
 
 export default class PluginLayers extends Plugin {
@@ -8,47 +9,42 @@ export default class PluginLayers extends Plugin {
     const { ipc } = this.client;
 
     // listen to events
-    ipc.on('control:set', this.set.bind(this));
-    ipc.on('control:reset', this.reset.bind(this));
-    ipc.on('controls:set', this.resetAll.bind(this));
-    ipc.on('controls:reset', this.resetAll.bind(this));
+    ipc.on('control:set', (...args) => this.set.call(this, args));
+    ipc.on('control:reset', (...args) => this.reset.call(this, ...args));
+    ipc.on('controls:set', (...args) => this.set.call(this, ...args));
+    ipc.on('controls:reset', (...args) => this.resetAll.call(this, ...args));
 
     this.sync();
   }
 
   sync() {
-    const layers = this.client.layer.toJSON().children;
-
     // Create cache of controls
     const controls: typeof this.cache = {};
-    this.client.layer.forEachRecursive((child) => {
+    this.client.layer.forEachRecursive((child, path) => {
       if ('value' in child) {
-        controls[child.id] = child;
+        controls[path] = child;
       }
-    });
-
-    // Send to back-end
-    this.client.ipc.send('layers', {
-      controls: Object.values(controls).map((c) => c.toJSON()),
-      layers,
     });
 
     // save to cache
     this.cache = controls;
+
+    // Send to back-end
+    const layers = this.client.layer.toJSON('', new Paths()).children;
+    console.log('to send from client', { layers });
+    this.client.ipc.send('layers', layers, 'hallo');
   }
 
-  set(id: string, value: any) {
-    const { layer } = this.client;
-    const control = layer.find(id);
+  set(path: string, value: any) {
+    const control = this.cache[path];
 
     if (control && 'value' in control) {
       control.value(value);
     }
   }
 
-  reset(id: string) {
-    const { layer } = this.client;
-    const control = layer.find(id);
+  reset(path: string) {
+    const control = this.cache[path];
 
     if (control && 'value' in control) {
       control.reset();

@@ -1,18 +1,15 @@
-import { nanoid } from 'nanoid';
+import type Paths from './paths';
 
 type Reference = Record<string, any>;
 
 export default class Control<T> {
-  id: string;
   type: string;
   reference: Reference;
   key: string;
   initialValue: T;
   options: Record<string, unknown>;
 
-  constructor(type: string, reference: Reference, key: string) {
-    this.id = nanoid();
-    this.type = type;
+  constructor(reference: Reference, key: string) {
     this.reference = reference;
     this.key = key;
 
@@ -44,10 +41,17 @@ export default class Control<T> {
     this.initialValue = this.value;
   }
 
-  toJSON() {
+  getPath(basePath: string, paths: Paths) {
+    return paths.get(basePath, this.key);
+  }
+
+  toJSON(basePath: string, paths: Paths) {
+    const path = this.getPath(basePath, paths);
     return {
-      id: this.id,
+      path,
       label: this.options.label || this.key,
+      options: this.options,
+      type: this.type,
       value: this.value,
       initialValue: this.initialValue,
     };

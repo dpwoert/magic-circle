@@ -31,9 +31,7 @@
     "rollup-plugin-terser": "^7.0.2",
     "typescript": "^4.7.3"
   },
-  "dependencies": {
-    "nanoid": "^4.0.0"
-  },
+  "dependencies": {},
   "publishConfig": {
     "access": "public"
   }

@@ -32,7 +32,7 @@ const Layer = styled.div<LayerProps>`
     props.selected
       ? String(COLORS.shades.s500.mix(COLORS.accent, 0.75))
       : 'none'};
-  font-weight: ${props => props.selected ? 700: 400};
+  font-weight: ${(props) => (props.selected ? 700 : 400)};
 
   &:nth-child(2n) {
     background: ${(props) =>
@@ -60,9 +60,13 @@ const Sidebar = ({ layers }: SidebarProps) => {
   return (
     <Container>
       {list.map((layer) => (
-        <Layer depth={layer.depth} selected={selected === layer.id} onClick={() => {
-          layers.selected.set(layer.id)
-        }}>
+        <Layer
+          depth={layer.depth}
+          selected={selected === layer.path}
+          onClick={() => {
+            layers.selected.set(layer.path);
+          }}
+        >
           <span>{layer.name}</span>
           {layer.hasChildren && (
             <Icon name="ChevronDown" width={SPACING(2)} height={SPACING(2)} />

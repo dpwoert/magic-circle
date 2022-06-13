@@ -1,17 +1,14 @@
-import { nanoid } from 'nanoid';
-
 import type Control from './control';
+import Paths from './paths';
 
 type Child = Layer | Control<any>;
 
 export default class Layer {
-  id: string;
   name: string;
   children: Child[];
   folder: boolean;
 
   constructor(name: string) {
-    this.id = nanoid();
     this.name = name;
     this.children = [];
     this.folder = false;
@@ -23,19 +20,21 @@ export default class Layer {
     });
   }
 
-  forEachRecursive(fn: (child: Child) => void) {
-    // todo
-    const recursive = (children: Child[]) => {
+  forEachRecursive(fn: (child: Child, path: string) => void) {
+    const path = new Paths();
+
+    const recursive = (children: Child[], basePath: string) => {
       children.forEach((child) => {
-        fn(child);
+        const currentPath = child.getPath(basePath, path);
+        fn(child, currentPath);
 
         if ('children' in child) {
-          recursive(child.children);
+          recursive(child.children, currentPath);
         }
       });
     };
 
-    recursive(this.children);
+    recursive(this.children, '');
   }
 
   add(child: Child | Child[]) {
@@ -54,32 +53,37 @@ export default class Layer {
     return this;
   }
 
-  find(id: string) {
-    let found: Child;
+  // find(id: string) {
+  //   let found: Child;
 
-    // recursively try to find this element
-    const recursive = (children: Child[]) => {
-      children.forEach((child) => {
-        if (child.id === id) {
-          found = child;
-        }
-        if ('children' in child && !found) {
-          recursive(child.children);
-        }
-      });
-    };
+  //   // recursively try to find this element
+  //   const recursive = (children: Child[]) => {
+  //     children.forEach((child) => {
+  //       if (child.id === id) {
+  //         found = child;
+  //       }
+  //       if ('children' in child && !found) {
+  //         recursive(child.children);
+  //       }
+  //     });
+  //   };
 
-    // start
-    recursive(this.children);
-    return found;
+  //   // start
+  //   recursive(this.children);
+  //   return found;
+  // }
+
+  getPath(basePath: string, paths: Paths) {
+    return paths.get(basePath, this.name);
   }
 
-  toJSON() {
+  toJSON(basePath: string, paths: Paths) {
+    const path = this.getPath(basePath, paths);
     return {
-      id: this.id,
+      path,
       name: this.name,
       folder: this.folder,
-      children: this.children.map((child) => child.toJSON()),
+      children: this.children.map((child) => child.toJSON(path, paths)),
     };
   }
 }

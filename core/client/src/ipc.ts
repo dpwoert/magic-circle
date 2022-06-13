@@ -1,4 +1,4 @@
-type hook = (payload: any, channel: string) => void;
+type hook = (channel: string, ...payload: any[]) => void;
 
 export class IpcBase {
   private listeners: Record<string, hook[]>;
@@ -15,18 +15,20 @@ export class IpcBase {
     return true;
   }
 
-  send(channel: string, payload: any) {
+  send(channel: string, ...payload: any[]) {
     console.error(`trying to send message on channel ${channel}`, payload);
   }
 
-  trigger(channel: string, payload: any) {
+  trigger(channel: string, payload: any[]) {
     // channel does not exist
     if (!this.listeners[channel]) {
       return;
     }
 
     // trigger events
-    this.listeners[channel].forEach((fn) => fn(payload, channel));
+    this.listeners[channel].forEach((fn) =>
+      fn.apply(undefined, [channel, ...payload])
+    );
   }
 
   screenshot() {
@@ -140,7 +142,7 @@ export class IpcIframe extends IpcBase {
     });
   }
 
-  send(channel: string, payload: any) {
+  send(channel: string, ...payload: any[]) {
     this.connection.postMessage({ channel, payload }, '*');
   }
 }

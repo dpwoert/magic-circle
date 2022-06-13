@@ -1,13 +1,16 @@
-import type {
+import {
   Plugin,
   icons,
   App,
   MainLayerExport,
   LayerExport,
+  LayoutHook,
+  ControlExport,
 } from '@magic-circle/schema';
-import { Store } from '@magic-circle/state';
+import { Store, StoreFamily } from '@magic-circle/state';
 
 import SidebarLeft from './SidebarLeft';
+import SidebarRight from './SidebarRight';
 
 type FlatListItem = LayerExport & {
   depth: number;
@@ -16,27 +19,33 @@ type FlatListItem = LayerExport & {
 
 const convert = (main: MainLayerExport) => {
   const flat: FlatListItem[] = [];
-  const lookup :Record<string, LayerExport['children']> = {};
+  const lookup: Record<string, LayerExport | ControlExport> = {};
 
   const recursive = (layers: LayerExport['children'] = [], depth = 0) => {
-    layers.forEach(child => {
+    layers.forEach((child) => {
+      lookup[child.path] = child;
+
       if ('folder' in child && !child.folder) {
+        const hasChildren = child.children && child.children.length > 0;
+        const childLayers =
+          hasChildren && child.children.some((c) => 'folder' in c && !c.folder);
+
         flat.push({
           ...child,
           depth,
-          hasChildren: child.children && child.children.length > 0,
+          hasChildren: childLayers,
         });
+      }
 
-        if (child.children) {
-          recursive(child.children, depth + 1);
-        }
+      if ('children' in child && child.children) {
+        recursive(child.children, depth + 1);
       }
     });
   };
 
-  recursive(main.layers);
+  recursive(main);
 
-  return {flat, lookup}
+  return { flat, lookup };
 };
 
 export default class Layers implements Plugin {
@@ -45,7 +54,7 @@ export default class Layers implements Plugin {
 
   layers: Store<MainLayerExport>;
   flat: Store<FlatListItem[]>;
-  lookup: Store<Record<string, LayerExport['children']>>;
+  lookup: StoreFamily<LayerExport | ControlExport>;
   selected: Store<string>;
 
   name = 'Layers';
@@ -55,19 +64,23 @@ export default class Layers implements Plugin {
     this.client = client;
 
     // Create stores
-    this.layers = new Store<MainLayerExport>({
-      controls: {},
-      layers: [],
-    });
+    this.layers = new Store<MainLayerExport>([]);
     this.flat = new Store<FlatListItem[]>([]);
     this.selected = new Store<string>(null);
+    this.lookup = new StoreFamily<LayerExport | ControlExport>();
 
-    this.ipc.on('layers', (layers: MainLayerExport) => {
-      const {flat, lookup} = convert(layers);
+    this.ipc.on('layers', (_, layers: MainLayerExport) => {
+      const { flat, lookup } = convert(layers);
       this.layers.set(layers);
       this.flat.set(flat);
-      this.lookup.set(lookup);
+      this.lookup.set((id) => lookup[id]);
     });
+
+    // Set controls sidebar
+    this.client.setLayoutHook(
+      LayoutHook.SIDEBAR_RIGHT,
+      <SidebarRight app={this.client} layers={this} />
+    );
   }
 
   sidebar() {
@@ -75,5 +88,36 @@ export default class Layers implements Plugin {
       icon: 'Rows' as icons,
       render: <SidebarLeft layers={this} />,
     };
+  }
+
+  setControl<T>(path: string, newValue: T) {
+    const store = this.lookup.get(path);
+
+    console.log('update', { path, newValue });
+
+    if (!store || !store.value) {
+      throw new Error('Trying to update value of non-existent control');
+    }
+
+    // Save changes locally
+    store.set({
+      ...store.value,
+      value: newValue,
+    });
+
+    // send changes to FE
+    this.ipc.send('controls:set', path, newValue);
+  }
+
+  resetControl(path: string) {
+    const store = this.lookup.get(path);
+
+    if (store && 'initialValue' in store.value) {
+      this.setControl(path, store.value.initialValue);
+    }
+  }
+
+  getControlRenderer(type: string) {
+    return this.client.controls[type]?.render;
   }
 }

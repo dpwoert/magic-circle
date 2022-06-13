@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { SPACING, COLORS, Icon } from '@magic-circle/styles';
+import { LayoutHook } from '@magic-circle/schema';
+import { useStore } from '@magic-circle/state';
+
+import APP from '../app/app';
 
 const Container = styled.div`
   display: flex;
@@ -13,15 +17,14 @@ const Inside = styled.div`
   width: 100%;
   height: 100%;
   overflow: auto;
-  border-right: 1px solid ${COLORS.shades.s300.css};
+  border-left: 1px solid ${COLORS.shades.s300.css};
 `;
 
 const SidebarRight = () => {
-  // todo
-
+  const hooks = useStore(APP.layoutHooks);
   return (
     <Container>
-      <Inside>todo</Inside>
+      <Inside>{hooks[LayoutHook.SIDEBAR_RIGHT]}</Inside>
     </Container>
   );
 };

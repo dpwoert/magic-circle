@@ -197,10 +197,6 @@ export interface StoreConstructor<T> {
   new (initialValue: T): Store<T>;
 }
 
-export enum LayoutPlacement {
-  SIDEBAR = 'sidebar',
-}
-
 export interface SidebarOpts {
   icon: icons;
   render: ReactNode;
@@ -239,6 +235,20 @@ export interface PluginConstructor {
   new (): Plugin;
 }
 
+export type ControlProps<T, K> = {
+  value: T;
+  label: string;
+  options: K;
+  hasChanges: boolean;
+  set: (newValue: T) => void;
+  reset: () => void;
+};
+
+export type Control = {
+  name: string;
+  render: (props: ControlProps<any, any>) => ReactNode;
+};
+
 export enum BuildTarget {
   ELECTRON = 'electron',
   IFRAME = 'iframe',
@@ -247,6 +257,7 @@ export enum BuildTarget {
 export interface Config {
   url: string;
   plugins: PluginConstructor[];
+  controls: Control[];
   theme: {
     accent: string;
   };
@@ -257,38 +268,48 @@ export interface Config {
 export type UserConfig = Partial<Config>;
 
 export type ControlExport = {
-  id: string;
+  path: string;
+  type: string;
   label: string;
+  options: Record<string, any>;
   value: any;
   initialValue: any;
 };
 
 export type LayerExport = {
-  id: string;
+  path: string;
   name: string;
   folder: boolean;
   children: Array<LayerExport | ControlExport>;
 };
 
-export type MainLayerExport = {
-  controls: Record<string, ControlExport[]>;
-  layers: LayerExport[];
-};
+export type MainLayerExport = LayerExport[];
 
 export type PageInfo = {
   title: string;
   location?: Location;
+};
+
+export enum LayoutHook {
+  SIDEBAR_RIGHT = 'sidebar_right',
 }
+
+export type layoutHooks = Record<string, ReactNode>;
 
 export interface App {
   plugins: Plugin[];
+  controls: Record<string, Control>;
   config: Config;
   ipc: IpcBase;
 
   buttons: Store<ButtonCollections>;
   sidebar: Store<Sidebar>;
   pageInfo: Store<PageInfo>;
+  layoutHooks: Store<layoutHooks>;
 
   getPlugin: (name: string) => Plugin | undefined;
+  getControl: (name: string) => Control | undefined;
   getSetting: (name: string) => unknown;
+
+  setLayoutHook: (name: string, hook: ReactNode) => void;
 }
