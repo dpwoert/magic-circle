@@ -14,11 +14,12 @@ const TextControlSelect = ({
   options,
   set,
   reset,
+  hasChanges,
 }: ControlProps<string, options>) => {
   const values = options.selection.keys;
   const labels = options.selection.labels || [...values];
   return (
-    <Control.Container>
+    <Control.Container hasChanges={hasChanges} reset={reset}>
       <Control.Label>{label}</Control.Label>
       <Control.Inside>
         <Forms.Select
@@ -42,10 +43,11 @@ const TextControlField = ({
   value,
   label,
   set,
+  hasChanges,
   reset,
 }: ControlProps<string, options>) => {
   return (
-    <Control.Container>
+    <Control.Container hasChanges={hasChanges} reset={reset}>
       <Control.Label>{label}</Control.Label>
       <Control.Inside>
         <Forms.Field

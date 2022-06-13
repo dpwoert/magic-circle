@@ -77,6 +77,7 @@ const NumberControlContinuous = ({
   label,
   options,
   set,
+  hasChanges,
   reset,
 }: ControlProps<number, options>) => {
   const { range, stepSize } = options;
@@ -92,7 +93,7 @@ const NumberControlContinuous = ({
   const left = biDirectional ? Math.min(x1, x2) : 0;
 
   return (
-    <Control.Container>
+    <Control.Container hasChanges={hasChanges} reset={reset}>
       <Control.Label>{label}</Control.Label>
       <Control.Inside>
         <InputContainer>
@@ -121,6 +122,7 @@ const NumberControlStepper = ({
   options,
   set,
   reset,
+  hasChanges,
 }: ControlProps<number, options>) => {
   const [valueSafe, setValueSafe] = useState<number | string>(value);
   const drag = useRef<{ start: number; value: number }>({
@@ -170,7 +172,7 @@ const NumberControlStepper = ({
   }, [value]);
 
   return (
-    <Control.Container>
+    <Control.Container hasChanges={hasChanges} reset={reset}>
       <Control.Label>{label}</Control.Label>
       <Control.Inside>
         <NumberStepper

@@ -9,10 +9,10 @@ export default class PluginLayers extends Plugin {
     const { ipc } = this.client;
 
     // listen to events
-    ipc.on('control:set', (...args) => this.set.call(this, args));
-    ipc.on('control:reset', (...args) => this.reset.call(this, ...args));
-    ipc.on('controls:set', (...args) => this.set.call(this, ...args));
-    ipc.on('controls:reset', (...args) => this.resetAll.call(this, ...args));
+    ipc.on('control:set', (_, ...args) => this.set.call(this, ...args));
+    ipc.on('control:reset', (_, ...args) => this.reset.call(this, ...args));
+    ipc.on('controls:set', (_, ...args) => this.set.call(this, ...args));
+    ipc.on('controls:reset', (_, ...args) => this.resetAll.call(this, ...args));
 
     this.sync();
   }
@@ -38,8 +38,13 @@ export default class PluginLayers extends Plugin {
   set(path: string, value: any) {
     const control = this.cache[path];
 
+    console.log('set', path, value);
+    console.log({ control, cache: this.cache });
+
     if (control && 'value' in control) {
-      control.value(value);
+      control.value = value;
+    } else {
+      console.warn(`Trying to update control (${path}) that can not be found`);
     }
   }
 

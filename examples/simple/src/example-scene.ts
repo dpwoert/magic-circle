@@ -67,9 +67,9 @@ export function setup(gui: MagicCircle) {
         ]);
 
         scaleFolder.add([
-          new NumberControl(mesh.scale, 'x').range(-3, 3),
-          new NumberControl(mesh.scale, 'y').range(-3, 3),
-          new NumberControl(mesh.scale, 'z').range(-3, 3),
+          new NumberControl(mesh.scale, 'x').range(0, 15),
+          new NumberControl(mesh.scale, 'y').range(0, 15),
+          new NumberControl(mesh.scale, 'z').range(0, 15),
         ]);
 
         i += 1;

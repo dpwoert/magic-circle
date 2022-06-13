@@ -34,7 +34,7 @@ export default class Layer {
       });
     };
 
-    recursive(this.children, '');
+    recursive(this.children, this.name);
   }
 
   add(child: Child | Child[]) {
