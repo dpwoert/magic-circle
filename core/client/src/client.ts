@@ -57,6 +57,9 @@ export default class MagicCircle {
       if (playing) this.start();
       else this.stop();
     });
+    this.ipc.on('refresh', () => {
+      location.reload();
+    });
   }
 
   async connect() {

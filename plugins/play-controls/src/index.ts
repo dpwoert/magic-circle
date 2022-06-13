@@ -64,14 +64,14 @@ export default class PlayControls implements Plugin {
           label: 'reload',
           icon: 'Refresh',
           onClick: () => {
-            // todo
+            this.refresh();
           },
         },
         {
           label: 'reset',
           icon: 'Rewind',
           onClick: () => {
-            // todo
+            this.client.reset();
           },
         },
         ...(buttons.play || []),
@@ -85,5 +85,13 @@ export default class PlayControls implements Plugin {
 
   pause() {
     this.ipc.send('play', false);
+  }
+
+  refresh() {
+    this.ipc.send('refresh', false);
+  }
+
+  async reset() {
+    this.ipc.send('controls:reset');
   }
 }

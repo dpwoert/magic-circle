@@ -69,5 +69,8 @@ export default class PluginLayers extends Plugin {
         control.reset();
       }
     });
+
+    // and sync again so editor is correct
+    this.sync();
   }
 }

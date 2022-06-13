@@ -86,9 +86,17 @@ class App implements AppBase {
     });
 
     // Update page information when needed
-    this.ipc.on('page-information', (info: PageInfo) => {
+    this.ipc.on('page-information', (_, info: PageInfo) => {
       this.pageInfo.set(info);
     });
+  }
+
+  async reset() {
+    await Promise.all(
+      this.plugins.map(async (plugin) => {
+        if (plugin.reset) await plugin.reset();
+      })
+    );
   }
 
   getPlugin(name: string) {

@@ -312,4 +312,6 @@ export interface App {
   getSetting: (name: string) => unknown;
 
   setLayoutHook: (name: string, hook: ReactNode) => void;
+
+  reset: () => Promise<void>;
 }
