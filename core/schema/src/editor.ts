@@ -207,8 +207,6 @@ export type Sidebar = {
   panels: SidebarOpts[];
 };
 
-export type Hydration = Record<string, any>;
-
 export type Button = {
   label: string;
   icon: icons;
@@ -224,9 +222,9 @@ export interface Plugin {
   setup: (app: App) => Promise<void>;
   sidebar?: () => SidebarOpts;
   buttons?: (buttons: ButtonCollections) => ButtonCollections;
-  hydrate?: (hydration: Hydration) => Promise<Hydration>;
+  load?: (data: any) => Promise<void>;
   ready?: () => void;
-  save?: () => Promise<Record<string, any>>;
+  save?: () => Promise<any>;
   reset?: () => Promise<void>;
   electron?: string;
 }
@@ -292,6 +290,7 @@ export type PageInfo = {
 
 export enum LayoutHook {
   SIDEBAR_RIGHT = 'sidebar_right',
+  INNER = 'inner',
 }
 
 export type layoutHooks = Record<string, ReactNode>;
@@ -313,5 +312,7 @@ export interface App {
 
   setLayoutHook: (name: string, hook: ReactNode) => void;
 
+  save: () => Promise<Record<string, any>>;
+  load: (data: Record<string, any>) => Promise<void>;
   reset: () => Promise<void>;
 }

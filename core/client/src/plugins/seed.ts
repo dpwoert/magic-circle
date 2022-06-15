@@ -3,6 +3,8 @@ import Plugin from '../plugin';
 export default class PluginSeed extends Plugin {
   seed: number;
 
+  name = 'seed';
+
   connect() {
     const { ipc } = this.client;
 

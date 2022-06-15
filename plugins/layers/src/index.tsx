@@ -90,6 +90,22 @@ export default class Layers implements Plugin {
     };
   }
 
+  async load(data: Record<string, any>) {
+    Object.keys(data).forEach((key) => this.setControl(key, data[key]));
+  }
+
+  async save() {
+    const toSave = {};
+
+    this.lookup.export((key, value) => {
+      if (value && 'value' in value) {
+        toSave[key] = value.value;
+      }
+    });
+
+    return toSave;
+  }
+
   setControl<T>(path: string, newValue: T) {
     const store = this.lookup.get(path);
 

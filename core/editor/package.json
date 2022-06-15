@@ -54,6 +54,7 @@
     "@magic-circle/client": "^0.0.7",
     "@magic-circle/state": "^0.0.7",
     "@magic-circle/controls": "^0.0.7",
+    "@magic-circle/screenshots": "^0.0.7",
     "@types/color-string": "^1.5.2",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",

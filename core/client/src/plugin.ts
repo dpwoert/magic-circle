@@ -3,6 +3,8 @@ import Client from './client';
 export default class Plugin {
   client: Client;
 
+  name = '';
+
   constructor(client) {
     this.client = client;
   }

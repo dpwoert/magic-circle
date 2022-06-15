@@ -5,6 +5,8 @@ import Plugin from '../plugin';
 export default class PluginLayers extends Plugin {
   cache: Record<string, Control<any>>;
 
+  name = 'layers';
+
   connect() {
     const { ipc } = this.client;
 

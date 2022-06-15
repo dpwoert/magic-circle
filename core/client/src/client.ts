@@ -156,4 +156,8 @@ export default class MagicCircle {
       this.frameRequest = requestAnimationFrame(this.tick);
     }
   }
+
+  plugin(name: string) {
+    return this.plugins.find((p) => p.name === name);
+  }
 }

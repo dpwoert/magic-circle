@@ -99,6 +99,29 @@ class App implements AppBase {
     );
   }
 
+  async save() {
+    const data: Record<string, any> = {};
+
+    await Promise.all(
+      this.plugins.map(async (plugin) => {
+        if (plugin.save) {
+          const toSave = await plugin.save();
+          data[plugin.name] = toSave;
+        }
+      })
+    );
+
+    return data;
+  }
+
+  async load(data: Record<string, any>) {
+    this.plugins.map(async (plugin) => {
+      if (plugin.load && data[plugin.name]) {
+        await plugin.load(data[plugin.name]);
+      }
+    });
+  }
+
   getPlugin(name: string) {
     return this.plugins.find((p) => p.name === name);
   }

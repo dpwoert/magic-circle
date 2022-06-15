@@ -22,6 +22,12 @@ const Inside = styled.div`
 
 const SidebarRight = () => {
   const hooks = useStore(APP.layoutHooks);
+
+  // not displaying when the inner hook is shown
+  if (hooks[LayoutHook.INNER]) {
+    return null;
+  }
+
   return (
     <Container>
       <Inside>{hooks[LayoutHook.SIDEBAR_RIGHT]}</Inside>

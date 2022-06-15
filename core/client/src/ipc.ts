@@ -31,10 +31,6 @@ export class IpcBase {
     );
   }
 
-  screenshot() {
-    console.error('Screenshot implementation not implemented yet');
-  }
-
   on(channel: string, fn: hook) {
     if (!this.listeners[channel]) {
       this.listeners[channel] = [];

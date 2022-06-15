@@ -13,6 +13,7 @@ import {
   Layer,
   Folder,
   NumberControl,
+  PluginScreenshot,
   //   BooleanControl,
   //   ColorControl,
 } from '@magic-circle/client';
@@ -84,6 +85,10 @@ export function setup(gui: MagicCircle) {
     new NumberControl(animation, 'x').stepSize(0.001),
     new NumberControl(animation, 'y').stepSize(0.001),
   ]);
+
+  // setup screenshots in iframe
+  const screenshots = gui.plugin('screenshot') as PluginScreenshot;
+  screenshots.setupIframeElement(renderer.domElement);
 }
 
 export function loop() {

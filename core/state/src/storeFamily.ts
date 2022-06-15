@@ -29,4 +29,11 @@ export default class StoreFamily<T> {
 
     return this.cache[id];
   }
+
+  export(fn: (key: string, value: T) => void) {
+    Object.keys(this.cache).forEach((key) => {
+      console.log({ key });
+      fn(key, this.cache[key].value);
+    });
+  }
 }

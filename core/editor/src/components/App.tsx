@@ -9,6 +9,7 @@ import APP from '../app/app';
 
 import { BuildTarget } from '@magic-circle/schema';
 import { SPACING, COLORS } from '@magic-circle/styles';
+import Inner from './Inner';
 
 const Container = styled.div`
   display: flex;
@@ -19,10 +20,20 @@ const Container = styled.div`
 const Inside = styled.div`
   flex: 1;
   display: flex;
+  min-height: 0;
+`;
+
+const Frame = styled.div`
+  position: relative;
+  flex: 1;
+  height: 100%;
+  background: ${COLORS.white.css};
+  border: none;
 `;
 
 const Iframe = styled.iframe`
-  flex: 1;
+  position: absolute;
+  width: 100%;
   height: 100%;
   background: ${COLORS.white.css};
   border: none;
@@ -40,11 +51,18 @@ export default function App() {
       <Header />
       <Inside>
         <SidebarLeft />
-        {APP.config.target === BuildTarget.IFRAME ? (
-          <Iframe src={APP.config.url} onLoad={() => APP.connect()} />
-        ) : (
-          <SpacerFrame />
-        )}
+        <Frame>
+          {APP.config.target === BuildTarget.IFRAME ? (
+            <Iframe
+              allow="display-capture"
+              src={APP.config.url}
+              onLoad={() => APP.connect()}
+            />
+          ) : (
+            <SpacerFrame />
+          )}
+          <Inner />
+        </Frame>
         <SidebarRight />
       </Inside>
     </Container>

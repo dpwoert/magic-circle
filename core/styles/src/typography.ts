@@ -13,6 +13,13 @@ export const FONT_STRING =
 // bold: 700;
 
 const typo = {
+  large: css`
+    font-family: ${FONT_STRING};
+    font-weight: 600;
+    font-size: ${rem(16)};
+    line-height: ${rem(24)};
+    letter-spacing: 0em;
+  `,
   title: css`
     font-family: ${FONT_STRING};
     font-weight: 600;

@@ -14,7 +14,7 @@ const Container = styled.div`
 
 const Tabs = styled.div`
   display: flex;
-  flex-direction: columns;
+  flex-direction: column;
   width: ${SPACING(5)}px;
   height: 100%;
   background: ${COLORS.shades.s500.css};
@@ -60,7 +60,15 @@ const SidebarLeft = () => {
     <Container>
       <Tabs>
         {panels.map((s, key) => (
-          <Tab selected={key === current}>
+          <Tab
+            selected={key === current}
+            onClick={() => {
+              APP.sidebar.set({
+                panels,
+                current: key,
+              });
+            }}
+          >
             <Icon name={s.icon} width={SPACING(2)} height={SPACING(2)} />
           </Tab>
         ))}
