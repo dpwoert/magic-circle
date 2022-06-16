@@ -10,6 +10,8 @@ export default class PluginSeed extends Plugin {
 
     // listen to events
     ipc.on('seed:set', (_, seed) => this.set(seed));
+    ipc.on('seed:generate', (_, seed) => this.generate());
+    this.generate();
   }
 
   set(seed: number) {

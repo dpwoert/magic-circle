@@ -19,7 +19,8 @@
     "directory": "plugins/performance"
   },
   "files": [
-    "src/*.js"
+    "dist/*.ts",
+    "dist/*.tsx"
   ],
   "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
   "license": "MIT",

@@ -293,6 +293,7 @@ export type PageInfo = {
 
 export enum LayoutHook {
   SIDEBAR_RIGHT = 'sidebar_right',
+  HEADER_RIGHT = 'header_right',
   INNER = 'inner',
 }
 

@@ -63,8 +63,6 @@ export default class Performance implements Plugin {
         updateTick(this.renderTime.value, metrics.renderTime)
       );
       this.memory.set(metrics.memory);
-
-      console.log('renderTime', this.renderTime.value);
     });
   }
 

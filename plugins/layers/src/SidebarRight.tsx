@@ -34,14 +34,6 @@ type ControlProps = {
 
 const Control = ({ layers, controlPath }: ControlProps) => {
   const control = useStore(layers.lookup.get(controlPath));
-
-  console.log({
-    control,
-    controlPath,
-    lookup: layers.lookup,
-    store: layers.lookup.get(controlPath),
-  });
-
   if (control && 'type' in control) {
     const Element = layers.getControlRenderer(control.type);
 

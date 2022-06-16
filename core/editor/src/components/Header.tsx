@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { useStore } from '@magic-circle/state';
+import { LayoutHook } from '@magic-circle/schema';
 import { SPACING, COLORS, TYPO, Icon } from '@magic-circle/styles';
 
 import APP from '../app/app';
@@ -9,8 +10,17 @@ import APP from '../app/app';
 const Container = styled.div`
   position: relative;
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   height: ${SPACING(5)}px;
   background: ${COLORS.shades.s700.css};
+  padding-right: ${SPACING(1)}px;
+`;
+
+const Part = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const Logo = styled.div`
@@ -82,26 +92,32 @@ const Title = styled.div`
 const Header = () => {
   const buttons = useStore(APP.buttons);
   const { title } = useStore(APP.pageInfo);
+  const hooks = useStore(APP.layoutHooks);
+
+  console.log({ hooks });
 
   return (
     <Container>
-      <Logo />
-      <ButtonCollections>
-        {Object.values(buttons).map((collection) => (
-          <ButtonCollection>
-            {collection.map((button) => (
-              <Button onClick={() => button.onClick()}>
-                <Icon
-                  name={button.icon}
-                  width={SPACING(2)}
-                  height={SPACING(2)}
-                />
-              </Button>
-            ))}
-          </ButtonCollection>
-        ))}
-      </ButtonCollections>
+      <Part>
+        <Logo />
+        <ButtonCollections>
+          {Object.values(buttons).map((collection) => (
+            <ButtonCollection>
+              {collection.map((button) => (
+                <Button onClick={() => button.onClick()}>
+                  <Icon
+                    name={button.icon}
+                    width={SPACING(2)}
+                    height={SPACING(2)}
+                  />
+                </Button>
+              ))}
+            </ButtonCollection>
+          ))}
+        </ButtonCollections>
+      </Part>
       <Title>{title}</Title>
+      <Part>{hooks[LayoutHook.HEADER_RIGHT]}</Part>
     </Container>
   );
 };
