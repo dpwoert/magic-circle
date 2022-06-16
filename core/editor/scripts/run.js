@@ -3,6 +3,7 @@ const path = require('path');
 const argv = require('minimist')(process.argv.slice(2));
 const tmp = require('tmp-promise');
 const vite = require('vite');
+const getRepoInfo = require('git-repo-info');
 
 const rollup = require('rollup');
 const nodeResolve = require('rollup-plugin-node-resolve');
@@ -47,6 +48,8 @@ const run = async () => {
   // check if config file is present, if so it needs to be build
   const configPath = await generateConfig();
 
+  const git = getRepoInfo(process.cwd());
+
   await vite.build({
     root: path.resolve(__dirname, '../'), // base: '/foo/',
     // build: {
@@ -54,6 +57,11 @@ const run = async () => {
     //     // ...
     //   },
     // },
+    define: {
+      'process.env.GIT_BRANCH': JSON.stringify(git.branch),
+      'process.env.GIT_COMMIT_MESSAGE': JSON.stringify(git.commitMessage),
+      'process.env.GIT_COMMIT_SHA': JSON.stringify(git.sha),
+    },
     resolve: {
       alias: {
         './user-config': configPath,

@@ -111,6 +111,15 @@ class App implements AppBase {
       })
     );
 
+    // Add git info
+    if (process.env.GIT_COMMIT_SHA) {
+      data.git = {
+        sha: process.env.GIT_COMMIT_SHA,
+        message: process.env.GIT_COMMIT_MESSAGE,
+        branch: process.env.GIT_BRANCH,
+      };
+    }
+
     return data;
   }
 

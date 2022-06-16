@@ -46,12 +46,14 @@ const SpacerFrame = styled.div`
 `;
 
 export default function App() {
+  console.log('git', process.env.GIT_BRANCH);
+
   return (
     <Container>
       <Header />
       <Inside>
         <SidebarLeft />
-        <Frame>
+        <Frame id="frame">
           {APP.config.target === BuildTarget.IFRAME ? (
             <Iframe
               allow="display-capture"

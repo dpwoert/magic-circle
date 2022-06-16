@@ -258,7 +258,7 @@ export default class Screenshots implements Plugin {
     // Set controls sidebar
     this.client.setLayoutHook(
       LayoutHook.INNER,
-      <JsonViewer screenshot={screenshot} />
+      <JsonViewer screenshots={this} screenshot={screenshot} />
     );
   }
 

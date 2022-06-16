@@ -8,6 +8,7 @@ import Screenshots, { ReadMode, ScreenshotFile } from './index';
 const Header = styled.div`
   position: sticky;
   top: 0;
+  z-index: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -214,6 +215,18 @@ const File = ({ file, preview, json, load, favourite }: FileProps) => {
             <Icon name="Information" width={SPACING(1)} height={SPACING(1)} />
             Show file info
           </Option>
+          {file.data.git && (
+            <Option
+              onClick={() => {
+                navigator.clipboard.writeText(
+                  `git checkout ${file.data.git.sha}`
+                );
+              }}
+            >
+              <Icon name="Code" width={SPACING(1)} height={SPACING(1)} />
+              Copy git commit
+            </Option>
+          )}
           <Option>
             <Icon name="Trash" width={SPACING(1)} height={SPACING(1)} />
             Delete

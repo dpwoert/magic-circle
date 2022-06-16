@@ -1,6 +1,16 @@
 import Client from './client';
 
-export default class Plugin {
+export interface PluginBase {
+  name: string;
+  compatible: () => boolean;
+  connect?: () => void;
+  playState?: (playing: boolean) => void;
+  startFrame?: () => void;
+  endFrame?: () => void;
+  destroy: () => void;
+}
+
+export default class Plugin implements PluginBase {
   client: Client;
 
   name = '';
@@ -12,12 +22,6 @@ export default class Plugin {
   compatible() {
     return true;
   }
-
-  connect() {
-    // todo
-  }
-
-  playState(playing: boolean) {}
 
   destroy() {
     this.client = null;

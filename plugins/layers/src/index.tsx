@@ -57,7 +57,7 @@ export default class Layers implements Plugin {
   lookup: StoreFamily<LayerExport | ControlExport>;
   selected: Store<string>;
 
-  name = 'Layers';
+  name = 'layers';
 
   async setup(client: App) {
     this.ipc = client.ipc;
@@ -74,6 +74,7 @@ export default class Layers implements Plugin {
       this.layers.set(layers);
       this.flat.set(flat);
       this.lookup.set((id) => lookup[id]);
+      this.lookup.keys(Object.keys(lookup));
     });
 
     // Set controls sidebar
@@ -98,10 +99,13 @@ export default class Layers implements Plugin {
     const toSave = {};
 
     this.lookup.export((key, value) => {
-      if (value && 'value' in value) {
+      if (value && 'value' in value && value.value) {
+        console.log('add key', key, value.value);
         toSave[key] = value.value;
       }
     });
+
+    console.log({ toSave });
 
     return toSave;
   }

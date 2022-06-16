@@ -55,6 +55,7 @@
     "@magic-circle/state": "^0.0.7",
     "@magic-circle/controls": "^0.0.7",
     "@magic-circle/screenshots": "^0.0.7",
+    "@magic-circle/performance": "^0.0.7",
     "@types/color-string": "^1.5.2",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
@@ -83,7 +84,8 @@
     "styled-components": "^4.4.1",
     "tmp-promise": "^3.0.3",
     "typescript": "^4.7.3",
-    "vite": "^2.9.9"
+    "vite": "^2.9.9",
+    "git-repo-info": "^2.1.1"
   },
   "devDependencies": {
     "case": "^1.6.3"

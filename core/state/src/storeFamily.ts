@@ -3,9 +3,11 @@ import Store from './store';
 export default class StoreFamily<T> {
   read: (id: string) => T;
   cache: Record<string, Store<T>>;
+  _keys: string[];
 
   constructor() {
     this.cache = {};
+    this._keys = [];
   }
 
   set(fn: (id: string) => T) {
@@ -20,6 +22,10 @@ export default class StoreFamily<T> {
   }
 
   get(id: string) {
+    if (!id) {
+      return new Store<T>(null);
+    }
+
     // create store when needed
     if (!this.cache[id]) {
       const data = this.read(id);
@@ -27,13 +33,22 @@ export default class StoreFamily<T> {
       this.cache[id] = store;
     }
 
+    // Add to list of keys
+    if (!this._keys.includes(id)) {
+      this._keys.push(id);
+    }
+
     return this.cache[id];
   }
 
   export(fn: (key: string, value: T) => void) {
-    Object.keys(this.cache).forEach((key) => {
-      console.log({ key });
-      fn(key, this.cache[key].value);
+    console.log({ allkeys: this.keys });
+    this._keys.forEach((key) => {
+      fn(key, this.get(key).value);
     });
+  }
+
+  keys(keys: string[]) {
+    this._keys = keys;
   }
 }

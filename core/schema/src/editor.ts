@@ -286,6 +286,9 @@ export type MainLayerExport = LayerExport[];
 export type PageInfo = {
   title: string;
   location?: Location;
+  firstPaint?: number;
+  firstContentfulPaint?: number;
+  loadingTime?: number;
 };
 
 export enum LayoutHook {

@@ -48,6 +48,13 @@ const typo = {
     line-height: ${rem(14)};
     letter-spacing: 0em;
   `,
+  metric: css`
+    font-family: ${FONT_STRING};
+    font-weight: 700;
+    font-size: ${rem(12)};
+    line-height: ${rem(18)};
+    letter-spacing: 0em;
+  `,
 };
 
 export default typo;

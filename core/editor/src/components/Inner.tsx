@@ -30,6 +30,7 @@ const Close = styled.div`
   background: ${COLORS.accent.opacity(0.15)};
   color: ${COLORS.accent.css};
   cursor: pointer;
+  z-index: 9;
 `;
 
 const Inner = () => {

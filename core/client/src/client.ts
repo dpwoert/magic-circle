@@ -1,9 +1,10 @@
-import type Plugin from './plugin';
+import type { default as Plugin, PluginBase } from './plugin';
 import Layer from './layer';
 import { IpcBase, IpcIframe } from './ipc';
 
 import PluginLayers from './plugins/layers';
 import PluginSeed from './plugins/seed';
+import PluginPerformance from './plugins/performance';
 
 type setupFn = (client: MagicCircle) => void;
 
@@ -19,7 +20,7 @@ export default class MagicCircle {
     setup: setupFn;
   };
 
-  private plugins: Plugin[];
+  private plugins: PluginBase[];
   ipc: IpcBase;
   layer: Layer;
 
@@ -28,7 +29,7 @@ export default class MagicCircle {
   isPlaying: boolean;
 
   constructor(plugins: typeof Plugin[] = []) {
-    const standardPlugins = [PluginLayers, PluginSeed];
+    const standardPlugins = [PluginLayers, PluginSeed, PluginPerformance];
 
     // setup initial hooks
     this.hooks = {
@@ -63,11 +64,7 @@ export default class MagicCircle {
   }
 
   async connect() {
-    console.log('starting to connect client');
-
     await this.ipc.connect();
-
-    console.log('connected client');
 
     // Send page information to UI
     this.ipc.send('page-information', {
@@ -141,6 +138,12 @@ export default class MagicCircle {
   }
 
   tick(customDelta?: number) {
+    this.plugins.forEach((p) => {
+      if (p.startFrame) {
+        p.startFrame();
+      }
+    });
+
     // calculate delta
     const newTime = (
       typeof performance === 'undefined' ? Date : performance
@@ -155,6 +158,12 @@ export default class MagicCircle {
     if (this.isPlaying) {
       this.frameRequest = requestAnimationFrame(this.tick);
     }
+
+    this.plugins.forEach((p) => {
+      if (p.endFrame) {
+        p.endFrame();
+      }
+    });
   }
 
   plugin(name: string) {

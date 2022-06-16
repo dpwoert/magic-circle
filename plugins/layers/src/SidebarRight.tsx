@@ -94,8 +94,6 @@ const SidebarRight = ({ app, layers }: SidebarProps) => {
   const selected = useStore(layers.selected);
   const layer = useStore(layers.lookup.get(selected));
 
-  console.log({ layer, selected, store: layers.lookup.get(selected) });
-
   if (layer && 'children' in layer) {
     return (
       <Container>
