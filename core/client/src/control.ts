@@ -25,7 +25,16 @@ export default class Control<T> {
   }
 
   set value(value: T) {
-    this.reference[this.key] = value;
+    console.log('set value', typeof value);
+    if (typeof value === 'object') {
+      // set objects per key, so to not destroy references
+      Object.keys(value).forEach((k) => {
+        this.reference[this.key][k] = value[k];
+      });
+      console.log('new val', this.reference[this.key]);
+    } else {
+      this.reference[this.key] = value;
+    }
   }
 
   label(label: string) {

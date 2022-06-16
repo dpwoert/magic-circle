@@ -134,8 +134,6 @@ export default class Screenshots implements Plugin {
     }
 
     for await (const entry of directory.values()) {
-      console.log({ entry });
-
       if (entry.kind !== 'file') {
         break;
       }

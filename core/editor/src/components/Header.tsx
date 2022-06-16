@@ -94,8 +94,6 @@ const Header = () => {
   const { title } = useStore(APP.pageInfo);
   const hooks = useStore(APP.layoutHooks);
 
-  console.log({ hooks });
-
   return (
     <Container>
       <Part>

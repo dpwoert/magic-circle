@@ -68,7 +68,6 @@ const Group = ({ layers, group }: GroupProps) => {
     <GroupContainer>
       <GroupHeader>{group.name}</GroupHeader>
       {group.children.map((c) => {
-        console.log({ c });
         if ('value' in c) {
           return <Control layers={layers} controlPath={c.path} />;
         }

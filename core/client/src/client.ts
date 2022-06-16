@@ -4,15 +4,23 @@ import { IpcBase, IpcIframe } from './ipc';
 
 import PluginLayers from './plugins/layers';
 import PluginSeed from './plugins/seed';
+import PluginScreenshot from './plugins/screenshots';
 import PluginPerformance from './plugins/performance';
 
-type setupFn = (client: MagicCircle) => void;
+type setupFn = (client: MagicCircle) => void | HTMLElement;
 
 type loopFn = (delta: number) => void;
 
 const warnOnTrigger = (name: string) => () => {
   console.warn(`The hook '${name}' is not set`);
 };
+
+const STANDARD_PLUGINS = [
+  PluginLayers,
+  PluginSeed,
+  PluginPerformance,
+  PluginScreenshot,
+];
 
 export default class MagicCircle {
   private hooks: {
@@ -26,11 +34,10 @@ export default class MagicCircle {
 
   private lastTime: number;
   private frameRequest: ReturnType<typeof requestAnimationFrame>;
+  element: HTMLElement;
   isPlaying: boolean;
 
   constructor(plugins: typeof Plugin[] = []) {
-    const standardPlugins = [PluginLayers, PluginSeed, PluginPerformance];
-
     // setup initial hooks
     this.hooks = {
       setup: warnOnTrigger('setup'),
@@ -38,7 +45,7 @@ export default class MagicCircle {
     };
 
     this.layer = new Layer('base');
-    this.plugins = [...standardPlugins, ...plugins].map(
+    this.plugins = [...STANDARD_PLUGINS, ...plugins].map(
       (plugin) => new plugin(this)
     );
     this.ipc = new IpcIframe();
@@ -74,7 +81,8 @@ export default class MagicCircle {
 
     // run setup hooks
     if (this.hooks.setup) {
-      this.hooks.setup(this);
+      const element = this.hooks.setup(this);
+      if (element) this.element = element;
     }
 
     // run plugins

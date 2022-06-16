@@ -12,10 +12,12 @@ import {
   MagicCircle,
   Layer,
   Folder,
-  NumberControl,
   PluginScreenshot,
-  //   BooleanControl,
-  //   ColorControl,
+  NumberControl,
+  ColorControl,
+  ButtonControl,
+  BooleanControl,
+  TextControl,
 } from '@magic-circle/client';
 
 let renderer;
@@ -59,7 +61,7 @@ export function setup(gui: MagicCircle) {
         const meshLayer = new Layer(`Box ${i}`).addTo(sceneLayer);
         const positionFolder = new Folder('Position').addTo(meshLayer);
         const scaleFolder = new Folder('Scale').addTo(meshLayer);
-        // const materialFolder = new Folder('Material').addTo(meshLayer);
+        const materialFolder = new Folder('Material').addTo(meshLayer);
 
         positionFolder.add([
           new NumberControl(mesh.position, 'x').range(-200, 200),
@@ -73,6 +75,13 @@ export function setup(gui: MagicCircle) {
           new NumberControl(mesh.scale, 'z').range(0, 15),
         ]);
 
+        materialFolder.add([
+          new TextControl(material, 'name'),
+          new ColorControl(material, 'color').range(1),
+          new BooleanControl(material, 'transparent'),
+          new NumberControl(material, 'opacity').range(0, 1).stepSize(0.05),
+        ]);
+
         i += 1;
       }
     }
@@ -84,11 +93,11 @@ export function setup(gui: MagicCircle) {
   animationFolder.add([
     new NumberControl(animation, 'x').stepSize(0.001),
     new NumberControl(animation, 'y').stepSize(0.001),
+    new ButtonControl(gui, 'stop').label('Stop'),
   ]);
 
-  // setup screenshots in iframe
-  const screenshots = gui.plugin('screenshot') as PluginScreenshot;
-  screenshots.setupIframeElement(renderer.domElement);
+  // Save element for screenshots
+  return renderer.domElement;
 }
 
 export function loop() {

@@ -34,11 +34,9 @@ const Header = ({ store, generate }: HeaderProps) => {
   const seed = useStore(store);
   const seedFormatted = String(seed).replace('0.', '');
 
-  console.log('header');
-
   return (
     <Container onClick={() => generate()}>
-      Seed<span>{truncate(seedFormatted, 5)}</span>
+      Seed<span>{truncate(seedFormatted, 7)}</span>
     </Container>
   );
 };

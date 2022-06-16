@@ -1,8 +1,6 @@
 import Plugin from '../plugin';
 
 export default class PluginScreenshot extends Plugin {
-  element?: HTMLCanvasElement;
-
   name = 'screenshot';
 
   connect() {
@@ -13,20 +11,21 @@ export default class PluginScreenshot extends Plugin {
   }
 
   async screenshot() {
-    if (!this.element) {
+    console.log('screenshot 1');
+
+    if (!this.client.element || 'toDataURL' in this.client.element === false) {
       // eslint-disable-next-line
-      alert('This plugin is not configured yet');
+      alert('This plugin is not configured correctly yet');
+      return;
     }
+
+    console.log('can make screen');
 
     requestAnimationFrame(() => {
       // Get image
-      const dataUrl: string = this.element.toDataURL('image/png', 1);
+      // @ts-expect-error
+      const dataUrl: string = this.client.element.toDataURL('image/png', 1);
       this.client.ipc.send('screenshot:save', dataUrl);
     });
-  }
-
-  setupIframeElement(canvas: HTMLCanvasElement) {
-    this.element = canvas;
-    return this;
   }
 }

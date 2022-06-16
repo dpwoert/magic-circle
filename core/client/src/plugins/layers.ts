@@ -40,9 +40,6 @@ export default class PluginLayers extends Plugin {
   set(path: string, value: any) {
     const control = this.cache[path];
 
-    console.log('set', path, value);
-    console.log({ control, cache: this.cache });
-
     if (control && 'value' in control) {
       control.value = value;
     } else {

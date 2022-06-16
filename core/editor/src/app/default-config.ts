@@ -4,14 +4,26 @@ import Screenshots from '@magic-circle/screenshots';
 import Performance from '@magic-circle/performance';
 import Seed from '@magic-circle/seed';
 
-import { TextControl, NumberControl } from '@magic-circle/controls/editor';
+import {
+  TextControl,
+  NumberControl,
+  ColorControl,
+  ButtonControl,
+  BooleanControl,
+} from '@magic-circle/controls/editor';
 
 import { Config, BuildTarget } from '@magic-circle/schema';
 
 const config: Config = {
   url: '',
   plugins: [Layers, PlayControls, Seed, Screenshots, Performance],
-  controls: [TextControl, NumberControl],
+  controls: [
+    TextControl,
+    NumberControl,
+    ColorControl,
+    ButtonControl,
+    BooleanControl,
+  ],
   theme: {
     accent: 'string',
   },

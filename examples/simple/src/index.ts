@@ -1,4 +1,4 @@
-import { MagicCircle, PluginScreenshot } from '@magic-circle/client';
+import { MagicCircle } from '@magic-circle/client';
 import { setup, loop } from './example-scene';
 
-new MagicCircle([PluginScreenshot]).setup(setup).loop(loop);
+new MagicCircle().setup(setup).loop(loop);
