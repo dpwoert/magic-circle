@@ -6,6 +6,8 @@ import {
   App,
   icons,
   LayoutHook,
+  CommandLineAction,
+  CommandLineReference,
 } from '@magic-circle/schema';
 
 import Sidebar from './Sidebar';
@@ -107,8 +109,53 @@ export default class Screenshots implements Plugin {
   sidebar() {
     return {
       icon: 'Photo' as icons,
+      name: 'screenshots',
       render: <Sidebar screenshots={this} />,
     };
+  }
+
+  commands(reference?: CommandLineReference): CommandLineAction[] {
+    if (!reference) {
+      return [
+        {
+          label: 'Take screenshot',
+          icon: 'Photo',
+          shortcut: 'platform+s',
+          onSelect: async () => this.ipc.send('screenshot:take'),
+        },
+        {
+          label: 'Change screenshot folder',
+          icon: 'Folder',
+          onSelect: async () => {
+            this.changeFolder();
+          },
+        },
+      ];
+    }
+
+    if (reference.type === 'screenshot') {
+      return [
+        {
+          label: 'Show screenshot',
+          icon: 'Photo',
+          onSelect: async () => {},
+        },
+        {
+          label: 'View information',
+          icon: 'Information',
+          shortcut: 'platform+i',
+          onSelect: async () => {},
+        },
+        {
+          label: 'Delete screenshot',
+          icon: 'Trash',
+          shortcut: 'platform+backspace',
+          onSelect: async () => {},
+        },
+      ];
+    }
+
+    return [];
   }
 
   async getDirectory() {

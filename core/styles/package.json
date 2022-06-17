@@ -31,14 +31,16 @@
   "scripts": {
     "watch": "tsc --watch",
     "build:dev": "tsc",
-    "build:prod": "NODE_ENV=production tsc"
+    "build:prod": "NODE_ENV=production tsc",
+    "generate:icons": "node scripts/icons.js"
   },
   "dependencies": {
     "color-string": "1.9.1"
   },
   "devDependencies": {
     "typescript": "^4.7.3",
-    "@types/styled-components": "*"
+    "@types/styled-components": "*",
+    "case": "^1.6.3"
   },
   "peerDependencies": {
     "react": "*",

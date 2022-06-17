@@ -3,6 +3,8 @@ import type {
   Plugin,
   App,
   Button,
+  CommandLineReference,
+  CommandLineAction,
 } from '@magic-circle/schema';
 
 export default class PlayControls implements Plugin {
@@ -77,6 +79,37 @@ export default class PlayControls implements Plugin {
         ...(buttons.play || []),
       ],
     };
+  }
+
+  commands(reference: CommandLineReference): CommandLineAction[] {
+    if (!reference) {
+      return [
+        {
+          label: this.playing ? 'Pause' : 'Play',
+          icon: this.playing ? 'Pause' : 'Play',
+          onSelect: async () => {
+            if (this.playing) this.pause();
+            else this.play();
+          },
+        },
+        {
+          label: 'Reload page',
+          icon: 'Refresh',
+          onSelect: async () => {
+            this.refresh();
+          },
+        },
+        {
+          label: 'Reset',
+          icon: 'Rewind',
+          onSelect: async () => {
+            this.reset();
+          },
+        },
+      ];
+    }
+
+    return [];
   }
 
   play() {

@@ -69,7 +69,7 @@ export default class Performance implements Plugin {
   sidebar() {
     return {
       icon: 'TrendingUp' as icons,
-      // render: <SidebarLeft layers={this} />,
+      name: 'performance',
       render: <Sidebar performance={this} />,
     };
   }

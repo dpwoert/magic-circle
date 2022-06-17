@@ -87,6 +87,7 @@ export default class Layers implements Plugin {
   sidebar() {
     return {
       icon: 'Rows' as icons,
+      name: 'layers',
       render: <SidebarLeft layers={this} />,
     };
   }

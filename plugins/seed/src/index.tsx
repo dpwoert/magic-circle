@@ -24,7 +24,7 @@ export default class Seed implements Plugin {
     // Set controls sidebar
     this.client.setLayoutHook(
       LayoutHook.HEADER_RIGHT,
-      <Header store={this.seed} generate={this.generate} />
+      <Header store={this.seed} generate={() => this.generate()} />
     );
   }
 

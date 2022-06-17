@@ -15,6 +15,7 @@ const Container = styled.div`
   gap: ${SPACING(0.5)}px;
   border: 1px solid ${COLORS.accent.css};
   border-radius: 5px;
+  cursor: pointer;
 
   span {
     ${TYPO.small}

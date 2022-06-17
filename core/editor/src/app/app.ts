@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import Mousetrap from 'mousetrap';
 
 import type {
   App as AppBase,
@@ -10,6 +11,9 @@ import type {
   Sidebar,
   PageInfo,
   layoutHooks,
+  CommandLineScreen,
+  CommandLineAction,
+  CommandLineReference,
 } from '@magic-circle/schema';
 import { IpcIframe, IpcBase } from '@magic-circle/client';
 import { Store } from '@magic-circle/state';
@@ -25,6 +29,8 @@ class App implements AppBase {
 
   sidebar: Store<Sidebar>;
   buttons: Store<ButtonCollections>;
+  commandLine: Store<CommandLineScreen | null>;
+  commandLineReference: Store<CommandLineReference | null>;
   pageInfo: Store<PageInfo>;
   layoutHooks: Store<layoutHooks>;
 
@@ -40,6 +46,8 @@ class App implements AppBase {
     this.buttons = new Store<ButtonCollections>({});
     this.sidebar = new Store<Sidebar>({ current: 0, panels: [] });
     this.pageInfo = new Store<PageInfo>({ title: 'No title' });
+    this.commandLine = new Store<CommandLineScreen | null>(null);
+    this.commandLineReference = new Store<CommandLineReference | null>(null);
     this.layoutHooks = new Store<layoutHooks>({});
     this.controls = {};
     this.config.controls.forEach((control) => {
@@ -53,6 +61,9 @@ class App implements AppBase {
 
     const sidebar: SidebarOpts[] = [];
     let buttons: ButtonCollections = {};
+
+    // Destroy all previous plugins
+    // todo
 
     // Load all plugins
     await Promise.all(
@@ -89,6 +100,9 @@ class App implements AppBase {
     this.ipc.on('page-information', (_, info: PageInfo) => {
       this.pageInfo.set(info);
     });
+
+    // Bind all shortcuts
+    this.bindKeys();
   }
 
   async reset() {
@@ -145,6 +159,66 @@ class App implements AppBase {
     this.layoutHooks.set({
       ...this.layoutHooks.value,
       [name]: value,
+    });
+  }
+
+  getCommandLine(reference?: CommandLineReference): CommandLineScreen {
+    const items: CommandLineAction[] = [];
+
+    // Get sidebar commands
+    const sidebar: CommandLineAction[] = this.sidebar.value.panels.map(
+      (panel, key) => ({
+        icon: panel.icon,
+        label: `Show ${panel.name} panel`,
+        shortcut: `platform+${key + 1}`,
+        onSelect: async () => {
+          this.sidebar.set({
+            ...this.sidebar.value,
+            current: key,
+          });
+        },
+      })
+    );
+
+    // Get pluggin commands
+    this.plugins.forEach((p) => {
+      if (p.commands) {
+        items.push(...p.commands());
+      }
+    });
+
+    return {
+      searchLabel: 'Type a command or search',
+      initialScreen: true,
+      reference,
+      actions: [...sidebar, ...items],
+    };
+  }
+
+  showCommandLine(screen?: CommandLineScreen) {
+    if (screen) this.commandLine.set(screen);
+    else this.commandLine.set(this.getCommandLine());
+  }
+
+  bindKeys() {
+    // Reset all shortcuts
+    Mousetrap.reset();
+
+    // Bind shortcuts
+    this.getCommandLine().actions.forEach((action) => {
+      if (action.shortcut) {
+        const shortcut = action.shortcut.replace('platform', 'mod');
+
+        Mousetrap.bind(shortcut, (e: KeyboardEvent) => {
+          action.onSelect(action);
+          e.preventDefault();
+        });
+      }
+    });
+
+    // Show command line
+    Mousetrap.bind('mod+k', () => {
+      this.showCommandLine();
     });
   }
 }

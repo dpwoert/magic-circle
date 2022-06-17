@@ -199,6 +199,7 @@ export interface StoreConstructor<T> {
 
 export interface SidebarOpts {
   icon: icons;
+  name: string;
   render: ReactNode;
 }
 
@@ -217,6 +218,25 @@ export type Buttons = Button[];
 
 export type ButtonCollections = Record<string, Buttons>;
 
+export type CommandLineReference = {
+  type: string;
+  id: string;
+};
+
+export type CommandLineScreen = {
+  searchLabel?: string;
+  initialScreen?: boolean;
+  reference?: CommandLineReference;
+  actions: CommandLineAction[];
+};
+
+export type CommandLineAction = {
+  label: string;
+  shortcut?: string;
+  icon: icons;
+  onSelect: (action: CommandLineAction) => Promise<void | CommandLineScreen>;
+};
+
 export interface Plugin {
   name: string;
   setup: (app: App) => Promise<void>;
@@ -226,6 +246,7 @@ export interface Plugin {
   ready?: () => void;
   save?: () => Promise<any>;
   reset?: () => Promise<void>;
+  commands?: (reference?: CommandLineReference) => CommandLineAction[];
   electron?: string;
 }
 

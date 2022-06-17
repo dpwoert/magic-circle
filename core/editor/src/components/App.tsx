@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Header from './Header';
 import SidebarLeft from './SidebarLeft';
 import SidebarRight from './SidebarRight';
+import CommandLine from './CommandLine';
 
 import APP from '../app/app';
 
@@ -67,6 +68,7 @@ export default function App() {
         </Frame>
         <SidebarRight />
       </Inside>
+      <CommandLine />
     </Container>
   );
 }
