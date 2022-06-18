@@ -1,5 +1,10 @@
 import Plugin from '../plugin';
 
+type screenshot = {
+  data: string;
+  type: 'png' | 'svg';
+};
+
 export default class PluginScreenshot extends Plugin {
   name = 'screenshot';
 
@@ -10,22 +15,38 @@ export default class PluginScreenshot extends Plugin {
     ipc.on('screenshot:take', () => this.screenshot());
   }
 
-  async screenshot() {
-    console.log('screenshot 1');
+  screenshot(): Promise<screenshot> {
+    return new Promise(async (resolve, reject) => {
+      if (!this.client.element) {
+        // eslint-disable-next-line
+        alert('This plugin is not configured correctly yet');
+        reject();
+        return;
+      }
 
-    if (!this.client.element || 'toDataURL' in this.client.element === false) {
-      // eslint-disable-next-line
-      alert('This plugin is not configured correctly yet');
-      return;
-    }
+      if (this.client.element.tagName === 'svg') {
+        resolve({
+          data: this.client.element.innerHTML,
+          type: 'svg',
+        });
+      }
 
-    console.log('can make screen');
-
-    requestAnimationFrame(() => {
-      // Get image
-      // @ts-expect-error
-      const dataUrl: string = this.client.element.toDataURL('image/png', 1);
-      this.client.ipc.send('screenshot:save', dataUrl);
+      if ('toDataURL' in this.client.element) {
+        requestAnimationFrame(() => {
+          // Get image
+          // @ts-expect-error
+          const dataUrl: string = this.client.element.toDataURL('image/png', 1);
+          resolve({
+            data: dataUrl,
+            type: 'png',
+          });
+        });
+      }
     });
+  }
+
+  async saveScreenshot() {
+    const screenshot = await this.screenshot();
+    this.client.ipc.send('screenshot:save', screenshot);
   }
 }

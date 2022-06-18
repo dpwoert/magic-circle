@@ -110,3 +110,20 @@ export const Checkbox = ({ value, onChange, ...props }: CheckboxProps) => {
     </>
   );
 };
+
+export const Button = styled.button`
+  ${TYPO.regular}
+  display: flex;
+  align-items: center;
+  padding: 0 ${SPACING(1)}px;
+  border: 1px solid ${COLORS.accent.css};
+  border-radius: 5px;
+  color: ${COLORS.white.css};
+  background: ${COLORS.accent.opacity(0.15)};
+  height: ${SPACING(3)}px;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: ${COLORS.accent.css};
+  }
+`;

@@ -5,4 +5,5 @@ export { default as Icon } from './Icon';
 export { default as Shortcut } from './Shortcut';
 export * as Control from './control';
 export * as Forms from './forms';
+export * as Metric from './metric';
 export * from './assets/icons';

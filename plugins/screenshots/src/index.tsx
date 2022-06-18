@@ -26,24 +26,6 @@ function dataURLtoBlob(dataUrl: string) {
   return new Blob([u8arr], { type: mime });
 }
 
-async function verifyPermission(directoryHandle: any, readWrite: boolean) {
-  const options = {};
-  if (readWrite) {
-    // @ts-ignore
-    options.mode = 'readwrite';
-  }
-  // Check if permission was already granted. If so, return true.
-  if ((await directoryHandle.queryPermission(options)) === 'granted') {
-    return true;
-  }
-  // Request permission. If the user grants permission, return true.
-  if ((await directoryHandle.requestPermission(options)) === 'granted') {
-    return true;
-  }
-  // The user didn't grant permission, so return false.
-  return false;
-}
-
 export type ScreenshotFile = {
   fileName: string;
   size: number;
@@ -58,18 +40,23 @@ export enum ReadMode {
   RECENT,
 }
 
+type ScreenshotExport = {
+  data: string;
+  type: 'png' | 'svg';
+};
+
 export default class Screenshots implements Plugin {
   ipc: App['ipc'];
   client: App;
 
-  name = 'Screenshots';
+  name = 'screenshots';
 
   async setup(client: App) {
     this.ipc = client.ipc;
     this.client = client;
 
-    this.ipc.on('screenshot:save', (_, dataUrl: string) => {
-      this.saveScreenshot(dataUrl);
+    this.ipc.on('screenshot:save', (_, data: ScreenshotExport) => {
+      this.saveScreenshot(data);
     });
 
     // binding
@@ -158,7 +145,7 @@ export default class Screenshots implements Plugin {
     return [];
   }
 
-  async getDirectory() {
+  async getDirectory(verify?: boolean) {
     const stored = await get('directory');
 
     if (!stored) {
@@ -174,7 +161,7 @@ export default class Screenshots implements Plugin {
     const jsons: Record<string, any> = {};
 
     // Ensure we have permission
-    const permission = await verifyPermission(directory, false);
+    const permission = await this.verifyPermission(directory, false);
 
     if (!permission) {
       return [];
@@ -247,44 +234,57 @@ export default class Screenshots implements Plugin {
     return directoryHandle;
   }
 
-  async saveScreenshot(dataUrl: string) {
-    const blob = dataURLtoBlob(dataUrl);
-
-    // Get date for filename
-    const now = new Date();
-    const date = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
-    const time = `${now.getHours()}.${now.getMinutes()}`;
-    const dateTime = `${date} ${time}`;
-
-    const directory = await this.getDirectory();
-
+  async saveScreenshotTo(
+    directory,
+    fileName,
+    { data: image, type }: ScreenshotExport,
+    saveJSON = true
+  ) {
     // Ensure we have permission
-    const permission = await verifyPermission(directory, true);
+    const permission = await this.verifyPermission(directory, true);
 
     if (!permission) {
       alert('No permission to save files in folder');
     }
 
-    // Get data
-    const data = await this.client.save();
-
     // Create files
-    const fileHandleImage = await directory.getFileHandle(`${dateTime}.png`, {
-      create: true,
-    });
-    const fileHandleJSON = await directory.getFileHandle(`${dateTime}.json`, {
-      create: true,
-    });
+    const fileHandleImage = await directory.getFileHandle(
+      `${fileName}.${type}`,
+      {
+        create: true,
+      }
+    );
 
     // Save image
     const writable = await fileHandleImage.createWritable();
-    await writable.write(blob);
+    await writable.write(type === 'png' ? dataURLtoBlob(image) : image);
     await writable.close();
 
-    // Save JSON
-    const writable2 = await fileHandleJSON.createWritable();
-    await writable2.write(JSON.stringify(data));
-    await writable2.close();
+    if (saveJSON) {
+      // Get data
+      const data = await this.client.save();
+
+      const fileHandleJSON = await directory.getFileHandle(`${fileName}.json`, {
+        create: true,
+      });
+
+      // Save JSON
+      const writable2 = await fileHandleJSON.createWritable();
+      await writable2.write(JSON.stringify(data));
+      await writable2.close();
+    }
+  }
+
+  async saveScreenshot(screenshot: ScreenshotExport) {
+    const directory = await this.getDirectory();
+
+    // Get date for filename
+    const now = new Date();
+    const date = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
+    const time = `${now.getHours()}.${now.getMinutes()}`;
+    const fileName = `${date} ${time}`;
+
+    this.saveScreenshotTo(directory, fileName, screenshot, true);
   }
 
   async loadScreenshot(screenshot: ScreenshotFile) {
@@ -322,5 +322,23 @@ export default class Screenshots implements Plugin {
       })
     );
     await writable2.close();
+  }
+
+  async verifyPermission(directoryHandle: any, readWrite: boolean) {
+    const options = {};
+    if (readWrite) {
+      // @ts-ignore
+      options.mode = 'readwrite';
+    }
+    // Check if permission was already granted. If so, return true.
+    if ((await directoryHandle.queryPermission(options)) === 'granted') {
+      return true;
+    }
+    // Request permission. If the user grants permission, return true.
+    if ((await directoryHandle.requestPermission(options)) === 'granted') {
+      return true;
+    }
+    // The user didn't grant permission, so return false.
+    return false;
   }
 }

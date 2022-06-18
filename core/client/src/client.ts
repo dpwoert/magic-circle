@@ -5,6 +5,7 @@ import { IpcBase, IpcIframe } from './ipc';
 import PluginLayers from './plugins/layers';
 import PluginSeed from './plugins/seed';
 import PluginScreenshot from './plugins/screenshots';
+import PluginRecordings from './plugins/recordings';
 import PluginPerformance from './plugins/performance';
 
 type setupFn = (client: MagicCircle) => void | HTMLElement;
@@ -20,6 +21,7 @@ const STANDARD_PLUGINS = [
   PluginSeed,
   PluginPerformance,
   PluginScreenshot,
+  PluginRecordings,
 ];
 
 export default class MagicCircle {

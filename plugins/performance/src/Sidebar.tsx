@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 
-import { SPACING, COLORS, TYPO } from '@magic-circle/styles';
+import { SPACING, COLORS, TYPO, Metric } from '@magic-circle/styles';
 import { useStore } from '@magic-circle/state';
 
 import type Performance from './index';
@@ -11,22 +11,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-`;
-
-const Metric = styled.div`
-  ${TYPO.regular}
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: ${SPACING(4)}px;
-  padding: 0 ${SPACING(1)}px;
-  border-bottom: 1px solid ${COLORS.shades.s300.css};
-  color: ${COLORS.white.css};
-  background: ${COLORS.shades.s600.css};
-`;
-
-const MetricValue = styled.div`
-  ${TYPO.metric}
 `;
 
 type SidebarProps = {
@@ -67,48 +51,50 @@ export const Sidebar = ({ performance }: SidebarProps) => {
 
   return (
     <Container>
-      <Metric>
+      <Metric.Container>
         Frames per second
-        <MetricValue>{displayMetric(fps[fps.length - 1], 'fps')}</MetricValue>
-      </Metric>
+        <Metric.Value>{displayMetric(fps[fps.length - 1], 'fps')}</Metric.Value>
+      </Metric.Container>
       <Chart max={60} values={fps} />
-      <Metric>
+      <Metric.Container>
         Render time
-        <MetricValue>
+        <Metric.Value>
           {displayMetric(renderTime[renderTime.length - 1], 'ms')}
-        </MetricValue>
-      </Metric>
+        </Metric.Value>
+      </Metric.Container>
       <Chart max={maxRenderTime} values={renderTime} />
-      <Metric>
+      <Metric.Container>
         Memory
-        <MetricValue>{displayMetric(memory, 'mb')}</MetricValue>
-      </Metric>
-      <Metric>
+        <Metric.Value>{displayMetric(memory, 'mb')}</Metric.Value>
+      </Metric.Container>
+      <Metric.Container>
         First paint
-        <MetricValue>{displayMetric(loadTimes.firstPaint, 'ms')}</MetricValue>
-      </Metric>
-      <Metric>
+        <Metric.Value>{displayMetric(loadTimes.firstPaint, 'ms')}</Metric.Value>
+      </Metric.Container>
+      <Metric.Container>
         First contentful paint
-        <MetricValue>
+        <Metric.Value>
           {displayMetric(loadTimes.firstContentfulPaint, 'ms')}
-        </MetricValue>
-      </Metric>
-      <Metric>
+        </Metric.Value>
+      </Metric.Container>
+      <Metric.Container>
         Load time
-        <MetricValue>{displayMetric(loadTimes.loadingTime, 'ms')}</MetricValue>
-      </Metric>
-      <Metric>
+        <Metric.Value>
+          {displayMetric(loadTimes.loadingTime, 'ms')}
+        </Metric.Value>
+      </Metric.Container>
+      <Metric.Container>
         Frame width
-        <MetricValue>{displayMetric(width, 'px')}</MetricValue>
-      </Metric>
-      <Metric>
+        <Metric.Value>{displayMetric(width, 'px')}</Metric.Value>
+      </Metric.Container>
+      <Metric.Container>
         Frame height
-        <MetricValue>{displayMetric(height, 'px')}</MetricValue>
-      </Metric>
-      <Metric>
+        <Metric.Value>{displayMetric(height, 'px')}</Metric.Value>
+      </Metric.Container>
+      <Metric.Container>
         Device pixel ratio
-        <MetricValue>{window.devicePixelRatio}</MetricValue>
-      </Metric>
+        <Metric.Value>{window.devicePixelRatio}</Metric.Value>
+      </Metric.Container>
     </Container>
   );
 };
