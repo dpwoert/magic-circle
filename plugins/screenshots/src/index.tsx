@@ -145,7 +145,7 @@ export default class Screenshots implements Plugin {
     return [];
   }
 
-  async getDirectory(verify?: boolean) {
+  async getDirectory() {
     const stored = await get('directory');
 
     if (!stored) {
@@ -169,7 +169,7 @@ export default class Screenshots implements Plugin {
 
     for await (const entry of directory.values()) {
       if (entry.kind !== 'file') {
-        break;
+        continue;
       }
 
       const file = await entry.getFile();
@@ -178,6 +178,8 @@ export default class Screenshots implements Plugin {
         const arr: ArrayBuffer = await file.arrayBuffer();
         const blob = new Blob([arr], { type: 'image/png' });
         const dataUrl = URL.createObjectURL(blob);
+
+        // todo handle svgs
 
         images[file.name.replace('.png', '')] = {
           fileName: file.name,
@@ -284,7 +286,9 @@ export default class Screenshots implements Plugin {
     const time = `${now.getHours()}.${now.getMinutes()}`;
     const fileName = `${date} ${time}`;
 
-    this.saveScreenshotTo(directory, fileName, screenshot, true);
+    console.log('saveScreenshot', { directory, fileName, screenshot });
+
+    await this.saveScreenshotTo(directory, fileName, screenshot, true);
   }
 
   async loadScreenshot(screenshot: ScreenshotFile) {

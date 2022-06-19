@@ -110,7 +110,7 @@ const ColorControlField = ({
               // convert to old format
               if (typeof value === 'string' && alpha) {
                 newColorConverted = toRgbString(newColor, 255, 1);
-              } else if (typeof value === 'string' && alpha) {
+              } else if (typeof value === 'string' && !alpha) {
                 newColorConverted = toHex(newColor, 255);
               } else if (Array.isArray(value)) {
                 newColorConverted = newColor.map((v, k) =>

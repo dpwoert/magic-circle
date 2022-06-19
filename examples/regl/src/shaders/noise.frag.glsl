@@ -114,7 +114,7 @@ float octavePerlin(vec3 position){
 }
 
 void main() {
-  vec3 pos = vec3(uv.x, offset, uv.y);
+  vec3 pos = vec3(uv.x, uv.y, offset);
   float n = octavePerlin(pos);
   gl_FragColor = vec4(n, n, n, n);
 }

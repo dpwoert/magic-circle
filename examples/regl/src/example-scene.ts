@@ -1,6 +1,12 @@
 import Regl from 'regl';
 
-import { NumberControl, ColorControl } from '@magic-circle/client';
+import {
+  MagicCircle,
+  NumberControl,
+  ColorControl,
+  Layer,
+  Folder,
+} from '@magic-circle/client';
 
 import noiseVert from './shaders/noise.vert.glsl';
 import noiseFrag from './shaders/noise.frag.glsl';
@@ -8,7 +14,7 @@ import isoLinesVert from './shaders/isolines.vert.glsl';
 import isoLinesFrag from './shaders/isolines.frag.glsl';
 
 export default function create() {
-  const canvas = document.querySelector('#canvas');
+  const canvas: HTMLElement = document.querySelector('#canvas');
 
   // default settings
   const settings = {
@@ -27,15 +33,16 @@ export default function create() {
   };
 
   const regl = Regl({
-    container: canvas,
-    pixelRatio: Math.min(window.devicePixelRatio, 1.5),
-    attributes: {
-      antialias: true,
-      stencil: false,
-      depth: true,
-      alpha: true,
-    },
-    extensions: ['OES_standard_derivatives'],
+    // container: 'canvas',
+    // pixelRatio: window.devicePixelRatio,
+    // // pixelRatio: Math.min(window.devicePixelRatio, 1.5),
+    // attributes: {
+    //   antialias: true,
+    //   stencil: false,
+    //   depth: true,
+    //   alpha: true,
+    // },
+    // extensions: ['OES_standard_derivatives'],
   });
 
   const fbo = regl.framebuffer({
@@ -53,10 +60,12 @@ export default function create() {
     vert: noiseVert,
     frag: noiseFrag,
     uniforms: {
-      frequency: regl.prop('frequency'),
-      persistence: regl.prop('persistence'),
-      offset: regl.prop('offset'),
-      time: regl.context('time'),
+      frequency: regl.prop<typeof settings, keyof typeof settings>('frequency'),
+      persistence: regl.prop<typeof settings, keyof typeof settings>(
+        'persistence'
+      ),
+      offset: regl.prop<typeof settings, keyof typeof settings>('offset'),
+      // time: regl.context('time'),
     },
     attributes: {
       position: [-4, -4, 4, -4, 0, 4],
@@ -85,41 +94,48 @@ export default function create() {
         viewportWidth,
         viewportHeight,
       ],
-      time: regl.context('time'),
+      // time: regl.context('time'),
     },
     count: 3,
   });
 
   return {
-    setup: (gui) => {
-      const fx = gui.layer('Isoline');
+    setup: (gui: MagicCircle) => {
+      const noise = new Layer('Noise').addTo(gui.layer);
+      const fx = new Layer('Isoline').addTo(gui.layer);
+      const colorsFolder = new Folder('Color').addTo(fx);
+      const linesFolder = new Folder('Lines').addTo(fx);
+      const animationFolder = new Folder('Animation').addTo(fx);
 
-      fx.folder('Colors', [
-        new ColorControl(settings, 'backgroundColor'),
-        new ColorControl(settings, 'color').label('Line color'),
-      ]);
-
-      fx.folder('Noise', [
+      noise.add([
         new NumberControl(settings, 'frequency').range(0, 20),
         new NumberControl(settings, 'amplitude').range(0, 200),
         new NumberControl(settings, 'peaks').range(0, 3),
         new NumberControl(settings, 'persistence').range(0, 3),
       ]);
 
-      fx.folder('Lines', [
+      colorsFolder.add([
+        new ColorControl(settings, 'backgroundColor'),
+        new ColorControl(settings, 'color').label('Line color'),
+      ]);
+
+      linesFolder.add([
         new NumberControl(settings, 'lineWidth').range(0, 1).stepSize(0.001),
-        new NumberControl(settings, 'segmentHeight').range(0, 2),
-        new NumberControl(settings, 'antialiasing').range(0.001, 1),
-        new NumberControl(settings, 'minAlpha').range(0, 1),
+        new NumberControl(settings, 'segmentHeight').range(0, 2).stepSize(0.01),
+        new NumberControl(settings, 'antialiasing')
+          .range(0.001, 1)
+          .stepSize(0.001),
+        new NumberControl(settings, 'minAlpha').range(0, 1).stepSize(0.01),
       ]);
 
-      fx.folder('Animation', [
-        new NumberControl(settings, 'speed').range(0, 1),
+      animationFolder.add([
+        new NumberControl(settings, 'speed').range(0, 1).stepSize(0.01),
       ]);
+
+      return regl._gl.canvas;
     },
-    loop: (delta) => {
-      settings.offset += (delta * settings.speed) / 10;
-
+    loop: (delta: number) => {
+      settings.offset += (delta * settings.speed) / 1000000;
       document.body.style.backgroundColor = settings.backgroundColor;
 
       // renders noise to a buffer

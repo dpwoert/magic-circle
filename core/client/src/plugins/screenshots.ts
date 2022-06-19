@@ -12,7 +12,9 @@ export default class PluginScreenshot extends Plugin {
     const { ipc } = this.client;
 
     // listen to events
-    ipc.on('screenshot:take', () => this.screenshot());
+    ipc.on('screenshot:take', () => {
+      this.saveScreenshot();
+    });
   }
 
   screenshot(): Promise<screenshot> {
@@ -46,7 +48,9 @@ export default class PluginScreenshot extends Plugin {
   }
 
   async saveScreenshot() {
+    console.log('start save');
     const screenshot = await this.screenshot();
+    console.log('save', { screenshot });
     this.client.ipc.send('screenshot:save', screenshot);
   }
 }

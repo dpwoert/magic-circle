@@ -137,8 +137,6 @@ export const CommandLine = () => {
       _setSelected((curr) => {
         const nextNumber = typeof next === 'number' ? next : next(curr);
 
-        console.log({ nextNumber, curr });
-
         // highlight in view
         if (actionsRef.current) {
           const element = actionsRef.current.children[nextNumber];

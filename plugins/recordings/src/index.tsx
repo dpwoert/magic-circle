@@ -73,7 +73,7 @@ export default class Recordings implements Plugin {
     }
 
     // create directory
-    const base = await this.screenshots.getDirectory(true);
+    const base = await this.screenshots.getDirectory();
     const permission = await this.screenshots.verifyPermission(base, false);
 
     if (!permission) {

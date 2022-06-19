@@ -47,8 +47,6 @@ const SpacerFrame = styled.div`
 `;
 
 export default function App() {
-  console.log('git', process.env.GIT_BRANCH);
-
   return (
     <Container>
       <Header />
