@@ -5,13 +5,13 @@
 }
 
 html,
-body,
-#root {
+body {
   height: 100%;
+  overflow: hidden;
 }
 
 body {
-  background: #1c1c1c;
+  background: #fff;
   font-size: 14px;
   font-family: 'inter', sans-serif;
   -webkit-font-smoothing: antialiased;

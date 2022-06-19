@@ -1,4 +1,6 @@
 import createSketch from './wrapper';
 import { sketch } from './example-scene';
 
-createSketch(sketch, document.querySelector('#p5'));
+import './style.css';
+
+createSketch(sketch, document.querySelector('#p5')).start();

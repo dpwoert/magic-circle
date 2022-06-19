@@ -38,6 +38,8 @@ export default class MagicCircle {
   private frameRequest: ReturnType<typeof requestAnimationFrame>;
   element: HTMLElement;
   isPlaying: boolean;
+  autoPlay: boolean;
+  isConnected: boolean;
 
   constructor(plugins: typeof Plugin[] = []) {
     // setup initial hooks
@@ -46,21 +48,32 @@ export default class MagicCircle {
       loop: warnOnTrigger('loop'),
     };
 
+    //event binding
+    this.tick = this.tick.bind(this);
+    this.start = this.start.bind(this);
+    this.stop = this.stop.bind(this);
+
     this.layer = new Layer('base');
+    this.isPlaying = false;
+    this.autoPlay = true;
+    this.isConnected = false;
+
+    // Do setup
+    if (window.location !== window.parent.location) {
+      this.setupWithIPC(plugins);
+    }
+  }
+
+  setupWithIPC(plugins: typeof Plugin[] = []) {
+    // Create plugins and IPC
     this.plugins = [...STANDARD_PLUGINS, ...plugins].map(
       (plugin) => new plugin(this)
     );
     this.ipc = new IpcIframe();
     this.ipc.setup();
-    this.isPlaying = false;
 
     // start
     this.connect();
-
-    //event binding
-    this.tick = this.tick.bind(this);
-    this.start = this.start.bind(this);
-    this.stop = this.stop.bind(this);
 
     // listen to events
     this.ipc.on('play', (_, playing) => {
@@ -72,8 +85,21 @@ export default class MagicCircle {
     });
   }
 
+  setupWithoutIPC() {
+    this.layer = new Layer('base');
+    this.plugins = [];
+
+    // run setup hooks
+    if (this.hooks.setup) {
+      const element = this.hooks.setup(this);
+      console.log({ element });
+      if (element) this.element = element;
+    }
+  }
+
   async connect() {
     await this.ipc.connect();
+    this.isConnected = true;
 
     // Send page information to UI
     this.ipc.send('page-information', {
@@ -97,11 +123,23 @@ export default class MagicCircle {
     // Receive default values by hydrating
     // todo
 
+    // Let editor know we're ready
     this.ipc.send('ready', true);
+
+    // Play if wanted
+    if (this.autoPlay) {
+      this.start();
+    }
   }
 
   setup(fn: setupFn) {
     this.hooks.setup = fn;
+
+    // No IPC will load so need to do setup now
+    if (!this.ipc) {
+      this.setupWithoutIPC();
+    }
+
     return this;
   }
 
@@ -111,6 +149,14 @@ export default class MagicCircle {
   }
 
   start() {
+    if (!this.isConnected && this.ipc) {
+      this.autoPlay = true;
+      return;
+    } else if (!this.ipc) {
+      this.startWithoutEditor();
+      return;
+    }
+
     // Stop all future frames
     if (this.frameRequest) {
       cancelAnimationFrame(this.frameRequest);
@@ -131,6 +177,17 @@ export default class MagicCircle {
     });
 
     return this;
+  }
+
+  private startWithoutEditor() {
+    // Stop all future frames
+    if (this.frameRequest) {
+      cancelAnimationFrame(this.frameRequest);
+    }
+
+    // Start and save to state
+    this.isPlaying = true;
+    this.tick();
   }
 
   stop() {

@@ -49,7 +49,7 @@ export default class PlayControls implements Plugin {
 
   ready() {
     // play when ready
-    this.play();
+    // this.play();
   }
 
   buttons(buttons: ButtonCollections): ButtonCollections {

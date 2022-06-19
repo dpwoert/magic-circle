@@ -5,5 +5,5 @@ import './style.css';
 
 window.addEventListener('load', () => {
   const scene = exampleScene();
-  new MagicCircle().setup(scene.setup).loop(scene.loop);
+  new MagicCircle().setup(scene.setup).loop(scene.loop).start();
 });
