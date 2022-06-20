@@ -11,13 +11,13 @@ const commonjs = require('rollup-plugin-commonjs');
 const babel = require('rollup-plugin-babel');
 const json = require('@rollup/plugin-json');
 
-let filesToDelete = [];
+const filesToDelete = [];
 
 // Cleanup helpers
 process.addListener('exit', () => {
   filesToDelete.forEach((f) => fs.unlinkSync(f));
 });
-process.on('SIGINT', function () {
+process.on('SIGINT', () => {
   process.exit();
 });
 

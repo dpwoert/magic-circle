@@ -111,7 +111,7 @@ module.exports = {
       },
     },
     {
-      files: ['core/{editor,styles}/scripts/**/*.js'],
+      files: ['core/{editor,styles,online}/scripts/**/*.js'],
       rules: {
         '@typescript-eslint/no-var-requires': 0,
       },
