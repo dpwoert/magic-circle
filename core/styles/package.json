@@ -40,6 +40,7 @@
   "devDependencies": {
     "typescript": "^4.7.3",
     "@types/styled-components": "*",
+    "@types/color-string": "^1.5.2",
     "case": "^1.6.3"
   },
   "peerDependencies": {

@@ -3,4 +3,8 @@ import { sketch } from './example-scene';
 
 import './style.css';
 
-createSketch(sketch, document.querySelector('#p5')).start();
+const element = document.querySelector('#p5') as HTMLElement;
+
+if (element) {
+  createSketch(sketch, element).start();
+}

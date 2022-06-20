@@ -1,5 +1,9 @@
 import colorString from 'color-string';
 
+type stringOrColor<T extends string | Color> = T extends string
+  ? string
+  : Color;
+
 const lerp = (start: number, end: number, t: number): number => {
   return start * (1 - t) + end * t;
 };
@@ -98,13 +102,23 @@ export class Color {
     }
   }
 
-  opacity(opacity: number, chain?: boolean) {
+  opacity(opacity: number): string;
+  opacity(opacity: number, chain: false): string;
+  opacity(opacity: number, chain: true): Color;
+
+  opacity(opacity: number, chain?: boolean): unknown {
     const mixed = colorString.to.rgb([...this.value.slice(0, 3), opacity]);
+
     if (chain) {
       return new Color(mixed);
     }
+
     return mixed;
   }
+
+  mix(color2: Color | string, a: number): string;
+  mix(color2: Color | string, a: number, chain: false): string;
+  mix(color2: Color | string, a: number, chain: true): Color;
 
   mix(color2: Color | string, a: number, chain?: boolean): string | Color {
     const c1 = this.value;
@@ -133,25 +147,6 @@ export class Color {
     const c1 = this.value;
     const c2 = typeof color2 === 'string' ? new Color(color2) : color2.value;
     return c1[0] === c2[0] && c1[1] === c2[1] && c1[2] === c2[2];
-  }
-
-  invert(bw?: boolean, light = '#FFFFFF', dark = '#000000') {
-    if (bw) {
-      // http://stackoverflow.com/a/3943023/112731
-      return this.value[0] * 0.299 +
-        this.value[1] * 0.587 +
-        this.value[2] * 0.114 >
-        186
-        ? dark
-        : light;
-    }
-
-    const c = this.value.map((v, i) => {
-      if (i !== 3) return 255 - v;
-      return v;
-    });
-
-    return colorString.to.hex(c);
   }
 
   get hsl() {

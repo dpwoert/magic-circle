@@ -14,8 +14,6 @@ import isoLinesVert from './shaders/isolines.vert.glsl';
 import isoLinesFrag from './shaders/isolines.frag.glsl';
 
 export default function create() {
-  const canvas: HTMLElement = document.querySelector('#canvas');
-
   // default settings
   const settings = {
     frequency: 3.5,

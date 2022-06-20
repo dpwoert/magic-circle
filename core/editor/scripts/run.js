@@ -44,19 +44,13 @@ const generateConfig = async () => {
   return tmpName;
 };
 
-const run = async () => {
+const generateViteSettings = async () => {
   // check if config file is present, if so it needs to be build
   const configPath = await generateConfig();
-
   const git = getRepoInfo(process.cwd());
 
-  await vite.build({
+  return {
     root: path.resolve(__dirname, '../'), // base: '/foo/',
-    // build: {
-    //   rollupOptions: {
-    //     // ...
-    //   },
-    // },
     define: {
       'process.env.GIT_BRANCH': JSON.stringify(git.branch),
       'process.env.GIT_COMMIT_MESSAGE': JSON.stringify(git.commitMessage),
@@ -67,13 +61,37 @@ const run = async () => {
         './user-config': configPath,
       },
     },
+  };
+};
+
+const build = async () => {
+  const viteSettings = await generateViteSettings();
+
+  const outDirSettings = argv.outDir || argv.O;
+  const outDir = outDirSettings
+    ? path.join(process.cwd(), outDirSettings)
+    : path.join(process.cwd(), 'magic-circle');
+
+  await vite.build({
+    ...viteSettings,
+    build: {
+      outDir,
+    },
+  });
+
+  console.info(`🎛  Magic Circle build to: ${outDir}`);
+};
+
+const run = async () => {
+  const viteSettings = await generateViteSettings();
+
+  await vite.build({
+    ...viteSettings,
   });
 
   // run build with vite
   const previewServer = await vite.preview({
     root: path.resolve(__dirname, '../'),
-
-    // any valid user config options, plus `mode` and `configFile`
     preview: {
       port: 8080,
       open: true,
@@ -81,12 +99,25 @@ const run = async () => {
   });
 
   previewServer.printUrls();
-
-  // copy to correct folder
 };
 
 const serve = async () => {
-  // todo
+  const viteSettings = await generateViteSettings();
+
+  const server = await vite.createServer({
+    ...viteSettings,
+    server: {
+      port: 8080,
+    },
+  });
+  await server.listen();
+  server.printUrls();
 };
 
-run();
+if (argv._[0] === 'build') {
+  build();
+} else if (argv._[0] === 'develop') {
+  serve();
+} else {
+  run();
+}

@@ -95,6 +95,6 @@ export const roundSignificant = (number: number, precision: number) => {
   return String(roundedValue);
 };
 
-export const pythagorean = (sideA, sideB) => {
+export const pythagorean = (sideA: number, sideB: number) => {
   return Math.sqrt(sideA ** 2 + sideB ** 2);
 };

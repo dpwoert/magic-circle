@@ -11,7 +11,7 @@ export const Field = styled.input`
   background: ${COLORS.shades.s600.css};
   color: ${COLORS.shades.s100.css};
   outline: none;
-  border: 1px solid ${COLORS.shades.s400.opacity(0)};
+  border: 1px solid ${String(COLORS.shades.s400.opacity(0))};
   border-radius: 3px;
   transition: border-color 0.2s ease;
   padding: 0 ${SPACING(1)}px;
@@ -39,7 +39,7 @@ export const Color = styled.div`
   background: ${COLORS.shades.s600.css};
   color: ${COLORS.shades.s100.css};
   outline: none;
-  border: 1px solid ${COLORS.shades.s400.opacity(0)};
+  border: 1px solid ${String(COLORS.shades.s400.opacity(0))};
   border-radius: 3px;
   transition: border-color 0.2s ease;
   padding: 0 ${SPACING(0.5)}px;
@@ -60,7 +60,7 @@ export const Select = styled.select`
   background: ${COLORS.shades.s600.css};
   color: ${COLORS.shades.s100.css};
   outline: none;
-  border: 1px solid ${COLORS.shades.s400.opacity(0)};
+  border: 1px solid ${String(COLORS.shades.s400.opacity(0))};
   border-radius: 3px;
   transition: border-color 0.2s ease;
   padding: 0 ${SPACING(1)}px;
@@ -76,7 +76,7 @@ const Box = styled.div`
   height: 18px;
   border: 1px solid ${COLORS.accent.css};
   border-radius: 3px;
-  background: ${COLORS.accent.opacity(0)};
+  background: ${String(COLORS.accent.opacity(0))};
   transition: border 0.2s ease, background 0.2s ease;
   pointer-events: none;
 `;
@@ -88,7 +88,7 @@ export const CheckboxInput = styled.input`
   height: 18px;
 
   &:checked + ${Box} {
-    background: ${COLORS.accent.opacity(0.5)};
+    background: ${String(COLORS.accent.opacity(0.5))};
   }
 `;
 
@@ -119,7 +119,7 @@ export const Button = styled.button`
   border: 1px solid ${COLORS.accent.css};
   border-radius: 5px;
   color: ${COLORS.white.css};
-  background: ${COLORS.accent.opacity(0.15)};
+  background: ${String(COLORS.accent.opacity(0.15))};
   height: ${SPACING(3)}px;
   transition: color 0.2s ease;
 

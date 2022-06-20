@@ -58,7 +58,7 @@ class ChartViz {
 
       if (value >= 0) {
         // top bar
-        this.context.fillStyle = COLORS.accent.opacity(0.2);
+        this.context.fillStyle = String(COLORS.accent.opacity(0.2));
         this.context.fillRect(x, this.height - height, this.barWidth, height);
 
         // performance bar

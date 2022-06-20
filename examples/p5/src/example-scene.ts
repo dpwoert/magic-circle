@@ -19,7 +19,7 @@ const options = {
 };
 
 export const sketch = (gui: MagicCircle) => (s: p5) => {
-  let system;
+  let system: ParticleSystem;
 
   const createCanvas = s.createCanvas.bind(s);
   const background = s.background.bind(s);

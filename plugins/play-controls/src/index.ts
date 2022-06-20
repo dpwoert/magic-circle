@@ -81,7 +81,7 @@ export default class PlayControls implements Plugin {
     };
   }
 
-  commands(reference: CommandLineReference): CommandLineAction[] {
+  commands(reference?: CommandLineReference): CommandLineAction[] {
     if (!reference) {
       return [
         {
