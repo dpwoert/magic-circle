@@ -20,7 +20,7 @@ export default function useStore<T>(store: Store<T>): T {
     return () => {
       store.removeListener(listener);
     };
-  }, [store]);
+  }, [store, value]);
 
   return value;
 }

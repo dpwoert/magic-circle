@@ -7,6 +7,7 @@ import React, {
 } from 'react';
 import styled from 'styled-components';
 
+import type { CommandLineAction } from '@magic-circle/schema';
 import { useStore } from '@magic-circle/state';
 import {
   SPACING,
@@ -18,7 +19,6 @@ import {
 } from '@magic-circle/styles';
 
 import APP from '../app/app';
-import { CommandLineAction } from '@magic-circle/schema';
 
 const Screen = styled.div`
   position: fixed;
@@ -170,13 +170,13 @@ export const CommandLine = () => {
     return () => {
       window.removeEventListener('keydown', keydown);
     };
-  }, [screen, select]);
+  }, [screen, select, setSelected]);
 
   // If screen changes reset selection and focus on the input field
   useEffect(() => {
     setSelected(0);
     if (searchRef.current) searchRef.current.focus();
-  }, [screen]);
+  }, [screen, setSelected]);
 
   const actions = useMemo(() => {
     if (search && screen) {
@@ -191,8 +191,6 @@ export const CommandLine = () => {
   if (!screen || !actions) {
     return null;
   }
-
-  console.log({ selected });
 
   return (
     <>

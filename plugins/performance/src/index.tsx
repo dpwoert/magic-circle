@@ -1,13 +1,5 @@
-import {
-  Plugin,
-  icons,
-  App,
-  MainLayerExport,
-  LayerExport,
-  LayoutHook,
-  ControlExport,
-} from '@magic-circle/schema';
-import { Store, StoreFamily } from '@magic-circle/state';
+import { Plugin, icons, App } from '@magic-circle/schema';
+import { Store } from '@magic-circle/state';
 import Sidebar from './Sidebar';
 
 type loadTimes = {

@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import { Control as ControlSchema, ControlProps } from '@magic-circle/schema';
 import { Control, SPACING, COLORS, Icon } from '@magic-circle/styles';
 
-type options = {};
-
 const Container = styled(Control.Container)`
   background: ${COLORS.shades.s600.css};
   color: ${COLORS.white.css};
@@ -23,7 +21,7 @@ const ButtonControlField = ({
   label,
   set,
   reset,
-}: ControlProps<() => void, options>) => {
+}: ControlProps<() => void, never>) => {
   return (
     <Container hasChanges={false} reset={reset} onClick={() => set(value)}>
       <Control.Label>{label}</Control.Label>
@@ -36,7 +34,7 @@ const ButtonControlField = ({
 
 const ButtonControl: ControlSchema = {
   name: 'button',
-  render: (props: ControlProps<() => void, options>) => {
+  render: (props: ControlProps<() => void, never>) => {
     return <ButtonControlField {...props} />;
   },
 };

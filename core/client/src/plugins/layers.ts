@@ -33,7 +33,6 @@ export default class PluginLayers extends Plugin {
 
     // Send to back-end
     const layers = this.client.layer.toJSON('', new Paths()).children;
-    console.log('to send from client', { layers });
     this.client.ipc.send('layers', layers, 'hallo');
   }
 

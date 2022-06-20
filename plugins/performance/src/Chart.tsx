@@ -90,7 +90,7 @@ export const Chart = ({ max, values }: ChartProps) => {
 
   useLayoutEffect(() => {
     viz.current = new ChartViz(ref.current, max);
-  }, []);
+  }, [max]);
 
   useEffect(() => {
     viz.current.set(values);

@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable new-cap */
 import p5 from 'p5';
 
 import { MagicCircle } from '@magic-circle/client';
@@ -20,7 +22,7 @@ const createSketch = (
 
   // interpreted from https://github.com/processing/p5.js/blob/7d193c34665b8771596f01c8774e1e4c2d7f064b/src/core/main.js#L362
   const loop = (delta: number) => {
-    //mandatory update values(matrixes and stack)
+    // mandatory update values(matrixes and stack)
     sketchInstance.redraw();
     // @ts-expect-error
     sketchInstance._frameRate = 1000.0 / delta;
@@ -39,7 +41,7 @@ const createSketch = (
       // @ts-expect-error
       sketchInstance._updateMouseCoords();
 
-      //reset delta values so they reset even if there is no mouse event to set them
+      // reset delta values so they reset even if there is no mouse event to set them
       // for example if the mouse is outside the screen
       // @ts-expect-error
       sketchInstance._setProperty('movedX', 0);

@@ -1,3 +1,4 @@
+/* eslint-disable no-async-promise-executor */
 import Plugin from '../plugin';
 
 type screenshot = {
@@ -48,9 +49,7 @@ export default class PluginScreenshot extends Plugin {
   }
 
   async saveScreenshot() {
-    console.log('start save');
     const screenshot = await this.screenshot();
-    console.log('save', { screenshot });
     this.client.ipc.send('screenshot:save', screenshot);
   }
 }

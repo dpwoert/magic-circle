@@ -130,6 +130,7 @@ export default function create() {
         new NumberControl(settings, 'speed').range(0, 1).stepSize(0.01),
       ]);
 
+      // eslint-disable-next-line
       return regl._gl.canvas;
     },
     loop: (delta: number) => {

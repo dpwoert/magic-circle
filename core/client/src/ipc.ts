@@ -64,7 +64,9 @@ export class IpcBase {
     this.listeners[channel] = [];
   }
 
-  destroy() {}
+  destroy() {
+    this.listeners = {};
+  }
 }
 
 enum IframeMode {

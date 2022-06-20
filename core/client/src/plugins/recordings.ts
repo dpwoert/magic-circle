@@ -58,7 +58,6 @@ export default class PluginRecordings extends Plugin {
 
     // Get and send
     const screenshot = await plugin.screenshot();
-    console.log({ screenshot });
     this.client.ipc.send('recordings:save', screenshot);
   }
 

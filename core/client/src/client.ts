@@ -48,7 +48,7 @@ export default class MagicCircle {
       loop: warnOnTrigger('loop'),
     };
 
-    //event binding
+    // event binding
     this.tick = this.tick.bind(this);
     this.start = this.start.bind(this);
     this.stop = this.stop.bind(this);
@@ -67,7 +67,7 @@ export default class MagicCircle {
   setupWithIPC(plugins: typeof Plugin[] = []) {
     // Create plugins and IPC
     this.plugins = [...STANDARD_PLUGINS, ...plugins].map(
-      (plugin) => new plugin(this)
+      (Plugin) => new Plugin(this)
     );
     this.ipc = new IpcIframe();
     this.ipc.setup();
@@ -92,7 +92,6 @@ export default class MagicCircle {
     // run setup hooks
     if (this.hooks.setup) {
       const element = this.hooks.setup(this);
-      console.log({ element });
       if (element) this.element = element;
     }
   }
@@ -151,10 +150,12 @@ export default class MagicCircle {
   start() {
     if (!this.isConnected && this.ipc) {
       this.autoPlay = true;
-      return;
-    } else if (!this.ipc) {
+      return this;
+    }
+
+    if (!this.ipc) {
       this.startWithoutEditor();
-      return;
+      return this;
     }
 
     // Stop all future frames

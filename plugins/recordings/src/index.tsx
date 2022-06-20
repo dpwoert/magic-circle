@@ -1,12 +1,4 @@
-import {
-  ButtonCollections,
-  Plugin,
-  App,
-  icons,
-  LayoutHook,
-  CommandLineAction,
-  CommandLineReference,
-} from '@magic-circle/schema';
+import { Plugin, App, icons } from '@magic-circle/schema';
 import { Store } from '@magic-circle/state';
 import ScreenshotPlugin from '@magic-circle/screenshots';
 
@@ -106,12 +98,10 @@ export default class Recordings implements Plugin {
     // start recording
     const { width, height, fps } = this.current.value;
     this.ipc.send('recordings:start', {
-      width: width,
-      height: height,
-      fps: fps,
+      width,
+      height,
+      fps,
     });
-
-    console.log('start on editor done');
   }
 
   next() {

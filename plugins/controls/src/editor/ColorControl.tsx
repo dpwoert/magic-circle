@@ -1,3 +1,4 @@
+/* eslint-disable no-bitwise */
 import rgba from 'color-rgba';
 import ColorPicker from 'rc-color-picker';
 import styled from 'styled-components';

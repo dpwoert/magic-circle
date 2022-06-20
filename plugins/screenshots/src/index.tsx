@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-continue */
 import { get, set } from 'idb-keyval';
 
 import {
@@ -15,11 +17,12 @@ import ImagePreview from './ImagePreview';
 import JsonViewer from './JsonViewer';
 
 function dataURLtoBlob(dataUrl: string) {
-  var arr = dataUrl.split(','),
-    mime = arr[0].match(/:(.*?);/)[1],
-    bstr = atob(arr[1]),
-    n = bstr.length,
-    u8arr = new Uint8Array(n);
+  const arr = dataUrl.split(',');
+  const mime = arr[0].match(/:(.*?);/)[1];
+  const bstr = atob(arr[1]);
+  let n = bstr.length;
+  const u8arr = new Uint8Array(n);
+  // eslint-disable-next-line
   while (n--) {
     u8arr[n] = bstr.charCodeAt(n);
   }
@@ -125,19 +128,25 @@ export default class Screenshots implements Plugin {
         {
           label: 'Show screenshot',
           icon: 'Photo',
-          onSelect: async () => {},
+          onSelect: async () => {
+            // todo
+          },
         },
         {
           label: 'View information',
           icon: 'Information',
           shortcut: 'platform+i',
-          onSelect: async () => {},
+          onSelect: async () => {
+            // todo
+          },
         },
         {
           label: 'Delete screenshot',
           icon: 'Trash',
           shortcut: 'platform+backspace',
-          onSelect: async () => {},
+          onSelect: async () => {
+            // todo
+          },
         },
       ];
     }
@@ -285,8 +294,6 @@ export default class Screenshots implements Plugin {
     const date = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
     const time = `${now.getHours()}.${now.getMinutes()}`;
     const fileName = `${date} ${time}`;
-
-    console.log('saveScreenshot', { directory, fileName, screenshot });
 
     await this.saveScreenshotTo(directory, fileName, screenshot, true);
   }

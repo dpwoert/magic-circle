@@ -101,20 +101,15 @@ export default class Layers implements Plugin {
 
     this.lookup.export((key, value) => {
       if (value && 'value' in value && value.value) {
-        console.log('add key', key, value.value);
         toSave[key] = value.value;
       }
     });
-
-    console.log({ toSave });
 
     return toSave;
   }
 
   setControl<T>(path: string, newValue: T) {
     const store = this.lookup.get(path);
-
-    console.log('update', { path, newValue });
 
     if (!store || !store.value) {
       throw new Error('Trying to update value of non-existent control');

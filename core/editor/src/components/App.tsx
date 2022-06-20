@@ -1,16 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { BuildTarget } from '@magic-circle/schema';
+import { SPACING, COLORS } from '@magic-circle/styles';
+
 import Header from './Header';
 import SidebarLeft from './SidebarLeft';
 import SidebarRight from './SidebarRight';
 import CommandLine from './CommandLine';
+import Inner from './Inner';
 
 import APP from '../app/app';
-
-import { BuildTarget } from '@magic-circle/schema';
-import { SPACING, COLORS } from '@magic-circle/styles';
-import Inner from './Inner';
 
 const Container = styled.div`
   display: flex;

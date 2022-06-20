@@ -280,7 +280,7 @@ export interface Config {
   theme: {
     accent: string;
   };
-  settings: {};
+  settings: Record<string, any>;
   target: BuildTarget;
 }
 

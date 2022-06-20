@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 import { Forms, Control, SPACING, Metric, Icon } from '@magic-circle/styles';
+import { useStore } from '@magic-circle/state';
 
 import type Recordings from './index';
-import { useStore } from '@magic-circle/state';
 
 const Container = styled.div`
   display: flex;
@@ -26,7 +26,7 @@ const Sidebar = ({ recordings }: SidebarProps) => {
     <Container>
       {!current.isRecording ? (
         <>
-          <Control.Container hasChanges={false} reset={() => {}}>
+          <Control.Container hasChanges={false}>
             <Control.Label>Width</Control.Label>
             <Control.Inside>
               <Forms.Field
@@ -42,7 +42,7 @@ const Sidebar = ({ recordings }: SidebarProps) => {
             </Control.Inside>
           </Control.Container>
 
-          <Control.Container hasChanges={false} reset={() => {}}>
+          <Control.Container hasChanges={false}>
             <Control.Label>Height</Control.Label>
             <Control.Inside>
               <Forms.Field
@@ -58,7 +58,7 @@ const Sidebar = ({ recordings }: SidebarProps) => {
             </Control.Inside>
           </Control.Container>
 
-          <Control.Container hasChanges={false} reset={() => {}}>
+          <Control.Container hasChanges={false}>
             <Control.Label>FPS</Control.Label>
             <Control.Inside>
               <Forms.Select
@@ -79,7 +79,7 @@ const Sidebar = ({ recordings }: SidebarProps) => {
             </Control.Inside>
           </Control.Container>
 
-          <Control.Container hasChanges={false} reset={() => {}}>
+          <Control.Container hasChanges={false}>
             <Control.Label>Duration (s)</Control.Label>
             <Control.Inside>
               <Forms.Field

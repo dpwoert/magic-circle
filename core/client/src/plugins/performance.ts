@@ -1,3 +1,4 @@
+/* eslint-disable no-unsafe-optional-chaining */
 import type Control from '../control';
 import Paths from '../paths';
 import Plugin from '../plugin';
@@ -80,11 +81,13 @@ export default class PluginPerformance extends Plugin {
       time >= this.previousPerformanceUpdate + 1000 ||
       !this.previousPerformanceUpdate
     ) {
+      // @ts-expect-error
+      const memory = performance?.memory.usedJSHeapSize;
+
       this.client.ipc.send('performance:fps', {
         fps: (this.frames * 1000) / (time - this.previousPerformanceUpdate),
         renderTime: time - this.startFrameTime,
-        // @ts-expect-error
-        memory: performance?.memory.usedJSHeapSize / 1048576,
+        memory: memory ? memory / 1048576 : null,
       });
 
       // Reset

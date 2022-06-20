@@ -54,7 +54,7 @@ export const ResetMask = styled.div`
 
 type ContainerProps = {
   hasChanges: boolean;
-  reset: () => void;
+  reset?: () => void;
   children: ReactNode;
 };
 

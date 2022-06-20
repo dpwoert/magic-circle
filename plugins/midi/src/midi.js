@@ -167,7 +167,9 @@ class Midi {
     this.store.set('unsavedChanges', false);
   }
 
-  reset() {}
+  reset() {
+    console.warn('reset not working');
+  }
 
   applicationMenu() {
     return [

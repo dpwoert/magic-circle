@@ -1,4 +1,4 @@
-import { useMemo, useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import styled from 'styled-components';
 
 import { COLORS, Icon, SPACING, TYPO } from '@magic-circle/styles';
@@ -263,7 +263,7 @@ const Sidebar = ({ screenshots }: SidebarProps) => {
 
   useEffect(() => {
     read();
-  }, [screenshots, mode]);
+  }, [read]);
 
   return (
     <div>

@@ -101,7 +101,6 @@ const NumberControlContinuous = ({
           <Slider
             value={value}
             onChange={(evt) => {
-              console.log('set value', evt.target.value);
               set(+evt.target.value);
             }}
             type="range"
@@ -130,46 +129,55 @@ const NumberControlStepper = ({
     value: null,
   });
 
-  const dragEvent = useCallback((e) => {
-    const delta = e.clientY - drag.current.start;
-    const steps = Math.floor(delta / STEP_SIZE);
-    const stepSize = options.stepSize || 1;
+  const dragEvent = useCallback(
+    (e) => {
+      const delta = e.clientY - drag.current.start;
+      const steps = Math.floor(delta / STEP_SIZE);
+      const stepSize = options.stepSize || 1;
 
-    set(drag.current.value + steps * stepSize);
-  }, []);
+      set(drag.current.value + steps * stepSize);
+    },
+    [options, set]
+  );
 
   const endDrag = useCallback(() => {
     document.querySelector('body').style.cursor = 'auto';
     window.removeEventListener('mousemove', dragEvent);
     window.removeEventListener('mouseup', endDrag);
-  }, []);
+  }, [dragEvent]);
 
-  const startDrag = useCallback((e) => {
-    drag.current.start = e.clientY;
-    drag.current.value = value;
+  const startDrag = useCallback(
+    (e) => {
+      drag.current.start = e.clientY;
+      drag.current.value = value;
 
-    window.addEventListener('mousemove', dragEvent);
-    window.addEventListener('mouseup', endDrag);
+      window.addEventListener('mousemove', dragEvent);
+      window.addEventListener('mouseup', endDrag);
 
-    document.querySelector('body').style.cursor = 'ns-resize';
-  }, []);
+      document.querySelector('body').style.cursor = 'ns-resize';
+    },
+    [endDrag, dragEvent, value]
+  );
 
-  const updateControl = useCallback((value: string) => {
-    const number = parseInt(value, 10);
+  const updateControl = useCallback(
+    (value: string) => {
+      const number = parseInt(value, 10);
 
-    if (!isNaN(number)) {
-      set(number);
-      setValueSafe(number);
-    } else {
-      setValueSafe(value);
-    }
-  }, []);
+      if (!isNaN(number)) {
+        set(number);
+        setValueSafe(number);
+      } else {
+        setValueSafe(value);
+      }
+    },
+    [set]
+  );
 
   useEffect(() => {
     if (value !== valueSafe) {
       setValueSafe(value);
     }
-  }, [value]);
+  }, [value, valueSafe]);
 
   return (
     <Control.Container hasChanges={hasChanges} reset={reset}>

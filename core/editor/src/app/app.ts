@@ -153,7 +153,9 @@ class App implements AppBase {
     return this.controls[name];
   }
 
-  getSetting(name: string) {}
+  getSetting(name: string) {
+    // todo
+  }
 
   setLayoutHook(name: string, value: ReactNode) {
     this.layoutHooks.set({

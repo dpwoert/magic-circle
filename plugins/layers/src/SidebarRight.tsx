@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
+import { App, LayerExport } from '@magic-circle/schema';
 import { useStore } from '@magic-circle/state';
 import { SPACING, COLORS, TYPO } from '@magic-circle/styles';
 
 import type Layers from './index';
-import { App, LayerExport } from '@magic-circle/schema';
 
 const Container = styled.div`
   display: flex;
@@ -71,6 +71,8 @@ const Group = ({ layers, group }: GroupProps) => {
         if ('value' in c) {
           return <Control layers={layers} controlPath={c.path} />;
         }
+
+        return null;
       })}
     </GroupContainer>
   );
@@ -81,7 +83,7 @@ type SidebarProps = {
   layers: Layers;
 };
 
-const SidebarRight = ({ app, layers }: SidebarProps) => {
+const SidebarRight = ({ layers }: SidebarProps) => {
   const selected = useStore(layers.selected);
   const layer = useStore(layers.lookup.get(selected));
 
@@ -96,6 +98,8 @@ const SidebarRight = ({ app, layers }: SidebarProps) => {
           if (item.folder) {
             return <Group layers={layers} group={item} />;
           }
+
+          return null;
         })}
       </Container>
     );

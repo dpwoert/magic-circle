@@ -28,7 +28,7 @@ export default class PlayControls implements Plugin {
     this.playing = play;
 
     const buttons = this.client.buttons.value;
-    const playBtns = buttons['play'].map((b): Button => {
+    const playBtns = buttons.play.map((b): Button => {
       if (b.label !== 'play') return b;
 
       return {

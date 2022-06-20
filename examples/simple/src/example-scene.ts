@@ -12,7 +12,6 @@ import {
   MagicCircle,
   Layer,
   Folder,
-  PluginScreenshot,
   NumberControl,
   ColorControl,
   ButtonControl,

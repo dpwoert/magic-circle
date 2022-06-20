@@ -8,9 +8,6 @@ const getRepoInfo = require('git-repo-info');
 const rollup = require('rollup');
 const nodeResolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
-const babel = require('rollup-plugin-babel');
-const replace = require('rollup-plugin-replace');
-const { config } = require('process');
 
 const generateConfig = async () => {
   const config = argv.config || argv.C;
@@ -27,13 +24,7 @@ const generateConfig = async () => {
     plugins: [
       nodeResolve({
         browser: true,
-        // customResolveOptions: {
-        //   moduleDirectory: path.join(process.cwd(), 'node_modules'),
-        // },
       }),
-      // replace({
-      //   __dirname: id => `'${path.dirname(id)}'`,
-      // }),
       commonjs(),
     ],
   });

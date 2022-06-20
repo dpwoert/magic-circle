@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import Store from './store';
 
 export default class StoreFamily<T> {
@@ -42,7 +43,6 @@ export default class StoreFamily<T> {
   }
 
   export(fn: (key: string, value: T) => void) {
-    console.log({ allkeys: this.keys });
     this._keys.forEach((key) => {
       fn(key, this.get(key).value);
     });

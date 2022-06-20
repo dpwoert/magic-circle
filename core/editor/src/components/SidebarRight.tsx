@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
-import { SPACING, COLORS, Icon } from '@magic-circle/styles';
+import { SPACING, COLORS } from '@magic-circle/styles';
 import { LayoutHook } from '@magic-circle/schema';
 import { useStore } from '@magic-circle/state';
 

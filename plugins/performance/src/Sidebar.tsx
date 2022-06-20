@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 
-import { SPACING, COLORS, TYPO, Metric } from '@magic-circle/styles';
+import { Metric } from '@magic-circle/styles';
 import { useStore } from '@magic-circle/state';
 
 import type Performance from './index';
