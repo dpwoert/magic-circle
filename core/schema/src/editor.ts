@@ -275,7 +275,9 @@ export enum BuildTarget {
 
 export interface Config {
   url: string;
-  plugins: PluginConstructor[];
+  plugins:
+    | PluginConstructor[]
+    | ((defaultPlugins: PluginConstructor[]) => PluginConstructor[]);
   controls: Control[];
   theme: {
     accent: string;

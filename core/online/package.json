@@ -1,7 +1,8 @@
 {
-  "name": "@magic-circle/schema",
+  "name": "@magic-circle/online",
   "version": "0.0.7",
-  "description": "Magic Circle shares typescript schemas",
+  "private": true,
+  "description": "Magic Circle online test environment",
   "keywords": [
     "controls",
     "creative coding",
@@ -12,27 +13,26 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/dpwoert/magic-circle.git",
-    "directory": "core/schema"
+    "directory": "core/online"
   },
-  "files": [
-    "dist/*.js",
-    "dist/*.d.ts"
-  ],
   "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "src/index.js",
   "scripts": {
     "watch": "tsc --watch",
     "build:dev": "tsc",
-    "build:prod": "NODE_ENV=production tsc"
+    "build:prod": "NODE_ENV=production tsc",
+    "package": "sh scripts/build.sh",
+    "generate:list": "node scripts/create-list.js"
   },
-  "dependencies": {},
   "devDependencies": {
-    "@magic-circle/client": "^0.0.7",
-    "typescript": "^4.7.3"
+    "typescript": "^4.7.3",
+    "@types/react": "*",
+    "@magic-circle/editor": "^0.0.7",
+    "@magic-circle/styles": "^0.0.7",
+    "@magic-circle/schema": "^0.0.7"
   },
   "peerDependencies": {
-    "@magic-circle/client": "^0.0.7",
     "react": "^18.0.0"
   },
   "publishConfig": {

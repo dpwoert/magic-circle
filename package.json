@@ -21,6 +21,7 @@
     "build:icons": "lerna run generate:icons --scope @magic-circle/editor",
     "example": "sh examples/run.sh",
     "publish:npm": "sh publish.sh",
+    "publish:online": "lerna run package --scoep @magic-circle/online",
     "prettier": "prettier --config --write \"{core,examples,plugins}/**/*.{js,jsx,ts,tsx,json,css}\"",
     "lint": "eslint \"{core,examples,plugins}/**/*.{js,jsx,ts,tsx}\"",
     "clean": "find . -name 'node_modules' -type d | xargs rm -rf && find . -name 'dist' -type d | xargs rm -rf && find . -name '.cache' -type d"

@@ -65,9 +65,19 @@ class App implements AppBase {
     // Destroy all previous plugins
     // todo
 
+    // Get list of plugins
+    const defaultPlugins =
+      typeof defaultConfig.plugins === 'function'
+        ? defaultConfig.plugins([])
+        : defaultConfig.plugins;
+    const plugins =
+      typeof this.config.plugins === 'function'
+        ? this.config.plugins(defaultPlugins)
+        : this.config.plugins;
+
     // Load all plugins
     await Promise.all(
-      this.config.plugins.map(async (P) => {
+      plugins.map(async (P) => {
         const plugin = new P();
 
         await plugin.setup(this);

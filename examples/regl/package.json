@@ -25,7 +25,7 @@
   "scripts": {
     "serve": "vite",
     "build:dev": "tsc && vite build",
-    "build:prod": "BUILD_ENV=production npm run build:prod",
+    "build:prod": "BUILD_ENV=production npm run build:dev",
     "editor": "controls"
   },
   "devDependencies": {

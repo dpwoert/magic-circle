@@ -1,13 +1,25 @@
 #!/usr/bin/env node
 const path = require('path');
+const fs = require('fs');
 const argv = require('minimist')(process.argv.slice(2));
-const tmp = require('tmp-promise');
 const vite = require('vite');
 const getRepoInfo = require('git-repo-info');
 
 const rollup = require('rollup');
 const nodeResolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
+const babel = require('rollup-plugin-babel');
+const json = require('@rollup/plugin-json');
+
+let filesToDelete = [];
+
+// Cleanup helpers
+process.addListener('exit', () => {
+  filesToDelete.forEach((f) => fs.unlinkSync(f));
+});
+process.on('SIGINT', function () {
+  process.exit();
+});
 
 const generateConfig = async () => {
   const config = argv.config || argv.C;
@@ -15,22 +27,34 @@ const generateConfig = async () => {
     ? path.join(process.cwd(), config)
     : path.join(process.cwd(), 'controls.config.js');
 
-  const tmpName = await tmp.tmpName({ postfix: '.js' });
+  const tmpName = path.join(__dirname, '../build.tmp.js');
 
   // create a bundle
   const bundle = await rollup.rollup({
     input: configFile,
-    // external: ['styled-components', 'fs', 'react', 'react-dom', 'react-is'],
+    external: [
+      'styled-components',
+      '@magic-circle/styles',
+      'react',
+      'react-dom',
+      'react-is',
+    ],
     plugins: [
       nodeResolve({
         browser: true,
+        rootDir: process.cwd(),
       }),
+      json(),
       commonjs(),
+      babel({ presets: [require('@babel/preset-react')] }),
     ],
   });
 
   // Write to HDD
   await bundle.write({ file: tmpName, format: 'esm' });
+
+  // Ensure we clean this file on close
+  filesToDelete.push(tmpName);
 
   return tmpName;
 };

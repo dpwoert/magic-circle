@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { BuildTarget } from '@magic-circle/schema';
-import { SPACING, COLORS } from '@magic-circle/styles';
+import { COLORS } from '@magic-circle/styles';
 
 import Header from './Header';
 import SidebarLeft from './SidebarLeft';

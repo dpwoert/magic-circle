@@ -5,27 +5,41 @@ on:
   push:
     branches:
       - master
+      - feature/v2
 
 jobs:
   online:
-    runs-on: macos-latest
+    runs-on: linux
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v1
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
-      - name: Setup repo (prod mode)
-        run: npm run setup:prod -- --yes
-      - name: Setup web specific parts
-        run: npm run setup:web
-      - name: Install Surge CI tool
-        run: npm install surge --global
-      - name: Linting
-        run: npm run lint
-      - name: Deploy to surge
-        run: surge --project ./core/online/dist --domain magic-circle.dev
+          node-version: 16.x
+      - name: Setup rep
+        run: npm i
+      - name: Build all files
+        run: npm run build:prod
+      - name: Create bundle
+        run: npm run publish:online
+      - name: Deploy to S3
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read --delete
         env:
-          SURGE_EMAIL: ${{ secrets.SURGE_EMAIL }}
-          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
+          AWS_S3_BUCKET: ${{ secrets.AWS_BUCKET_NAME }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          BUILD_ENV: 'production'
+          SOURCE_DIR: 'core/online/magic-circle'
+      # Invalidate Cloudfront
+      - name: Invalidate Cloudfront
+        uses: chetan/invalidate-cloudfront-action@master
+        env:
+          DISTRIBUTION: ${{ secrets.DISTRIBUTION_ID }}
+          PATHS: '/*'
+          AWS_REGION: 'us-east-1'
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

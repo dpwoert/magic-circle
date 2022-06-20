@@ -40,8 +40,6 @@
     "@types/styled-components": "*"
   },
   "peerDependencies": {
-    "@magic-circle/schema": "^0.0.7",
-    "@magic-circle/styles": "^0.0.7",
     "react": "*",
     "styled-components": "*"
   },
