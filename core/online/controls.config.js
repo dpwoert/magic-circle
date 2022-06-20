@@ -1,6 +1,6 @@
 import DemoPlugin from './dist/index.jsx';
 
 export default {
-  url: 'http://localhost:4000',
+  url: 'https://magic-circle.dev/examples/simple',
   plugins: (defaultPlugins) => [...defaultPlugins, DemoPlugin],
 };
