@@ -39,7 +39,7 @@
   "scripts": {
     "watch": "vite",
     "build:dev": "tsc && vite build",
-    "build:prod": "BUILD_ENV=production npm run build:prod",
+    "build:prod": "BUILD_ENV=production npm run build:dev",
     "generate:icons": "node scripts/icons.js"
   },
   "dependencies": {
