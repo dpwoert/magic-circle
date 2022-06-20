@@ -11,6 +11,7 @@ import {
   CommandLineAction,
   CommandLineReference,
 } from '@magic-circle/schema';
+import { Store } from '@magic-circle/state';
 
 import Sidebar from './Sidebar';
 import ImagePreview from './ImagePreview';
@@ -54,9 +55,12 @@ export default class Screenshots implements Plugin {
 
   name = 'screenshots';
 
+  last: Store<string>;
+
   async setup(client: App) {
     this.ipc = client.ipc;
     this.client = client;
+    this.last = new Store<string>('');
 
     this.ipc.on('screenshot:save', (_, data: ScreenshotExport) => {
       this.saveScreenshot(data);
@@ -296,6 +300,7 @@ export default class Screenshots implements Plugin {
     const fileName = `${date} ${time}`;
 
     await this.saveScreenshotTo(directory, fileName, screenshot, true);
+    this.last.set(fileName);
   }
 
   async loadScreenshot(screenshot: ScreenshotFile) {

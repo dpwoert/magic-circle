@@ -9,7 +9,7 @@ on:
 
 jobs:
   linting:
-    runs-on: linux-latest
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v1
@@ -22,7 +22,7 @@ jobs:
       - name: Linting
         run: npm run lint
   build:
-    runs-on: linux-latest
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v1

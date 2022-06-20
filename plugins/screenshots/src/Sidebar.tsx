@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import styled from 'styled-components';
 
 import { COLORS, Icon, SPACING, TYPO } from '@magic-circle/styles';
+import { useStore } from '@magic-circle/state';
 
 import Screenshots, { ReadMode, ScreenshotFile } from './index';
 
@@ -253,6 +254,7 @@ type SidebarProps = {
 };
 
 const Sidebar = ({ screenshots }: SidebarProps) => {
+  const lastScreenshot = useStore(screenshots.last);
   const [files, setFiles] = useState<ScreenshotFile[]>([]);
   const [mode, setMode] = useState(ReadMode.RECENT);
 
@@ -264,6 +266,10 @@ const Sidebar = ({ screenshots }: SidebarProps) => {
   useEffect(() => {
     read();
   }, [read]);
+
+  useEffect(() => {
+    read();
+  }, [lastScreenshot]); // eslint-disable-line
 
   return (
     <div>
