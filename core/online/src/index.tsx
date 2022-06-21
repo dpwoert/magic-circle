@@ -15,7 +15,7 @@ export default class DemoPlugin implements Plugin {
 
   sidebar() {
     return {
-      icon: 'Archive' as icons,
+      icon: 'Video' as icons,
       name: 'demo',
       render: <Sidebar />,
     };
