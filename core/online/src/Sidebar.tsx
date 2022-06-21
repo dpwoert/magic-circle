@@ -1,8 +1,29 @@
 import React, { useCallback } from 'react';
+import styled from 'styled-components';
 
-import { Metric, SPACING, Icon } from '@magic-circle/styles';
+import { Metric, SPACING, Icon, COLORS } from '@magic-circle/styles';
 
 import { list } from './list.json';
+
+const Example = styled(Metric.Container)`
+  cursor: pointer;
+
+  &:hover {
+    color: ${COLORS.accent.css};
+  }
+`;
+
+const Link = styled.a`
+  color: ${COLORS.white.css};
+
+  &:hover {
+    color: ${COLORS.accent.css};
+  }
+`;
+
+const capitalizeFirstLetter = (str: string) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
 
 const Sidebar = () => {
   const loadExample = useCallback((name: string) => {
@@ -15,13 +36,15 @@ const Sidebar = () => {
 
   return (
     <div>
-      {list.map((name) => (
-        <Metric.Container onClick={() => loadExample(name)} key={name}>
-          {name}
+      {list.map((example) => (
+        <Example onClick={() => loadExample(example.name)} key={example.name}>
+          {capitalizeFirstLetter(example.name)}
           <Metric.Value>
-            <Icon name="Code" width={SPACING(2)} height={SPACING(2)} />
+            <Link href={example.repo} target="_blank">
+              <Icon name="Code" width={SPACING(2)} height={SPACING(2)} />
+            </Link>
           </Metric.Value>
-        </Metric.Container>
+        </Example>
       ))}
     </div>
   );

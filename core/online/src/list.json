@@ -1,1 +1,16 @@
-{ "list": ["p5", "regl", "simple"] }
+{
+  "list": [
+    {
+      "name": "p5",
+      "repo": "https://github.com/dpwoert/magic-circle/examples/p5"
+    },
+    {
+      "name": "regl",
+      "repo": "https://github.com/dpwoert/magic-circle/examples/regl"
+    },
+    {
+      "name": "simple",
+      "repo": "https://github.com/dpwoert/magic-circle/examples/simple"
+    }
+  ]
+}

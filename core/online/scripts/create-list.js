@@ -11,7 +11,17 @@ const exampleFolder = path.join(__dirname, '../../../examples');
 fs.readdirSync(exampleFolder, { withFileTypes: true })
   .filter((dir) => dir.isDirectory())
   .forEach((dir) => {
-    examples.list.push(dir.name);
+    const pkgFile = fs.readFileSync(
+      path.join(exampleFolder, dir.name, 'package.json')
+    );
+    const pkg = JSON.parse(pkgFile.toString('utf8'));
+
+    examples.list.push({
+      name: dir.name,
+      repo: `${pkg.repository.url.replace('.git', '')}/${
+        pkg.repository.directory
+      }`,
+    });
   });
 
 // write to disk

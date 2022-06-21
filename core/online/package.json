@@ -28,12 +28,14 @@
   "devDependencies": {
     "typescript": "^4.7.3",
     "@types/react": "*",
+    "@types/styled-components": "*",
     "@magic-circle/editor": "^0.0.7",
     "@magic-circle/styles": "^0.0.7",
     "@magic-circle/schema": "^0.0.7"
   },
   "peerDependencies": {
-    "react": "^18.0.0"
+    "react": "^18.0.0",
+    "styled-components": "*"
   },
   "publishConfig": {
     "access": "public"
