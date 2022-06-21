@@ -6,8 +6,11 @@ import { list } from './list.json';
 
 const Sidebar = () => {
   const loadExample = useCallback((name: string) => {
-    const frame: HTMLIFrameElement = document.querySelector('#frame');
+    const frame: HTMLIFrameElement = document.querySelector('#frame iframe');
     frame.src = `examples/${name}`;
+
+    // Set sidebar to layers
+    // todo
   }, []);
 
   return (
@@ -16,7 +19,7 @@ const Sidebar = () => {
         <Metric.Container onClick={() => loadExample(name)} key={name}>
           {name}
           <Metric.Value>
-            <Icon name="ArrowRight" width={SPACING(2)} height={SPACING(2)} />
+            <Icon name="Code" width={SPACING(2)} height={SPACING(2)} />
           </Metric.Value>
         </Metric.Container>
       ))}
