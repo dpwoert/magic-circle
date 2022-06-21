@@ -10,7 +10,7 @@ const exampleFolder = path.join(__dirname, '../../../examples');
 // Get all folders
 fs.readdirSync(exampleFolder, { withFileTypes: true })
   .filter((dir) => dir.isDirectory())
-  .map((dir) => {
+  .forEach((dir) => {
     examples.list.push(dir.name);
   });
 
