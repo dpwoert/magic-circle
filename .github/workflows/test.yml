@@ -34,3 +34,10 @@ jobs:
         run: npm i
       - name: Linting
         run: npm run build:dev
+      - name: Generate stats
+        run: npm run build:stats
+      - name: Upload packaged files
+        uses: actions/upload-artifact@v2
+        with:
+          name: Bundle statistics
+          path: 'core/editor/stats.html'
