@@ -282,7 +282,10 @@ export interface Config {
   theme: {
     accent: string;
   };
-  settings: Record<string, any>;
+  settings: {
+    directoryBasedOnFrameUrl?: boolean;
+    [key: string]: any;
+  };
   target: BuildTarget;
 }
 
@@ -335,7 +338,7 @@ export interface App {
 
   getPlugin: (name: string) => Plugin | undefined;
   getControl: (name: string) => Control | undefined;
-  getSetting: (name: string) => unknown;
+  getSetting: <T>(path: string, defaultValue?: T) => T;
 
   setLayoutHook: (name: string, hook: ReactNode) => void;
 

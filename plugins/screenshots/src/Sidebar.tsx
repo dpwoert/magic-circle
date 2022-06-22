@@ -176,10 +176,20 @@ type FileProps = {
   preview: (screenshot: ScreenshotFile) => void;
   json: (screenshot: ScreenshotFile) => void;
   favourite: (screenshot: ScreenshotFile) => void;
+  remove: (screenshot: ScreenshotFile) => void;
+  rename: (screenshot: ScreenshotFile) => void;
   file: ScreenshotFile;
 };
 
-const File = ({ file, preview, json, load, favourite }: FileProps) => {
+const File = ({
+  file,
+  preview,
+  json,
+  load,
+  favourite,
+  remove,
+  rename,
+}: FileProps) => {
   const [expand, setExpand] = useState(false);
   return (
     <FileContainer>
@@ -228,7 +238,11 @@ const File = ({ file, preview, json, load, favourite }: FileProps) => {
               Copy git commit
             </Option>
           )}
-          <Option>
+          <Option onClick={() => rename(file)}>
+            <Icon name="Tag" width={SPACING(1)} height={SPACING(1)} />
+            Rename
+          </Option>
+          <Option onClick={() => remove(file)}>
             <Icon name="Trash" width={SPACING(1)} height={SPACING(1)} />
             Delete
           </Option>
@@ -304,6 +318,14 @@ const Sidebar = ({ screenshots }: SidebarProps) => {
           preview={screenshots.previewImage}
           favourite={async () => {
             await screenshots.toggleFavourite(file);
+            read();
+          }}
+          rename={async () => {
+            await screenshots.renameScreenshot(file);
+            read();
+          }}
+          remove={async () => {
+            await screenshots.deleteScreenshot(file);
             read();
           }}
           json={screenshots.jsonViewer}

@@ -2,15 +2,15 @@
   "list": [
     {
       "name": "p5",
-      "repo": "https://github.com/dpwoert/magic-circle/examples/p5"
+      "repo": "https://github.com/dpwoert/magic-circle/tree/master/examples/p5"
     },
     {
       "name": "regl",
-      "repo": "https://github.com/dpwoert/magic-circle/examples/regl"
+      "repo": "https://github.com/dpwoert/magic-circle/tree/master/examples/regl"
     },
     {
       "name": "simple",
-      "repo": "https://github.com/dpwoert/magic-circle/examples/simple"
+      "repo": "https://github.com/dpwoert/magic-circle/tree/master/examples/simple"
     }
   ]
 }

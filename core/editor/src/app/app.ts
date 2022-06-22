@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import Mousetrap from 'mousetrap';
+import dotProp from 'dot-prop';
 
 import type {
   App as AppBase,
@@ -163,8 +164,8 @@ class App implements AppBase {
     return this.controls[name];
   }
 
-  getSetting(name: string) {
-    // todo
+  getSetting<T>(path: string, defaultValue: T): T {
+    return dotProp.get(this.config.settings, path, defaultValue);
   }
 
   setLayoutHook(name: string, value: ReactNode) {

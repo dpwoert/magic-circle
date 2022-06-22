@@ -18,7 +18,7 @@ fs.readdirSync(exampleFolder, { withFileTypes: true })
 
     examples.list.push({
       name: dir.name,
-      repo: `${pkg.repository.url.replace('.git', '')}/${
+      repo: `${pkg.repository.url.replace('.git', '')}/tree/master/${
         pkg.repository.directory
       }`,
     });

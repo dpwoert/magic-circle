@@ -158,8 +158,19 @@ export default class Screenshots implements Plugin {
     return [];
   }
 
+  private directoryKey(): string {
+    const useIframe = this.client.getSetting('directoryBasedOnFrameUrl', false);
+
+    if (useIframe) {
+      const frame: HTMLIFrameElement = document.querySelector('#frame iframe');
+      return `directory-${frame.src}`;
+    }
+
+    return 'directory';
+  }
+
   async getDirectory() {
-    const stored = await get('directory');
+    const stored = await get(this.directoryKey());
 
     if (!stored) {
       return this.changeFolder();
@@ -224,14 +235,16 @@ export default class Screenshots implements Plugin {
 
     // Add data
     files = await Promise.all(
-      files.map(async (file) => {
-        const data = jsons[file.fileName.replace('.png', '')];
-        const text = await data.text();
-        return {
-          ...file,
-          data: JSON.parse(text),
-        };
-      })
+      files
+        .filter((file) => !!jsons[file.fileName.replace('.png', '')])
+        .map(async (file) => {
+          const data = jsons[file.fileName.replace('.png', '')];
+          const text = await data.text();
+          return {
+            ...file,
+            data: JSON.parse(text),
+          };
+        })
     );
 
     // Favourites only
@@ -245,7 +258,7 @@ export default class Screenshots implements Plugin {
   async changeFolder() {
     // @ts-ignore
     const directoryHandle = await window.showDirectoryPicker();
-    await set('directory', directoryHandle);
+    await set(this.directoryKey(), directoryHandle);
     return directoryHandle;
   }
 
@@ -338,6 +351,45 @@ export default class Screenshots implements Plugin {
       })
     );
     await writable2.close();
+  }
+
+  async renameScreenshot(screenshot: ScreenshotFile) {
+    const ext = screenshot.fileName.endsWith('.svg') ? '.svg' : '.png';
+    const newName = prompt(
+      'How would you like to rename this file?',
+      screenshot.fileName.replace('.png', '').replace('.svg', '')
+    );
+
+    if (newName) {
+      const directory = await this.getDirectory();
+
+      // Ensure we have permission
+      const permission = await this.verifyPermission(directory, true);
+      if (!permission) return;
+
+      const file = await directory.getFileHandle(screenshot.fileName);
+      const json = await directory.getFileHandle(
+        screenshot.fileName.replace('.svg', '.json').replace('.png', '.json')
+      );
+      const newNameSafe = newName.endsWith(ext) ? newName : `${newName}${ext}`;
+      await file.move(newNameSafe);
+      await json.move(
+        newNameSafe.replace('.svg', '.json').replace('.png', '.json')
+      );
+    }
+  }
+
+  async deleteScreenshot(screenshot: ScreenshotFile) {
+    const directory = await this.getDirectory();
+
+    // Ensure we have permission
+    const permission = await this.verifyPermission(directory, true);
+    if (!permission) return;
+
+    await directory.removeEntry(screenshot.fileName);
+    await directory.removeEntry(
+      screenshot.fileName.replace('.png', '.json').replace('.svg', '.json')
+    );
   }
 
   async verifyPermission(directoryHandle: any, readWrite: boolean) {

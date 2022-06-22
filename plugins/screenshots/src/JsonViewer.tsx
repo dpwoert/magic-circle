@@ -77,7 +77,19 @@ const JsonViewer = ({ screenshot, screenshots }: JsonViewerProps) => {
             <Icon name="Photo" width={SPACING(1.5)} height={SPACING(1.5)} />
             View screenshot
           </Action>
-          <Action>
+          <Action
+            onClick={() => {
+              screenshots.renameScreenshot(screenshot);
+            }}
+          >
+            <Icon name="Tag" width={SPACING(1.5)} height={SPACING(1.5)} />
+            Rename
+          </Action>
+          <Action
+            onClick={() => {
+              screenshots.renameScreenshot(screenshot);
+            }}
+          >
             <Icon name="Trash" width={SPACING(1.5)} height={SPACING(1.5)} />
             Delete
           </Action>

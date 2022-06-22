@@ -29,9 +29,6 @@ const Sidebar = () => {
   const loadExample = useCallback((name: string) => {
     const frame: HTMLIFrameElement = document.querySelector('#frame iframe');
     frame.src = `examples/${name}`;
-
-    // Set sidebar to layers
-    // todo
   }, []);
 
   return (
