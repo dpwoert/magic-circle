@@ -32,9 +32,9 @@ jobs:
           node-version: 16.x
       - name: Setup repo
         run: npm i
-      - name: Linting
+      - name: Build all files to check types
         run: npm run build:dev
-      - name: Generate stats
+      - name: Generate bundle stats
         run: npm run build:stats
       - name: Upload packaged files
         uses: actions/upload-artifact@v2
