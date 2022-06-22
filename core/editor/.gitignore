@@ -1,4 +1,4 @@
 build
 arguments.json
-build.tmp.json
+build.tmp.js
 stats.html

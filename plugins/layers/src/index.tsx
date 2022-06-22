@@ -8,9 +8,13 @@ import {
   ControlExport,
 } from '@magic-circle/schema';
 import { Store, StoreFamily } from '@magic-circle/state';
+import { ChevronDown, registerIcon, Rows } from '@magic-circle/styles';
 
 import SidebarLeft from './SidebarLeft';
 import SidebarRight from './SidebarRight';
+
+registerIcon(Rows);
+registerIcon(ChevronDown);
 
 type FlatListItem = LayerExport & {
   depth: number;

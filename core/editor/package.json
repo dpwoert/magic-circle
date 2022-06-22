@@ -40,8 +40,7 @@
     "watch": "vite",
     "build:dev": "tsc && vite build",
     "build:prod": "BUILD_ENV=production npm run build:dev",
-    "build:stats": "STATS=true npm run build:prod",
-    "generate:icons": "node scripts/icons.js"
+    "build:stats": "STATS=true npm run build:prod"
   },
   "dependencies": {
     "@babel/core": "^7.1.2",

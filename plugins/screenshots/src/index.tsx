@@ -12,10 +12,37 @@ import {
   CommandLineReference,
 } from '@magic-circle/schema';
 import { Store } from '@magic-circle/state';
+import {
+  Camera,
+  Folder,
+  Photo,
+  Information,
+  registerIcon,
+  Clock,
+  Star,
+  Copy,
+  DotsVertical,
+  Trash,
+  Tag,
+  Code,
+} from '@magic-circle/styles';
 
 import Sidebar from './Sidebar';
 import ImagePreview from './ImagePreview';
 import JsonViewer from './JsonViewer';
+
+// Register icons
+registerIcon(Camera);
+registerIcon(Folder);
+registerIcon(Photo);
+registerIcon(Information);
+registerIcon(Clock);
+registerIcon(Star);
+registerIcon(DotsVertical);
+registerIcon(Copy);
+registerIcon(Trash);
+registerIcon(Tag);
+registerIcon(Code);
 
 function dataURLtoBlob(dataUrl: string) {
   const arr = dataUrl.split(',');

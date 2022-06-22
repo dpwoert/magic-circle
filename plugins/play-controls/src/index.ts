@@ -6,6 +6,18 @@ import type {
   CommandLineReference,
   CommandLineAction,
 } from '@magic-circle/schema';
+import {
+  registerIcon,
+  Play,
+  Pause,
+  Refresh,
+  Rewind,
+} from '@magic-circle/styles';
+
+registerIcon(Play);
+registerIcon(Pause);
+registerIcon(Refresh);
+registerIcon(Rewind);
 
 export default class PlayControls implements Plugin {
   playing: boolean;

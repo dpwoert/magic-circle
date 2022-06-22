@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { BuildTarget } from '@magic-circle/schema';
-import { COLORS } from '@magic-circle/styles';
+import { COLORS, registerIcon, Close } from '@magic-circle/styles';
 
 import Header from './Header';
 import SidebarLeft from './SidebarLeft';
@@ -11,6 +11,8 @@ import CommandLine from './CommandLine';
 import Inner from './Inner';
 
 import APP from '../app/app';
+
+registerIcon(Close);
 
 const Container = styled.div`
   display: flex;

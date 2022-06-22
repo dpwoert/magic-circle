@@ -9,14 +9,7 @@ import styled from 'styled-components';
 
 import type { CommandLineAction } from '@magic-circle/schema';
 import { useStore } from '@magic-circle/state';
-import {
-  SPACING,
-  COLORS,
-  TYPO,
-  Icon,
-  Search,
-  Shortcut,
-} from '@magic-circle/styles';
+import { SPACING, COLORS, TYPO, Icon, Shortcut } from '@magic-circle/styles';
 
 import APP from '../app/app';
 

@@ -1,6 +1,9 @@
 import { Plugin, icons, App } from '@magic-circle/schema';
 import { Store } from '@magic-circle/state';
+import { registerIcon, TrendingUp } from '@magic-circle/styles';
 import Sidebar from './Sidebar';
+
+registerIcon(TrendingUp);
 
 type loadTimes = {
   firstPaint?: number;
