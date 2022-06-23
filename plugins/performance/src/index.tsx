@@ -82,7 +82,7 @@ export default class Performance implements Plugin {
           this.renderTime.value.length,
         last: this.renderTime.value[this.renderTime.value.length - 1],
       },
-      ...this.loadTimes,
+      ...(this.loadTimes.value || []),
     };
   }
 }

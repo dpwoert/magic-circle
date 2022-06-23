@@ -2,7 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { BuildTarget } from '@magic-circle/schema';
-import { COLORS, registerIcon, Close } from '@magic-circle/styles';
+import { AppProvider } from '@magic-circle/state';
+import {
+  COLORS,
+  registerIcon,
+  Close,
+  Command,
+  Search,
+  Delete,
+} from '@magic-circle/styles';
 
 import Header from './Header';
 import SidebarLeft from './SidebarLeft';
@@ -13,6 +21,9 @@ import Inner from './Inner';
 import APP from '../app/app';
 
 registerIcon(Close);
+registerIcon(Command);
+registerIcon(Search);
+registerIcon(Delete);
 
 const Container = styled.div`
   display: flex;
@@ -50,25 +61,27 @@ const SpacerFrame = styled.div`
 
 export default function App() {
   return (
-    <Container>
-      <Header />
-      <Inside>
-        <SidebarLeft />
-        <Frame id="frame">
-          {APP.config.target === BuildTarget.IFRAME ? (
-            <Iframe
-              allow="display-capture"
-              src={APP.config.url}
-              onLoad={() => APP.connect()}
-            />
-          ) : (
-            <SpacerFrame />
-          )}
-          <Inner />
-        </Frame>
-        <SidebarRight />
-      </Inside>
-      <CommandLine />
-    </Container>
+    <AppProvider app={APP}>
+      <Container>
+        <Header />
+        <Inside>
+          <SidebarLeft />
+          <Frame id="frame">
+            {APP.config.target === BuildTarget.IFRAME ? (
+              <Iframe
+                allow="display-capture"
+                src={APP.config.url}
+                onLoad={() => APP.connect()}
+              />
+            ) : (
+              <SpacerFrame />
+            )}
+            <Inner />
+          </Frame>
+          <SidebarRight />
+        </Inside>
+        <CommandLine />
+      </Container>
+    </AppProvider>
   );
 }

@@ -1,10 +1,12 @@
 import { useEffect, useState, useCallback } from 'react';
 import styled from 'styled-components';
 
-import { COLORS, Icon, SPACING, TYPO } from '@magic-circle/styles';
+import { COLORS, Icon, Metric, SPACING, TYPO } from '@magic-circle/styles';
 import { useStore } from '@magic-circle/state';
+import { App, LayoutHook } from '@magic-circle/schema';
 
 import Screenshots, { ReadMode, ScreenshotFile } from './index';
+import GalleryView from './GalleryView';
 
 const Header = styled.div`
   position: sticky;
@@ -226,18 +228,6 @@ const File = ({
             <Icon name="Information" width={SPACING(1)} height={SPACING(1)} />
             Show file info
           </Option>
-          {file.data.git && (
-            <Option
-              onClick={() => {
-                navigator.clipboard.writeText(
-                  `git checkout ${file.data.git.sha}`
-                );
-              }}
-            >
-              <Icon name="Code" width={SPACING(1)} height={SPACING(1)} />
-              Copy git commit
-            </Option>
-          )}
           <Option onClick={() => rename(file)}>
             <Icon name="Tag" width={SPACING(1)} height={SPACING(1)} />
             Rename
@@ -264,18 +254,43 @@ const File = ({
 };
 
 type SidebarProps = {
+  app: App;
   screenshots: Screenshots;
 };
 
-const Sidebar = ({ screenshots }: SidebarProps) => {
+const Sidebar = ({ app, screenshots }: SidebarProps) => {
   const lastScreenshot = useStore(screenshots.last);
   const [files, setFiles] = useState<ScreenshotFile[]>([]);
-  const [mode, setMode] = useState(ReadMode.RECENT);
+  const [mode, _setMode] = useState(ReadMode.RECENT);
 
   const read = useCallback(async () => {
     const list = await screenshots.readDirectory(mode);
     setFiles(list);
   }, [screenshots, mode]);
+
+  const setMode = useCallback(
+    (newMode: ReadMode) => {
+      _setMode(newMode);
+
+      if (newMode === ReadMode.ALL) {
+        app.setLayoutHook(
+          LayoutHook.INNER,
+          <GalleryView
+            close={() => {
+              app.setLayoutHook(LayoutHook.INNER, null);
+              setMode(ReadMode.RECENT);
+            }}
+            reload={read}
+            screenshots={screenshots}
+            files={files}
+          />
+        );
+      } else {
+        app.setLayoutHook(LayoutHook.INNER, null);
+      }
+    },
+    [app, files, screenshots]
+  );
 
   useEffect(() => {
     read();
@@ -311,26 +326,34 @@ const Sidebar = ({ screenshots }: SidebarProps) => {
           <Icon name="Folder" width={SPACING(1.5)} height={SPACING(1.5)} />
         </HeaderFilterAll>
       </Header>
-      {files.map((file) => (
-        <File
-          file={file}
-          load={screenshots.loadScreenshot}
-          preview={screenshots.previewImage}
-          favourite={async () => {
-            await screenshots.toggleFavourite(file);
-            read();
-          }}
-          rename={async () => {
-            await screenshots.renameScreenshot(file);
-            read();
-          }}
-          remove={async () => {
-            await screenshots.deleteScreenshot(file);
-            read();
-          }}
-          json={screenshots.jsonViewer}
-        />
-      ))}
+      {mode === ReadMode.ALL ? (
+        <>
+          <Metric.Container>
+            No screenshots<Metric.Value>{files.length}</Metric.Value>
+          </Metric.Container>
+        </>
+      ) : (
+        files.map((file) => (
+          <File
+            file={file}
+            load={screenshots.loadScreenshot}
+            preview={screenshots.previewImage}
+            favourite={async () => {
+              await screenshots.toggleFavourite(file);
+              read();
+            }}
+            rename={async () => {
+              await screenshots.renameScreenshot(file);
+              read();
+            }}
+            remove={async () => {
+              await screenshots.deleteScreenshot(file);
+              read();
+            }}
+            json={screenshots.jsonViewer}
+          />
+        ))
+      )}
     </div>
   );
 };

@@ -112,6 +112,8 @@ export const CommandLine = () => {
   const searchRef = useRef<HTMLElement | null>();
   const actionsRef = useRef<HTMLElement | null>();
 
+  console.log({ screen });
+
   const select = useCallback(async () => {
     if (screen) {
       const action = screen.actions[selected];
@@ -208,7 +210,7 @@ export const CommandLine = () => {
             ref={actionsRef}
           >
             {actions.map((action, key) => (
-              <Action selected={selected === key}>
+              <Action selected={selected === key} key={action.label}>
                 <ActionLabel>
                   <Icon
                     name={action.icon}

@@ -335,12 +335,16 @@ export interface App {
   sidebar: Store<Sidebar>;
   pageInfo: Store<PageInfo>;
   layoutHooks: Store<layoutHooks>;
+  commandLine: Store<CommandLineScreen | null>;
+  commandLineReference: Store<CommandLineReference | null>;
 
   getPlugin: (name: string) => Plugin | undefined;
   getControl: (name: string) => Control | undefined;
   getSetting: <T>(path: string, defaultValue?: T) => T;
 
   setLayoutHook: (name: string, hook: ReactNode) => void;
+  getCommandLine: (reference?: CommandLineReference) => CommandLineScreen;
+  showCommandLine: (screen?: CommandLineScreen) => void;
 
   save: () => Promise<Record<string, any>>;
   load: (data: Record<string, any>) => Promise<void>;

@@ -5,6 +5,7 @@ import { TYPO, COLORS, SPACING, Icon } from '@magic-circle/styles';
 
 import type { ScreenshotFile } from './index';
 import Screenshots from './index';
+import { useReference } from '@magic-circle/state';
 
 const Container = styled.div`
   position: absolute;
@@ -56,6 +57,7 @@ type JsonViewerProps = {
 };
 
 const JsonViewer = ({ screenshot, screenshots }: JsonViewerProps) => {
+  useReference({ id: screenshot.fileName, type: 'screenshot' });
   return (
     <Container>
       <Header>
@@ -69,6 +71,18 @@ const JsonViewer = ({ screenshot, screenshots }: JsonViewerProps) => {
             <Icon name="Copy" width={SPACING(1.5)} height={SPACING(1.5)} />
             Copy JSON
           </Action>
+          {screenshot.data.git && (
+            <Action
+              onClick={() => {
+                navigator.clipboard.writeText(
+                  `git checkout ${screenshot.data.git.sha}`
+                );
+              }}
+            >
+              <Icon name="Code" width={SPACING(1.5)} height={SPACING(1.5)} />
+              Copy Git commit
+            </Action>
+          )}
           <Action
             onClick={() => {
               screenshots.previewImage(screenshot);

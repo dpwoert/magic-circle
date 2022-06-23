@@ -25,6 +25,7 @@ import {
   Trash,
   Tag,
   Code,
+  StreamToTv,
 } from '@magic-circle/styles';
 
 import Sidebar from './Sidebar';
@@ -43,6 +44,7 @@ registerIcon(Copy);
 registerIcon(Trash);
 registerIcon(Tag);
 registerIcon(Code);
+registerIcon(StreamToTv);
 
 function dataURLtoBlob(dataUrl: string) {
   const arr = dataUrl.split(',');
@@ -131,11 +133,12 @@ export default class Screenshots implements Plugin {
     return {
       icon: 'Photo' as icons,
       name: 'screenshots',
-      render: <Sidebar screenshots={this} />,
+      render: <Sidebar app={this.client} screenshots={this} />,
     };
   }
 
   commands(reference?: CommandLineReference): CommandLineAction[] {
+    console.log({ reference });
     if (!reference) {
       return [
         {
@@ -167,6 +170,27 @@ export default class Screenshots implements Plugin {
           label: 'View information',
           icon: 'Information',
           shortcut: 'platform+i',
+          onSelect: async () => {
+            // todo
+          },
+        },
+        {
+          label: 'Copy JSON',
+          icon: 'Code',
+          onSelect: async () => {
+            // todo
+          },
+        },
+        {
+          label: 'Copy Git commit',
+          icon: 'Code',
+          onSelect: async () => {
+            // todo
+          },
+        },
+        {
+          label: 'Rename screenshot',
+          icon: 'Tag',
           onSelect: async () => {
             // todo
           },

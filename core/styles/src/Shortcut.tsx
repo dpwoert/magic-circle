@@ -51,6 +51,13 @@ export const Shortcut = ({
             </Key>
           );
         }
+        if (command === 'backspace') {
+          return (
+            <Key color={color} backgroundColor={backgroundColor}>
+              <Icon name="Delete" width={SPACING(1)} height={SPACING(1)} />
+            </Key>
+          );
+        }
         if (command === 'shift') {
           return (
             <Key color={color} backgroundColor={backgroundColor}>

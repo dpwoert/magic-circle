@@ -28,7 +28,7 @@
     "build:prod": "BUILD_ENV=production npm run build:dev",
     "build:editor": "controls build",
     "editor": "controls",
-    "editor:dev": "controls serve"
+    "editor:dev": "controls develop"
   },
   "devDependencies": {
     "@magic-circle/editor": "^0.0.7",

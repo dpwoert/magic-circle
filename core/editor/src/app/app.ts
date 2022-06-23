@@ -177,6 +177,7 @@ class App implements AppBase {
 
   getCommandLine(reference?: CommandLineReference): CommandLineScreen {
     const items: CommandLineAction[] = [];
+    const ref = reference || this.commandLineReference.value;
 
     // Get sidebar commands
     const sidebar: CommandLineAction[] = this.sidebar.value.panels.map(
@@ -196,15 +197,15 @@ class App implements AppBase {
     // Get pluggin commands
     this.plugins.forEach((p) => {
       if (p.commands) {
-        items.push(...p.commands());
+        items.push(...p.commands(ref));
       }
     });
 
     return {
       searchLabel: 'Type a command or search',
       initialScreen: true,
-      reference,
-      actions: [...sidebar, ...items],
+      reference: ref,
+      actions: ref ? [...items] : [...sidebar, ...items],
     };
   }
 
@@ -213,7 +214,7 @@ class App implements AppBase {
     else this.commandLine.set(this.getCommandLine());
   }
 
-  bindKeys() {
+  private bindKeys() {
     // Reset all shortcuts
     Mousetrap.reset();
 
