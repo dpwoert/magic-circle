@@ -182,192 +182,685 @@ import { ReactComponent as WifiIcon } from './wifi.svg';
 import { ReactComponent as ZoomInIcon } from './zoom-in.svg';
 import { ReactComponent as ZoomOutIcon } from './zoom-out.svg';
 
+export const AirplayToTv: IconDefinition = {
+  name: 'AirplayToTv',
+  component: AirplayToTvIcon,
+};
+export const AnnotationDots: IconDefinition = {
+  name: 'AnnotationDots',
+  component: AnnotationDotsIcon,
+};
+export const AnnotationWarning: IconDefinition = {
+  name: 'AnnotationWarning',
+  component: AnnotationWarningIcon,
+};
+export const Announcement: IconDefinition = {
+  name: 'Announcement',
+  component: AnnouncementIcon,
+};
+export const Archive: IconDefinition = {
+  name: 'Archive',
+  component: ArchiveIcon,
+};
+export const ArrowDownLeft: IconDefinition = {
+  name: 'ArrowDownLeft',
+  component: ArrowDownLeftIcon,
+};
+export const ArrowDownRight: IconDefinition = {
+  name: 'ArrowDownRight',
+  component: ArrowDownRightIcon,
+};
+export const ArrowDown: IconDefinition = {
+  name: 'ArrowDown',
+  component: ArrowDownIcon,
+};
+export const ArrowLeft: IconDefinition = {
+  name: 'ArrowLeft',
+  component: ArrowLeftIcon,
+};
+export const ArrowRight: IconDefinition = {
+  name: 'ArrowRight',
+  component: ArrowRightIcon,
+};
+export const ArrowUpLeft: IconDefinition = {
+  name: 'ArrowUpLeft',
+  component: ArrowUpLeftIcon,
+};
+export const ArrowUpRight: IconDefinition = {
+  name: 'ArrowUpRight',
+  component: ArrowUpRightIcon,
+};
+export const ArrowUp: IconDefinition = {
+  name: 'ArrowUp',
+  component: ArrowUpIcon,
+};
+export const AtSign: IconDefinition = { name: 'AtSign', component: AtSignIcon };
+export const Badge: IconDefinition = { name: 'Badge', component: BadgeIcon };
+export const Bank: IconDefinition = { name: 'Bank', component: BankIcon };
+export const BatteryCharging: IconDefinition = {
+  name: 'BatteryCharging',
+  component: BatteryChargingIcon,
+};
+export const BatteryFull: IconDefinition = {
+  name: 'BatteryFull',
+  component: BatteryFullIcon,
+};
+export const BatteryLow: IconDefinition = {
+  name: 'BatteryLow',
+  component: BatteryLowIcon,
+};
+export const BatteryMedium: IconDefinition = {
+  name: 'BatteryMedium',
+  component: BatteryMediumIcon,
+};
+export const Battery: IconDefinition = {
+  name: 'Battery',
+  component: BatteryIcon,
+};
+export const BellOff: IconDefinition = {
+  name: 'BellOff',
+  component: BellOffIcon,
+};
+export const Bell: IconDefinition = { name: 'Bell', component: BellIcon };
+export const Book: IconDefinition = { name: 'Book', component: BookIcon };
+export const Bookmark: IconDefinition = {
+  name: 'Bookmark',
+  component: BookmarkIcon,
+};
+export const Box: IconDefinition = { name: 'Box', component: BoxIcon };
+export const Briefcase: IconDefinition = {
+  name: 'Briefcase',
+  component: BriefcaseIcon,
+};
+export const BuildingStore: IconDefinition = {
+  name: 'BuildingStore',
+  component: BuildingStoreIcon,
+};
+export const Building: IconDefinition = {
+  name: 'Building',
+  component: BuildingIcon,
+};
+export const CalendarMinus: IconDefinition = {
+  name: 'CalendarMinus',
+  component: CalendarMinusIcon,
+};
+export const CalendarPlus: IconDefinition = {
+  name: 'CalendarPlus',
+  component: CalendarPlusIcon,
+};
+export const Calendar: IconDefinition = {
+  name: 'Calendar',
+  component: CalendarIcon,
+};
+export const CameraOff: IconDefinition = {
+  name: 'CameraOff',
+  component: CameraOffIcon,
+};
+export const Camera: IconDefinition = { name: 'Camera', component: CameraIcon };
+export const Chart: IconDefinition = { name: 'Chart', component: ChartIcon };
+export const CheckCircle: IconDefinition = {
+  name: 'CheckCircle',
+  component: CheckCircleIcon,
+};
+export const Check: IconDefinition = { name: 'Check', component: CheckIcon };
+export const ChevronDown: IconDefinition = {
+  name: 'ChevronDown',
+  component: ChevronDownIcon,
+};
+export const ChevronLeft: IconDefinition = {
+  name: 'ChevronLeft',
+  component: ChevronLeftIcon,
+};
+export const ChevronRight: IconDefinition = {
+  name: 'ChevronRight',
+  component: ChevronRightIcon,
+};
+export const ChevronUp: IconDefinition = {
+  name: 'ChevronUp',
+  component: ChevronUpIcon,
+};
+export const Clipboard: IconDefinition = {
+  name: 'Clipboard',
+  component: ClipboardIcon,
+};
+export const Clock: IconDefinition = { name: 'Clock', component: ClockIcon };
+export const CloseCircle: IconDefinition = {
+  name: 'CloseCircle',
+  component: CloseCircleIcon,
+};
+export const Close: IconDefinition = { name: 'Close', component: CloseIcon };
+export const Cloud: IconDefinition = { name: 'Cloud', component: CloudIcon };
+export const Code: IconDefinition = { name: 'Code', component: CodeIcon };
+export const ColumnsHorizontal: IconDefinition = {
+  name: 'ColumnsHorizontal',
+  component: ColumnsHorizontalIcon,
+};
+export const ColumnsVertical: IconDefinition = {
+  name: 'ColumnsVertical',
+  component: ColumnsVerticalIcon,
+};
+export const Columns: IconDefinition = {
+  name: 'Columns',
+  component: ColumnsIcon,
+};
+export const Command: IconDefinition = {
+  name: 'Command',
+  component: CommandIcon,
+};
+export const Copy: IconDefinition = { name: 'Copy', component: CopyIcon };
+export const Crop: IconDefinition = { name: 'Crop', component: CropIcon };
+export const Cursor: IconDefinition = { name: 'Cursor', component: CursorIcon };
+export const Dashboard: IconDefinition = {
+  name: 'Dashboard',
+  component: DashboardIcon,
+};
+export const Delete: IconDefinition = { name: 'Delete', component: DeleteIcon };
+export const Dollar: IconDefinition = { name: 'Dollar', component: DollarIcon };
+export const DotsHorizontal: IconDefinition = {
+  name: 'DotsHorizontal',
+  component: DotsHorizontalIcon,
+};
+export const DotsVertical: IconDefinition = {
+  name: 'DotsVertical',
+  component: DotsVerticalIcon,
+};
+export const Download: IconDefinition = {
+  name: 'Download',
+  component: DownloadIcon,
+};
+export const Edit: IconDefinition = { name: 'Edit', component: EditIcon };
+export const EmojiHappy: IconDefinition = {
+  name: 'EmojiHappy',
+  component: EmojiHappyIcon,
+};
+export const EmojiSad: IconDefinition = {
+  name: 'EmojiSad',
+  component: EmojiSadIcon,
+};
+export const EyeOff: IconDefinition = { name: 'EyeOff', component: EyeOffIcon };
+export const Eye: IconDefinition = { name: 'Eye', component: EyeIcon };
+export const FastForward: IconDefinition = {
+  name: 'FastForward',
+  component: FastForwardIcon,
+};
+export const FileMinus: IconDefinition = {
+  name: 'FileMinus',
+  component: FileMinusIcon,
+};
+export const FilePlus: IconDefinition = {
+  name: 'FilePlus',
+  component: FilePlusIcon,
+};
+export const FileText: IconDefinition = {
+  name: 'FileText',
+  component: FileTextIcon,
+};
+export const File: IconDefinition = { name: 'File', component: FileIcon };
+export const Film: IconDefinition = { name: 'Film', component: FilmIcon };
+export const Filter: IconDefinition = { name: 'Filter', component: FilterIcon };
+export const Flag: IconDefinition = { name: 'Flag', component: FlagIcon };
+export const FolderMinus: IconDefinition = {
+  name: 'FolderMinus',
+  component: FolderMinusIcon,
+};
+export const FolderPlus: IconDefinition = {
+  name: 'FolderPlus',
+  component: FolderPlusIcon,
+};
+export const Folder: IconDefinition = { name: 'Folder', component: FolderIcon };
+export const Globe: IconDefinition = { name: 'Globe', component: GlobeIcon };
+export const GridMasonry: IconDefinition = {
+  name: 'GridMasonry',
+  component: GridMasonryIcon,
+};
+export const Grid: IconDefinition = { name: 'Grid', component: GridIcon };
+export const Hashtag: IconDefinition = {
+  name: 'Hashtag',
+  component: HashtagIcon,
+};
+export const Headphones: IconDefinition = {
+  name: 'Headphones',
+  component: HeadphonesIcon,
+};
+export const Heart: IconDefinition = { name: 'Heart', component: HeartIcon };
+export const HelpCircle: IconDefinition = {
+  name: 'HelpCircle',
+  component: HelpCircleIcon,
+};
+export const Help: IconDefinition = { name: 'Help', component: HelpIcon };
+export const Home: IconDefinition = { name: 'Home', component: HomeIcon };
+export const Inbox: IconDefinition = { name: 'Inbox', component: InboxIcon };
+export const Information: IconDefinition = {
+  name: 'Information',
+  component: InformationIcon,
+};
+export const Key: IconDefinition = { name: 'Key', component: KeyIcon };
+export const Link: IconDefinition = { name: 'Link', component: LinkIcon };
+export const LockUnlocked: IconDefinition = {
+  name: 'LockUnlocked',
+  component: LockUnlockedIcon,
+};
+export const Lock: IconDefinition = { name: 'Lock', component: LockIcon };
+export const LogIn: IconDefinition = { name: 'LogIn', component: LogInIcon };
+export const LogOut: IconDefinition = { name: 'LogOut', component: LogOutIcon };
+export const Mail: IconDefinition = { name: 'Mail', component: MailIcon };
+export const Map: IconDefinition = { name: 'Map', component: MapIcon };
+export const Maximize: IconDefinition = {
+  name: 'Maximize',
+  component: MaximizeIcon,
+};
+export const Menu: IconDefinition = { name: 'Menu', component: MenuIcon };
+export const Message: IconDefinition = {
+  name: 'Message',
+  component: MessageIcon,
+};
+export const MicrophoneMute: IconDefinition = {
+  name: 'MicrophoneMute',
+  component: MicrophoneMuteIcon,
+};
+export const Microphone: IconDefinition = {
+  name: 'Microphone',
+  component: MicrophoneIcon,
+};
+export const Minimize: IconDefinition = {
+  name: 'Minimize',
+  component: MinimizeIcon,
+};
+export const MinusCircle: IconDefinition = {
+  name: 'MinusCircle',
+  component: MinusCircleIcon,
+};
+export const Minus: IconDefinition = { name: 'Minus', component: MinusIcon };
+export const Monitor2: IconDefinition = {
+  name: 'Monitor2',
+  component: Monitor2Icon,
+};
+export const Monitor: IconDefinition = {
+  name: 'Monitor',
+  component: MonitorIcon,
+};
+export const Moon: IconDefinition = { name: 'Moon', component: MoonIcon };
+export const Music: IconDefinition = { name: 'Music', component: MusicIcon };
+export const Paintbucket: IconDefinition = {
+  name: 'Paintbucket',
+  component: PaintbucketIcon,
+};
+export const Pause: IconDefinition = { name: 'Pause', component: PauseIcon };
+export const Percentage: IconDefinition = {
+  name: 'Percentage',
+  component: PercentageIcon,
+};
+export const PhoneCallCross: IconDefinition = {
+  name: 'PhoneCallCross',
+  component: PhoneCallCrossIcon,
+};
+export const PhoneCallForward: IconDefinition = {
+  name: 'PhoneCallForward',
+  component: PhoneCallForwardIcon,
+};
+export const PhoneCallHangUp: IconDefinition = {
+  name: 'PhoneCallHangUp',
+  component: PhoneCallHangUpIcon,
+};
+export const PhoneCallIncoming: IconDefinition = {
+  name: 'PhoneCallIncoming',
+  component: PhoneCallIncomingIcon,
+};
+export const PhoneCallOutgoing: IconDefinition = {
+  name: 'PhoneCallOutgoing',
+  component: PhoneCallOutgoingIcon,
+};
+export const PhoneCall: IconDefinition = {
+  name: 'PhoneCall',
+  component: PhoneCallIcon,
+};
+export const Phone: IconDefinition = { name: 'Phone', component: PhoneIcon };
+export const Photo: IconDefinition = { name: 'Photo', component: PhotoIcon };
+export const PictureInPicture: IconDefinition = {
+  name: 'PictureInPicture',
+  component: PictureInPictureIcon,
+};
+export const PieChart: IconDefinition = {
+  name: 'PieChart',
+  component: PieChartIcon,
+};
+export const Pill: IconDefinition = { name: 'Pill', component: PillIcon };
+export const PinTack: IconDefinition = {
+  name: 'PinTack',
+  component: PinTackIcon,
+};
+export const Pin: IconDefinition = { name: 'Pin', component: PinIcon };
+export const Play: IconDefinition = { name: 'Play', component: PlayIcon };
+export const Plug: IconDefinition = { name: 'Plug', component: PlugIcon };
+export const PlusCircle: IconDefinition = {
+  name: 'PlusCircle',
+  component: PlusCircleIcon,
+};
+export const Plus: IconDefinition = { name: 'Plus', component: PlusIcon };
+export const Print: IconDefinition = { name: 'Print', component: PrintIcon };
+export const Projector: IconDefinition = {
+  name: 'Projector',
+  component: ProjectorIcon,
+};
+export const Redo: IconDefinition = { name: 'Redo', component: RedoIcon };
+export const Refresh: IconDefinition = {
+  name: 'Refresh',
+  component: RefreshIcon,
+};
+export const Rewind: IconDefinition = { name: 'Rewind', component: RewindIcon };
+export const Rows: IconDefinition = { name: 'Rows', component: RowsIcon };
+export const Search: IconDefinition = { name: 'Search', component: SearchIcon };
+export const Send: IconDefinition = { name: 'Send', component: SendIcon };
+export const Server: IconDefinition = { name: 'Server', component: ServerIcon };
+export const SettingsSliders: IconDefinition = {
+  name: 'SettingsSliders',
+  component: SettingsSlidersIcon,
+};
+export const Settings: IconDefinition = {
+  name: 'Settings',
+  component: SettingsIcon,
+};
+export const Share: IconDefinition = { name: 'Share', component: ShareIcon };
+export const Shield: IconDefinition = { name: 'Shield', component: ShieldIcon };
+export const ShoppingBag: IconDefinition = {
+  name: 'ShoppingBag',
+  component: ShoppingBagIcon,
+};
+export const ShoppingBasket: IconDefinition = {
+  name: 'ShoppingBasket',
+  component: ShoppingBasketIcon,
+};
+export const ShoppingCart: IconDefinition = {
+  name: 'ShoppingCart',
+  component: ShoppingCartIcon,
+};
+export const SkipBack: IconDefinition = {
+  name: 'SkipBack',
+  component: SkipBackIcon,
+};
+export const SkipForward: IconDefinition = {
+  name: 'SkipForward',
+  component: SkipForwardIcon,
+};
+export const Smartphone: IconDefinition = {
+  name: 'Smartphone',
+  component: SmartphoneIcon,
+};
+export const Speaker: IconDefinition = {
+  name: 'Speaker',
+  component: SpeakerIcon,
+};
+export const Star: IconDefinition = { name: 'Star', component: StarIcon };
+export const Sticker: IconDefinition = {
+  name: 'Sticker',
+  component: StickerIcon,
+};
+export const Stop: IconDefinition = { name: 'Stop', component: StopIcon };
+export const StreamToTv: IconDefinition = {
+  name: 'StreamToTv',
+  component: StreamToTvIcon,
+};
+export const Sun: IconDefinition = { name: 'Sun', component: SunIcon };
+export const TableColumns: IconDefinition = {
+  name: 'TableColumns',
+  component: TableColumnsIcon,
+};
+export const TableRows: IconDefinition = {
+  name: 'TableRows',
+  component: TableRowsIcon,
+};
+export const Tablet: IconDefinition = { name: 'Tablet', component: TabletIcon };
+export const Tag: IconDefinition = { name: 'Tag', component: TagIcon };
+export const Target: IconDefinition = { name: 'Target', component: TargetIcon };
+export const Ticket: IconDefinition = { name: 'Ticket', component: TicketIcon };
+export const Trash: IconDefinition = { name: 'Trash', component: TrashIcon };
+export const TrendingDown: IconDefinition = {
+  name: 'TrendingDown',
+  component: TrendingDownIcon,
+};
+export const TrendingUp: IconDefinition = {
+  name: 'TrendingUp',
+  component: TrendingUpIcon,
+};
+export const Truck: IconDefinition = { name: 'Truck', component: TruckIcon };
+export const Undo: IconDefinition = { name: 'Undo', component: UndoIcon };
+export const Upload: IconDefinition = { name: 'Upload', component: UploadIcon };
+export const UserCheck: IconDefinition = {
+  name: 'UserCheck',
+  component: UserCheckIcon,
+};
+export const UserCross: IconDefinition = {
+  name: 'UserCross',
+  component: UserCrossIcon,
+};
+export const UserMinus: IconDefinition = {
+  name: 'UserMinus',
+  component: UserMinusIcon,
+};
+export const UserPlus: IconDefinition = {
+  name: 'UserPlus',
+  component: UserPlusIcon,
+};
+export const User: IconDefinition = { name: 'User', component: UserIcon };
+export const UsersMinus: IconDefinition = {
+  name: 'UsersMinus',
+  component: UsersMinusIcon,
+};
+export const UsersPlus: IconDefinition = {
+  name: 'UsersPlus',
+  component: UsersPlusIcon,
+};
+export const Users: IconDefinition = { name: 'Users', component: UsersIcon };
+export const VideoCameraOff: IconDefinition = {
+  name: 'VideoCameraOff',
+  component: VideoCameraOffIcon,
+};
+export const VideoCamera: IconDefinition = {
+  name: 'VideoCamera',
+  component: VideoCameraIcon,
+};
+export const Video: IconDefinition = { name: 'Video', component: VideoIcon };
+export const Virus: IconDefinition = { name: 'Virus', component: VirusIcon };
+export const Wallet: IconDefinition = { name: 'Wallet', component: WalletIcon };
+export const WarningTriangle: IconDefinition = {
+  name: 'WarningTriangle',
+  component: WarningTriangleIcon,
+};
+export const WifiNoConnection: IconDefinition = {
+  name: 'WifiNoConnection',
+  component: WifiNoConnectionIcon,
+};
+export const Wifi: IconDefinition = { name: 'Wifi', component: WifiIcon };
+export const ZoomIn: IconDefinition = { name: 'ZoomIn', component: ZoomInIcon };
+export const ZoomOut: IconDefinition = {
+  name: 'ZoomOut',
+  component: ZoomOutIcon,
+};
 
-export const AirplayToTv: IconDefinition = {name: 'AirplayToTv',component: AirplayToTvIcon};
-export const AnnotationDots: IconDefinition = {name: 'AnnotationDots',component: AnnotationDotsIcon};
-export const AnnotationWarning: IconDefinition = {name: 'AnnotationWarning',component: AnnotationWarningIcon};
-export const Announcement: IconDefinition = {name: 'Announcement',component: AnnouncementIcon};
-export const Archive: IconDefinition = {name: 'Archive',component: ArchiveIcon};
-export const ArrowDownLeft: IconDefinition = {name: 'ArrowDownLeft',component: ArrowDownLeftIcon};
-export const ArrowDownRight: IconDefinition = {name: 'ArrowDownRight',component: ArrowDownRightIcon};
-export const ArrowDown: IconDefinition = {name: 'ArrowDown',component: ArrowDownIcon};
-export const ArrowLeft: IconDefinition = {name: 'ArrowLeft',component: ArrowLeftIcon};
-export const ArrowRight: IconDefinition = {name: 'ArrowRight',component: ArrowRightIcon};
-export const ArrowUpLeft: IconDefinition = {name: 'ArrowUpLeft',component: ArrowUpLeftIcon};
-export const ArrowUpRight: IconDefinition = {name: 'ArrowUpRight',component: ArrowUpRightIcon};
-export const ArrowUp: IconDefinition = {name: 'ArrowUp',component: ArrowUpIcon};
-export const AtSign: IconDefinition = {name: 'AtSign',component: AtSignIcon};
-export const Badge: IconDefinition = {name: 'Badge',component: BadgeIcon};
-export const Bank: IconDefinition = {name: 'Bank',component: BankIcon};
-export const BatteryCharging: IconDefinition = {name: 'BatteryCharging',component: BatteryChargingIcon};
-export const BatteryFull: IconDefinition = {name: 'BatteryFull',component: BatteryFullIcon};
-export const BatteryLow: IconDefinition = {name: 'BatteryLow',component: BatteryLowIcon};
-export const BatteryMedium: IconDefinition = {name: 'BatteryMedium',component: BatteryMediumIcon};
-export const Battery: IconDefinition = {name: 'Battery',component: BatteryIcon};
-export const BellOff: IconDefinition = {name: 'BellOff',component: BellOffIcon};
-export const Bell: IconDefinition = {name: 'Bell',component: BellIcon};
-export const Book: IconDefinition = {name: 'Book',component: BookIcon};
-export const Bookmark: IconDefinition = {name: 'Bookmark',component: BookmarkIcon};
-export const Box: IconDefinition = {name: 'Box',component: BoxIcon};
-export const Briefcase: IconDefinition = {name: 'Briefcase',component: BriefcaseIcon};
-export const BuildingStore: IconDefinition = {name: 'BuildingStore',component: BuildingStoreIcon};
-export const Building: IconDefinition = {name: 'Building',component: BuildingIcon};
-export const CalendarMinus: IconDefinition = {name: 'CalendarMinus',component: CalendarMinusIcon};
-export const CalendarPlus: IconDefinition = {name: 'CalendarPlus',component: CalendarPlusIcon};
-export const Calendar: IconDefinition = {name: 'Calendar',component: CalendarIcon};
-export const CameraOff: IconDefinition = {name: 'CameraOff',component: CameraOffIcon};
-export const Camera: IconDefinition = {name: 'Camera',component: CameraIcon};
-export const Chart: IconDefinition = {name: 'Chart',component: ChartIcon};
-export const CheckCircle: IconDefinition = {name: 'CheckCircle',component: CheckCircleIcon};
-export const Check: IconDefinition = {name: 'Check',component: CheckIcon};
-export const ChevronDown: IconDefinition = {name: 'ChevronDown',component: ChevronDownIcon};
-export const ChevronLeft: IconDefinition = {name: 'ChevronLeft',component: ChevronLeftIcon};
-export const ChevronRight: IconDefinition = {name: 'ChevronRight',component: ChevronRightIcon};
-export const ChevronUp: IconDefinition = {name: 'ChevronUp',component: ChevronUpIcon};
-export const Clipboard: IconDefinition = {name: 'Clipboard',component: ClipboardIcon};
-export const Clock: IconDefinition = {name: 'Clock',component: ClockIcon};
-export const CloseCircle: IconDefinition = {name: 'CloseCircle',component: CloseCircleIcon};
-export const Close: IconDefinition = {name: 'Close',component: CloseIcon};
-export const Cloud: IconDefinition = {name: 'Cloud',component: CloudIcon};
-export const Code: IconDefinition = {name: 'Code',component: CodeIcon};
-export const ColumnsHorizontal: IconDefinition = {name: 'ColumnsHorizontal',component: ColumnsHorizontalIcon};
-export const ColumnsVertical: IconDefinition = {name: 'ColumnsVertical',component: ColumnsVerticalIcon};
-export const Columns: IconDefinition = {name: 'Columns',component: ColumnsIcon};
-export const Command: IconDefinition = {name: 'Command',component: CommandIcon};
-export const Copy: IconDefinition = {name: 'Copy',component: CopyIcon};
-export const Crop: IconDefinition = {name: 'Crop',component: CropIcon};
-export const Cursor: IconDefinition = {name: 'Cursor',component: CursorIcon};
-export const Dashboard: IconDefinition = {name: 'Dashboard',component: DashboardIcon};
-export const Delete: IconDefinition = {name: 'Delete',component: DeleteIcon};
-export const Dollar: IconDefinition = {name: 'Dollar',component: DollarIcon};
-export const DotsHorizontal: IconDefinition = {name: 'DotsHorizontal',component: DotsHorizontalIcon};
-export const DotsVertical: IconDefinition = {name: 'DotsVertical',component: DotsVerticalIcon};
-export const Download: IconDefinition = {name: 'Download',component: DownloadIcon};
-export const Edit: IconDefinition = {name: 'Edit',component: EditIcon};
-export const EmojiHappy: IconDefinition = {name: 'EmojiHappy',component: EmojiHappyIcon};
-export const EmojiSad: IconDefinition = {name: 'EmojiSad',component: EmojiSadIcon};
-export const EyeOff: IconDefinition = {name: 'EyeOff',component: EyeOffIcon};
-export const Eye: IconDefinition = {name: 'Eye',component: EyeIcon};
-export const FastForward: IconDefinition = {name: 'FastForward',component: FastForwardIcon};
-export const FileMinus: IconDefinition = {name: 'FileMinus',component: FileMinusIcon};
-export const FilePlus: IconDefinition = {name: 'FilePlus',component: FilePlusIcon};
-export const FileText: IconDefinition = {name: 'FileText',component: FileTextIcon};
-export const File: IconDefinition = {name: 'File',component: FileIcon};
-export const Film: IconDefinition = {name: 'Film',component: FilmIcon};
-export const Filter: IconDefinition = {name: 'Filter',component: FilterIcon};
-export const Flag: IconDefinition = {name: 'Flag',component: FlagIcon};
-export const FolderMinus: IconDefinition = {name: 'FolderMinus',component: FolderMinusIcon};
-export const FolderPlus: IconDefinition = {name: 'FolderPlus',component: FolderPlusIcon};
-export const Folder: IconDefinition = {name: 'Folder',component: FolderIcon};
-export const Globe: IconDefinition = {name: 'Globe',component: GlobeIcon};
-export const GridMasonry: IconDefinition = {name: 'GridMasonry',component: GridMasonryIcon};
-export const Grid: IconDefinition = {name: 'Grid',component: GridIcon};
-export const Hashtag: IconDefinition = {name: 'Hashtag',component: HashtagIcon};
-export const Headphones: IconDefinition = {name: 'Headphones',component: HeadphonesIcon};
-export const Heart: IconDefinition = {name: 'Heart',component: HeartIcon};
-export const HelpCircle: IconDefinition = {name: 'HelpCircle',component: HelpCircleIcon};
-export const Help: IconDefinition = {name: 'Help',component: HelpIcon};
-export const Home: IconDefinition = {name: 'Home',component: HomeIcon};
-export const Inbox: IconDefinition = {name: 'Inbox',component: InboxIcon};
-export const Information: IconDefinition = {name: 'Information',component: InformationIcon};
-export const Key: IconDefinition = {name: 'Key',component: KeyIcon};
-export const Link: IconDefinition = {name: 'Link',component: LinkIcon};
-export const LockUnlocked: IconDefinition = {name: 'LockUnlocked',component: LockUnlockedIcon};
-export const Lock: IconDefinition = {name: 'Lock',component: LockIcon};
-export const LogIn: IconDefinition = {name: 'LogIn',component: LogInIcon};
-export const LogOut: IconDefinition = {name: 'LogOut',component: LogOutIcon};
-export const Mail: IconDefinition = {name: 'Mail',component: MailIcon};
-export const Map: IconDefinition = {name: 'Map',component: MapIcon};
-export const Maximize: IconDefinition = {name: 'Maximize',component: MaximizeIcon};
-export const Menu: IconDefinition = {name: 'Menu',component: MenuIcon};
-export const Message: IconDefinition = {name: 'Message',component: MessageIcon};
-export const MicrophoneMute: IconDefinition = {name: 'MicrophoneMute',component: MicrophoneMuteIcon};
-export const Microphone: IconDefinition = {name: 'Microphone',component: MicrophoneIcon};
-export const Minimize: IconDefinition = {name: 'Minimize',component: MinimizeIcon};
-export const MinusCircle: IconDefinition = {name: 'MinusCircle',component: MinusCircleIcon};
-export const Minus: IconDefinition = {name: 'Minus',component: MinusIcon};
-export const Monitor2: IconDefinition = {name: 'Monitor2',component: Monitor2Icon};
-export const Monitor: IconDefinition = {name: 'Monitor',component: MonitorIcon};
-export const Moon: IconDefinition = {name: 'Moon',component: MoonIcon};
-export const Music: IconDefinition = {name: 'Music',component: MusicIcon};
-export const Paintbucket: IconDefinition = {name: 'Paintbucket',component: PaintbucketIcon};
-export const Pause: IconDefinition = {name: 'Pause',component: PauseIcon};
-export const Percentage: IconDefinition = {name: 'Percentage',component: PercentageIcon};
-export const PhoneCallCross: IconDefinition = {name: 'PhoneCallCross',component: PhoneCallCrossIcon};
-export const PhoneCallForward: IconDefinition = {name: 'PhoneCallForward',component: PhoneCallForwardIcon};
-export const PhoneCallHangUp: IconDefinition = {name: 'PhoneCallHangUp',component: PhoneCallHangUpIcon};
-export const PhoneCallIncoming: IconDefinition = {name: 'PhoneCallIncoming',component: PhoneCallIncomingIcon};
-export const PhoneCallOutgoing: IconDefinition = {name: 'PhoneCallOutgoing',component: PhoneCallOutgoingIcon};
-export const PhoneCall: IconDefinition = {name: 'PhoneCall',component: PhoneCallIcon};
-export const Phone: IconDefinition = {name: 'Phone',component: PhoneIcon};
-export const Photo: IconDefinition = {name: 'Photo',component: PhotoIcon};
-export const PictureInPicture: IconDefinition = {name: 'PictureInPicture',component: PictureInPictureIcon};
-export const PieChart: IconDefinition = {name: 'PieChart',component: PieChartIcon};
-export const Pill: IconDefinition = {name: 'Pill',component: PillIcon};
-export const PinTack: IconDefinition = {name: 'PinTack',component: PinTackIcon};
-export const Pin: IconDefinition = {name: 'Pin',component: PinIcon};
-export const Play: IconDefinition = {name: 'Play',component: PlayIcon};
-export const Plug: IconDefinition = {name: 'Plug',component: PlugIcon};
-export const PlusCircle: IconDefinition = {name: 'PlusCircle',component: PlusCircleIcon};
-export const Plus: IconDefinition = {name: 'Plus',component: PlusIcon};
-export const Print: IconDefinition = {name: 'Print',component: PrintIcon};
-export const Projector: IconDefinition = {name: 'Projector',component: ProjectorIcon};
-export const Redo: IconDefinition = {name: 'Redo',component: RedoIcon};
-export const Refresh: IconDefinition = {name: 'Refresh',component: RefreshIcon};
-export const Rewind: IconDefinition = {name: 'Rewind',component: RewindIcon};
-export const Rows: IconDefinition = {name: 'Rows',component: RowsIcon};
-export const Search: IconDefinition = {name: 'Search',component: SearchIcon};
-export const Send: IconDefinition = {name: 'Send',component: SendIcon};
-export const Server: IconDefinition = {name: 'Server',component: ServerIcon};
-export const SettingsSliders: IconDefinition = {name: 'SettingsSliders',component: SettingsSlidersIcon};
-export const Settings: IconDefinition = {name: 'Settings',component: SettingsIcon};
-export const Share: IconDefinition = {name: 'Share',component: ShareIcon};
-export const Shield: IconDefinition = {name: 'Shield',component: ShieldIcon};
-export const ShoppingBag: IconDefinition = {name: 'ShoppingBag',component: ShoppingBagIcon};
-export const ShoppingBasket: IconDefinition = {name: 'ShoppingBasket',component: ShoppingBasketIcon};
-export const ShoppingCart: IconDefinition = {name: 'ShoppingCart',component: ShoppingCartIcon};
-export const SkipBack: IconDefinition = {name: 'SkipBack',component: SkipBackIcon};
-export const SkipForward: IconDefinition = {name: 'SkipForward',component: SkipForwardIcon};
-export const Smartphone: IconDefinition = {name: 'Smartphone',component: SmartphoneIcon};
-export const Speaker: IconDefinition = {name: 'Speaker',component: SpeakerIcon};
-export const Star: IconDefinition = {name: 'Star',component: StarIcon};
-export const Sticker: IconDefinition = {name: 'Sticker',component: StickerIcon};
-export const Stop: IconDefinition = {name: 'Stop',component: StopIcon};
-export const StreamToTv: IconDefinition = {name: 'StreamToTv',component: StreamToTvIcon};
-export const Sun: IconDefinition = {name: 'Sun',component: SunIcon};
-export const TableColumns: IconDefinition = {name: 'TableColumns',component: TableColumnsIcon};
-export const TableRows: IconDefinition = {name: 'TableRows',component: TableRowsIcon};
-export const Tablet: IconDefinition = {name: 'Tablet',component: TabletIcon};
-export const Tag: IconDefinition = {name: 'Tag',component: TagIcon};
-export const Target: IconDefinition = {name: 'Target',component: TargetIcon};
-export const Ticket: IconDefinition = {name: 'Ticket',component: TicketIcon};
-export const Trash: IconDefinition = {name: 'Trash',component: TrashIcon};
-export const TrendingDown: IconDefinition = {name: 'TrendingDown',component: TrendingDownIcon};
-export const TrendingUp: IconDefinition = {name: 'TrendingUp',component: TrendingUpIcon};
-export const Truck: IconDefinition = {name: 'Truck',component: TruckIcon};
-export const Undo: IconDefinition = {name: 'Undo',component: UndoIcon};
-export const Upload: IconDefinition = {name: 'Upload',component: UploadIcon};
-export const UserCheck: IconDefinition = {name: 'UserCheck',component: UserCheckIcon};
-export const UserCross: IconDefinition = {name: 'UserCross',component: UserCrossIcon};
-export const UserMinus: IconDefinition = {name: 'UserMinus',component: UserMinusIcon};
-export const UserPlus: IconDefinition = {name: 'UserPlus',component: UserPlusIcon};
-export const User: IconDefinition = {name: 'User',component: UserIcon};
-export const UsersMinus: IconDefinition = {name: 'UsersMinus',component: UsersMinusIcon};
-export const UsersPlus: IconDefinition = {name: 'UsersPlus',component: UsersPlusIcon};
-export const Users: IconDefinition = {name: 'Users',component: UsersIcon};
-export const VideoCameraOff: IconDefinition = {name: 'VideoCameraOff',component: VideoCameraOffIcon};
-export const VideoCamera: IconDefinition = {name: 'VideoCamera',component: VideoCameraIcon};
-export const Video: IconDefinition = {name: 'Video',component: VideoIcon};
-export const Virus: IconDefinition = {name: 'Virus',component: VirusIcon};
-export const Wallet: IconDefinition = {name: 'Wallet',component: WalletIcon};
-export const WarningTriangle: IconDefinition = {name: 'WarningTriangle',component: WarningTriangleIcon};
-export const WifiNoConnection: IconDefinition = {name: 'WifiNoConnection',component: WifiNoConnectionIcon};
-export const Wifi: IconDefinition = {name: 'Wifi',component: WifiIcon};
-export const ZoomIn: IconDefinition = {name: 'ZoomIn',component: ZoomInIcon};
-export const ZoomOut: IconDefinition = {name: 'ZoomOut',component: ZoomOutIcon};
-
-export type list = "AirplayToTv" | "AnnotationDots" | "AnnotationWarning" | "Announcement" | "Archive" | "ArrowDownLeft" | "ArrowDownRight" | "ArrowDown" | "ArrowLeft" | "ArrowRight" | "ArrowUpLeft" | "ArrowUpRight" | "ArrowUp" | "AtSign" | "Badge" | "Bank" | "BatteryCharging" | "BatteryFull" | "BatteryLow" | "BatteryMedium" | "Battery" | "BellOff" | "Bell" | "Book" | "Bookmark" | "Box" | "Briefcase" | "BuildingStore" | "Building" | "CalendarMinus" | "CalendarPlus" | "Calendar" | "CameraOff" | "Camera" | "Chart" | "CheckCircle" | "Check" | "ChevronDown" | "ChevronLeft" | "ChevronRight" | "ChevronUp" | "Clipboard" | "Clock" | "CloseCircle" | "Close" | "Cloud" | "Code" | "ColumnsHorizontal" | "ColumnsVertical" | "Columns" | "Command" | "Copy" | "Crop" | "Cursor" | "Dashboard" | "Delete" | "Dollar" | "DotsHorizontal" | "DotsVertical" | "Download" | "Edit" | "EmojiHappy" | "EmojiSad" | "EyeOff" | "Eye" | "FastForward" | "FileMinus" | "FilePlus" | "FileText" | "File" | "Film" | "Filter" | "Flag" | "FolderMinus" | "FolderPlus" | "Folder" | "Globe" | "GridMasonry" | "Grid" | "Hashtag" | "Headphones" | "Heart" | "HelpCircle" | "Help" | "Home" | "Inbox" | "Information" | "Key" | "Link" | "LockUnlocked" | "Lock" | "LogIn" | "LogOut" | "Mail" | "Map" | "Maximize" | "Menu" | "Message" | "MicrophoneMute" | "Microphone" | "Minimize" | "MinusCircle" | "Minus" | "Monitor2" | "Monitor" | "Moon" | "Music" | "Paintbucket" | "Pause" | "Percentage" | "PhoneCallCross" | "PhoneCallForward" | "PhoneCallHangUp" | "PhoneCallIncoming" | "PhoneCallOutgoing" | "PhoneCall" | "Phone" | "Photo" | "PictureInPicture" | "PieChart" | "Pill" | "PinTack" | "Pin" | "Play" | "Plug" | "PlusCircle" | "Plus" | "Print" | "Projector" | "Redo" | "Refresh" | "Rewind" | "Rows" | "Search" | "Send" | "Server" | "SettingsSliders" | "Settings" | "Share" | "Shield" | "ShoppingBag" | "ShoppingBasket" | "ShoppingCart" | "SkipBack" | "SkipForward" | "Smartphone" | "Speaker" | "Star" | "Sticker" | "Stop" | "StreamToTv" | "Sun" | "TableColumns" | "TableRows" | "Tablet" | "Tag" | "Target" | "Ticket" | "Trash" | "TrendingDown" | "TrendingUp" | "Truck" | "Undo" | "Upload" | "UserCheck" | "UserCross" | "UserMinus" | "UserPlus" | "User" | "UsersMinus" | "UsersPlus" | "Users" | "VideoCameraOff" | "VideoCamera" | "Video" | "Virus" | "Wallet" | "WarningTriangle" | "WifiNoConnection" | "Wifi" | "ZoomIn" | "ZoomOut";
+export type list =
+  | 'AirplayToTv'
+  | 'AnnotationDots'
+  | 'AnnotationWarning'
+  | 'Announcement'
+  | 'Archive'
+  | 'ArrowDownLeft'
+  | 'ArrowDownRight'
+  | 'ArrowDown'
+  | 'ArrowLeft'
+  | 'ArrowRight'
+  | 'ArrowUpLeft'
+  | 'ArrowUpRight'
+  | 'ArrowUp'
+  | 'AtSign'
+  | 'Badge'
+  | 'Bank'
+  | 'BatteryCharging'
+  | 'BatteryFull'
+  | 'BatteryLow'
+  | 'BatteryMedium'
+  | 'Battery'
+  | 'BellOff'
+  | 'Bell'
+  | 'Book'
+  | 'Bookmark'
+  | 'Box'
+  | 'Briefcase'
+  | 'BuildingStore'
+  | 'Building'
+  | 'CalendarMinus'
+  | 'CalendarPlus'
+  | 'Calendar'
+  | 'CameraOff'
+  | 'Camera'
+  | 'Chart'
+  | 'CheckCircle'
+  | 'Check'
+  | 'ChevronDown'
+  | 'ChevronLeft'
+  | 'ChevronRight'
+  | 'ChevronUp'
+  | 'Clipboard'
+  | 'Clock'
+  | 'CloseCircle'
+  | 'Close'
+  | 'Cloud'
+  | 'Code'
+  | 'ColumnsHorizontal'
+  | 'ColumnsVertical'
+  | 'Columns'
+  | 'Command'
+  | 'Copy'
+  | 'Crop'
+  | 'Cursor'
+  | 'Dashboard'
+  | 'Delete'
+  | 'Dollar'
+  | 'DotsHorizontal'
+  | 'DotsVertical'
+  | 'Download'
+  | 'Edit'
+  | 'EmojiHappy'
+  | 'EmojiSad'
+  | 'EyeOff'
+  | 'Eye'
+  | 'FastForward'
+  | 'FileMinus'
+  | 'FilePlus'
+  | 'FileText'
+  | 'File'
+  | 'Film'
+  | 'Filter'
+  | 'Flag'
+  | 'FolderMinus'
+  | 'FolderPlus'
+  | 'Folder'
+  | 'Globe'
+  | 'GridMasonry'
+  | 'Grid'
+  | 'Hashtag'
+  | 'Headphones'
+  | 'Heart'
+  | 'HelpCircle'
+  | 'Help'
+  | 'Home'
+  | 'Inbox'
+  | 'Information'
+  | 'Key'
+  | 'Link'
+  | 'LockUnlocked'
+  | 'Lock'
+  | 'LogIn'
+  | 'LogOut'
+  | 'Mail'
+  | 'Map'
+  | 'Maximize'
+  | 'Menu'
+  | 'Message'
+  | 'MicrophoneMute'
+  | 'Microphone'
+  | 'Minimize'
+  | 'MinusCircle'
+  | 'Minus'
+  | 'Monitor2'
+  | 'Monitor'
+  | 'Moon'
+  | 'Music'
+  | 'Paintbucket'
+  | 'Pause'
+  | 'Percentage'
+  | 'PhoneCallCross'
+  | 'PhoneCallForward'
+  | 'PhoneCallHangUp'
+  | 'PhoneCallIncoming'
+  | 'PhoneCallOutgoing'
+  | 'PhoneCall'
+  | 'Phone'
+  | 'Photo'
+  | 'PictureInPicture'
+  | 'PieChart'
+  | 'Pill'
+  | 'PinTack'
+  | 'Pin'
+  | 'Play'
+  | 'Plug'
+  | 'PlusCircle'
+  | 'Plus'
+  | 'Print'
+  | 'Projector'
+  | 'Redo'
+  | 'Refresh'
+  | 'Rewind'
+  | 'Rows'
+  | 'Search'
+  | 'Send'
+  | 'Server'
+  | 'SettingsSliders'
+  | 'Settings'
+  | 'Share'
+  | 'Shield'
+  | 'ShoppingBag'
+  | 'ShoppingBasket'
+  | 'ShoppingCart'
+  | 'SkipBack'
+  | 'SkipForward'
+  | 'Smartphone'
+  | 'Speaker'
+  | 'Star'
+  | 'Sticker'
+  | 'Stop'
+  | 'StreamToTv'
+  | 'Sun'
+  | 'TableColumns'
+  | 'TableRows'
+  | 'Tablet'
+  | 'Tag'
+  | 'Target'
+  | 'Ticket'
+  | 'Trash'
+  | 'TrendingDown'
+  | 'TrendingUp'
+  | 'Truck'
+  | 'Undo'
+  | 'Upload'
+  | 'UserCheck'
+  | 'UserCross'
+  | 'UserMinus'
+  | 'UserPlus'
+  | 'User'
+  | 'UsersMinus'
+  | 'UsersPlus'
+  | 'Users'
+  | 'VideoCameraOff'
+  | 'VideoCamera'
+  | 'Video'
+  | 'Virus'
+  | 'Wallet'
+  | 'WarningTriangle'
+  | 'WifiNoConnection'
+  | 'Wifi'
+  | 'ZoomIn'
+  | 'ZoomOut';
 
 export type Component = React.FC<React.SVGProps<SVGSVGElement>>;
 
-export type IconDefinition = { name: list; component: Component; };
+export type IconDefinition = { name: list; component: Component };

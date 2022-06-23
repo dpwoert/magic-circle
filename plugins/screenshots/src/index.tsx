@@ -138,7 +138,6 @@ export default class Screenshots implements Plugin {
   }
 
   commands(reference?: CommandLineReference): CommandLineAction[] {
-    console.log({ reference });
     if (!reference) {
       return [
         {

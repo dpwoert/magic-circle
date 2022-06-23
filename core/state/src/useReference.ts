@@ -13,5 +13,5 @@ export default function useReference(reference: CommandLineReference) {
     return () => {
       app.commandLineReference.set(null);
     };
-  }, []);
+  }, [app, reference]);
 }

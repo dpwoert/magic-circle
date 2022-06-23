@@ -19,7 +19,7 @@
     "watch": "lerna run watch",
     "build:dev": "lerna run build:dev",
     "build:prod": "lerna run build:prod",
-    "build:stats": "lerna run build:stats --scope @magic-circle/editor",
+    "build:stats": "lerna run build:stats",
     "generate:icons": "lerna run generate:icons --scope @magic-circle/styles",
     "example": "sh examples/run.sh",
     "publish:npm": "sh publish.sh",
@@ -49,8 +49,7 @@
   },
   "lint-staged": {
     "*.{js,jsx,json}": [
-      "prettier --config --write",
-      "git add"
+      "prettier --config --write"
     ]
   }
 }

@@ -4,3 +4,4 @@ dist
 .cache
 .rollup.cache
 build
+magic-circle

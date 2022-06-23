@@ -289,7 +289,7 @@ const Sidebar = ({ app, screenshots }: SidebarProps) => {
         app.setLayoutHook(LayoutHook.INNER, null);
       }
     },
-    [app, files, screenshots]
+    [app, files, screenshots, read]
   );
 
   useEffect(() => {

@@ -112,8 +112,6 @@ export const CommandLine = () => {
   const searchRef = useRef<HTMLElement | null>();
   const actionsRef = useRef<HTMLElement | null>();
 
-  console.log({ screen });
-
   const select = useCallback(async () => {
     if (screen) {
       const action = screen.actions[selected];

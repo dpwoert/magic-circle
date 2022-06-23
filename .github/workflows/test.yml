@@ -40,4 +40,6 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Bundle statistics
-          path: 'core/editor/stats.html'
+          path: |
+            core/editor/stats.html
+            core/client/stats.html

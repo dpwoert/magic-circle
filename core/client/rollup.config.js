@@ -3,6 +3,7 @@ import replace from '@rollup/plugin-replace';
 import typescript from '@rollup/plugin-typescript';
 import dts from 'rollup-plugin-dts';
 import path from 'path';
+import visualiser from 'rollup-plugin-visualizer';
 
 export default [
   {
@@ -32,6 +33,7 @@ export default [
         __dirname: (id) => `'${path.dirname(id)}'`,
       }),
       typescript({ tsconfig: './tsconfig.json' }),
+      process.env.STATS && visualiser(),
     ],
   },
   {

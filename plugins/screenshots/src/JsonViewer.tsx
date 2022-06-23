@@ -2,10 +2,10 @@ import styled from 'styled-components';
 import ReactJson from 'react-json-view';
 
 import { TYPO, COLORS, SPACING, Icon } from '@magic-circle/styles';
+import { useReference } from '@magic-circle/state';
 
 import type { ScreenshotFile } from './index';
 import Screenshots from './index';
-import { useReference } from '@magic-circle/state';
 
 const Container = styled.div`
   position: absolute;
