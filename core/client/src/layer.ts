@@ -53,26 +53,6 @@ export default class Layer {
     return this;
   }
 
-  // find(id: string) {
-  //   let found: Child;
-
-  //   // recursively try to find this element
-  //   const recursive = (children: Child[]) => {
-  //     children.forEach((child) => {
-  //       if (child.id === id) {
-  //         found = child;
-  //       }
-  //       if ('children' in child && !found) {
-  //         recursive(child.children);
-  //       }
-  //     });
-  //   };
-
-  //   // start
-  //   recursive(this.children);
-  //   return found;
-  // }
-
   getPath(basePath: string, paths: Paths) {
     return paths.get(basePath, this.name);
   }

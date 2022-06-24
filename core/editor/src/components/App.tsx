@@ -71,7 +71,7 @@ export default function App() {
               <Iframe
                 allow="display-capture"
                 src={APP.config.url}
-                onLoad={() => APP.connect()}
+                onLoad={() => APP.setup()}
               />
             ) : (
               <SpacerFrame />

@@ -3,9 +3,11 @@ import Client from './client';
 export interface PluginBase {
   name: string;
   compatible: () => boolean;
-  connect?: () => void;
+  setup?: () => void;
   playState?: (playing: boolean) => void;
   startFrame?: () => void;
+  sync?: () => void;
+  hydrate?: (data: any) => void;
   endFrame?: () => void;
   destroy: () => void;
 }

@@ -35,10 +35,6 @@ export default class PluginPerformance extends Plugin {
     window.addEventListener('load', () => this.getLoadMetrics());
   }
 
-  connect() {
-    this.sync();
-  }
-
   getLoadMetrics() {
     if (performance) {
       const paint = performance.getEntriesByType('paint');

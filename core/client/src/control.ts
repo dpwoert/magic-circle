@@ -8,6 +8,7 @@ export default class Control<T> {
   key: string;
   initialValue: T;
   options: Record<string, unknown>;
+  blockHydrate?: boolean;
 
   constructor(reference: Reference, key: string) {
     this.reference = reference;
@@ -61,6 +62,7 @@ export default class Control<T> {
       type: this.type,
       value: this.value,
       initialValue: this.initialValue,
+      blockHydrate: !!this.blockHydrate,
     };
   }
 }

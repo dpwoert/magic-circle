@@ -240,14 +240,16 @@ export type CommandLineAction = {
 export interface Plugin {
   name: string;
   setup: (app: App) => Promise<void>;
+  connect?: () => void;
+  hydrate?: () => any;
+  ready?: () => void;
   sidebar?: () => SidebarOpts;
   buttons?: (buttons: ButtonCollections) => ButtonCollections;
   load?: (data: any) => Promise<void>;
-  ready?: () => void;
   save?: () => Promise<any>;
   reset?: () => Promise<void>;
   commands?: (reference?: CommandLineReference) => CommandLineAction[];
-  electron?: string;
+  // electron?: string;
 }
 
 export interface PluginConstructor {
@@ -298,6 +300,7 @@ export type ControlExport = {
   options: Record<string, any>;
   value: any;
   initialValue: any;
+  blockHydrate: boolean;
 };
 
 export type LayerExport = {

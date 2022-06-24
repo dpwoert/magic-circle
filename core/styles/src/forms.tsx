@@ -102,7 +102,7 @@ export const Checkbox = ({ value, onChange, ...props }: CheckboxProps) => {
     <>
       <CheckboxInput
         checked={value}
-        onClick={() => onChange(!value)}
+        onChange={() => onChange(!value)}
         type="checkbox"
         {...props}
       />

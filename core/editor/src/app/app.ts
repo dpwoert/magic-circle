@@ -27,6 +27,7 @@ class App implements AppBase {
   controls: AppBase['controls'];
   config: Config;
   ipc: IpcBase;
+  loaded: boolean;
 
   sidebar: Store<Sidebar>;
   buttons: Store<ButtonCollections>;
@@ -43,6 +44,7 @@ class App implements AppBase {
     this.ipc = new IpcIframe();
 
     // Set initial values
+    this.loaded = false;
     this.plugins = [];
     this.buttons = new Store<ButtonCollections>({});
     this.sidebar = new Store<Sidebar>({ current: 0, panels: [] });
@@ -56,15 +58,17 @@ class App implements AppBase {
     });
   }
 
-  async connect() {
+  async setup() {
+    // Already done the editor setup, just need to reconnect
+    if (this.loaded) {
+      await this.connect();
+      return;
+    }
+
     this.ipc.setup();
-    await this.ipc.connect();
 
     const sidebar: SidebarOpts[] = [];
     let buttons: ButtonCollections = {};
-
-    // Destroy all previous plugins
-    // todo
 
     // Get list of plugins
     const defaultPlugins =
@@ -102,9 +106,31 @@ class App implements AppBase {
     this.buttons.set(buttons);
     this.sidebar.set({ ...this.sidebar.value, panels: sidebar });
 
+    await this.connect();
+
     // ready now
     this.plugins.forEach((p) => {
       if (p.ready) p.ready();
+    });
+
+    // Bind all shortcuts
+    this.bindKeys();
+
+    // Pretend setup hook from being re-run
+    this.loaded = true;
+  }
+
+  async connect() {
+    // remove redundant listeners
+    this.ipc.removeAllListeners('hydrate');
+    this.ipc.removeAllListeners('page-information');
+    this.ipc.removeAllListeners('connect');
+
+    await this.ipc.connect();
+
+    // run hooks
+    this.plugins.forEach((p) => {
+      if (p.connect) p.connect();
     });
 
     // Update page information when needed
@@ -112,8 +138,25 @@ class App implements AppBase {
       this.pageInfo.set(info);
     });
 
-    // Bind all shortcuts
-    this.bindKeys();
+    // Reconnect if needed (HMR for example)
+    this.ipc.on('connect', () => {
+      this.connect;
+    });
+
+    // Send hydration when needed
+    this.ipc.on('hydrate', () => {
+      const hydration = {};
+
+      if (this.loaded) {
+        this.plugins.forEach((p) => {
+          if (p.hydrate) {
+            hydration[p.name] = p.hydrate();
+          }
+        });
+      }
+
+      this.ipc.send('hydrate', hydration);
+    });
   }
 
   async reset() {

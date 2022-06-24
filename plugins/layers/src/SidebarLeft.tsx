@@ -61,6 +61,7 @@ const Sidebar = ({ layers }: SidebarProps) => {
     <Container>
       {list.map((layer) => (
         <Layer
+          key={layer.path}
           depth={layer.depth}
           selected={selected === layer.path}
           onClick={() => {

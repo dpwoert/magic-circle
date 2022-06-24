@@ -40,12 +40,21 @@ export class IpcBase {
   }
 
   once(channel: string, fn: hook) {
-    const handler = (payload: any) => {
-      fn(payload, channel);
+    const handler: hook = (_, ...payload: any[]) => {
+      fn.apply(undefined, [channel, ...payload]);
       this.removeListener('channel', handler);
     };
 
     this.on(channel, handler);
+  }
+
+  invoke<T>(channel: string, payload?: any): Promise<T> {
+    return new Promise((resolve) => {
+      this.send(channel, payload);
+      this.once(channel, (_, response) => {
+        resolve(response);
+      });
+    });
   }
 
   removeListener(channel: string, fn: hook) {

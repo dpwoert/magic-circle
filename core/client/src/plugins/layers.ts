@@ -7,7 +7,7 @@ export default class PluginLayers extends Plugin {
 
   name = 'layers';
 
-  connect() {
+  setup() {
     const { ipc } = this.client;
 
     // listen to events
@@ -15,11 +15,16 @@ export default class PluginLayers extends Plugin {
     ipc.on('control:reset', (_, ...args) => this.reset.call(this, ...args));
     ipc.on('controls:set', (_, ...args) => this.set.call(this, ...args));
     ipc.on('controls:reset', (_, ...args) => this.resetAll.call(this, ...args));
-
-    this.sync();
   }
 
-  sync() {
+  hydrate(data: Record<string, any>) {
+    if (data.layers) {
+      this.generateCache();
+      this.setAll(data.layers);
+    }
+  }
+
+  private generateCache() {
     // Create cache of controls
     const controls: typeof this.cache = {};
     this.client.layer.forEachRecursive((child, path) => {
@@ -30,10 +35,14 @@ export default class PluginLayers extends Plugin {
 
     // save to cache
     this.cache = controls;
+  }
+
+  sync() {
+    this.generateCache();
 
     // Send to back-end
     const layers = this.client.layer.toJSON('', new Paths()).children;
-    this.client.ipc.send('layers', layers, 'hallo');
+    this.client.ipc.send('layers', layers);
   }
 
   set(path: string, value: any) {
@@ -63,7 +72,7 @@ export default class PluginLayers extends Plugin {
   resetAll() {
     const { layer } = this.client;
     layer.forEachRecursive((control) => {
-      if (control && 'value' in control) {
+      if (control && 'value' in control && !control.blockHydrate) {
         control.reset();
       }
     });

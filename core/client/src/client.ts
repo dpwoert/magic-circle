@@ -64,7 +64,7 @@ export default class MagicCircle {
     }
   }
 
-  setupWithIPC(plugins: typeof Plugin[] = []) {
+  async setupWithIPC(plugins: typeof Plugin[] = []) {
     // Create plugins and IPC
     this.plugins = [...STANDARD_PLUGINS, ...plugins].map(
       (Plugin) => new Plugin(this)
@@ -73,7 +73,7 @@ export default class MagicCircle {
     this.ipc.setup();
 
     // start
-    this.connect();
+    await this.connect();
 
     // listen to events
     this.ipc.on('play', (_, playing) => {
@@ -112,15 +112,23 @@ export default class MagicCircle {
       if (element) this.element = element;
     }
 
-    // run plugins
+    // run plugins on start
     this.plugins.forEach((p) => {
-      if (p.connect) {
-        p.connect();
+      if (p.setup) {
+        p.setup();
       }
     });
 
-    // Receive default values by hydrating
-    // todo
+    // Receive default values by hydrating (one reload for example)
+    const hydration = await this.ipc.invoke<Record<string, any>>('hydrate');
+    this.plugins.forEach((p) => {
+      if (p.hydrate && hydration) {
+        p.hydrate(hydration);
+      }
+    });
+
+    // sync values
+    this.sync();
 
     // Let editor know we're ready
     this.ipc.send('ready', true);
@@ -145,6 +153,14 @@ export default class MagicCircle {
   loop(fn: loopFn) {
     this.hooks.loop = fn;
     return this;
+  }
+
+  sync() {
+    this.plugins.forEach((p) => {
+      if (p.sync) {
+        p.sync();
+      }
+    });
   }
 
   start() {

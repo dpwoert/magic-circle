@@ -36,7 +36,11 @@ export default class Seed implements Plugin {
     return this.seed.value;
   }
 
-  async load(seed) {
+  async load(seed: number) {
     this.ipc.send('seed:set', seed);
+  }
+
+  hydrate() {
+    return this.seed.value;
   }
 }

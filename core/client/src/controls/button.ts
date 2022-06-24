@@ -2,6 +2,7 @@ import Control from '../control';
 
 export default class ButtonControl extends Control<() => void> {
   type = 'button';
+  blockHydrate = true;
 
   get value() {
     return null;

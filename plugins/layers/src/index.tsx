@@ -100,6 +100,16 @@ export default class Layers implements Plugin {
     Object.keys(data).forEach((key) => this.setControl(key, data[key]));
   }
 
+  hydrate() {
+    const hydrate: Record<string, any> = {};
+    this.lookup.export((key, value) => {
+      if ('value' in value && !value.blockHydrate) {
+        hydrate[key] = value.value;
+      }
+    });
+    return hydrate;
+  }
+
   async save() {
     const toSave = {};
 

@@ -99,10 +99,10 @@ const Header = () => {
       <Part>
         <Logo />
         <ButtonCollections>
-          {Object.values(buttons).map((collection) => (
-            <ButtonCollection>
-              {collection.map((button) => (
-                <Button onClick={() => button.onClick()}>
+          {Object.keys(buttons).map((key) => (
+            <ButtonCollection key={key}>
+              {buttons[key].map((button) => (
+                <Button key={button.label} onClick={() => button.onClick()}>
                   <Icon
                     name={button.icon}
                     width={SPACING(2)}
