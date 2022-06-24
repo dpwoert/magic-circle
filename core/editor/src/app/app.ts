@@ -140,7 +140,7 @@ class App implements AppBase {
 
     // Reconnect if needed (HMR for example)
     this.ipc.on('connect', () => {
-      this.connect;
+      this.connect();
     });
 
     // Send hydration when needed
