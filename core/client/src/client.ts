@@ -250,6 +250,18 @@ export default class MagicCircle {
     });
   }
 
+  destroy() {
+    this.stop();
+    this.plugins = null;
+    this.hooks = null;
+
+    this.plugins.forEach((p) => {
+      if (p.destroy) {
+        p.destroy();
+      }
+    });
+  }
+
   plugin(name: string) {
     return this.plugins.find((p) => p.name === name);
   }

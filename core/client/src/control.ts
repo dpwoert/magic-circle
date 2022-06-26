@@ -9,6 +9,7 @@ export default class Control<T> {
   initialValue: T;
   options: Record<string, unknown>;
   blockHydrate?: boolean;
+  watchChanges?: boolean;
 
   constructor(reference: Reference, key: string) {
     this.reference = reference;
@@ -51,6 +52,11 @@ export default class Control<T> {
 
   getPath(basePath: string, paths: Paths) {
     return paths.get(basePath, this.key);
+  }
+
+  watch(watch = true) {
+    this.watchChanges = watch;
+    return this;
   }
 
   toJSON(basePath: string, paths: Paths) {

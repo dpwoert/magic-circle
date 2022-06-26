@@ -86,6 +86,9 @@ export default class Layers implements Plugin {
       this.lookup.set((id) => lookup[id]);
       this.lookup.keys(Object.keys(lookup));
     });
+    this.ipc.on('control:set-value', (_, path: string, value: any) => {
+      this.setControl(path, value);
+    });
 
     // Set controls sidebar
     this.client.setLayoutHook(
