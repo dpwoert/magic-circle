@@ -1,3 +1,4 @@
+/* eslint-disable  no-param-reassign */
 import {
   PerspectiveCamera,
   Scene,
@@ -22,8 +23,8 @@ import {
 let renderer;
 let scene;
 let camera;
-let boxes = [];
 
+const boxes = [];
 const animation = { x: 0.005, y: 0.01 };
 
 export function setup(gui: MagicCircle) {

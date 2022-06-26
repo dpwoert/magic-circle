@@ -69,9 +69,9 @@ const Sidebar = ({ layers }: SidebarProps) => {
           }}
         >
           <span>{layer.name}</span>
-          {layer.hasChildren && (
+          {/* {layer.hasChildren && (
             <Icon name="ChevronDown" width={SPACING(2)} height={SPACING(2)} />
-          )}
+          )} */}
         </Layer>
       ))}
     </Container>
