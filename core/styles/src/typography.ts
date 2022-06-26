@@ -4,7 +4,7 @@ export const base = 14;
 
 export const rem = (px: number): string => `${px / base}rem`;
 
-export const FONT_STRING =
+const FONT_STRING =
   '"Inter", -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 
 // regular: 400;

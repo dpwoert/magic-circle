@@ -9,7 +9,7 @@ type AppProviderProps = {
   children: React.ReactNode;
 };
 
-export const AppProvider = ({ children, app }: AppProviderProps) => {
+const AppProvider = ({ children, app }: AppProviderProps) => {
   return <AppContext.Provider value={app}>{children}</AppContext.Provider>;
 };
 

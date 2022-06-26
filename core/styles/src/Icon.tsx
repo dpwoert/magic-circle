@@ -2,6 +2,7 @@ import React, { ReactFragment } from 'react';
 
 import { Component, IconDefinition, list } from './assets/icons/index';
 
+// ts-unused-exports:disable-next-line
 export type IconName = list;
 
 interface IconProps extends React.HTMLAttributes<SVGElement> {

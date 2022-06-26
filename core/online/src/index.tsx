@@ -3,7 +3,7 @@ import React from 'react';
 import type { Plugin, icons, App } from '@magic-circle/schema';
 import { registerIcon, Video, Code } from '@magic-circle/styles';
 
-import Sidebar from './Sidebar.jsx';
+import Sidebar from './Sidebar';
 
 registerIcon(Video);
 registerIcon(Code);

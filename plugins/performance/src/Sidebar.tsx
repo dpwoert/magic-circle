@@ -22,7 +22,7 @@ const displayMetric = (value: number, unit: string) => {
   return `${Math.round(value)}${unit}`;
 };
 
-export const Sidebar = ({ performance }: SidebarProps) => {
+const Sidebar = ({ performance }: SidebarProps) => {
   const loadTimes = useStore(performance.loadTimes);
   const fps = useStore(performance.fps);
   const renderTime = useStore(performance.renderTime);

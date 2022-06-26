@@ -21,6 +21,8 @@ jobs:
         run: npm i
       - name: Linting
         run: npm run lint
+      - name: Types
+        run: npm run lint:types
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 10

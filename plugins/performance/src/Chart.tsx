@@ -84,7 +84,7 @@ type ChartProps = {
   values: number[];
 };
 
-export const Chart = ({ max, values }: ChartProps) => {
+const Chart = ({ max, values }: ChartProps) => {
   const ref = useRef<HTMLCanvasElement>();
   const viz = useRef<ChartViz>();
 

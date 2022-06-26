@@ -24,8 +24,9 @@
     "example": "sh examples/run.sh",
     "publish:npm": "sh publish.sh",
     "publish:online": "lerna run package --scope @magic-circle/online",
-    "prettier": "prettier --config --write \"{core,examples,plugins}/**/*.{js,jsx,ts,tsx,json,css}\"",
-    "lint": "eslint \"{core,examples,plugins}/**/*.{js,jsx,ts,tsx}\" --cache",
+    "prettier": "prettier --config --write \"{core,examples,plugins,scripts}/**/*.{js,jsx,ts,tsx,json,css}\"",
+    "lint": "eslint \"{core,examples,plugins,scripts}/**/*.{js,jsx,ts,tsx}\" --cache",
+    "lint:types": "node scripts/unused-types",
     "clean": "find . -name 'node_modules' -type d | xargs rm -rf && find . -name 'dist' -type d | xargs rm -rf && find . -name '.cache' -type d"
   },
   "devDependencies": {
@@ -41,6 +42,8 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "@typescript-eslint/eslint-plugin": "^5.10.2",
     "@typescript-eslint/parser": "^5.10.2",
+    "ts-unused-exports": "^8.0.0",
+    "kleur": "4.1.5",
     "husky": "^8.0.1",
     "lerna": "^5.1.4",
     "lint-staged": "13.0.2",

@@ -105,7 +105,7 @@ const ActionLabel = styled.div`
   gap: 15px;
 `;
 
-export const CommandLine = () => {
+const CommandLine = () => {
   const screen = useStore(APP.commandLine);
   const [selected, _setSelected] = useState(0);
   const [search, setSearch] = useState('');

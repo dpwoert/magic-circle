@@ -33,7 +33,7 @@ type ShortcutProps = {
   backgroundColor?: string;
 };
 
-export const Shortcut = ({
+const Shortcut = ({
   shortcut,
   color = COLORS.white.css,
   backgroundColor = COLORS.shades.s700.css,
