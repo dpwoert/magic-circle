@@ -52,8 +52,16 @@ class App implements AppBase {
     this.commandLine = new Store<CommandLineScreen | null>(null);
     this.commandLineReference = new Store<CommandLineReference | null>(null);
     this.layoutHooks = new Store<layoutHooks>({});
+
+    // Get controls
     this.controls = {};
-    this.config.controls.forEach((control) => {
+    const defaultControls = Array.isArray(defaultConfig.controls)
+      ? defaultConfig.controls
+      : [];
+    const controls = Array.isArray(this.config.controls)
+      ? this.config.controls
+      : this.config.controls(defaultControls);
+    controls.forEach((control) => {
       this.controls[control.name] = control;
     });
   }

@@ -24,7 +24,6 @@
   "module": "src/index.js",
   "scripts": {},
   "dependencies": {
-    "@magic-circle/colors": "^0.0.7",
     "webmidi": "^2.5.1"
   },
   "devDependencies": {

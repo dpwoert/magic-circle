@@ -77,8 +77,9 @@ export default class PluginPerformance extends Plugin {
       time >= this.previousPerformanceUpdate + 1000 ||
       !this.previousPerformanceUpdate
     ) {
-      // @ts-expect-error
-      const memory = performance?.memory.usedJSHeapSize;
+      const memory =
+        // @ts-expect-error
+        'memory' in performance ? performance.memory.usedJSHeapSize : null;
 
       this.client.ipc.send('performance:fps', {
         fps: (this.frames * 1000) / (time - this.previousPerformanceUpdate),

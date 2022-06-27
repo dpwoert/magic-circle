@@ -55,7 +55,11 @@ const ButtonCollection = styled.div`
   height: ${SPACING(3)}px;
 `;
 
-const Button = styled.div`
+type ButtonProps = {
+  disabled?: boolean;
+};
+
+const Button = styled.div<ButtonProps>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -64,6 +68,8 @@ const Button = styled.div`
   border-right: 1px solid ${COLORS.accent.css};
   cursor: pointer;
   transition: background 0.2s ease;
+  opacity: ${(props) => (props.disabled ? 0.4 : 1)};
+  pointer-events: ${(props) => (props.disabled ? 'none' : 'all')};
 
   &:last-child {
     border-right: none;
@@ -101,15 +107,21 @@ const Header = () => {
         <ButtonCollections>
           {Object.keys(buttons).map((key) => (
             <ButtonCollection key={key}>
-              {buttons[key].map((button) => (
-                <Button key={button.label} onClick={() => button.onClick()}>
-                  <Icon
-                    name={button.icon}
-                    width={SPACING(2)}
-                    height={SPACING(2)}
-                  />
-                </Button>
-              ))}
+              {buttons[key]
+                .filter((button) => !button.hide)
+                .map((button) => (
+                  <Button
+                    disabled={button.disabled}
+                    key={button.label}
+                    onClick={() => button.onClick()}
+                  >
+                    <Icon
+                      name={button.icon}
+                      width={SPACING(2)}
+                      height={SPACING(2)}
+                    />
+                  </Button>
+                ))}
             </ButtonCollection>
           ))}
         </ButtonCollections>

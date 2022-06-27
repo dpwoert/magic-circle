@@ -212,6 +212,8 @@ export type Button = {
   label: string;
   icon: icons;
   onClick: () => void;
+  hide?: boolean;
+  disabled?: boolean;
 };
 
 export type Buttons = Button[];
@@ -270,25 +272,31 @@ export type Control = {
   render: (props: ControlProps<any, any>) => ReactNode;
 };
 
-export enum BuildTarget {
-  ELECTRON = 'electron',
-  IFRAME = 'iframe',
-}
+// export enum BuildTarget {
+//   ELECTRON = 'electron',
+//   IFRAME = 'iframe',
+// }
 
 export interface Config {
   url: string;
   plugins:
     | PluginConstructor[]
     | ((defaultPlugins: PluginConstructor[]) => PluginConstructor[]);
-  controls: Control[];
-  theme: {
-    accent: string;
-  };
+  controls: Control[] | ((defaultControls: Control[]) => Control[]);
   settings: {
-    directoryBasedOnFrameUrl?: boolean;
+    screenshots?: {
+      directoryBasedOnFrameUrl?: boolean;
+      gitInfo?: boolean;
+    };
+    playControls?: {
+      fullscreen?: boolean;
+    };
+    recordings?: {
+      fps?: number[];
+    };
     [key: string]: any;
   };
-  target: BuildTarget;
+  // target: BuildTarget;
 }
 
 export type UserConfig = Partial<Config>;

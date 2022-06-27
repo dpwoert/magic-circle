@@ -13,7 +13,7 @@ import {
   BooleanControl,
 } from '@magic-circle/controls/editor';
 
-import { Config, BuildTarget } from '@magic-circle/schema';
+import { Config } from '@magic-circle/schema';
 
 const config: Config = {
   url: '',
@@ -25,11 +25,19 @@ const config: Config = {
     ButtonControl,
     BooleanControl,
   ],
-  theme: {
-    accent: 'string',
+  settings: {
+    screenshots: {
+      directoryBasedOnFrameUrl: false,
+      gitInfo: true,
+    },
+    playControls: {
+      fullscreen: false,
+    },
+    recordings: {
+      fps: [12, 24, 25, 30, 60],
+    },
   },
-  settings: {},
-  target: BuildTarget.IFRAME,
+  // target: BuildTarget.IFRAME,
 };
 
 export default config;

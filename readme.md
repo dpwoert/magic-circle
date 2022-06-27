@@ -1,6 +1,4 @@
-# Magic Circle (beta)
-
-![Logo of Magic Circle](https://raw.github.com/dpwoert/magic-circle/feature/v2/docs/assets/logo.png)
+# ![Logo of Magic Circle](https://raw.github.com/dpwoert/magic-circle/feature/v2/docs/assets/logo.png)
 
 This is my attempt of creating a tool for my creative development needs. It's a multifunctional editor inspired by tools like dat.GUI, Unity and Framer. Basically Storybook for creative coding.
 
@@ -16,38 +14,33 @@ An online demo environment can be found [here](https://magic-circle.dev/).
 
 ## Features
 
-- **🎛 Custom controls** Enables you to play around with variables. All controls are configurable and adaptable to play nicely with most data sources.
+**🎛 Custom controls** Enables you to play around with variables. All controls are configurable and adaptable to play nicely with most data sources.
 
-- **👁‍🗨 Layers** Layers are used to organise all these controls. This can, for example, mimic the 'scene graph'.
+**👁‍🗨 Layers** Layers are used to organise all these controls. This can, for example, mimic the 'scene graph'.
 
-- **📦 Presets & Seeding** Enables you to create the exact same scene by saving the values of your controls and the _seeding_ value. When a page is reloaded, the last preset is being reapplied.
+**📦 Presets & Seeding** Enables you to create the exact same scene by saving the values of your controls and the _seeding_ value. When a page is reloaded, the last preset is being reapplied.
 
-- **📸 Screenshots** Take screenshots easily and in high-quality. Together with a screenshot, the current preset is saved. This means you can recreate that screenshot again. Especially since the current git state is also being stored, you can go back in time to re-create old presets.
+**📸 Screenshots** Take screenshots easily and in high-quality. Together with a screenshot, the current preset is saved. This means you can recreate that screenshot again. Especially since the current git state is also being stored, you can go back in time to re-create old presets.
 
-- **🎥 Screen recordings** Render your content into a screen recording by exporting it frame by frame. Enabling you to export videos in high quality without loss of quality like for example a manual screen recording would.
+**🎥 Screen recordings** Render your content into a screen recording by exporting it frame by frame. Enabling you to export videos in high quality without loss of quality like for example a manual screen recording would.
 
-- **⏲ Performance measurement** Measures and displays performance metrics like Frames Per Second and memory usage.
+**⏲ Performance measurement** Measures and displays performance metrics like Frames Per Second and memory usage.
 
-- **🛠 Custom plugins** Since all projects are unique, some projects need custom plugins that might not exists yet. Make your own if needed.
+**🛠 Custom plugins** Since all projects are unique, some projects need custom plugins that might not exists yet. Make your own if needed.
 
-- **🚀 Deploy** Build and deploy your setup so you can share it with others in your team.
+**🚀 Deploy** Build and deploy your setup so you can share it with others in your team.
 
 ## Roadmap
 
-- **🐞 Bug fixes and refactoring etc** This is just a first beta version to test if things are wokring. There are obviously many bugs and things that can be improved.
+**🐞 Bug fixes and refactoring etc** This is just a first beta version to test if things are wokring. There are obviously many bugs and things that can be improved.
 
-- **⛓ Helpers** Helper functions for framework/liberies that make life easier. For example for React, P5 and ThreeJS.
+**⛓ Helpers** Helper functions for framework/liberies that make life easier. For example for React, P5 and ThreeJS.
 
-- **🎹 MIDI** Use a MIDI controller to play around with your variables.
+**🎹 MIDI** Use a MIDI controller to play around with your variables.
 
-- **🎛 More advanced custom controls** More controls types, like setting images for textures and easing controls.
+**🎛 More advanced custom controls** More controls types, like setting images for textures and easing controls.
 
-- **⏰ Animation timeline** Create an animation timeline where variables can be key-framed.
-
-## Requirements
-
-- NodeJS
-- Npm or Yarn
+**⏰ Animation timeline** Create an animation timeline where variables can be key-framed.
 
 ## Install
 
@@ -145,6 +138,8 @@ export default {
 
   // Load custom controls
   controls: (defaultControls) => [...defaultControls],
+
+  settings: {},
 };
 ```
 

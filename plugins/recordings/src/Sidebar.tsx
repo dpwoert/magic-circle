@@ -70,11 +70,11 @@ const Sidebar = ({ recordings }: SidebarProps) => {
                   });
                 }}
               >
-                <option>12</option>
-                <option>24</option>
-                <option>25</option>
-                <option>30</option>
-                <option>60</option>
+                {recordings.client
+                  .getSetting<number[]>('recordings.fps', [12, 24, 25, 30, 60])
+                  .map((n) => (
+                    <option>{n}</option>
+                  ))}
               </Forms.Select>
             </Control.Inside>
           </Control.Container>

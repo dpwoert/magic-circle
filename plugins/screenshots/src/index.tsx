@@ -103,29 +103,25 @@ export default class Screenshots implements Plugin {
   }
 
   buttons(buttons: ButtonCollections): ButtonCollections {
-    const toAdd: ButtonCollections['0'] = [
-      {
-        label: 'screenshot',
-        icon: 'Camera',
-        onClick: () => {
-          this.ipc.send('screenshot:take');
-        },
-      },
-    ];
-
-    if ('mode' in this.ipc) {
-      toAdd.unshift({
-        label: 'directory',
-        icon: 'Folder',
-        onClick: () => {
-          this.changeFolder();
-        },
-      });
-    }
-
     return {
       ...buttons,
-      screenshots: toAdd,
+      screenshots: [
+        {
+          label: 'screenshot',
+          icon: 'Camera',
+          onClick: () => {
+            this.ipc.send('screenshot:take');
+          },
+        },
+        {
+          label: 'directory',
+          icon: 'Folder',
+          onClick: () => {
+            this.changeFolder();
+          },
+          disabled: 'showFilePicker' in window === false,
+        },
+      ],
     };
   }
 

@@ -12,12 +12,14 @@ import {
   Pause,
   Refresh,
   Rewind,
+  Maximize,
 } from '@magic-circle/styles';
 
 registerIcon(Play);
 registerIcon(Pause);
 registerIcon(Refresh);
 registerIcon(Rewind);
+registerIcon(Maximize);
 
 export default class PlayControls implements Plugin {
   playing: boolean;
@@ -87,6 +89,18 @@ export default class PlayControls implements Plugin {
           onClick: () => {
             this.client.reset();
           },
+        },
+        {
+          label: 'fullscreen',
+          icon: 'Maximize',
+          onClick: () => {
+            const element = document.querySelector('#frame iframe');
+
+            if (element) {
+              element.requestFullscreen();
+            }
+          },
+          hide: !this.client.getSetting('playControls.fullscreen', false),
         },
         ...(buttons.play || []),
       ],

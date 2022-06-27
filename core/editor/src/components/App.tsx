@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { BuildTarget } from '@magic-circle/schema';
 import { AppProvider } from '@magic-circle/state';
 import {
   COLORS,
@@ -67,15 +66,11 @@ export default function App() {
         <Inside>
           <SidebarLeft />
           <Frame id="frame">
-            {APP.config.target === BuildTarget.IFRAME ? (
-              <Iframe
-                allow="display-capture"
-                src={APP.config.url}
-                onLoad={() => APP.setup()}
-              />
-            ) : (
-              <SpacerFrame />
-            )}
+            <Iframe
+              allow="display-capture"
+              src={APP.config.url}
+              onLoad={() => APP.setup()}
+            />
             <Inner />
           </Frame>
           <SidebarRight />
