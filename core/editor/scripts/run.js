@@ -43,6 +43,7 @@ const generateConfig = async () => {
       nodeResolve({
         browser: true,
         rootDir: process.cwd(),
+        extensions: ['.mjs', '.js', '.jsx', '.json'],
       }),
       json(),
       commonjs(),
