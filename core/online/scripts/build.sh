@@ -2,7 +2,7 @@
 rm -rf magic-circle
 
 # Build Magic Circle
-npx controls build
+npx magic build
 
 # ensure we have an example dir
 mkdir magic-circle/examples

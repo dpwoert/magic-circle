@@ -26,9 +26,9 @@
     "serve": "vite",
     "build:dev": "tsc && vite build",
     "build:prod": "BUILD_ENV=production npm run build:dev",
-    "build:editor": "controls build",
-    "editor": "controls",
-    "editor:dev": "controls develop"
+    "build:editor": "magic build",
+    "editor": "magic",
+    "editor:dev": "magic develop"
   },
   "devDependencies": {
     "@magic-circle/editor": "^0.0.7",

@@ -25,7 +25,7 @@ const generateConfig = async () => {
   const config = argv.config || argv.C;
   const configFile = config
     ? path.join(process.cwd(), config)
-    : path.join(process.cwd(), 'controls.config.js');
+    : path.join(process.cwd(), 'magic.config.js');
 
   const tmpName = path.join(__dirname, '../build.tmp.js');
 

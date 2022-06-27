@@ -34,7 +34,7 @@
   "license": "MIT",
   "main": "src/index.js",
   "bin": {
-    "controls": "./scripts/run.js"
+    "magic": "./scripts/run.js"
   },
   "scripts": {
     "watch": "vite",
