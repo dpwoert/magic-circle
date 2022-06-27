@@ -22,6 +22,7 @@ const Screen = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  pointer-events: none;
 `;
 
 const Overlay = styled.div`
@@ -37,6 +38,7 @@ const Container = styled.div`
   width: ${SPACING(52)}px;
   background: ${COLORS.shades.s500.css};
   border-radius: 5px;
+  pointer-events: all;
 `;
 
 const Header = styled.div`
@@ -187,7 +189,12 @@ const CommandLine = () => {
 
   return (
     <>
-      <Overlay />
+      <Overlay
+        onClick={() => {
+          APP.commandLine.set(null);
+          console.log('click');
+        }}
+      />
       <Screen>
         <Container>
           <Header>
