@@ -94,6 +94,7 @@ type StarProps = {
 };
 
 const Star = styled.div<StarProps>`
+  display: flex;
   color: ${(props) => (props.selected ? COLORS.accent.css : COLORS.white.css)};
 `;
 
@@ -101,6 +102,7 @@ const Options = styled.div`
   display: flex;
   gap: ${SPACING(1)}px;
   cursor: pointer;
+  align-items: center;
 `;
 
 type GalleryViewProps = {
