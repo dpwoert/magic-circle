@@ -192,7 +192,6 @@ const CommandLine = () => {
       <Overlay
         onClick={() => {
           APP.commandLine.set(null);
-          console.log('click');
         }}
       />
       <Screen>
