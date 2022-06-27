@@ -63,6 +63,7 @@
     "babel-plugin-styled-components": "^1.8.0",
     "color-string": "^1.9.1",
     "dot-prop": "5.1.0",
+    "deepmerge": "^4.2.2",
     "electron": "^3.0.8",
     "electron-packager": "^13.0.1",
     "electron-settings": "^3.2.0",

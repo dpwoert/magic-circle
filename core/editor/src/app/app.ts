@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import Mousetrap from 'mousetrap';
 import dotProp from 'dot-prop';
+import deepMerge from 'deepmerge';
 
 import type {
   App as AppBase,
@@ -38,7 +39,7 @@ class App implements AppBase {
 
   constructor(userConf: UserConfig) {
     // merge with default config
-    this.config = { ...defaultConfig, ...userConf };
+    this.config = deepMerge<Config>(defaultConfig, userConf);
 
     // Setup ipc
     this.ipc = new IpcIframe();
