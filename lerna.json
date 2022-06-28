@@ -3,10 +3,10 @@
   "version": "0.0.7",
   "command": {
     "version": {
-      "allowBranch": "master"
+      "allowBranch": "main"
     },
     "publish": {
-      "allowBranch": "master"
+      "allowBranch": "main"
     }
   }
 }
