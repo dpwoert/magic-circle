@@ -20,8 +20,6 @@ An online demo environment can be found [here](https://magic-circle.dev/).
 
 **📦 Presets & Seeding** Enables you to create the exact same scene by saving the values of your controls and the _seeding_ value. When a page is reloaded, the last preset is being reapplied.
 
-**🐥 Small client** The editor and your project run in two different frames. This means the client code is very very small since all the heavy lifting is done inside the editor frame. The editor code won't even be bundled with your project. If you load your project outside of magic circle, it will just work as-asual.
-
 **📸 Screenshots** Take screenshots easily and in high-quality. Together with a screenshot, the current preset is saved. This means you can recreate that screenshot again. Especially since the current git state is also being stored, you can go back in time to re-create old presets.
 
 **🎥 Screen recordings** Render your content into a screen recording by exporting it frame by frame. Enabling you to export videos in high quality without loss of quality like for example a manual screen recording would.
