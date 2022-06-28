@@ -35,8 +35,15 @@ npm install
 echo "building packages"
 npm run build:prod
 
+if [[ `git status --porcelain` ]]; then
+  echo ""
+  echo "Git changes detected, make sure you've commited all your work before"
+  echo ""
+  exit 1
+fi
+
 # update version
-# lerna version
+lerna version
 
 # publish to npm
 # lerna publish from-package
