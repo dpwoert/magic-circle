@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/state",
-  "version": "0.1.0-alpha.3",
+  "version": "0.1.0-alpha.4",
   "description": "Magic Circle state management solution for React",
   "keywords": [
     "controls",
@@ -29,7 +29,7 @@
     "build:prod": "NODE_ENV=production tsc"
   },
   "devDependencies": {
-    "@magic-circle/schema": "^0.1.0-alpha.3",
+    "@magic-circle/schema": "^0.1.0-alpha.4",
     "@types/react": "*",
     "typescript": "^4.7.3"
   },
