@@ -1,7 +1,14 @@
 import { useEffect, useState, useCallback } from 'react';
 import styled from 'styled-components';
 
-import { COLORS, Icon, Metric, SPACING, TYPO } from '@magic-circle/styles';
+import {
+  COLORS,
+  Icon,
+  Metric,
+  SPACING,
+  TYPO,
+  Warning,
+} from '@magic-circle/styles';
 import { useStore } from '@magic-circle/state';
 import { App, LayoutHook } from '@magic-circle/schema';
 
@@ -299,6 +306,12 @@ const Sidebar = ({ app, screenshots }: SidebarProps) => {
   useEffect(() => {
     read();
   }, [lastScreenshot]); // eslint-disable-line
+
+  if ('showOpenFilePicker' in window === false) {
+    return (
+      <Warning text="This functionality is currently not support in Firefox" />
+    );
+  }
 
   return (
     <div>

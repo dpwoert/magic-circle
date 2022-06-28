@@ -6,7 +6,11 @@ import { AppContext } from '@magic-circle/state';
 import SPACING from './spacing';
 import COLORS from './colors';
 import TYPO from './typography';
-import Icon, { IconName } from './Icon';
+import Icon, { IconName, register as registerIcon } from './Icon';
+
+import { Close as CloseIcon } from './assets/icons';
+
+registerIcon(CloseIcon);
 
 const Container = styled.div`
   position: absolute;

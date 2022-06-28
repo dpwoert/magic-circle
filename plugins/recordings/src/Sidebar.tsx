@@ -1,6 +1,13 @@
 import styled from 'styled-components';
 
-import { Forms, Control, SPACING, Metric, Icon } from '@magic-circle/styles';
+import {
+  Warning,
+  Forms,
+  Control,
+  SPACING,
+  Metric,
+  Icon,
+} from '@magic-circle/styles';
 import { useStore } from '@magic-circle/state';
 
 import type Recordings from './index';
@@ -22,6 +29,13 @@ type SidebarProps = {
 
 const Sidebar = ({ recordings }: SidebarProps) => {
   const current = useStore(recordings.current);
+
+  if ('showOpenFilePicker' in window === false) {
+    return (
+      <Warning text="This functionality is currently not support in Firefox" />
+    );
+  }
+
   return (
     <Container>
       {!current.isRecording ? (
