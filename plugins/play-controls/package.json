@@ -18,12 +18,13 @@
     "directory": "plugins/play-controls"
   },
   "files": [
-    "dist/*.ts"
+    "dist/*.ts",
+    "dist/*.js"
   ],
   "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
   "license": "MIT",
-  "main": "dist/index.ts",
-  "module": "dist/index.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
   "scripts": {
     "watch": "tsc --watch",
     "build:dev": "tsc",
