@@ -353,7 +353,7 @@ export interface App {
   getControl: (name: string) => Control | undefined;
   getSetting: <T>(path: string, defaultValue?: T) => T;
 
-  setLayoutHook: (name: string, hook: ReactNode) => void;
+  setLayoutHook: (name: LayoutHook, hook: ReactNode) => void;
   getCommandLine: (reference?: CommandLineReference) => CommandLineScreen;
   showCommandLine: (screen?: CommandLineScreen) => void;
 

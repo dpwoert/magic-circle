@@ -26,6 +26,7 @@ import {
   Tag,
   Code,
   StreamToTv,
+  Inner,
 } from '@magic-circle/styles';
 
 import Sidebar from './Sidebar';
@@ -119,7 +120,7 @@ export default class Screenshots implements Plugin {
           onClick: () => {
             this.changeFolder();
           },
-          disabled: 'showFilePicker' in window === false,
+          disabled: 'showOpenFilePicker' in window === false,
         },
       ],
     };
@@ -370,7 +371,7 @@ export default class Screenshots implements Plugin {
     // Set controls sidebar
     this.client.setLayoutHook(
       LayoutHook.INNER,
-      <ImagePreview screenshot={screenshot} />
+      <ImagePreview screenshots={this} screenshot={screenshot} />
     );
   }
 

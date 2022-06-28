@@ -16,6 +16,7 @@ import type {
   CommandLineScreen,
   CommandLineAction,
   CommandLineReference,
+  LayoutHook,
 } from '@magic-circle/schema';
 import { IpcIframe, IpcBase } from '@magic-circle/client';
 import { Store } from '@magic-circle/state';
@@ -220,7 +221,7 @@ class App implements AppBase {
     return dotProp.get(this.config.settings, path, defaultValue);
   }
 
-  setLayoutHook(name: string, value: ReactNode) {
+  setLayoutHook(name: LayoutHook, value: ReactNode) {
     this.layoutHooks.set({
       ...this.layoutHooks.value,
       [name]: value,

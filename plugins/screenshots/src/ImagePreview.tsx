@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
+import { Inner } from '@magic-circle/styles';
+
 import type { ScreenshotFile } from './index';
+import type Screenshots from './index';
 
 const Image = styled.img`
   position: absolute;
@@ -11,11 +14,23 @@ const Image = styled.img`
 `;
 
 type ImagePreviewProps = {
+  screenshots: Screenshots;
   screenshot: ScreenshotFile;
 };
 
-const ImagePreview = ({ screenshot }: ImagePreviewProps) => {
-  return <Image src={screenshot.dataUrl} />;
+const ImagePreview = ({ screenshots, screenshot }: ImagePreviewProps) => {
+  return (
+    <Inner
+      breadcrumbs={{
+        plugin: {
+          ...screenshots.sidebar(),
+        },
+        title: screenshot.fileName,
+      }}
+    >
+      <Image src={screenshot.dataUrl} />;
+    </Inner>
+  );
 };
 
 export default ImagePreview;

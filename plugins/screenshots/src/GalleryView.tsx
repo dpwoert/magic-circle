@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { TYPO, COLORS, SPACING, Icon } from '@magic-circle/styles';
+import { Inner, TYPO, COLORS, SPACING, Icon } from '@magic-circle/styles';
 
 import type { ScreenshotFile } from './index';
 import Screenshots from './index';
@@ -11,7 +11,7 @@ const Container = styled.div`
   height: 100%;
   object-fit: contain;
   object-position: center center;
-  padding: ${SPACING(2)}px;
+  padding: ${SPACING(1)}px;
   overflow: auto;
   display: flex;
   gap: ${SPACING(2)}px;
@@ -19,7 +19,7 @@ const Container = styled.div`
 `;
 
 const Screenshot = styled.div`
-  ${TYPO.title}
+  ${TYPO.regular}
   height: ${SPACING(25)}px;
   width: calc(25% - ${SPACING(2 * 3) / 4}px);
   color: ${COLORS.shades.s100.css};
@@ -32,7 +32,7 @@ const Screenshot = styled.div`
 
   &:nth-child(1),
   &:nth-child(2) {
-    width: calc(50% - ${SPACING(2 * 3.5) / 2}px);
+    width: calc(50% - ${SPACING(2) / 2}px);
   }
 `;
 
@@ -53,7 +53,7 @@ const ImageContainer = styled.div`
   width: 100%;
   height: ${SPACING(21)}px;
   border: 1px solid ${COLORS.shades.s400.css};
-  border-radius: 3px;
+  border-radius: 5px 5px 0 0;
   object-fit: cover;
   object-position: center center;
   background: ${COLORS.white.css};
@@ -85,8 +85,14 @@ const Bar = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: ${SPACING(3)}px;
+  height: ${SPACING(4)}px;
   width: 100%;
+  border: 1px solid ${COLORS.shades.s400.css};
+  border-radius: 0 0px 5px 5px;
+  background: ${COLORS.shades.s700.css};
+  color: ${COLORS.shades.s100.css};
+  padding: 0 ${SPACING(1)}px;
+  border-top: none;
 `;
 
 type StarProps = {
@@ -100,7 +106,7 @@ const Star = styled.div<StarProps>`
 
 const Options = styled.div`
   display: flex;
-  gap: ${SPACING(1)}px;
+  gap: ${SPACING(0.5)}px;
   cursor: pointer;
   align-items: center;
 `;
@@ -119,52 +125,66 @@ const GalleryView = ({
   close,
 }: GalleryViewProps) => {
   return (
-    <Container>
-      {files.map((file) => (
-        <Screenshot key={file.fileName}>
-          <ImageContainer>
-            <Image
-              src={file.dataUrl}
-              onClick={() => {
-                screenshots.loadScreenshot(file);
-                close();
-              }}
-            />
-            <ImageHover>
-              <Icon name="StreamToTv" width={SPACING(2)} height={SPACING(2)} />
-            </ImageHover>
-          </ImageContainer>
-          <Bar>
-            {file.fileName}
-            <Options>
-              <Star selected={file.data.favourite}>
+    <Inner
+      breadcrumbs={{
+        plugin: {
+          ...screenshots.sidebar(),
+        },
+        title: 'All screenshots',
+      }}
+      onClose={close}
+    >
+      <Container>
+        {files.map((file) => (
+          <Screenshot key={file.fileName}>
+            <ImageContainer>
+              <Image
+                src={file.dataUrl}
+                onClick={() => {
+                  screenshots.loadScreenshot(file);
+                  close();
+                }}
+              />
+              <ImageHover>
                 <Icon
-                  onClick={() => {
-                    screenshots.toggleFavourite(file);
-                    reload();
-                  }}
-                  name="Star"
+                  name="StreamToTv"
                   width={SPACING(2)}
                   height={SPACING(2)}
                 />
-              </Star>
-              <Icon
-                name="DotsVertical"
-                width={SPACING(2)}
-                height={SPACING(2)}
-                onClick={() => {
-                  const screen = screenshots.client.getCommandLine({
-                    type: 'screenshot',
-                    id: file.fileName,
-                  });
-                  screenshots.client.showCommandLine(screen);
-                }}
-              />
-            </Options>
-          </Bar>
-        </Screenshot>
-      ))}
-    </Container>
+              </ImageHover>
+            </ImageContainer>
+            <Bar>
+              {file.fileName}
+              <Options>
+                <Star selected={file.data.favourite}>
+                  <Icon
+                    onClick={() => {
+                      screenshots.toggleFavourite(file);
+                      reload();
+                    }}
+                    name="Star"
+                    width={SPACING(1.5)}
+                    height={SPACING(1.5)}
+                  />
+                </Star>
+                <Icon
+                  name="DotsVertical"
+                  width={SPACING(1.5)}
+                  height={SPACING(1.5)}
+                  onClick={() => {
+                    const screen = screenshots.client.getCommandLine({
+                      type: 'screenshot',
+                      id: file.fileName,
+                    });
+                    screenshots.client.showCommandLine(screen);
+                  }}
+                />
+              </Options>
+            </Bar>
+          </Screenshot>
+        ))}
+      </Container>
+    </Inner>
   );
 };
 
