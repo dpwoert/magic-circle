@@ -25,7 +25,7 @@
   "scripts": {
     "watch": "tsc --watch",
     "build:dev": "tsc && sh post-build.sh",
-    "build:prod": "NODE_ENV=production tsc",
+    "build:prod": "NODE_ENV=production tsc && sh post-build.sh",
     "generate:icons": "node scripts/icons.js"
   },
   "dependencies": {
