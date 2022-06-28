@@ -15,55 +15,46 @@
   "license": "MIT",
   "scripts": {
     "postinstall": "lerna bootstrap",
-    "setup:dev": "sh setup-dev.sh",
-    "setup:prod": "sh setup-prod.sh",
-    "setup:web": "sh setup-web.sh",
-    "build:ui": "lerna run build:dev --scope @magic-circle/ui",
-    "build:client": "lerna run build:dev --scope @magic-circle/client",
-    "build:ui:prod": "lerna run build:prod --scope @magic-circle/ui",
-    "build:client:prod": "lerna run build:prod --scope @magic-circle/client",
-    "build:online": "lerna run build --scope @magic-circle/online",
-    "build:icons": "cd core/ui && sh icons.sh && cd ../..",
-    "watch:online": "lerna run watch --scope @magic-circle/online --stream",
-    "watch:ui": "lerna run watch --scope @magic-circle/ui",
-    "watch:client": "lerna run watch --scope @magic-circle/client",
-    "package:dev": "lerna run package:dev --scope @magic-circle/editor",
-    "package:prod": "lerna run package:prod --scope @magic-circle/editor",
+    "prepare": "husky install",
+    "watch": "lerna run watch",
+    "build:dev": "lerna run build:dev",
+    "build:prod": "lerna run build:prod",
+    "build:stats": "lerna run build:stats",
+    "generate:icons": "lerna run generate:icons --scope @magic-circle/styles",
     "example": "sh examples/run.sh",
     "publish:npm": "sh publish.sh",
-    "publish:online": "echo \"TODO\"",
-    "prettier": "prettier --config --write \"{core,examples,plugins}/**/*.js\"",
-    "lint": "eslint \"{core,examples,plugins}/**/*.js\"",
-    "test": "npm run lint",
-    "clean": "find . -name 'node_modules' -type d | xargs rm -rf && find . -name 'dist' -type d | xargs rm -rf && find . -name '.cache' -type d | xargs rm -rf && rm -rf core/editor/build/"
+    "publish:online": "lerna run package --scope @magic-circle/online",
+    "prettier": "prettier --config --write \"{core,examples,plugins,scripts}/**/*.{js,jsx,ts,tsx,json,css}\"",
+    "lint": "eslint \"{core,examples,plugins,scripts}/**/*.{js,jsx,ts,tsx}\" --cache",
+    "lint:types": "node scripts/unused-types",
+    "lint:dependencies": "node scripts/unused-dependencies",
+    "clean": "find . -name 'node_modules' -type d | xargs rm -rf && find . -name 'dist' -type d | xargs rm -rf && find . -name '.cache' -type d"
   },
   "devDependencies": {
     "@babel/core": "^7.1.5",
     "babel-eslint": "^10.0.1",
     "builtin-modules": "^3.1.0",
-    "eslint": "^5.12.0",
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-config-prettier": "^3.4.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jsx-a11y": "^6.1.2",
-    "eslint-plugin-prettier": "^3.0.1",
-    "eslint-plugin-react": "^7.12.3",
-    "husky": "^1.3.1",
-    "lerna": "^3.14.1",
-    "lint-staged": "^8.1.0",
-    "prettier": "^1.15.3",
+    "depcheck": "^1.4.3",
+    "eslint": "^8.8.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "@typescript-eslint/eslint-plugin": "^5.10.2",
+    "@typescript-eslint/parser": "^5.10.2",
+    "ts-unused-exports": "^8.0.0",
+    "kleur": "4.1.5",
+    "husky": "^8.0.1",
+    "lerna": "^5.1.4",
+    "lint-staged": "13.0.2",
+    "prettier": "^2.5.1",
     "replace-in-file": "^4.1.3"
   },
   "lint-staged": {
     "*.{js,jsx,json}": [
-      "prettier --config --write",
-      "git add"
+      "prettier --config --write"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "npm run lint"
-    }
   }
 }

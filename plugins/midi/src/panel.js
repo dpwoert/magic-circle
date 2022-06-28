@@ -24,18 +24,18 @@ const Table = styled.div`
 `;
 const Row = styled.div`
   display: flex;
-  background: ${props =>
+  background: ${(props) =>
     props.selected
       ? new Color(props.theme.accent).alpha(0.9).toCSS()
       : '#191919'};
-  border-radius: ${props => (props.selected ? 3 : 0)}px;
-  font-weight: ${props =>
+  border-radius: ${(props) => (props.selected ? 3 : 0)}px;
+  font-weight: ${(props) =>
     props.selected || props.heading ? 'bold' : 'normal'};
-  border-bottom: ${props =>
+  border-bottom: ${(props) =>
     props.heading ? '1px solid rgba(100, 100, 100, 0.6)' : 'none'};
 
   &:nth-of-type(even) {
-    background: ${props =>
+    background: ${(props) =>
       props.selected
         ? new Color(props.theme.accent).alpha(0.9).toCSS()
         : '#111111'};
@@ -49,7 +49,7 @@ const Column = styled.div`
   box-sizing: border-box;
   cursor: default;
   width: 50%;
-  background: ${props => (props.edit ? props.theme.accent : 'none')};
+  background: ${(props) => (props.edit ? props.theme.accent : 'none')};
 `;
 
 const Buttons = styled.div`
@@ -59,8 +59,8 @@ const Buttons = styled.div`
 `;
 
 const Button = styled.button`
-  border: 1px solid ${props => props.theme.accent};
-  color: ${props => props.theme.accent};
+  border: 1px solid ${(props) => props.theme.accent};
+  color: ${(props) => props.theme.accent};
   display: block;
   text-align: center;
   user-select: none;
@@ -103,14 +103,14 @@ class MidiPanel extends Component {
     });
 
     if (mode === 'path') {
-      connect(path => {
+      connect((path) => {
         updateRow(id, 'path', path);
         this.stopChange();
       });
       store.set('once', null);
     } else {
       connect(null);
-      store.set('once', command => {
+      store.set('once', (command) => {
         updateRow(id, 'midi', command);
         this.stopChange();
       });
@@ -133,7 +133,7 @@ class MidiPanel extends Component {
             <Column>MIDI signal</Column>
             <Column>Control key</Column>
           </Row>
-          {config.map(row => {
+          {config.map((row) => {
             const editing = changing && id === row.id;
             return (
               <Row>
@@ -142,9 +142,7 @@ class MidiPanel extends Component {
                   onDoubleClick={() => this.change(row.id, 'midi')}
                 >
                   {row.midi
-                    ? `ch.${row.midi.channel} ${row.midi.note.octave}.${
-                        row.midi.note.name
-                      }`
+                    ? `ch.${row.midi.channel} ${row.midi.note.octave}.${row.midi.note.name}`
                     : '--'}
                 </Column>
                 <Column

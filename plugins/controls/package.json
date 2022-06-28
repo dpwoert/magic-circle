@@ -1,7 +1,7 @@
 {
   "name": "@magic-circle/controls",
   "version": "0.0.7",
-  "description": "Magic Circle control panel",
+  "description": "Magic Circle default controls",
   "keywords": [
     "controls",
     "creative coding",
@@ -21,27 +21,35 @@
     "directory": "plugins/controls"
   },
   "files": [
-    "src/*.js"
+    "dist/*.js",
+    "dist/*.jsx",
+    "dist/*.d.ts",
+    "editor.js",
+    "client.js"
   ],
   "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
   "license": "MIT",
   "main": "src/index.js",
-  "module": "src/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "watch": "tsc --watch",
+    "build:dev": "tsc",
+    "build:prod": "NODE_ENV=production tsc"
+  },
   "devDependencies": {
-    "@babel/core": "^7.2.0",
-    "@babel/plugin-proposal-class-properties": "^7.2.0",
-    "@babel/preset-react": "^7.0.0",
-    "babel-plugin-styled-components": "^1.8.0",
-    "indexof": "0.0.1",
-    "rc-color-picker": "^1.2.6"
+    "typescript": "^4.7.3",
+    "@types/react": "*"
   },
   "peerDependencies": {
     "react": "*",
     "styled-components": "*"
   },
   "dependencies": {
-    "@magic-circle/colors": "^0.0.7",
-    "shallowequal": "^1.1.0"
+    "@magic-circle/schema": "^0.0.7",
+    "@magic-circle/styles": "^0.0.7",
+    "rc-color-picker": "^1.2.6",
+    "color-rgba": "^2.4.0"
   },
   "publishConfig": {
     "access": "public"

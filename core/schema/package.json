@@ -1,0 +1,41 @@
+{
+  "name": "@magic-circle/schema",
+  "version": "0.0.7",
+  "description": "Magic Circle shares typescript schemas",
+  "keywords": [
+    "controls",
+    "creative coding",
+    "editor",
+    "editing",
+    "GUI"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dpwoert/magic-circle.git",
+    "directory": "core/schema"
+  },
+  "files": [
+    "dist/*.js",
+    "dist/*.d.ts"
+  ],
+  "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "scripts": {
+    "watch": "tsc --watch",
+    "build:dev": "tsc",
+    "build:prod": "NODE_ENV=production tsc"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@magic-circle/client": "^0.0.7",
+    "typescript": "^4.7.3"
+  },
+  "peerDependencies": {
+    "@magic-circle/client": "^0.0.7",
+    "react": "^18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

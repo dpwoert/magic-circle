@@ -1,0 +1,41 @@
+{
+  "name": "@magic-circle/example-p5",
+  "private": true,
+  "version": "0.0.7",
+  "description": "Magic Circle P5js example",
+  "keywords": [
+    "controls",
+    "creative coding",
+    "editor",
+    "performance",
+    "layers",
+    "editing",
+    "GUI",
+    "example",
+    "simple"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dpwoert/magic-circle.git",
+    "directory": "examples/p5"
+  },
+  "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "serve": "vite",
+    "build:dev": "tsc && vite build",
+    "build:prod": "BUILD_ENV=production npm run build:dev",
+    "editor": "magic"
+  },
+  "devDependencies": {
+    "@magic-circle/editor": "^0.0.7",
+    "@types/p5": "^1.4.2",
+    "vite": "^2.9.9",
+    "typescript": "^4.7.3"
+  },
+  "dependencies": {
+    "@magic-circle/client": "^0.0.7",
+    "p5": "^1.4.1"
+  }
+}
