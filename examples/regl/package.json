@@ -1,7 +1,7 @@
 {
   "name": "@magic-circle/example-regl",
   "private": true,
-  "version": "0.1.0-alpha.0",
+  "version": "0.1.0-alpha.1",
   "description": "Magic Circle Regl example",
   "keywords": [
     "controls",
@@ -29,13 +29,13 @@
     "editor": "magic"
   },
   "devDependencies": {
-    "@magic-circle/editor": "^0.1.0-alpha.0",
+    "@magic-circle/editor": "^0.1.0-alpha.1",
     "typescript": "^4.7.3",
     "vite": "^2.9.9",
     "vite-plugin-glsl": "^0.1.2"
   },
   "dependencies": {
-    "@magic-circle/client": "^0.1.0-alpha.0",
+    "@magic-circle/client": "^0.1.0-alpha.1",
     "regl": "1.3.13"
   }
 }
