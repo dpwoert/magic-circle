@@ -47,11 +47,8 @@
   },
   "dependencies": {
     "@magic-circle/schema": "^0.0.7",
-    "@magic-circle/colors": "^0.0.7",
     "@magic-circle/styles": "^0.0.7",
-    "@magic-circle/state": "^0.0.7",
     "rc-color-picker": "^1.2.6",
-    "shallowequal": "^1.1.0",
     "color-rgba": "^2.4.0"
   },
   "publishConfig": {

@@ -27,12 +27,14 @@
     "prettier": "prettier --config --write \"{core,examples,plugins,scripts}/**/*.{js,jsx,ts,tsx,json,css}\"",
     "lint": "eslint \"{core,examples,plugins,scripts}/**/*.{js,jsx,ts,tsx}\" --cache",
     "lint:types": "node scripts/unused-types",
+    "lint:dependencies": "node scripts/unused-dependencies",
     "clean": "find . -name 'node_modules' -type d | xargs rm -rf && find . -name 'dist' -type d | xargs rm -rf && find . -name '.cache' -type d"
   },
   "devDependencies": {
     "@babel/core": "^7.1.5",
     "babel-eslint": "^10.0.1",
     "builtin-modules": "^3.1.0",
+    "depcheck": "^1.4.3",
     "eslint": "^8.8.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-base": "^15.0.0",

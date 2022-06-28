@@ -23,6 +23,8 @@ jobs:
         run: npm run lint
       - name: Types
         run: npm run lint:types
+      - name: Dependencies
+        run: npm run lint:dependencies
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 10
