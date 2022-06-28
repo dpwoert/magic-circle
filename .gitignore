@@ -43,6 +43,12 @@ jspm_packages/
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 
+# typescript
+*.tsbuildinfo
+
+# rollup
+.rollup.cache
+
 # project specific
 dist
 examples/**/screenshots

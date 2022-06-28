@@ -1,0 +1,40 @@
+{
+  "name": "@magic-circle/state",
+  "version": "0.0.7",
+  "description": "Magic Circle state management solution for React",
+  "keywords": [
+    "controls",
+    "creative coding",
+    "editor",
+    "editing",
+    "GUI"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dpwoert/magic-circle.git",
+    "directory": "core/state"
+  },
+  "files": [
+    "dist/*.js",
+    "dist/*.d.ts"
+  ],
+  "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "scripts": {
+    "watch": "tsc --watch",
+    "build:dev": "tsc",
+    "build:prod": "NODE_ENV=production tsc"
+  },
+  "devDependencies": {
+    "typescript": "^4.7.3",
+    "@types/react": "*",
+    "@magic-circle/schema": "^0.0.7"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

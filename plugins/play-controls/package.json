@@ -18,18 +18,21 @@
     "directory": "plugins/play-controls"
   },
   "files": [
-    "src/*.js"
+    "src/*.ts"
   ],
   "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
   "license": "MIT",
-  "main": "src/index.js",
-  "module": "src/index.js",
-  "scripts": {},
+  "main": "src/index.ts",
+  "module": "src/index.ts",
+  "scripts": {
+    "watch": "tsc --watch",
+    "build:dev": "tsc",
+    "build:prod": "NODE_ENV=production tsc"
+  },
   "devDependencies": {
-    "@babel/core": "^7.1.2",
-    "@babel/plugin-proposal-class-properties": "^7.1.0",
-    "@babel/preset-react": "^7.0.0",
-    "babel-plugin-styled-components": "^1.8.0"
+    "@magic-circle/schema": "^0.0.7",
+    "@magic-circle/styles": "^0.0.7",
+    "typescript": "^4.7.3"
   },
   "peerDependencies": {
     "react": "*",

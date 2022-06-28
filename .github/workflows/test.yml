@@ -1,82 +1,49 @@
 name: Test
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - feature/*
 
 jobs:
   linting:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     timeout-minutes: 10
-    strategy:
-      matrix:
-        stage: [dev, prod]
     steps:
       - uses: actions/checkout@v1
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
-      - name: Setup repo (dev mode)
-        run: |
-          npm run setup:${{ matrix.stage }} -- --yes
+          node-version: 16.x
+      - name: Setup repo
+        run: npm i
       - name: Linting
         run: npm run lint
-
-  example_simple:
-    runs-on: macos-latest
+      - name: Types
+        run: npm run lint:types
+      - name: Dependencies
+        run: npm run lint:dependencies
+  build:
+    runs-on: ubuntu-latest
     timeout-minutes: 10
-    strategy:
-      matrix:
-        stage: [dev, prod]
     steps:
       - uses: actions/checkout@v1
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
-      - name: Setup repo (dev mode)
-        run: |
-          npm run setup:${{ matrix.stage }} -- --yes
-      - name: Run simple example
-        env:
-          CI: true
-        run: npm run example simple
-
-  example_custom-plugin:
-    runs-on: macos-latest
-    timeout-minutes: 10
-    strategy:
-      matrix:
-        stage: [dev, prod]
-    steps:
-      - uses: actions/checkout@v1
-      - name: Use Node.js
-        uses: actions/setup-node@v1
+          node-version: 16.x
+      - name: Setup repo
+        run: npm i
+      - name: Build all files to check types
+        run: npm run build:dev
+      - name: Generate bundle stats
+        run: npm run build:stats
+      - name: Upload packaged files
+        uses: actions/upload-artifact@v2
         with:
-          node-version: 12.x
-      - name: Setup repo (dev mode)
-        run: |
-          npm run setup:${{ matrix.stage }} -- --yes
-      - name: Run example with custom plugin
-        env:
-          CI: true
-        run: npm run example custom-plugin
-
-  example_embed:
-    runs-on: macos-latest
-    timeout-minutes: 10
-    strategy:
-      matrix:
-        stage: [dev, prod]
-    steps:
-      - uses: actions/checkout@v1
-      - name: Use Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12.x
-      - name: Setup repo (dev mode)
-        run: |
-          npm run setup:${{ matrix.stage }} -- --yes
-      - name: Run example with embedded files
-        env:
-          CI: true
-        run: npm run example simple embed
+          name: Bundle statistics
+          path: |
+            core/editor/stats.html
+            core/client/stats.html

@@ -17,20 +17,27 @@
     "directory": "plugins/layers"
   },
   "files": [
-    "src/*.js"
+    "dist/*.js",
+    "dist/*.jsx",
+    "dist/*.d.ts"
   ],
   "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
   "license": "MIT",
-  "main": "src/index.js",
-  "module": "src/index.js",
+  "main": "dist/index.jsx",
+  "module": "dist/index.jsx",
+  "scripts": {
+    "watch": "tsc --watch",
+    "build:dev": "tsc",
+    "build:prod": "NODE_ENV=production tsc"
+  },
   "dependencies": {
-    "@magic-circle/colors": "^0.0.7"
+    "@magic-circle/styles": "^0.0.7",
+    "@magic-circle/state": "^0.0.7"
   },
   "devDependencies": {
-    "@babel/core": "^7.2.0",
-    "@babel/plugin-proposal-class-properties": "^7.2.0",
-    "@babel/preset-react": "^7.0.0",
-    "babel-plugin-styled-components": "^1.8.0"
+    "@magic-circle/schema": "^0.0.7",
+    "typescript": "^4.7.3",
+    "@types/react": "*"
   },
   "peerDependencies": {
     "react": "*",

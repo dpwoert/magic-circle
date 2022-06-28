@@ -2,3 +2,5 @@
 dist
 *.build.js
 build
+magic-circle
+build.tmp.js
