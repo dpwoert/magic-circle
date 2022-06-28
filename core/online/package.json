@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/online",
-  "version": "0.0.7",
+  "version": "0.1.0-alpha.0",
   "private": true,
   "description": "Magic Circle online test environment",
   "keywords": [
@@ -26,12 +26,12 @@
     "generate:list": "node scripts/create-list.js"
   },
   "devDependencies": {
-    "typescript": "^4.7.3",
+    "@magic-circle/editor": "^0.1.0-alpha.0",
+    "@magic-circle/schema": "^0.1.0-alpha.0",
+    "@magic-circle/styles": "^0.1.0-alpha.0",
     "@types/react": "*",
     "@types/styled-components": "*",
-    "@magic-circle/editor": "^0.0.7",
-    "@magic-circle/styles": "^0.0.7",
-    "@magic-circle/schema": "^0.0.7"
+    "typescript": "^4.7.3"
   },
   "peerDependencies": {
     "react": "^18.0.0",

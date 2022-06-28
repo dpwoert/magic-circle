@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/screenshots",
-  "version": "0.0.7",
+  "version": "0.1.0-alpha.0",
   "description": "Magic Circle screenshots",
   "keywords": [
     "controls",
@@ -33,12 +33,12 @@
     "react-json-view": "^1.21.3"
   },
   "devDependencies": {
-    "@magic-circle/schema": "^0.0.7",
-    "@magic-circle/styles": "^0.0.7",
-    "@magic-circle/state": "^0.0.7",
-    "typescript": "^4.7.3",
+    "@magic-circle/schema": "^0.1.0-alpha.0",
+    "@magic-circle/state": "^0.1.0-alpha.0",
+    "@magic-circle/styles": "^0.1.0-alpha.0",
     "@types/react": "*",
-    "@types/styled-components": "*"
+    "@types/styled-components": "*",
+    "typescript": "^4.7.3"
   },
   "peerDependencies": {
     "react": "*",

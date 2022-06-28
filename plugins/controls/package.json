@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/controls",
-  "version": "0.0.7",
+  "version": "0.1.0-alpha.0",
   "description": "Magic Circle default controls",
   "keywords": [
     "controls",
@@ -38,18 +38,18 @@
     "build:prod": "NODE_ENV=production tsc"
   },
   "devDependencies": {
-    "typescript": "^4.7.3",
-    "@types/react": "*"
+    "@types/react": "*",
+    "typescript": "^4.7.3"
   },
   "peerDependencies": {
     "react": "*",
     "styled-components": "*"
   },
   "dependencies": {
-    "@magic-circle/schema": "^0.0.7",
-    "@magic-circle/styles": "^0.0.7",
-    "rc-color-picker": "^1.2.6",
-    "color-rgba": "^2.4.0"
+    "@magic-circle/schema": "^0.1.0-alpha.0",
+    "@magic-circle/styles": "^0.1.0-alpha.0",
+    "color-rgba": "^2.4.0",
+    "rc-color-picker": "^1.2.6"
   },
   "publishConfig": {
     "access": "public"
