@@ -100,7 +100,9 @@ controls
   })
   .loop((delta) => {
     // this code will run every frame
-  });
+  })
+  // auto start
+  .start();
 ```
 
 ## Run locally
@@ -132,6 +134,9 @@ After building is completed the bundle will be available in the `magic-circle` f
 
 ```js
 export default {
+  // The url to load
+  url: 'http://localhost:4000',
+
   // Load list of plugins, first argument is the default list of plugins
   // This list can be filtered and extended with custom plugins.
   plugins: (defaultPlugins) => [...defaultPlugins],
@@ -139,6 +144,7 @@ export default {
   // Load custom controls
   controls: (defaultControls) => [...defaultControls],
 
+  // Read plugin pages for specific settings
   settings: {},
 };
 ```
