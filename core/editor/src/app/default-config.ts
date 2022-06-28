@@ -11,7 +11,7 @@ import {
   ColorControl,
   ButtonControl,
   BooleanControl,
-} from '@magic-circle/controls/editor';
+} from '@magic-circle/controls';
 
 import { Config } from '@magic-circle/schema';
 

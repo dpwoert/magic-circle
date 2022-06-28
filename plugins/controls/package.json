@@ -23,9 +23,7 @@
   "files": [
     "dist/*.js",
     "dist/*.jsx",
-    "dist/*.d.ts",
-    "editor.js",
-    "client.js"
+    "dist/*.d.ts"
   ],
   "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
   "license": "MIT",
