@@ -20,6 +20,7 @@ cp readme.md core/editor
 cp readme.md core/styles
 cp readme.md core/state
 cp readme.md core/schema
+cp readme.md core/online
 
 if [[ `git status --porcelain` ]]; then
   echo "Commiting update to README files"
@@ -35,7 +36,7 @@ echo "building packages"
 npm run build:prod
 
 # update version
-lerna version
+# lerna version
 
 # publish to npm
-lerna publish from-package
+# lerna publish from-package
