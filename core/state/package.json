@@ -21,6 +21,7 @@
   "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
   "license": "MIT",
   "main": "dist/index.js",
+  "module": "dist/index.js",
   "scripts": {
     "watch": "tsc --watch",
     "build:dev": "tsc",
