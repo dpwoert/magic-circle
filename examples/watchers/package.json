@@ -1,7 +1,7 @@
 {
   "name": "@magic-circle/example-watchers",
   "private": true,
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0-alpha.2",
   "description": "Magic Circle watcher example",
   "keywords": [
     "controls",
@@ -31,13 +31,13 @@
     "editor:dev": "magic develop"
   },
   "devDependencies": {
-    "@magic-circle/editor": "^0.1.0-alpha.1",
+    "@magic-circle/editor": "^0.1.0-alpha.2",
     "@types/three": "^0.141.0",
     "typescript": "^4.7.3",
     "vite": "^2.9.9"
   },
   "dependencies": {
-    "@magic-circle/client": "^0.1.0-alpha.1",
+    "@magic-circle/client": "^0.1.0-alpha.2",
     "three": "^0.97.0"
   }
 }
