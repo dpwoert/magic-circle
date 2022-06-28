@@ -1,7 +1,7 @@
 # cp src/assets/fonts/*.woff dist/assets/fonts/
 
-mkdir -p dist/assets/fonts
-mkdir -p dist/assets/icons
+mkdir dist/assets/fonts
+mkdir dist/assets/icons
 
 cd src/assets/fonts
 
