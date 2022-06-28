@@ -1,50 +1,46 @@
-# Magic Circle
+# ![Logo of Magic Circle](https://raw.github.com/dpwoert/magic-circle/develop/docs/assets/logo.png)
 
-This is my attempt of creating a tool for my creative development needs. It's a multifunctional editor inspired by tools like dat.GUI, Unity and Framer. With this tool I want to enable and promote playfulness and collaboration in creative technology. You don't need to be a coder to improve a piece of creative tech. In fact collaborating with different disciplines might (will!) improve creative tech projects.
+This is my attempt of creating a tool for my creative development needs. It's a multifunctional editor inspired by tools like dat.GUI, Unity and Framer. Basically Storybook for creative coding.
 
-<sub><sup>I named this tool **Magic Circle**, which is the place where _play_ takes place. In this place the normal rules and reality that guard normal life are suspended. [Read more here](https://uxdesign.cc/why-play-can-improve-the-interdisciplinary-collaboration-in-your-team-8d7fd1ce32f8)</sub></sup>
+The aim of this editor is not only to allow for easier and quicker development but also to promote collaboration and playfulness inside teams. Everyone should be able to play with the tech you make and add a meaningful contribution. You don't need to be a coder to improve a piece of creative tech. With this tool, people can play and share their results.
 
-![screenshot here](https://raw.github.com/dpwoert/magic-circle/develop/docs/assets/screenshot.png)
+I named this tool **Magic Circle**, which according to Huizinga (Homo Ludens, 1938) is the place where _play_ takes place. A place whereby the rules and reality that guard normal life have been suspended ([read more here](https://uxdesign.cc/why-play-can-improve-the-interdisciplinary-collaboration-in-your-team-8d7fd1ce32f8)).
 
-**An online demo with limited functionality can be found [here](https://magic-circle.surge.sh/)**
+![screenshot of magic circle](https://raw.github.com/dpwoert/magic-circle/develop/docs/assets/screenshot.png)
+
+## Online demo
+
+An online demo environment can be found [here](https://magic-circle.dev/).
 
 ## Features
 
-- **🎛 Custom controls** Enables you to play around with variables. All controls are configurable and adaptable to play nicely with most data sources.
+**🎛 Custom controls** Enables you to play around with variables. All controls are configurable and adaptable to play nicely with most data sources.
 
-- **👁‍🗨 Layers** Layers are used to organise all these controls and can mimic the 'scene graph'.
+**👁‍🗨 Layers** Layers are used to organise all these controls. This can, for example, mimic the 'scene graph'.
 
-- **📦 Presets & Seeding** Enables you to create the exact same scene by saving the values of your controls and the _seeding_ value. When a page is reloaded, the last preset is being reapplied.
+**📦 Presets & Seeding** Enables you to create the exact same scene by saving the values of your controls and the _seeding_ value. When a page is reloaded, the last preset is being reapplied.
 
-- **📸 Screenshots** Take screenshots easily and in high quality. Together with a screenshot, the current preset and seed is saved and can be loaded by loading that screenshot. Will also save the current git state, so you can always reproduce that screenshot, even if your code has changed.
+**📸 Screenshots** Take screenshots easily and in high-quality. Together with a screenshot, the current preset is saved. This means you can recreate that screenshot again. Especially since the current git state is also being stored, you can go back in time to re-create old presets.
 
-- **🎥 Screen recordings** Render your content into a screen recording by exporting it frame by frame. Enabling you to export videos in high quality without loss of quality like for example a Quicktime recording would.
+**🎥 Screen recordings** Render your content into a screen recording by exporting it frame by frame. Enabling you to export videos in high quality without loss of quality like for example a manual screen recording would.
 
-- **⏲ Performance measurement** Measures and displays performance metrics like Frames Per Second and memory usage.
+**⏲ Performance measurement** Measures and displays performance metrics like Frames Per Second and memory usage.
 
-- **👐 Touch Bar** Enables you to trigger quick actions and view a live Frames per Second meter.
+**🛠 Custom plugins** Since all projects are unique, some projects need custom plugins that might not exists yet. Make your own if needed.
 
-- **🛠 Custom plugins** Since all projects are unique, some projects need custom plugins that might not exists yet. Make your own if needed.
-
-- **🌈 Theming** It is possible and easy to change some colours around.
-
-- **🧩 Stand-alone** So you won't need the CLI anymore and can share this app with others.
+**🚀 Deploy** Build and deploy your setup so you can share it with others in your team.
 
 ## Roadmap
 
-- **⛓ THREEjs helpers** Automatically create controls based upon the THREE.js scene graph.
+**🐞 Bug fixes and refactoring etc** This is just a first beta version to test if things are wokring. There are obviously many bugs and things that can be improved.
 
-- **🎹 MIDI** Use a MIDI controller to play around with your variables.
+**⛓ Helpers** Helper functions for framework/liberies that make life easier. For example for React, P5 and ThreeJS.
 
-- **🎛 More advanced custom controls** More controls types, like setting images for textures and easing controls.
+**🎹 MIDI** Use a MIDI controller to play around with your variables.
 
-- **⏰ Animation timeline** Create an animation timeline where variables can be key-framed.
+**🎛 More advanced custom controls** More controls types, like setting images for textures and easing controls.
 
-## Requirements
-
-- Mac OSX (Windows and Linux versions might come later)
-- NodeJS
-- Npm or Yarn
+**⏰ Animation timeline** Create an animation timeline where variables can be key-framed.
 
 ## Install
 
@@ -65,33 +61,35 @@ $ npm install @magic-circle/editor -g
 
 ```js
 // ES5
-// <script type="text/javascript" src="controls.min.js"></script>
-var controls = window.controls;
+// <script type="text/javascript" src="https://unpkg.com/@magic-circle/client/dist/magic-circle.min.js"></script>
+const { MagicCircle, Layer, NumberControl }  = window.magicCircle.MagicCircle;
 
 // CommonJS:
-const { Controls, Layer, NumberControl } = require('@magic-circle/client');
+const { MagicCircle, Layer, NumberControl } = require('@magic-circle/client');
 
 // ES6:
 import {
-  Controls,
+  MagicCircle,
   Layer,
+  Folder
   NumberControl,
   ColorControl,
 } from '@magic-circle/client';
 
 // Create instance of Magic Circle client
-const controls = new Controls();
+const controls = new MagicCircle();
 
 controls
-  .setup(gui => {
+  .setup((gui) => {
     // Create layer
-    const layer = gui.layer('Main');
+    const layer = new Layer('Main').addTo(gui.layer);
 
     // Create sublayer
-    const sublayer = layer.layer('child');
+    const sublayer = new Layer('child').addTo(layer);
 
     // Add folder with controls
-    layer.folder('Position', [
+    const folder = new Folder('Position').addTo(subLayer);
+    folder.add([
       new NumberControl(obj3d, 'x').range(-100, 100),
       new NumberControl(obj3d, 'y').range(-100, 100),
       new NumberControl(obj3d, 'z').range(-100, 100),
@@ -100,26 +98,35 @@ controls
     // Add control without folder
     sublayer.add(new ColorControl(obj3d, 'color'));
   })
-  .loop(delta => {
+  .loop((delta) => {
     // this code will run every frame
   });
 ```
 
-## Run
+## Run locally
+
+To run a server locally the following commands can be used:
 
 ```sh
-# run with default config, loading index.html as page
-$ controls
+# run with default config (magic.config.js)
+$ magic
 
-# run with default config, loading a custom local file path
-$ controls --url dist/index.html
+# run with custom config
+$ magic --config custom.config.js
 
-# run with custom config, and loading a custom local file path
-$ controls --config controls.config.js --url dist/index.html
-
-# run with custom config, and loading a custom url path
-$ controls --config controls.config.js --url http://localhost:3000
+# if not running via a package.json make sure to use npx:
+$ npx magic
 ```
+
+## Build & Deploy
+
+It is possible to create a distribution that can be deployed to wherever (for example via CI/CD) by running the following command:
+
+```sh
+$ magic build
+```
+
+After building is completed the bundle will be available in the `magic-circle` folder,
 
 ## Settings file
 
@@ -127,87 +134,25 @@ $ controls --config controls.config.js --url http://localhost:3000
 export default {
   // Load list of plugins, first argument is the default list of plugins
   // This list can be filtered and extended with custom plugins.
-  plugins: defaultPlugins => [...defaultPlugins],
+  plugins: (defaultPlugins) => [...defaultPlugins],
 
   // Load custom controls
-  controls: defaultControls => [...defaultControls],
+  controls: (defaultControls) => [...defaultControls],
 
-  // In case you need to overwrite the standard render function.
-  // On default this will render the editor in React
-  render: client => { ... },
-
-  // Theming settings
-  theme: {
-    dark: true, //(WIP)
-    accent: 'rgb(136, 74, 255)',
-  },
-
-  // Stops maintaining state when refreshing
-  noHydrate: false,
-
-  screen: {
-    // Size of screen on load, on default will load with saved size of window
-    size: {
-      width: 1400,
-      height: 768,
-    },
-
-    // Save window size on resize
-    saveSize: true
-
-    // Enables resizing of window
-    enableResize: true,
-
-    // Enables resizing of window to be larger than the size of the screen
-    enableLargerThanScreen: false,
-
-    // When enabled prevents sleeping of display
-    preventSleep: false,
-
-    // Hide editor so only
-    hideEditor: false,
-  },
-
-  // Look at plugin folders for settings of individual plugins
-  ...
-}
+  settings: {},
+};
 ```
 
-## Examples
+## Plugins
 
-To run examples:
-
-```sh
-# copy repo and open
-git clone https://github.com/dpwoert/magic-circle.git && cd magic-circle
-
-# install dependencies
-npm run setup:dev
-
-# run examples
-npm run example [name]
-npm run example simple
-npm run example custom-plugin
-```
-
-## Core plugins
-
-**Default**:
+The plugins that are currently bundled by default:
 
 - **magic-circle/controls** ([readme](https://github.com/dpwoert/magic-circle/tree/master/plugins/controls))
-- **magic-circle/fullscreen** ([readme](https://github.com/dpwoert/magic-circle/tree/master/plugins/fullscreen))
 - **magic-circle/layers** ([readme](https://github.com/dpwoert/magic-circle/tree/master/plugins/layers))
-- **magic-circle/page-information** ([readme](https://github.com/dpwoert/magic-circle/tree/master/plugins/page-information))
 - **magic-circle/performance** ([readme](https://github.com/dpwoert/magic-circle/tree/master/plugins/performance))
 - **magic-circle/play-controls** ([readme](https://github.com/dpwoert/magic-circle/tree/master/plugins/play-controls))
 - **magic-circle/screenshots** ([readme](https://github.com/dpwoert/magic-circle/tree/master/plugins/screenshots))
 - **magic-circle/seed** ([readme](https://github.com/dpwoert/magic-circle/tree/master/plugins/seed))
-- **magic-circle/touchbar** ([readme](https://github.com/dpwoert/magic-circle/tree/master/plugins/touchbar))
-
-**Non-default:**
-
-- **magic-circle/debug** ([readme](https://github.com/dpwoert/magic-circle/tree/master/plugins/debug))
-- **magic-circle/recordings** ([readme](https://github.com/dpwoert/magic-circle/tree/master/plugins/recordings))
 
 ## Creating custom plugins
 
