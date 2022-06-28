@@ -46,4 +46,4 @@ fi
 lerna version
 
 # publish to npm
-# lerna publish from-package
+lerna publish from-package
