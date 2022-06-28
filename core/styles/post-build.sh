@@ -1,6 +1,8 @@
 mkdir -p dist/assets/fonts
 mkdir -p dist/assets/icons
 
+cp src/fonts.css dist/fonts.css
+
 cd src/assets/fonts
 
 for file in *.woff; do cp "$file" "../../../dist/assets/fonts/$file" ;done
