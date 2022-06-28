@@ -16,21 +16,15 @@
     "directory": "core/styles"
   },
   "files": [
-    "dist/*.js",
-    "dist/*.d.ts",
-    "dist/*.svg",
-    "src/*.css",
-    "src/assets/**/*.svg",
-    "src/assets/**/*.woff",
-    "src/assets/**/*.woff2"
+    "dist/*"
   ],
   "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
   "license": "MIT",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "module": "src/index.js",
   "scripts": {
     "watch": "tsc --watch",
-    "build:dev": "tsc",
+    "build:dev": "tsc && sh post-build.sh",
     "build:prod": "NODE_ENV=production tsc",
     "generate:icons": "node scripts/icons.js"
   },
