@@ -1,4 +1,4 @@
-# ![Logo of Magic Circle](https://raw.github.com/dpwoert/magic-circle/feature/v2/docs/assets/logo.png)
+# ![Logo of Magic Circle](https://raw.github.com/dpwoert/magic-circle/develop/docs/assets/logo.png)
 
 This is my attempt of creating a tool for my creative development needs. It's a multifunctional editor inspired by tools like dat.GUI, Unity and Framer. Basically Storybook for creative coding.
 
@@ -6,7 +6,7 @@ The aim of this editor is not only to allow for easier and quicker development b
 
 I named this tool **Magic Circle**, which according to Huizinga (Homo Ludens, 1938) is the place where _play_ takes place. A place whereby the rules and reality that guard normal life have been suspended ([read more here](https://uxdesign.cc/why-play-can-improve-the-interdisciplinary-collaboration-in-your-team-8d7fd1ce32f8)).
 
-![screenshot of magic circle](https://raw.github.com/dpwoert/magic-circle/feature/v2/docs/assets/screenshot.png)
+![screenshot of magic circle](https://raw.github.com/dpwoert/magic-circle/develop/docs/assets/screenshot.png)
 
 ## Online demo
 
@@ -61,8 +61,8 @@ $ npm install @magic-circle/editor -g
 
 ```js
 // ES5
-// <script type="text/javascript" src="https://unpkg.com/@magic-circle:client/dist/magic-circle.min.js"></script>
-const MagicCircle = window.magicCircle.MagicCircle;
+// <script type="text/javascript" src="https://unpkg.com/@magic-circle/client/dist/magic-circle.min.js"></script>
+const { MagicCircle, Layer, NumberControl }  = window.magicCircle.MagicCircle;
 
 // CommonJS:
 const { MagicCircle, Layer, NumberControl } = require('@magic-circle/client');
