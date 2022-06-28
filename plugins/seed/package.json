@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/seed",
-  "version": "0.1.0-alpha.2",
+  "version": "0.1.0-alpha.3",
   "description": "Magic Circle seed manangement",
   "keywords": [
     "controls",
@@ -33,11 +33,11 @@
     "build:prod": "NODE_ENV=production tsc"
   },
   "dependencies": {
-    "@magic-circle/state": "^0.1.0-alpha.2",
-    "@magic-circle/styles": "^0.1.0-alpha.2"
+    "@magic-circle/state": "^0.1.0-alpha.3",
+    "@magic-circle/styles": "^0.1.0-alpha.3"
   },
   "devDependencies": {
-    "@magic-circle/schema": "^0.1.0-alpha.2",
+    "@magic-circle/schema": "^0.1.0-alpha.3",
     "@types/react": "*",
     "@types/styled-components": "*",
     "typescript": "^4.7.3"
