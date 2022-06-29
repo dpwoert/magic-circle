@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/layers",
-  "version": "0.1.0-alpha.5",
+  "version": "0.1.0",
   "description": "Magic Circle layers",
   "keywords": [
     "controls",
@@ -31,11 +31,11 @@
     "build:prod": "NODE_ENV=production tsc"
   },
   "dependencies": {
-    "@magic-circle/state": "^0.1.0-alpha.5",
-    "@magic-circle/styles": "^0.1.0-alpha.5"
+    "@magic-circle/state": "^0.1.0",
+    "@magic-circle/styles": "^0.1.0"
   },
   "devDependencies": {
-    "@magic-circle/schema": "^0.1.0-alpha.5",
+    "@magic-circle/schema": "^0.1.0",
     "@types/react": "*",
     "typescript": "^4.7.3"
   },
