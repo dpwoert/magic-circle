@@ -1,6 +1,6 @@
 # ![Logo of Magic Circle](https://raw.github.com/dpwoert/magic-circle/develop/docs/assets/logo.png)
 
-This is my attempt of creating a tool for my creative development needs. It's a multifunctional editor inspired by tools like dat.GUI, Unity and Framer. It basically works as StorybookJS but then for creative coding. It is a very small bit of code (~8kb and with no dependencies) to add to a project, which allows you to use a fully extensible editor.
+This is my attempt of creating a tool for my creative development needs. It's a multifunctional editor inspired by tools like dat.GUI, Unity and Framer. It basically works as StorybookJS but then for creative coding. It is a very small bit of code (~5kb, no external dependencies) to add to a project but it allows you to use a fully extensible editor.
 
 The aim of this editor is not only to allow for easier and quicker development but also to promote collaboration and playfulness inside teams. Everyone should be able to play with the tech you make and add a meaningful contribution. You don't need to be a coder to improve a piece of creative tech. With this tool, people can play and share their results.
 
