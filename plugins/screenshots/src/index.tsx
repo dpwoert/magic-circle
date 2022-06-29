@@ -1,6 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-continue */
 import { get, set } from 'idb-keyval';
+import { saveAs } from 'file-saver';
 
 import {
   ButtonCollections,
@@ -351,13 +352,27 @@ export default class Screenshots implements Plugin {
   }
 
   async saveScreenshot(screenshot: ScreenshotExport) {
-    const directory = await this.getDirectory();
-
     // Get date for filename
     const now = new Date();
     const date = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
     const time = `${now.getHours()}.${now.getMinutes()}`;
     const fileName = `${date} ${time}`;
+
+    // Firefox fix
+    if ('showOpenFilePicker' in window === false) {
+      if (screenshot.type === 'png') {
+        saveAs(dataURLtoBlob(screenshot.data), `${fileName}.png`);
+      } else {
+        const blob = new Blob([screenshot.data], {
+          type: 'text/plain;charset=utf-8',
+        });
+        saveAs(blob, `${fileName}.svg`);
+      }
+
+      return;
+    }
+
+    const directory = await this.getDirectory();
 
     await this.saveScreenshotTo(directory, fileName, screenshot, true);
     this.last.set(fileName);
