@@ -35,11 +35,17 @@ export default class PluginRecordings extends Plugin {
     this.options = options;
 
     // Resize
-    this.client.element.style.position = `fixed`;
-    this.client.element.style.height = `${options.height}px`;
-    this.client.element.style.width = `${options.width}px`;
-    this.client.element.setAttribute('width', String(options.width));
-    this.client.element.setAttribute('height', String(options.height));
+    const resizeFn = this.client.resize();
+
+    if (resizeFn) {
+      resizeFn(options.width, options.height, this.client.element);
+    } else {
+      this.client.element.style.position = `fixed`;
+      this.client.element.style.height = `${options.height}px`;
+      this.client.element.style.width = `${options.width}px`;
+      this.client.element.setAttribute('width', String(options.width));
+      this.client.element.setAttribute('height', String(options.height));
+    }
 
     // Start!
     this.next();

@@ -14,6 +14,8 @@ type setupFn = (
 
 type loopFn = (delta: number) => void;
 
+type resizeFn = (width: number, height: number, element?: HTMLElement) => void;
+
 const warnOnTrigger = (name: string) => () => {
   console.warn(`The hook '${name}' is not set`);
 };
@@ -28,8 +30,9 @@ const STANDARD_PLUGINS = [
 
 export default class MagicCircle {
   private hooks: {
-    loop: loopFn;
-    setup: setupFn;
+    loop?: loopFn;
+    setup?: setupFn;
+    resize?: resizeFn;
   };
 
   private plugins: PluginBase[];
@@ -46,8 +49,9 @@ export default class MagicCircle {
   constructor(plugins: typeof Plugin[] = []) {
     // setup initial hooks
     this.hooks = {
-      setup: warnOnTrigger('setup'),
-      loop: warnOnTrigger('loop'),
+      setup: null,
+      loop: null,
+      resize: null,
     };
 
     // event binding
@@ -157,6 +161,14 @@ export default class MagicCircle {
     return this;
   }
 
+  resize(): resizeFn;
+  resize(fn: resizeFn): MagicCircle;
+
+  resize(fn?: resizeFn): unknown {
+    if (fn) this.hooks.resize = fn;
+    return fn ? this : this.hooks.resize;
+  }
+
   sync() {
     this.plugins.forEach((p) => {
       if (p.sync) {
@@ -238,7 +250,9 @@ export default class MagicCircle {
     this.lastTime = newTime;
 
     // do user action
-    this.hooks.loop(customDelta ?? delta);
+    if (this.hooks.loop) {
+      this.hooks.loop(customDelta ?? delta);
+    }
 
     // playing?
     if (this.isPlaying) {
