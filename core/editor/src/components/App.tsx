@@ -59,6 +59,11 @@ const SpacerFrame = styled.div`
 `;
 
 export default function App() {
+  const url =
+    typeof APP.config.url === 'string'
+      ? APP.config.url
+      : APP.config.url(process.env.BUILD_ENV === 'develop');
+
   return (
     <AppProvider app={APP}>
       <Container>
@@ -68,7 +73,7 @@ export default function App() {
           <Frame id="frame">
             <Iframe
               allow="display-capture"
-              src={APP.config.url}
+              src={url}
               onLoad={() => APP.setup()}
             />
             <Inner />

@@ -278,7 +278,7 @@ export type Control = {
 // }
 
 export interface Config {
-  url: string;
+  url: string | ((dev: boolean) => string);
   plugins:
     | PluginConstructor[]
     | ((defaultPlugins: PluginConstructor[]) => PluginConstructor[]);

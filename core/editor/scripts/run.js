@@ -60,7 +60,7 @@ const generateConfig = async () => {
   return tmpName;
 };
 
-const generateViteSettings = async () => {
+const generateViteSettings = async (dev) => {
   // check if config file is present, if so it needs to be build
   const configPath = await generateConfig();
   const git = getRepoInfo(process.cwd());
@@ -68,6 +68,7 @@ const generateViteSettings = async () => {
   return {
     root: path.resolve(__dirname, '../'), // base: '/foo/',
     define: {
+      'process.env.BUILD_ENV': JSON.stringify(dev ? 'develop' : 'production'),
       'process.env.GIT_BRANCH': JSON.stringify(git.branch),
       'process.env.GIT_COMMIT_MESSAGE': JSON.stringify(git.commitMessage),
       'process.env.GIT_COMMIT_SHA': JSON.stringify(git.sha),
@@ -81,7 +82,7 @@ const generateViteSettings = async () => {
 };
 
 const build = async () => {
-  const viteSettings = await generateViteSettings();
+  const viteSettings = await generateViteSettings(false);
 
   const outDirSettings = argv.outDir || argv.O;
   const outDir = outDirSettings
@@ -99,7 +100,7 @@ const build = async () => {
 };
 
 const run = async () => {
-  const viteSettings = await generateViteSettings();
+  const viteSettings = await generateViteSettings(true);
 
   await vite.build({
     ...viteSettings,
@@ -118,7 +119,7 @@ const run = async () => {
 };
 
 const serve = async () => {
-  const viteSettings = await generateViteSettings();
+  const viteSettings = await generateViteSettings(true);
 
   const server = await vite.createServer({
     ...viteSettings,

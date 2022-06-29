@@ -62,6 +62,7 @@ const SidebarLeft = () => {
         {panels.map((s, key) => (
           <Tab
             selected={key === current}
+            key={s.name}
             onClick={() => {
               APP.sidebar.set({
                 panels,
