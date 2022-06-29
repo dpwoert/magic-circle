@@ -4,6 +4,7 @@ import typescript from '@rollup/plugin-typescript';
 import dts from 'rollup-plugin-dts';
 import path from 'path';
 import visualiser from 'rollup-plugin-visualizer';
+import { terser } from 'rollup-plugin-terser';
 
 export default [
   {
@@ -18,6 +19,11 @@ export default [
         name: 'magicCircle',
         file: 'dist/magic-circle.min.js',
         format: 'umd',
+        plugins: [terser()],
+      },
+      {
+        file: 'dist/magic-circle.cjs.js',
+        format: 'cjs',
       },
       {
         file: 'dist/magic-circle.esm.js',
