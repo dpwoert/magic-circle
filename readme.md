@@ -109,7 +109,7 @@ controls
 
 ## Settings file
 
-To create your version of magic circle, a settings file is needed. To do see create a new file called `magic.config.js` in the root of your folder.
+To create your version of magic circle, a settings file is needed. To do see create a new file called `magic.config.js` in the root of your folder or run `npx magic init`.
 
 ```js
 export default {

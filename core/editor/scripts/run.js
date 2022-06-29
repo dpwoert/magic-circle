@@ -131,7 +131,21 @@ const serve = async () => {
   server.printUrls();
 };
 
-if (argv._[0] === 'build') {
+const init = async () => {
+  const templateFile = path.join(__dirname, '../src/app/template-config.js');
+  const configFile = path.join(process.cwd(), 'magic.config.js');
+
+  if (!fs.existsSync(configFile)) {
+    await fs.promises.copyFile(
+      templateFile,
+      path.join(process.cwd(), 'magic.config.js')
+    );
+  }
+};
+
+if (argv._[0] === 'init') {
+  init();
+} else if (argv._[0] === 'build') {
   build();
 } else if (argv._[0] === 'develop') {
   serve();
