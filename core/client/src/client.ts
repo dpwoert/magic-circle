@@ -8,7 +8,9 @@ import PluginScreenshot from './plugins/screenshots';
 import PluginRecordings from './plugins/recordings';
 import PluginPerformance from './plugins/performance';
 
-type setupFn = (client: MagicCircle) => void | HTMLElement;
+type setupFn = (
+  client: MagicCircle
+) => void | HTMLElement | Promise<void | HTMLElement>;
 
 type loopFn = (delta: number) => void;
 
@@ -85,13 +87,13 @@ export default class MagicCircle {
     });
   }
 
-  setupWithoutIPC() {
+  async setupWithoutIPC() {
     this.layer = new Layer('base');
     this.plugins = [];
 
     // run setup hooks
     if (this.hooks.setup) {
-      const element = this.hooks.setup(this);
+      const element = await this.hooks.setup(this);
       if (element) this.element = element;
     }
   }
@@ -108,7 +110,7 @@ export default class MagicCircle {
 
     // run setup hooks
     if (this.hooks.setup) {
-      const element = this.hooks.setup(this);
+      const element = await this.hooks.setup(this);
       if (element) this.element = element;
     }
 
