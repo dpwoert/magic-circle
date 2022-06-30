@@ -32,6 +32,8 @@ An online demo environment can be found [here](https://magic-circle.dev/).
 
 **🚀 Deploy** Build and deploy your setup so you can share it with others in your team.
 
+**🏎 Command line** Any action can be quickly accessed through the `cmd+k` command line window
+
 ## Roadmap
 
 **🐞 Bug fixes and refactoring etc** This is just a first beta version to test if things are wokring. There are obviously many bugs and things that can be improved.
