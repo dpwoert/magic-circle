@@ -11,6 +11,10 @@
     {
       "name": "simple",
       "repo": "https://github.com/dpwoert/magic-circle/tree/master/examples/simple"
+    },
+    {
+      "name": "watchers",
+      "repo": "https://github.com/dpwoert/magic-circle/tree/master/examples/watchers"
     }
   ]
 }
