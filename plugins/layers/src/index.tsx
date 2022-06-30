@@ -145,7 +145,7 @@ export default class Layers implements Plugin {
     });
 
     // send changes to FE
-    this.ipc.send('controls:set', path, newValue);
+    this.ipc.send('control:set', path, newValue);
   }
 
   resetControl(path: string) {
