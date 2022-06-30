@@ -52,11 +52,11 @@ const Iframe = styled.iframe`
   border: none;
 `;
 
-const SpacerFrame = styled.div`
-  flex: 1;
-  height: 100%;
-  background: ${COLORS.white.css};
-`;
+// const SpacerFrame = styled.div`
+//   flex: 1;
+//   height: 100%;
+//   background: ${COLORS.white.css};
+// `;
 
 export default function App() {
   const url =

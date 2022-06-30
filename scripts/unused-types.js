@@ -15,7 +15,7 @@ const test = (base) => {
       path.relative(process.cwd(), pathName)
     );
     const errors = error
-      .filter((error) => {
+      .filter(() => {
         // instead of adding exceptions here, you can also use:
         // ts-unused-exports:disable-next-line
 

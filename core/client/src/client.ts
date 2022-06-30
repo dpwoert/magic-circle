@@ -16,10 +16,6 @@ type loopFn = (delta: number) => void;
 
 type resizeFn = (width: number, height: number, element?: HTMLElement) => void;
 
-const warnOnTrigger = (name: string) => () => {
-  console.warn(`The hook '${name}' is not set`);
-};
-
 const STANDARD_PLUGINS = [
   PluginLayers,
   PluginSeed,

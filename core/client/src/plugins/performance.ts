@@ -1,6 +1,5 @@
 /* eslint-disable no-unsafe-optional-chaining */
 import type Control from '../control';
-import Paths from '../paths';
 import Plugin from '../plugin';
 
 const ensurePaint = (fn: () => void) => {

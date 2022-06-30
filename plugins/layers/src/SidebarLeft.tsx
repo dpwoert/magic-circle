@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { useStore } from '@magic-circle/state';
-import { SPACING, COLORS, TYPO, Icon } from '@magic-circle/styles';
+import { SPACING, COLORS, TYPO } from '@magic-circle/styles';
 
 import type Layers from './index';
 

@@ -27,12 +27,12 @@ import {
   Tag,
   Code,
   StreamToTv,
-  Inner,
 } from '@magic-circle/styles';
 
 import Sidebar from './Sidebar';
 import ImagePreview from './ImagePreview';
 import JsonViewer from './JsonViewer';
+import { copyGitCommit, copyJSON } from './utils';
 
 // Register icons
 registerIcon(Camera);
@@ -59,6 +59,12 @@ function dataURLtoBlob(dataUrl: string) {
     u8arr[n] = bstr.charCodeAt(n);
   }
   return new Blob([u8arr], { type: mime });
+}
+
+async function fileToDataUrl(file: any) {
+  const arr: ArrayBuffer = await file.arrayBuffer();
+  const blob = new Blob([arr], { type: 'image/png' });
+  return URL.createObjectURL(blob);
 }
 
 export type ScreenshotFile = {
@@ -160,7 +166,8 @@ export default class Screenshots implements Plugin {
           label: 'Show screenshot',
           icon: 'Photo',
           onSelect: async () => {
-            // todo
+            const file = await this.getFileFromFilename(reference.id);
+            this.previewImage(file);
           },
         },
         {
@@ -168,28 +175,32 @@ export default class Screenshots implements Plugin {
           icon: 'Information',
           shortcut: 'platform+i',
           onSelect: async () => {
-            // todo
+            const file = await this.getFileFromFilename(reference.id);
+            this.jsonViewer(file);
           },
         },
         {
           label: 'Copy JSON',
           icon: 'Code',
           onSelect: async () => {
-            // todo
+            const file = await this.getFileFromFilename(reference.id);
+            copyJSON(file);
           },
         },
         {
           label: 'Copy Git commit',
           icon: 'Code',
           onSelect: async () => {
-            // todo
+            const file = await this.getFileFromFilename(reference.id);
+            copyGitCommit(file);
           },
         },
         {
           label: 'Rename screenshot',
           icon: 'Tag',
           onSelect: async () => {
-            // todo
+            const file = await this.getFileFromFilename(reference.id);
+            this.renameScreenshot(file);
           },
         },
         {
@@ -197,7 +208,8 @@ export default class Screenshots implements Plugin {
           icon: 'Trash',
           shortcut: 'platform+backspace',
           onSelect: async () => {
-            // todo
+            const file = await this.getFileFromFilename(reference.id);
+            this.deleteScreenshot(file);
           },
         },
       ];
@@ -247,9 +259,7 @@ export default class Screenshots implements Plugin {
       const file = await entry.getFile();
 
       if (file.name.endsWith('.png')) {
-        const arr: ArrayBuffer = await file.arrayBuffer();
-        const blob = new Blob([arr], { type: 'image/png' });
-        const dataUrl = URL.createObjectURL(blob);
+        const dataUrl = await fileToDataUrl(file);
 
         // todo handle svgs
 
@@ -320,6 +330,7 @@ export default class Screenshots implements Plugin {
     const permission = await this.verifyPermission(directory, true);
 
     if (!permission) {
+      // eslint-disable-next-line
       alert('No permission to save files in folder');
     }
 
@@ -417,6 +428,7 @@ export default class Screenshots implements Plugin {
 
   async renameScreenshot(screenshot: ScreenshotFile) {
     const ext = screenshot.fileName.endsWith('.svg') ? '.svg' : '.png';
+    // eslint-disable-next-line
     const newName = prompt(
       'How would you like to rename this file?',
       screenshot.fileName.replace('.png', '').replace('.svg', '')
@@ -470,5 +482,35 @@ export default class Screenshots implements Plugin {
     }
     // The user didn't grant permission, so return false.
     return false;
+  }
+
+  async getFileFromFilename(fileName: string): Promise<ScreenshotFile | null> {
+    const directory = await this.getDirectory();
+
+    // Ensure we have permission
+    const permission = await this.verifyPermission(directory, false);
+    if (!permission) return null;
+
+    // Get file handles
+    const fileHandle = await directory.getFileHandle(fileName);
+    const dataHandle = await directory.getFileHandle(
+      fileName.replace('.png', '.json').replace('.svg', '.json')
+    );
+
+    // Read files
+    const file = await fileHandle.getFile();
+    const data = await dataHandle.getFile();
+
+    // Get contents of files
+    const dataUrl = await fileToDataUrl(file);
+    const text = await data.text();
+
+    return {
+      fileName: file.name,
+      size: file.size,
+      createdAt: file.lastModifiedDate,
+      dataUrl,
+      data: JSON.parse(text),
+    };
   }
 }

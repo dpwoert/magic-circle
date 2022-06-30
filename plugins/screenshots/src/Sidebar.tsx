@@ -348,6 +348,7 @@ const Sidebar = ({ app, screenshots }: SidebarProps) => {
       ) : (
         files.map((file) => (
           <File
+            key={file.fileName}
             file={file}
             load={screenshots.loadScreenshot}
             preview={screenshots.previewImage}

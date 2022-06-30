@@ -6,6 +6,7 @@ import { useReference } from '@magic-circle/state';
 
 import type { ScreenshotFile } from './index';
 import Screenshots from './index';
+import { copyGitCommit, copyJSON } from './utils';
 
 const Container = styled.div`
   padding-left: ${SPACING(4)}px;
@@ -33,16 +34,14 @@ const JsonViewer = ({ screenshot, screenshots }: JsonViewerProps) => {
           label: 'Copy JSON',
           icon: 'Copy',
           onClick: () => {
-            navigator.clipboard.writeText(JSON.stringify(screenshot.data));
+            copyJSON(screenshot);
           },
         },
         {
           label: 'Copy Git commit',
           icon: 'Code',
           onClick: () => {
-            navigator.clipboard.writeText(
-              `git checkout ${screenshot.data.git.sha}`
-            );
+            copyGitCommit(screenshot);
           },
           hide: !screenshot.data.git,
         },

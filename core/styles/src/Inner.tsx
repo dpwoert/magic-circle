@@ -147,7 +147,7 @@ const Inner = ({ children, breadcrumbs, buttons, onClose }: InnerProps) => {
               {buttons
                 .filter((button) => !button.hide)
                 .map((button) => (
-                  <Button onClick={button.onClick}>
+                  <Button key={button.label} onClick={button.onClick}>
                     <Icon
                       name={button.icon}
                       width={SPACING(1.5)}

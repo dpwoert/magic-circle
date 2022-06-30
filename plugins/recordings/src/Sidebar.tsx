@@ -87,7 +87,7 @@ const Sidebar = ({ recordings }: SidebarProps) => {
                 {recordings.client
                   .getSetting<number[]>('recordings.fps', [12, 24, 25, 30, 60])
                   .map((n) => (
-                    <option>{n}</option>
+                    <option key={n}>{n}</option>
                   ))}
               </Forms.Select>
             </Control.Inside>

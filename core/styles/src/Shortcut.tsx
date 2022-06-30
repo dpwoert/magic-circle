@@ -46,56 +46,56 @@ const Shortcut = ({
       {split.map((command) => {
         if (command === 'platform') {
           return (
-            <Key color={color} backgroundColor={backgroundColor}>
+            <Key key={command} color={color} backgroundColor={backgroundColor}>
               <Icon name="Command" width={SPACING(1)} height={SPACING(1)} />
             </Key>
           );
         }
         if (command === 'backspace') {
           return (
-            <Key color={color} backgroundColor={backgroundColor}>
+            <Key key={command} color={color} backgroundColor={backgroundColor}>
               <Icon name="Delete" width={SPACING(1)} height={SPACING(1)} />
             </Key>
           );
         }
         if (command === 'shift') {
           return (
-            <Key color={color} backgroundColor={backgroundColor}>
+            <Key key={command} color={color} backgroundColor={backgroundColor}>
               <Icon name="Upload" width={SPACING(1)} height={SPACING(1)} />
             </Key>
           );
         }
         if (command === 'up') {
           return (
-            <Key color={color} backgroundColor={backgroundColor}>
+            <Key key={command} color={color} backgroundColor={backgroundColor}>
               <Icon name="ArrowUp" width={SPACING(1)} height={SPACING(1)} />
             </Key>
           );
         }
         if (command === 'down') {
           return (
-            <Key color={color} backgroundColor={backgroundColor}>
+            <Key key={command} color={color} backgroundColor={backgroundColor}>
               <Icon name="ArrowDown" width={SPACING(1)} height={SPACING(1)} />
             </Key>
           );
         }
         if (command === 'left') {
           return (
-            <Key color={color} backgroundColor={backgroundColor}>
+            <Key key={command} color={color} backgroundColor={backgroundColor}>
               <Icon name="ArrowLeft" width={SPACING(1)} height={SPACING(1)} />
             </Key>
           );
         }
         if (command === 'right') {
           return (
-            <Key color={color} backgroundColor={backgroundColor}>
+            <Key key={command} color={color} backgroundColor={backgroundColor}>
               <Icon name="ArrowRight" width={SPACING(1)} height={SPACING(1)} />
             </Key>
           );
         }
 
         return (
-          <Key color={color} backgroundColor={backgroundColor}>
+          <Key key={command} color={color} backgroundColor={backgroundColor}>
             {command}
           </Key>
         );

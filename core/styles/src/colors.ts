@@ -1,9 +1,5 @@
 import colorString from 'color-string';
 
-type stringOrColor<T extends string | Color> = T extends string
-  ? string
-  : Color;
-
 const lerp = (start: number, end: number, t: number): number => {
   return start * (1 - t) + end * t;
 };

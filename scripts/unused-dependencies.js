@@ -1,5 +1,4 @@
 const depcheck = require('depcheck');
-const fs = require('fs');
 const path = require('path');
 const kleur = require('kleur');
 
@@ -13,13 +12,10 @@ const options = {
     'dist',
     'build',
     'out',
-    'proto',
     'deploy',
     'coverage',
-    'runtime',
-    'storybook-static',
+    'magic-circle',
     '*.d.ts',
-    '.storybook/*.js',
   ],
   ignoreMatches: ['@types/*', '@storybook/*'],
   parsers: {
