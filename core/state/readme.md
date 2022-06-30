@@ -1,6 +1,6 @@
 # ![Logo of Magic Circle](https://raw.github.com/dpwoert/magic-circle/develop/docs/assets/logo.png)
 
-This is my attempt of creating a tool for my creative development needs. It's a multifunctional editor inspired by tools like dat.GUI, Unity and Framer. Basically Storybook for creative coding.
+This is my attempt of creating a tool for my creative development needs. It's a multifunctional editor inspired by tools like dat.GUI, Unity and Framer. It works as StorybookJS but then for creative coding. It is a very small bit of code (~5kb, no external dependencies) to add to a project but it allows you to use a fully extensible editor.
 
 The aim of this editor is not only to allow for easier and quicker development but also to promote collaboration and playfulness inside teams. Everyone should be able to play with the tech you make and add a meaningful contribution. You don't need to be a coder to improve a piece of creative tech. With this tool, people can play and share their results.
 
@@ -35,6 +35,8 @@ An online demo environment can be found [here](https://magic-circle.dev/).
 ## Roadmap
 
 **🐞 Bug fixes and refactoring etc** This is just a first beta version to test if things are wokring. There are obviously many bugs and things that can be improved.
+
+**🎪 Better examples** The current examples are very simple and just a proof of concept.
 
 **⛓ Helpers** Helper functions for framework/liberies that make life easier. For example for React, P5 and ThreeJS.
 
@@ -109,7 +111,7 @@ controls
 
 ## Settings file
 
-To create your version of magic circle, a settings file is needed. To do see create a new file called `magic.config.js` in the root of your folder.
+To create your version of magic circle, a settings file is needed. To do see create a new file called `magic.config.js` in the root of your folder or run `npx magic init`.
 
 ```js
 export default {
