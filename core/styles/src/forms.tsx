@@ -116,6 +116,7 @@ export const Button = styled.button`
   display: flex;
   align-items: center;
   padding: 0 ${SPACING(1)}px;
+  gap: ${SPACING(0.5)}px;
   border: 1px solid ${COLORS.accent.css};
   border-radius: 5px;
   color: ${COLORS.white.css};

@@ -218,7 +218,7 @@ export default class MagicCircle {
   }
 
   stop() {
-    this.ipc.send('play', false);
+    if (this.ipc) this.ipc.send('play', false);
     this.isPlaying = false;
 
     // update plugins

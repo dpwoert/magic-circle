@@ -1,12 +1,13 @@
 import React from 'react';
 
 import type { Plugin, icons, App } from '@magic-circle/schema';
-import { registerIcon, Video, Code } from '@magic-circle/styles';
+import { registerIcon, Video, Code, Download } from '@magic-circle/styles';
 
 import Sidebar from './Sidebar';
 
 registerIcon(Video);
 registerIcon(Code);
+registerIcon(Download);
 
 export default class DemoPlugin implements Plugin {
   client: App;
