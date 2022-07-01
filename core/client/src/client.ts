@@ -274,7 +274,7 @@ export default class MagicCircle {
     });
   }
 
-  plugin(name: string) {
-    return this.plugins.find((p) => p.name === name);
+  plugin<T extends PluginBase>(name: string): T {
+    return this.plugins.find((p) => p.name === name) as T;
   }
 }
