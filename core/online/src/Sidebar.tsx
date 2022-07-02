@@ -95,6 +95,7 @@ const Sidebar = () => {
       <Bottom>
         <Forms.Button
           onClick={() => {
+            // eslint-disable-next-line
             const url = prompt(
               'What is the URL you are trying to load',
               'https://'

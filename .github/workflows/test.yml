@@ -25,6 +25,19 @@ jobs:
         run: npm run lint:types
       - name: Dependencies
         run: npm run lint:dependencies
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
+      - name: Setup repo
+        run: npm i
+      - name: Jest
+        run: npm run test
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 10

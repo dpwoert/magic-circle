@@ -1,7 +1,7 @@
 type hook = (channel: string, ...payload: any[]) => void;
 
 export class IpcBase {
-  private listeners: Record<string, hook[]>;
+  listeners: Record<string, Set<hook>>;
 
   constructor() {
     this.listeners = {};
@@ -33,16 +33,16 @@ export class IpcBase {
 
   on(channel: string, fn: hook) {
     if (!this.listeners[channel]) {
-      this.listeners[channel] = [];
+      this.listeners[channel] = new Set();
     }
 
-    this.listeners[channel].push(fn);
+    this.listeners[channel].add(fn);
   }
 
   once(channel: string, fn: hook) {
     const handler: hook = (_, ...payload: any[]) => {
       fn.apply(undefined, [channel, ...payload]);
-      this.removeListener('channel', handler);
+      this.removeListener(channel, handler);
     };
 
     this.on(channel, handler);
@@ -64,13 +64,13 @@ export class IpcBase {
     }
 
     // remove by filtering
-    this.listeners[channel] = this.listeners[channel].filter(
-      (hook) => fn === hook
-    );
+    this.listeners[channel].delete(fn);
   }
 
   removeAllListeners(channel: string) {
-    this.listeners[channel] = [];
+    if (this.listeners[channel]) {
+      this.listeners[channel].clear();
+    }
   }
 
   destroy() {
