@@ -4,6 +4,7 @@ import { useStore } from '@magic-circle/state';
 import { SPACING, COLORS, TYPO } from '@magic-circle/styles';
 
 import type Layers from './index';
+import { useEffect } from 'react';
 
 const Container = styled.div`
   display: flex;
@@ -56,6 +57,16 @@ type SidebarProps = {
 const Sidebar = ({ layers }: SidebarProps) => {
   const list = useStore(layers.flat);
   const selected = useStore(layers.selected);
+
+  useEffect(() => {
+    // If nothing is selected, try to select the first option
+    if (!selected || !list.find((l) => l.path === selected)) {
+      // Ensure we have something to select...
+      if (list.length > 0) {
+        layers.selected.set(list[0].path);
+      }
+    }
+  }, [selected, layers]);
 
   return (
     <Container>
