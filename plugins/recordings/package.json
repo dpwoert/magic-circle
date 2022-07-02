@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/recordings",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Magic Circle screen recordings",
   "keywords": [
     "controls",
@@ -34,10 +34,10 @@
     "build:prod": "NODE_ENV=production tsc"
   },
   "devDependencies": {
-    "@magic-circle/schema": "^0.1.1",
-    "@magic-circle/screenshots": "^0.1.1",
-    "@magic-circle/state": "^0.1.1",
-    "@magic-circle/styles": "^0.1.1",
+    "@magic-circle/schema": "^0.1.2",
+    "@magic-circle/screenshots": "^0.1.2",
+    "@magic-circle/state": "^0.1.2",
+    "@magic-circle/styles": "^0.1.2",
     "@types/react": "*",
     "@types/styled-components": "*",
     "typescript": "^4.7.3"
