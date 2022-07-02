@@ -15,7 +15,7 @@ type color2 = {
 };
 
 export default class ColorControl extends Control<
-  string | number[] | color | color2
+  string | number | number[] | color | color2
 > {
   type = 'color';
 

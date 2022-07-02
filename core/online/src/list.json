@@ -5,6 +5,10 @@
       "repo": "https://github.com/dpwoert/magic-circle/tree/master/examples/p5"
     },
     {
+      "name": "pixi",
+      "repo": "https://github.com/dpwoert/magic-circle/tree/master/examples/pixi"
+    },
+    {
       "name": "regl",
       "repo": "https://github.com/dpwoert/magic-circle/tree/master/examples/regl"
     },

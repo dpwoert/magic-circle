@@ -8,6 +8,10 @@ import { TYPO, COLORS, Control, Forms } from '@magic-circle/styles';
 
 import GlobalStyle from './ColorControl.style';
 
+function clamp(val: number, min: number, max: number): number {
+  return Math.max(min, Math.min(max, val));
+}
+
 const ColorValue = styled.div`
   ${TYPO.input}
   color: ${COLORS.shades.s200.css};
@@ -27,7 +31,7 @@ type colorRgb2 = {
   alpha?: number;
 };
 
-type color = string | number[] | colorRgb | colorRgb2;
+type color = string | number | number[] | colorRgb | colorRgb2;
 
 type options = {
   alpha?: boolean;
@@ -75,6 +79,8 @@ const ColorControlField = ({
 
   if (typeof value === 'string') {
     color = rgba(value);
+  } else if (typeof value === 'number') {
+    color = [(value >> 16) & 255, (value >> 8) & 255, value & 255];
   } else if (Array.isArray(value)) {
     color = value.map((v, k) =>
       k < 3 ? v * (255 / range) : v * (100 / rangeAlpha)
@@ -113,6 +119,11 @@ const ColorControlField = ({
                 newColorConverted = toRgbString(newColor, 255, 1);
               } else if (typeof value === 'string' && !alpha) {
                 newColorConverted = toHex(newColor, 255);
+              } else if (typeof value === 'number') {
+                newColorConverted =
+                  (clamp(newColor[0], 0, 255) << 16) ^
+                  (clamp(newColor[1], 0, 255) << 8) ^
+                  (clamp(newColor[2], 0, 255) << 0);
               } else if (Array.isArray(value)) {
                 newColorConverted = newColor.map((v, k) =>
                   k < 3 ? v * (range / 255) : v * (rangeAlpha / 100)

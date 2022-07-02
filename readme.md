@@ -14,7 +14,7 @@ An online demo environment can be found [here](https://magic-circle.dev/).
 
 ## Features
 
-**🎛 Custom controls** Enables you to play around with variables. All controls are configurable and adaptable to play nicely with most data sources.
+**🎛 Custom controls** Enables you to play around with variables. All controls are configurable and adaptable to play nicely with most data sources. Out of the box it comes with a good set of versatile controls for numbers, strings, booleans, functions and colours.
 
 **👁‍🗨 Layers** Layers are used to organise all these controls. This can, for example, mimic the 'scene graph'.
 

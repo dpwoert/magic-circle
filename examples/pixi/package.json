@@ -1,0 +1,44 @@
+{
+  "name": "@magic-circle/pixi",
+  "private": true,
+  "version": "0.1.2",
+  "description": "Magic Circle pixi.js example",
+  "keywords": [
+    "controls",
+    "creative coding",
+    "editor",
+    "performance",
+    "layers",
+    "editing",
+    "GUI",
+    "example",
+    "pixijs",
+    "pixi.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dpwoert/magic-circle.git",
+    "directory": "examples/pixi"
+  },
+  "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "serve": "vite",
+    "build:dev": "tsc && vite build",
+    "build:prod": "BUILD_ENV=production npm run build:dev",
+    "build:editor": "magic build",
+    "editor": "magic",
+    "editor:dev": "magic develop"
+  },
+  "devDependencies": {
+    "@magic-circle/editor": "^0.1.2",
+    "@types/three": "^0.141.0",
+    "typescript": "^4.7.3",
+    "vite": "^2.9.9"
+  },
+  "dependencies": {
+    "@magic-circle/client": "^0.1.2",
+    "pixi.js": "^6.4.2"
+  }
+}
