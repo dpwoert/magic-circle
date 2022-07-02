@@ -31,8 +31,8 @@
     "typescript": "^4.7.3"
   },
   "peerDependencies": {
-    "@magic-circle/client": "^0.1.1",
-    "react": "^18.0.0"
+    "@magic-circle/client": "*",
+    "react": "*"
   },
   "publishConfig": {
     "access": "public"
