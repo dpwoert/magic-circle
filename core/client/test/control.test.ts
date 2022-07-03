@@ -28,4 +28,18 @@ describe('core/client:control', () => {
     control.reset();
     expect(control.value).toBe('test');
   });
+
+  test('Should crash when invalid key is given', () => {
+    expect(() => {
+      const ref = {};
+      new Control<string>(ref, 'value');
+    }).toThrow();
+  });
+
+  test('Should crash when invalid object is given', () => {
+    expect(() => {
+      // @ts-ignore
+      const control = new Control<string>(null, 'value');
+    }).toThrow();
+  });
 });

@@ -12,6 +12,13 @@ export default class Control<T> {
   watchChanges?: boolean;
 
   constructor(reference: Reference, key: string) {
+    if (!reference) {
+      throw new Error('Reference object does not exist');
+    }
+    if (reference[key] === undefined) {
+      throw new Error(`Key (${key}) does not exist on referenced object`);
+    }
+
     this.reference = reference;
     this.key = key;
 
