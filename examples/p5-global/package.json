@@ -1,8 +1,8 @@
 {
-  "name": "@magic-circle/example-p5",
+  "name": "@magic-circle/example-p5-global",
   "private": true,
   "version": "0.1.2",
-  "description": "Magic Circle P5js example",
+  "description": "Magic Circle P5js (global mode) example",
   "keywords": [
     "controls",
     "creative coding",
@@ -17,7 +17,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/dpwoert/magic-circle.git",
-    "directory": "examples/p5"
+    "directory": "examples/p5-global"
   },
   "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
   "license": "MIT",
@@ -36,6 +36,8 @@
   },
   "dependencies": {
     "@magic-circle/client": "^0.1.2",
+    "@magic-circle/p5": "^0.1.2",
     "p5": "^1.4.1"
-  }
+  },
+  "exampleName": "p5.js (global mode)"
 }

@@ -17,7 +17,7 @@ fs.readdirSync(exampleFolder, { withFileTypes: true })
     const pkg = JSON.parse(pkgFile.toString('utf8'));
 
     examples.list.push({
-      name: dir.name,
+      name: pkg.exampleName || dir.name,
       repo: `${pkg.repository.url.replace('.git', '')}/tree/master/${
         pkg.repository.directory
       }`,

@@ -13,8 +13,10 @@ const createSketch = (
   const setup = (gui: MagicCircle) => {
     const sketch = factory(gui);
     sketchInstance = new p5(sketch, element);
+
+    // This stops p5 from running animation frames itself
     // @ts-expect-error
-    sketchInstance._loop = true;
+    sketchInstance._loop = false;
 
     // @ts-expect-error
     return sketchInstance.canvas;
