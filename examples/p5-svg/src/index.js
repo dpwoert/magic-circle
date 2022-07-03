@@ -1,5 +1,4 @@
-import p5 from 'p5';
-
+/* eslint-disable no-undef */
 import {
   MagicCircle,
   Layer,
@@ -23,15 +22,10 @@ const options = {
   acceleration: 0.05,
 };
 
-let system: ParticleSystem;
+let system;
 
 class Particle {
-  acceleration: p5.Vector;
-  velocity: p5.Vector;
-  position: p5.Vector;
-  lifespan: number;
-
-  constructor(position: p5.Vector) {
+  constructor(position) {
     this.acceleration = createVector(0, options.acceleration);
     this.velocity = createVector(random(-1, 1), random(-1, 0));
     this.position = position.copy();
@@ -72,9 +66,7 @@ class Particle {
 }
 
 class ParticleSystem {
-  origin: p5.Vector;
-  particles: Particle[];
-  constructor(position: p5.Vector) {
+  constructor(position) {
     this.origin = position.copy();
     this.particles = [];
   }
@@ -95,7 +87,7 @@ class ParticleSystem {
 }
 
 globalThis.setup = () => {
-  createCanvas(720, 400);
+  createCanvas(720, 400, 'svg');
   system = new ParticleSystem(createVector(720 / 2, 50));
 
   const sceneLayer = new Layer('Scene').addTo(magic.layer);

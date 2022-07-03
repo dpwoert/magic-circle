@@ -63,6 +63,8 @@ export default class MagicCircle {
     // Do setup
     if (window.location !== window.parent.location) {
       this.setupWithIPC(plugins);
+    } else {
+      this.setupWithoutIPC();
     }
   }
 
@@ -143,12 +145,6 @@ export default class MagicCircle {
 
   setup(fn: setupFn) {
     this.hooks.setup = fn;
-
-    // No IPC will load so need to do setup now
-    if (!this.ipc) {
-      this.setupWithoutIPC();
-    }
-
     return this;
   }
 

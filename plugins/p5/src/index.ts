@@ -6,7 +6,9 @@ import type { MagicCircle } from '@magic-circle/client';
 
 import draw from './draw';
 
-export default function createSketch(magicCircle: MagicCircle, p5: P5) {
+export default function createSketch(magicCircle: MagicCircle, p5?: P5) {
+  p5 = p5 || globalThis.p5;
+
   const global = (preload?: () => void) => {
     globalThis.preload = () => {
       // eslint-disable-next-line
