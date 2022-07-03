@@ -116,5 +116,11 @@ module.exports = {
         '@typescript-eslint/no-var-requires': 0,
       },
     },
+    {
+      files: ['*.test.ts'],
+      rules: {
+        'no-new': 0,
+      },
+    },
   ],
 };

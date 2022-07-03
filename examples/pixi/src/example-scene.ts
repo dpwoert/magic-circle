@@ -3,12 +3,8 @@ import * as PIXI from 'pixi.js';
 import {
   MagicCircle,
   Layer,
-  Folder,
   NumberControl,
   ColorControl,
-  ButtonControl,
-  BooleanControl,
-  TextControl,
 } from '@magic-circle/client';
 
 import asset from './asset.png';

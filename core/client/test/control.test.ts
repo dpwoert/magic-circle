@@ -39,7 +39,7 @@ describe('core/client:control', () => {
   test('Should crash when invalid object is given', () => {
     expect(() => {
       // @ts-ignore
-      const control = new Control<string>(null, 'value');
+      new Control<string>(null, 'value');
     }).toThrow();
   });
 });
