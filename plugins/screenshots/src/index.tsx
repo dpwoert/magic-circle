@@ -61,14 +61,19 @@ function dataURLtoBlob(dataUrl: string) {
   return new Blob([u8arr], { type: mime });
 }
 
-async function fileToDataUrl(file: any) {
+async function fileToDataUrl(file: any, type: string) {
   const arr: ArrayBuffer = await file.arrayBuffer();
-  const blob = new Blob([arr], { type: 'image/png' });
+  const blob = new Blob([arr], { type });
   return URL.createObjectURL(blob);
+}
+
+function getNameFromFileName(fileName: string) {
+  return fileName.replace('.png', '').replace('.svg', '').replace('.json', '');
 }
 
 export type ScreenshotFile = {
   fileName: string;
+  name: string;
   size: number;
   createdAt: Date;
   dataUrl: string;
@@ -259,12 +264,24 @@ export default class Screenshots implements Plugin {
       const file = await entry.getFile();
 
       if (file.name.endsWith('.png')) {
-        const dataUrl = await fileToDataUrl(file);
+        const dataUrl = await fileToDataUrl(file, 'image/png');
 
-        // todo handle svgs
-
-        images[file.name.replace('.png', '')] = {
+        images[getNameFromFileName(file.name)] = {
           fileName: file.name,
+          name: getNameFromFileName(file.name),
+          size: file.size,
+          createdAt: file.lastModifiedDate,
+          dataUrl,
+          data: {},
+        };
+      }
+
+      if (file.name.endsWith('.svg')) {
+        const dataUrl = await fileToDataUrl(file, 'image/svg+xml');
+
+        images[getNameFromFileName(file.name)] = {
+          fileName: file.name,
+          name: getNameFromFileName(file.name),
           size: file.size,
           createdAt: file.lastModifiedDate,
           dataUrl,
@@ -274,7 +291,7 @@ export default class Screenshots implements Plugin {
 
       // Save reference to data
       if (file.name.endsWith('.json')) {
-        jsons[file.name.replace('.json', '')] = file;
+        jsons[getNameFromFileName(file.name)] = file;
       }
     }
 
@@ -294,9 +311,9 @@ export default class Screenshots implements Plugin {
     // Add data
     files = await Promise.all(
       files
-        .filter((file) => !!jsons[file.fileName.replace('.png', '')])
+        .filter((file) => !!jsons[file.name])
         .map(async (file) => {
-          const data = jsons[file.fileName.replace('.png', '')];
+          const data = jsons[file.name];
           const text = await data.text();
           return {
             ...file,
@@ -373,11 +390,13 @@ export default class Screenshots implements Plugin {
     if ('showOpenFilePicker' in window === false) {
       if (screenshot.type === 'png') {
         saveAs(dataURLtoBlob(screenshot.data), `${fileName}.png`);
-      } else {
+      } else if (screenshot.type === 'svg') {
         const blob = new Blob([screenshot.data], {
-          type: 'text/plain;charset=utf-8',
+          type: 'image/svg+xml',
         });
         saveAs(blob, `${fileName}.svg`);
+      } else {
+        throw new Error('Unkown screenshot file type');
       }
 
       return;
@@ -410,7 +429,7 @@ export default class Screenshots implements Plugin {
   }
 
   async toggleFavourite(screenshot: ScreenshotFile) {
-    const fileName = screenshot.fileName.replace('.png', '.json');
+    const fileName = `${screenshot.name}.json`;
 
     const directory = await this.getDirectory();
     const fileHandleJSON = await directory.getFileHandle(fileName);
@@ -431,7 +450,7 @@ export default class Screenshots implements Plugin {
     // eslint-disable-next-line
     const newName = prompt(
       'How would you like to rename this file?',
-      screenshot.fileName.replace('.png', '').replace('.svg', '')
+      screenshot.name
     );
 
     if (newName) {
@@ -442,9 +461,7 @@ export default class Screenshots implements Plugin {
       if (!permission) return;
 
       const file = await directory.getFileHandle(screenshot.fileName);
-      const json = await directory.getFileHandle(
-        screenshot.fileName.replace('.svg', '.json').replace('.png', '.json')
-      );
+      const json = await directory.getFileHandle(`${screenshot.name}.json`);
       const newNameSafe = newName.endsWith(ext) ? newName : `${newName}${ext}`;
       await file.move(newNameSafe);
       await json.move(
@@ -461,9 +478,7 @@ export default class Screenshots implements Plugin {
     if (!permission) return;
 
     await directory.removeEntry(screenshot.fileName);
-    await directory.removeEntry(
-      screenshot.fileName.replace('.png', '.json').replace('.svg', '.json')
-    );
+    await directory.removeEntry(`${screenshot.name}.json`);
   }
 
   async verifyPermission(directoryHandle: any, readWrite: boolean) {
@@ -494,7 +509,7 @@ export default class Screenshots implements Plugin {
     // Get file handles
     const fileHandle = await directory.getFileHandle(fileName);
     const dataHandle = await directory.getFileHandle(
-      fileName.replace('.png', '.json').replace('.svg', '.json')
+      `${getNameFromFileName(fileName)}.json`
     );
 
     // Read files
@@ -502,11 +517,15 @@ export default class Screenshots implements Plugin {
     const data = await dataHandle.getFile();
 
     // Get contents of files
-    const dataUrl = await fileToDataUrl(file);
+    const dataUrl = await fileToDataUrl(
+      file,
+      fileName.endsWith('.svg') ? 'image/svg+xml' : 'image/png'
+    );
     const text = await data.text();
 
     return {
       fileName: file.name,
+      name: getNameFromFileName(file.name),
       size: file.size,
       createdAt: file.lastModifiedDate,
       dataUrl,

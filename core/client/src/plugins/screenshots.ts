@@ -29,7 +29,7 @@ export default class PluginScreenshot extends Plugin {
 
       if (this.client.element.tagName === 'svg') {
         resolve({
-          data: this.client.element.innerHTML,
+          data: this.client.element.outerHTML,
           type: 'svg',
         });
       }

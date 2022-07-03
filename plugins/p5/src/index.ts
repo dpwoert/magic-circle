@@ -14,11 +14,23 @@ export default function createSketch(magicCircle: MagicCircle, p5?: P5) {
       // eslint-disable-next-line
       p5.instance._draw = () => {};
 
+      // Run preload hook
       if (preload) preload();
     };
 
     const loop = (delta: number) => {
       if (p5.instance) {
+        // Set element for screenshots etc
+        if (!magicCircle.element && p5.instance.canvas) {
+          if (p5.instance.canvas && p5.instance.canvas.svg) {
+            // fix for svgs
+            magicCircle.element = p5.instance.canvas.svg;
+          } else {
+            // regular canvas
+            magicCircle.element = p5.instance.canvas;
+          }
+        }
+
         draw(p5.instance, delta);
       }
     };

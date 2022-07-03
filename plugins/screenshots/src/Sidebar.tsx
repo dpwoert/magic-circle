@@ -203,7 +203,7 @@ const File = ({
   return (
     <FileContainer>
       <FileHeader>
-        <Title>{file.fileName.replace('.png', '')}</Title>
+        <Title>{file.name}</Title>
         <Icons>
           <FileHeaderStar selected={file.data.favourite}>
             <Icon
