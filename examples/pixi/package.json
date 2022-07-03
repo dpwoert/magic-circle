@@ -40,5 +40,6 @@
   "dependencies": {
     "@magic-circle/client": "^0.1.2",
     "pixi.js": "^6.4.2"
-  }
+  },
+  "exampleName": "Pixi.js"
 }

@@ -1,11 +1,15 @@
 {
   "list": [
     {
-      "name": "p5",
+      "name": "p5.js (global mode)",
+      "repo": "https://github.com/dpwoert/magic-circle/tree/master/examples/p5-global"
+    },
+    {
+      "name": "p5.js (instance mode)",
       "repo": "https://github.com/dpwoert/magic-circle/tree/master/examples/p5"
     },
     {
-      "name": "pixi",
+      "name": "Pixi.js",
       "repo": "https://github.com/dpwoert/magic-circle/tree/master/examples/pixi"
     },
     {
