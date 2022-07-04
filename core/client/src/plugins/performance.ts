@@ -31,11 +31,12 @@ export default class PluginPerformance extends Plugin {
     this.previousPerformanceUpdate = (performance || Date).now();
     this.loadMetrics = {};
 
-    window.addEventListener('load', () => this.getLoadMetrics());
+    this.getLoadMetrics = this.getLoadMetrics.bind(this);
+    window.addEventListener('load', this.getLoadMetrics);
   }
 
   getLoadMetrics() {
-    if (performance) {
+    if (performance && performance.getEntriesByType) {
       const paint = performance.getEntriesByType('paint');
 
       this.loadMetrics = {
@@ -58,7 +59,9 @@ export default class PluginPerformance extends Plugin {
   }
 
   sync() {
-    this.client.ipc.send('performance:loading', this.loadMetrics);
+    if (this.client.ipc) {
+      this.client.ipc.send('performance:loading', this.loadMetrics);
+    }
   }
 
   startFrame() {
@@ -80,15 +83,21 @@ export default class PluginPerformance extends Plugin {
         // @ts-expect-error
         'memory' in performance ? performance.memory.usedJSHeapSize : null;
 
-      this.client.ipc.send('performance:fps', {
-        fps: (this.frames * 1000) / (time - this.previousPerformanceUpdate),
-        renderTime: time - this.startFrameTime,
-        memory: memory ? memory / 1048576 : null,
-      });
+      if (this.client.ipc) {
+        this.client.ipc.send('performance:fps', {
+          fps: (this.frames * 1000) / (time - this.previousPerformanceUpdate),
+          renderTime: time - this.startFrameTime,
+          memory: memory ? memory / 1048576 : null,
+        });
+      }
 
       // Reset
       this.frames = 0;
       this.previousPerformanceUpdate = time;
     }
+  }
+
+  destroy() {
+    window.removeEventListener('load', this.getLoadMetrics);
   }
 }

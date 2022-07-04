@@ -20,6 +20,10 @@ export default class PluginSeed extends Plugin {
     this.generate();
   }
 
+  setupWithoutIPC() {
+    this.generate();
+  }
+
   hydrate(hydration: Record<string, any>) {
     if (hydration.seed) {
       this.set(hydration.seed);

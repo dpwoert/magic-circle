@@ -119,11 +119,14 @@ export class IpcIframe extends IpcBase {
     }
 
     // setup events
-    window.addEventListener('message', (evt) => {
-      if (evt.data && evt.data.channel) {
-        this.trigger(evt.data.channel, evt.data.payload);
-      }
-    });
+    this.receiveMessage = this.receiveMessage.bind(this);
+    window.addEventListener('message', this.receiveMessage);
+  }
+
+  private receiveMessage(evt) {
+    if (evt.data && evt.data.channel) {
+      this.trigger(evt.data.channel, evt.data.payload);
+    }
   }
 
   async connect() {
@@ -151,5 +154,10 @@ export class IpcIframe extends IpcBase {
 
   send(channel: string, ...payload: any[]) {
     this.connection.postMessage({ channel, payload }, '*');
+  }
+
+  destroy() {
+    this.listeners = {};
+    window.removeEventListener('message', this.receiveMessage);
   }
 }

@@ -31,15 +31,17 @@ export default class MagicCircle {
     resize?: resizeFn;
   };
 
+  private pluginConstructors: typeof Plugin[];
   private plugins: PluginBase[];
   ipc: IpcBase;
   layer: Layer;
 
   private lastTime: number;
   private frameRequest: ReturnType<typeof requestAnimationFrame>;
+  private autoPlay: boolean;
+  private setupCalled: boolean;
   element: HTMLElement;
   isPlaying: boolean;
-  autoPlay: boolean;
   isConnected: boolean;
   setupDone: boolean;
 
@@ -56,28 +58,31 @@ export default class MagicCircle {
     this.start = this.start.bind(this);
     this.stop = this.stop.bind(this);
 
+    this.pluginConstructors = plugins;
     this.layer = new Layer('base');
     this.isPlaying = false;
     this.autoPlay = false;
     this.isConnected = false;
+    this.setupCalled = false;
     this.setupDone = false;
-
-    // Do setup
-    if (window.location !== window.parent.location) {
-      this.setupWithIPC(plugins);
-    }
   }
 
-  async setupWithIPC(plugins: typeof Plugin[] = []) {
+  private async setupWithIPC() {
+    console.log('setup with ipc');
+
     // Create plugins and IPC
-    this.plugins = [...STANDARD_PLUGINS, ...plugins].map(
+    this.plugins = [...STANDARD_PLUGINS, ...this.pluginConstructors].map(
       (Plugin) => new Plugin(this)
     );
     this.ipc = new IpcIframe();
     this.ipc.setup();
 
+    console.log('pre-connected');
+
     // start
     await this.connect();
+
+    console.log('post-connected');
 
     // listen to events
     this.ipc.on('play', (_, playing) => {
@@ -89,11 +94,17 @@ export default class MagicCircle {
     });
 
     this.setupDone = true;
+
+    // Play if wanted
+    if (this.autoPlay) {
+      this.start();
+    }
   }
 
-  async setupWithoutIPC() {
-    this.layer = new Layer('base');
-    this.plugins = [];
+  private async setupWithoutIPC() {
+    this.plugins = [...STANDARD_PLUGINS, ...this.pluginConstructors].map(
+      (Plugin) => new Plugin(this)
+    );
 
     // run setup hooks
     if (this.hooks.setup) {
@@ -101,10 +112,18 @@ export default class MagicCircle {
       if (element) this.element = element;
     }
 
+    // run plugins on start
+    this.plugins.forEach((p) => {
+      if (p.setupWithoutIPC) {
+        p.setupWithoutIPC();
+      }
+    });
+
     this.setupDone = true;
 
+    // Play if needed
     if (this.autoPlay) {
-      this.startWithoutEditor();
+      this.start();
     }
   }
 
@@ -144,21 +163,22 @@ export default class MagicCircle {
 
     // Let editor know we're ready
     this.ipc.send('ready', true);
-
-    // Play if wanted
-    if (this.autoPlay) {
-      this.start();
-    }
   }
 
-  setup(fn: setupFn) {
+  setup(fn?: setupFn) {
     if (this.setupDone) {
       throw new Error('Can not change setup function after it has already run');
     }
 
-    this.hooks.setup = fn;
+    this.setupCalled = true;
 
-    if (!this.ipc) {
+    if (fn) {
+      this.hooks.setup = fn;
+    }
+
+    if (window.location !== window.parent.location) {
+      this.setupWithIPC();
+    } else {
       this.setupWithoutIPC();
     }
 
@@ -187,25 +207,17 @@ export default class MagicCircle {
   }
 
   start() {
-    if (!this.isConnected && this.ipc) {
+    if (!this.setupCalled) {
+      throw new Error(
+        'Magic Circle setup has not been invoked, make sure to run magicCircle.setup(...)'
+      );
+    }
+
+    if (!this.setupDone) {
       this.autoPlay = true;
       return this;
     }
 
-    // No IPC so we just want to run setup and play (when possible)
-    if (!this.ipc) {
-      if (this.setupDone) {
-        this.startWithoutEditor();
-      } else {
-        this.autoPlay = true;
-
-        if (!this.hooks.setup) {
-          this.setupWithoutIPC();
-        }
-      }
-      return this;
-    }
-
     // Stop all future frames
     if (this.frameRequest) {
       cancelAnimationFrame(this.frameRequest);
@@ -215,33 +227,40 @@ export default class MagicCircle {
     this.isPlaying = true;
     this.tick();
 
-    // Send to editor
-    this.ipc.send('play', true);
+    if (this.ipc) {
+      // Send to editor
+      this.ipc.send('play', true);
 
-    // update plugins
-    this.plugins.forEach((p) => {
-      if (p.playState) {
-        p.playState(true);
-      }
-    });
+      // update plugins
+      this.plugins.forEach((p) => {
+        if (p.playState) {
+          p.playState(true);
+        }
+      });
+    }
 
     return this;
   }
 
-  private startWithoutEditor() {
-    // Stop all future frames
-    if (this.frameRequest) {
-      cancelAnimationFrame(this.frameRequest);
-    }
+  // private startWithoutEditor() {
+  //   // Stop all future frames
+  //   if (this.frameRequest) {
+  //     cancelAnimationFrame(this.frameRequest);
+  //   }
 
-    // Start and save to state
-    this.isPlaying = true;
-    this.tick();
-  }
+  //   // Start and save to state
+  //   this.isPlaying = true;
+  //   this.tick();
+  // }
 
   stop() {
     if (this.ipc) this.ipc.send('play', false);
     this.isPlaying = false;
+
+    // Stop all future frames
+    if (this.frameRequest) {
+      cancelAnimationFrame(this.frameRequest);
+    }
 
     // update plugins
     this.plugins.forEach((p) => {
@@ -286,14 +305,20 @@ export default class MagicCircle {
 
   destroy() {
     this.stop();
-    this.plugins = null;
-    this.hooks = null;
+    this.hooks = {};
+
+    if (this.ipc) {
+      this.ipc.destroy();
+    }
 
     this.plugins.forEach((p) => {
       if (p.destroy) {
         p.destroy();
       }
     });
+
+    this.plugins = [];
+    this.pluginConstructors = [];
   }
 
   plugin<T extends PluginBase>(name: string): T {

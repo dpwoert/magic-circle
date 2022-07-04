@@ -35,7 +35,7 @@ export default function createSketch(magicCircle: MagicCircle, p5?: P5) {
       }
     };
 
-    return magicCircle.loop(loop);
+    return magicCircle.setup().loop(loop);
   };
 
   const instance = (s: (p: P5) => void, element?: HTMLElement) => {
