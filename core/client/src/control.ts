@@ -54,7 +54,22 @@ export default class Control<T> {
   }
 
   setDefault() {
-    this.initialValue = this.value;
+    if (this.value === undefined) {
+      this.initialValue = undefined;
+    } else if (this.value === null) {
+      this.initialValue = null;
+    } else if (Array.isArray(this.value)) {
+      // @ts-ignore
+      this.initialValue = [...this.value];
+    } else if (typeof this.value === 'object') {
+      // @ts-ignore
+      this.initialValue = {};
+      Object.keys(this.value).forEach((k) => {
+        this.initialValue[k] = this.value[k];
+      });
+    } else {
+      this.initialValue = this.value;
+    }
   }
 
   getPath(basePath: string, paths: Paths) {

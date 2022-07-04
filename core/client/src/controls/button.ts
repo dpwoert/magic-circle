@@ -11,4 +11,8 @@ export default class ButtonControl extends Control<() => void> {
   set value(newValue: any) {
     this.reference[this.key]();
   }
+
+  setDefault(): void {
+    this.initialValue = null;
+  }
 }

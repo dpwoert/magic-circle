@@ -101,6 +101,7 @@ export default class PluginLayers extends Plugin {
 
   resetAll() {
     const { layer } = this.client;
+
     layer.forEachRecursive((control) => {
       if (control && 'value' in control && !control.blockHydrate) {
         control.reset();
