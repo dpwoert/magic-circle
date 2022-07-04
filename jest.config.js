@@ -6,4 +6,5 @@ module.exports = {
     '!**/node_modules/**',
   ],
   testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/.next/'],
+  testEnvironment: 'jsdom',
 };

@@ -41,6 +41,7 @@ export default class MagicCircle {
   isPlaying: boolean;
   autoPlay: boolean;
   isConnected: boolean;
+  setupDone: boolean;
 
   constructor(plugins: typeof Plugin[] = []) {
     // setup initial hooks
@@ -57,14 +58,13 @@ export default class MagicCircle {
 
     this.layer = new Layer('base');
     this.isPlaying = false;
-    this.autoPlay = true;
+    this.autoPlay = false;
     this.isConnected = false;
+    this.setupDone = false;
 
     // Do setup
     if (window.location !== window.parent.location) {
       this.setupWithIPC(plugins);
-    } else {
-      this.setupWithoutIPC();
     }
   }
 
@@ -87,6 +87,8 @@ export default class MagicCircle {
     this.ipc.on('refresh', () => {
       location.reload();
     });
+
+    this.setupDone = true;
   }
 
   async setupWithoutIPC() {
@@ -97,6 +99,12 @@ export default class MagicCircle {
     if (this.hooks.setup) {
       const element = await this.hooks.setup(this);
       if (element) this.element = element;
+    }
+
+    this.setupDone = true;
+
+    if (this.autoPlay) {
+      this.startWithoutEditor();
     }
   }
 
@@ -144,7 +152,16 @@ export default class MagicCircle {
   }
 
   setup(fn: setupFn) {
+    if (this.setupDone) {
+      throw new Error('Can not change setup function after it has already run');
+    }
+
     this.hooks.setup = fn;
+
+    if (!this.ipc) {
+      this.setupWithoutIPC();
+    }
+
     return this;
   }
 
@@ -175,8 +192,17 @@ export default class MagicCircle {
       return this;
     }
 
+    // No IPC so we just want to run setup and play (when possible)
     if (!this.ipc) {
-      this.startWithoutEditor();
+      if (this.setupDone) {
+        this.startWithoutEditor();
+      } else {
+        this.autoPlay = true;
+
+        if (!this.hooks.setup) {
+          this.setupWithoutIPC();
+        }
+      }
       return this;
     }
 
