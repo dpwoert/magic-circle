@@ -68,8 +68,6 @@ export default class MagicCircle {
   }
 
   private async setupWithIPC() {
-    console.log('setup with ipc');
-
     // Create plugins and IPC
     this.plugins = [...STANDARD_PLUGINS, ...this.pluginConstructors].map(
       (Plugin) => new Plugin(this)
@@ -77,12 +75,8 @@ export default class MagicCircle {
     this.ipc = new IpcIframe();
     this.ipc.setup();
 
-    console.log('pre-connected');
-
     // start
     await this.connect();
-
-    console.log('post-connected');
 
     // listen to events
     this.ipc.on('play', (_, playing) => {

@@ -113,11 +113,11 @@ describe('core/client:client', () => {
     expect(client.isPlaying).toBe(false);
 
     // @ts-ignore
-    expect(client.hooks.setup).not.toBeDefined;
+    expect(client.hooks.setup).not.toBeDefined();
     // @ts-ignore
-    expect(client.hooks.loop).not.toBeDefined;
+    expect(client.hooks.loop).not.toBeDefined();
     // @ts-ignore
-    expect(client.hooks.resize).not.toBeDefined;
+    expect(client.hooks.resize).not.toBeDefined();
     // @ts-ignore
     expect(client.plugins.length).toBe(0);
   });
