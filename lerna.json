@@ -1,6 +1,6 @@
 {
   "packages": ["core/*", "examples/*", "plugins/*"],
-  "version": "0.1.2",
+  "version": "0.1.3",
   "command": {
     "version": {
       "allowBranch": "main"
