@@ -9,6 +9,10 @@
       "repo": "https://github.com/dpwoert/magic-circle/tree/master/examples/p5"
     },
     {
+      "name": "p5.js (SVG renderer)",
+      "repo": "https://github.com/dpwoert/magic-circle/tree/master/examples/p5-global"
+    },
+    {
       "name": "Pixi.js",
       "repo": "https://github.com/dpwoert/magic-circle/tree/master/examples/pixi"
     },
