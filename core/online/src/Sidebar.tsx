@@ -74,7 +74,7 @@ const Sidebar = () => {
         <Header>Code examples</Header>
         {list.map((example) => (
           <Example
-            onClick={() => loadExample(`examples/${example.name}`)}
+            onClick={() => loadExample(`examples/${example.path}`)}
             key={example.name}
           >
             {capitalizeFirstLetter(example.name)}
