@@ -32,6 +32,9 @@ echo "cleaning repo and (re)installing dependencies"
 npm run clean
 npm install
 
+echo "Running prettier to ensure not detecting wrong changes"
+npm run prettier
+
 echo "building packages"
 npm run build:prod
 
