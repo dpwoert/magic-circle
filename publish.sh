@@ -4,15 +4,15 @@
 set -e
 set -o pipefail
 
-# ensuring project is fully linted
-npm run lint
-
 if [[ `git status --porcelain` ]]; then
   echo ""
   echo "Git changes detected, make sure you've commited all your work before"
   echo ""
   exit 1
 fi
+
+# ensuring project is fully linted
+npm run lint
 
 echo "Updating README in core plugins"
 cp readme.md core/client
