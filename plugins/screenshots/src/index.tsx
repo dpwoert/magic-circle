@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-continue */
-import { get, set } from 'idb-keyval';
+import { get as getIdb, set as setIdb } from 'idb-keyval';
 import { saveAs } from 'file-saver';
 
 import {
@@ -72,6 +72,22 @@ async function fileToDataUrl(file: any, type: string) {
 function getNameFromFileName(fileName: string) {
   return fileName.replace('.png', '').replace('.svg', '').replace('.json', '');
 }
+
+// Creates a memoization cache to prevent asking for permission over and over
+const idbCache: Record<string, any> = {};
+
+const get = async (key: string) => {
+  if (idbCache[key]) return idbCache[key];
+  const result = await getIdb(key);
+  idbCache[key] = result;
+
+  return result;
+};
+
+const set = (key: string, value: any) => {
+  delete idbCache[key];
+  return setIdb(key, value);
+};
 
 export type ScreenshotFile = {
   fileName: string;
