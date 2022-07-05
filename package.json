@@ -61,7 +61,7 @@
     "ts-unused-exports": "^8.0.0"
   },
   "lint-staged": {
-    "*.{js,jsx,json}": [
+    "{core,examples,plugins,scripts}/**/*.{js,jsx,ts,tsx}": [
       "prettier --config --write"
     ]
   }
