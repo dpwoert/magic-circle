@@ -270,8 +270,38 @@ const Sidebar = ({ app, screenshots }: SidebarProps) => {
   const [files, setFiles] = useState<ScreenshotFile[]>([]);
   const [mode, _setMode] = useState(ReadMode.RECENT);
 
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasDirectory, setHasDirectory] = useState(false);
+  const [hasAccess, setHasAccess] = useState(false);
+
   const read = useCallback(async () => {
+    console.log('read');
+
+    const dir = await screenshots.getDirectory(false);
+
+    if (!dir) {
+      setHasDirectory(false);
+      setHasAccess(false);
+      setIsLoading(false);
+      setFiles([]);
+      return;
+    }
+
+    const permission = await dir.queryPermission();
+    const hasPermission = permission === 'granted';
+
+    if (!hasPermission) {
+      setHasDirectory(true);
+      setHasAccess(false);
+      setIsLoading(false);
+      setFiles([]);
+      return;
+    }
+
     const list = await screenshots.readDirectory(mode);
+    setHasDirectory(true);
+    setHasAccess(true);
+    setIsLoading(false);
     setFiles(list);
   }, [screenshots, mode]);
 
@@ -310,6 +340,43 @@ const Sidebar = ({ app, screenshots }: SidebarProps) => {
   if ('showOpenFilePicker' in window === false) {
     return (
       <Warning text="This functionality is currently not support in Firefox" />
+    );
+  }
+
+  if (isLoading) {
+    return null;
+  }
+
+  if (!hasDirectory) {
+    return (
+      <Warning
+        text="No folder selected for storing screenshots, select one first"
+        button={{
+          icon: 'Folder',
+          label: 'Select folder',
+          onClick: async () => {
+            await screenshots.changeFolder();
+            read();
+          },
+        }}
+      />
+    );
+  }
+
+  if (!hasAccess) {
+    return (
+      <Warning
+        text="Permission needed to view a folder containing screenshots"
+        button={{
+          icon: 'CheckCircle',
+          label: 'Give access',
+          onClick: async () => {
+            const dir = await screenshots.getDirectory();
+            await screenshots.verifyPermission(dir, false);
+            read();
+          },
+        }}
+      />
     );
   }
 

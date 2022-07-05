@@ -27,6 +27,7 @@ import {
   Tag,
   Code,
   StreamToTv,
+  CheckCircle,
 } from '@magic-circle/styles';
 
 import Sidebar from './Sidebar';
@@ -47,6 +48,7 @@ registerIcon(Trash);
 registerIcon(Tag);
 registerIcon(Code);
 registerIcon(StreamToTv);
+registerIcon(CheckCircle);
 
 function dataURLtoBlob(dataUrl: string) {
   const arr = dataUrl.split(',');
@@ -234,10 +236,10 @@ export default class Screenshots implements Plugin {
     return 'directory';
   }
 
-  async getDirectory() {
+  async getDirectory(promptIfNeeded = true) {
     const stored = await get(this.directoryKey());
 
-    if (!stored) {
+    if (!stored && promptIfNeeded) {
       return this.changeFolder();
     }
 
