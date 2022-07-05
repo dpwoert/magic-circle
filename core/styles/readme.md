@@ -16,6 +16,8 @@ An online demo environment can be found [here](https://magic-circle.dev/).
 
 **🎛 Custom controls** Enables you to play around with variables. All controls are configurable and adaptable to play nicely with most data sources. Out of the box it comes with a good set of versatile controls for numbers, strings, booleans, functions and colours.
 
+**🏗 Framework agnostic** Magic Circle can work together with most frameworks and libraries, for example Three.js, p5.js, Regl and Pixi.js.
+
 **👁‍🗨 Layers** Layers are used to organise all these controls. This can, for example, mimic the 'scene graph'.
 
 **📦 Presets & Seeding** Enables you to create the exact same scene by saving the values of your controls and the _seeding_ value. When a page is reloaded, the last preset is being reapplied.
@@ -40,7 +42,7 @@ An online demo environment can be found [here](https://magic-circle.dev/).
 
 **🎪 Better examples** The current examples are very simple and just a proof of concept.
 
-**⛓ Helpers** Helper functions for framework/liberies that make life easier. For example for React, P5 and ThreeJS.
+**⛓ Helpers** Helper functions for framework/libraries that make life easier. For example for React, P5 and ThreeJS.
 
 **🎹 MIDI** Use a MIDI controller to play around with your variables.
 
@@ -68,7 +70,7 @@ $ npm install @magic-circle/editor -g
 ```js
 // ES5
 // <script type="text/javascript" src="https://unpkg.com/@magic-circle/client/dist/magic-circle.min.js"></script>
-const { MagicCircle, Layer, NumberControl }  = window.magicCircle.MagicCircle;
+const { MagicCircle, Layer, NumberControl }  = window.magicCircle;
 
 // CommonJS:
 const { MagicCircle, Layer, NumberControl } = require('@magic-circle/client');
@@ -83,9 +85,9 @@ import {
 } from '@magic-circle/client';
 
 // Create instance of Magic Circle client
-const controls = new MagicCircle();
+const magic = new MagicCircle();
 
-controls
+magic
   .setup((gui) => {
     // Create layer
     const layer = new Layer('Main').addTo(gui.layer);
