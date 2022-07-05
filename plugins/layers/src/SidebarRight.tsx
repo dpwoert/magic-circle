@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import shallowEqual from 'shallowequal';
 
 import { App, LayerExport } from '@magic-circle/schema';
 import { useStore } from '@magic-circle/state';
@@ -48,7 +49,7 @@ const Control = ({ layers, controlPath }: ControlProps) => {
         value={control.value}
         label={control.label}
         options={control.options}
-        hasChanges={control.value !== control.initialValue}
+        hasChanges={!shallowEqual(control.value, control.initialValue)}
         set={(newValue: any) => layers.setControl(control.path, newValue)}
         reset={() => layers.resetControl(control.path)}
       />

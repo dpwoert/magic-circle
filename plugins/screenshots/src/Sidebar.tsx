@@ -275,8 +275,6 @@ const Sidebar = ({ app, screenshots }: SidebarProps) => {
   const [hasAccess, setHasAccess] = useState(false);
 
   const read = useCallback(async () => {
-    console.log('read');
-
     const dir = await screenshots.getDirectory(false);
 
     if (!dir) {
