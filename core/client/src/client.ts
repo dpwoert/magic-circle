@@ -106,10 +106,7 @@ export default class MagicCircle {
     );
 
     // run setup hooks
-    if (this.hooks.setup) {
-      const element = await this.hooks.setup(this);
-      if (element) this.element = element;
-    }
+    await this.runSetupHook();
 
     this.setupDone = true;
 
@@ -117,6 +114,21 @@ export default class MagicCircle {
     if (this.autoPlay) {
       this.start();
     }
+  }
+
+  private async runSetupHook() {
+    // run setup hooks
+    if (this.hooks.setup) {
+      const element = await this.hooks.setup(this);
+      if (element) this.element = element;
+    }
+
+    // Run setup hook if needed so plugins can read element
+    this.plugins.forEach((p) => {
+      if (p.setup) {
+        p.setup(this.element);
+      }
+    });
   }
 
   async connect() {
@@ -130,10 +142,7 @@ export default class MagicCircle {
     });
 
     // run setup hooks
-    if (this.hooks.setup) {
-      const element = await this.hooks.setup(this);
-      if (element) this.element = element;
-    }
+    await this.runSetupHook();
 
     // run plugins on start
     this.plugins.forEach((p) => {
@@ -233,17 +242,6 @@ export default class MagicCircle {
 
     return this;
   }
-
-  // private startWithoutEditor() {
-  //   // Stop all future frames
-  //   if (this.frameRequest) {
-  //     cancelAnimationFrame(this.frameRequest);
-  //   }
-
-  //   // Start and save to state
-  //   this.isPlaying = true;
-  //   this.tick();
-  // }
 
   stop() {
     if (this.ipc) this.ipc.send('play', false);

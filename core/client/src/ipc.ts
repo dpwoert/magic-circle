@@ -163,5 +163,6 @@ export class IpcIframe extends IpcBase {
 }
 
 export class IpcMock extends IpcBase {
+  // eslint-disable-next-line
   send(channel: string, ...payload: any[]) {}
 }

@@ -4,6 +4,7 @@ export interface PluginBase {
   name: string;
   compatible: () => boolean;
   connect?: () => void;
+  setup?: (element: Client['element']) => void;
   playState?: (playing: boolean) => void;
   startFrame?: () => void;
   sync?: () => void;
