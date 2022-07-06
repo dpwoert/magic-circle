@@ -121,4 +121,18 @@ describe('core/client:client', () => {
     // @ts-ignore
     expect(client.plugins.length).toBe(0);
   });
+
+  test('Should be able to find a plugin', () => {
+    const client = new Client().setup();
+    const seed = client.plugin('seed');
+
+    expect(seed).toBeDefined();
+  });
+
+  test('Should not be able to find a plugin if setup has not run yet', () => {
+    const client = new Client();
+    expect(() => client.plugin('seed')).toThrow(
+      'Plugins not created yet, first run the setup() call'
+    );
+  });
 });

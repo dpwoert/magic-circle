@@ -31,7 +31,10 @@ export default class MagicCircle {
     resize?: resizeFn;
   };
 
-  private pluginConstructors: typeof Plugin[];
+  private arguments: {
+    plugins?: typeof Plugin[];
+    ipc?: typeof IpcBase;
+  };
   private plugins: PluginBase[];
   ipc: IpcBase;
   layer: Layer;
@@ -45,7 +48,7 @@ export default class MagicCircle {
   isConnected: boolean;
   setupDone: boolean;
 
-  constructor(plugins: typeof Plugin[] = []) {
+  constructor(plugins: typeof Plugin[] = [], ipc?: typeof IpcBase) {
     // setup initial hooks
     this.hooks = {
       setup: null,
@@ -58,7 +61,7 @@ export default class MagicCircle {
     this.start = this.start.bind(this);
     this.stop = this.stop.bind(this);
 
-    this.pluginConstructors = plugins;
+    this.arguments = { plugins, ipc };
     this.layer = new Layer('base');
     this.isPlaying = false;
     this.autoPlay = false;
@@ -68,11 +71,13 @@ export default class MagicCircle {
   }
 
   private async setupWithIPC() {
+    const Ipc = this.arguments.ipc || IpcIframe;
+
     // Create plugins and IPC
-    this.plugins = [...STANDARD_PLUGINS, ...this.pluginConstructors].map(
+    this.plugins = [...STANDARD_PLUGINS, ...this.arguments.plugins].map(
       (Plugin) => new Plugin(this)
     );
-    this.ipc = new IpcIframe();
+    this.ipc = new Ipc();
     this.ipc.setup();
 
     // start
@@ -96,7 +101,7 @@ export default class MagicCircle {
   }
 
   private async setupWithoutIPC() {
-    this.plugins = [...STANDARD_PLUGINS, ...this.pluginConstructors].map(
+    this.plugins = [...STANDARD_PLUGINS, ...this.arguments.plugins].map(
       (Plugin) => new Plugin(this)
     );
 
@@ -170,7 +175,7 @@ export default class MagicCircle {
       this.hooks.setup = fn;
     }
 
-    if (window.location !== window.parent.location) {
+    if (window.location !== window.parent.location || this.arguments.ipc) {
       this.setupWithIPC();
     } else {
       this.setupWithoutIPC();
@@ -312,10 +317,14 @@ export default class MagicCircle {
     });
 
     this.plugins = [];
-    this.pluginConstructors = [];
+    this.arguments = {};
   }
 
   plugin<T extends PluginBase>(name: string): T {
+    if (!this.plugins) {
+      throw new Error('Plugins not created yet, first run the setup() call');
+    }
+
     return this.plugins.find((p) => p.name === name) as T;
   }
 }

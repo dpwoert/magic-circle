@@ -161,3 +161,7 @@ export class IpcIframe extends IpcBase {
     window.removeEventListener('message', this.receiveMessage);
   }
 }
+
+export class IpcMock extends IpcBase {
+  send(channel: string, ...payload: any[]) {}
+}
