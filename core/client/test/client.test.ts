@@ -1,6 +1,9 @@
 import Client from '../src/client';
 import PluginLayers from '../src/plugins/layers';
 
+import IpcMock from './mock-ipc';
+import Plugin from './mock-plugin';
+
 describe('core/client:client', () => {
   test('Should run setup without IPC', () => {
     const setup = jest.fn();
@@ -19,8 +22,22 @@ describe('core/client:client', () => {
 
     setTimeout(() => {
       expect(loop).toBeCalled();
+      client.stop();
       done();
     }, 12);
+  });
+
+  test('Should run loop with IPC', (done) => {
+    const client = new Client([], IpcMock);
+
+    client
+      .setup()
+      .loop((delta) => {
+        expect(typeof delta).toBe('number');
+        client.stop();
+        done();
+      })
+      .start();
   });
 
   test('Should run loop without IPC and with setup function', (done) => {
@@ -134,5 +151,49 @@ describe('core/client:client', () => {
     expect(() => client.plugin('seed')).toThrow(
       'Plugins not created yet, first run the setup() call'
     );
+  });
+
+  test('Should run connect hook on start (with IPC)', (done) => {
+    const client = new Client([Plugin], IpcMock);
+    client
+      .setup()
+      .loop(() => {
+        const plugin = client.plugin('mock');
+        expect(plugin.connect).toBeCalled();
+
+        client.stop();
+        done();
+      })
+      .start();
+  });
+
+  test('Should run play hook on start (with IPC)', (done) => {
+    const client = new Client([Plugin], IpcMock);
+
+    client.setup().start();
+
+    window.setTimeout(() => {
+      const plugin = client.plugin<Plugin>('mock');
+      expect(plugin.playState).toHaveBeenLastCalledWith(true);
+
+      client.stop();
+      done();
+    }, 12);
+  });
+
+  test('Should run play hook on stop (with IPC)', (done) => {
+    const client = new Client([Plugin], IpcMock);
+
+    client.setup().start();
+
+    window.setTimeout(() => {
+      const plugin = client.plugin<Plugin>('mock');
+      expect(plugin.playState).toHaveBeenLastCalledWith(true);
+
+      client.stop();
+      expect(plugin.playState).toHaveBeenLastCalledWith(false);
+
+      done();
+    }, 12);
   });
 });
