@@ -1,7 +1,7 @@
 import PluginLayers from '../src/plugins/layers';
 import Client from '../src/client';
 import Control from '../src/control';
-import { IpcMock } from '../src/ipc';
+import IpcMock from './mock-ipc';
 
 describe('core/client:plugin/layers', () => {
   beforeEach(() => {
