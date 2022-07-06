@@ -3,8 +3,7 @@ import Client from './client';
 export interface PluginBase {
   name: string;
   compatible: () => boolean;
-  setup?: () => void;
-  setupWithoutIPC?: () => void;
+  connect?: () => void;
   playState?: (playing: boolean) => void;
   startFrame?: () => void;
   sync?: () => void;

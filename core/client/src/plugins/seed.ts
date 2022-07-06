@@ -5,7 +5,12 @@ export default class PluginSeed extends Plugin {
 
   name = 'seed';
 
-  setup() {
+  constructor(client: Plugin['client']) {
+    super(client);
+    this.generate();
+  }
+
+  connect() {
     const { ipc } = this.client;
 
     // listen to events
@@ -17,11 +22,6 @@ export default class PluginSeed extends Plugin {
       this.generate();
       this.sync();
     });
-    this.generate();
-  }
-
-  setupWithoutIPC() {
-    this.generate();
   }
 
   hydrate(hydration: Record<string, any>) {

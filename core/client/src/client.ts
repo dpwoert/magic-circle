@@ -111,13 +111,6 @@ export default class MagicCircle {
       if (element) this.element = element;
     }
 
-    // run plugins on start
-    this.plugins.forEach((p) => {
-      if (p.setupWithoutIPC) {
-        p.setupWithoutIPC();
-      }
-    });
-
     this.setupDone = true;
 
     // Play if needed
@@ -144,8 +137,8 @@ export default class MagicCircle {
 
     // run plugins on start
     this.plugins.forEach((p) => {
-      if (p.setup) {
-        p.setup();
+      if (p.connect) {
+        p.connect();
       }
     });
 

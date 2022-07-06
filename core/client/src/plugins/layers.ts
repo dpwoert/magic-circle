@@ -9,7 +9,7 @@ export default class PluginLayers extends Plugin {
 
   name = 'layers';
 
-  setup() {
+  connect() {
     const { ipc } = this.client;
 
     // listen to events

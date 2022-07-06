@@ -12,7 +12,7 @@ export default class PluginRecordings extends Plugin {
 
   options?: Recording;
 
-  setup() {
+  connect() {
     const { ipc } = this.client;
 
     // listen to events
