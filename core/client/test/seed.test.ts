@@ -1,6 +1,5 @@
 import PluginSeed from '../src/plugins/seed';
 import Client from '../src/client';
-import Control from '../src/control';
 import IpcMock from './mock-ipc';
 
 describe('core/client:plugin/seed', () => {
