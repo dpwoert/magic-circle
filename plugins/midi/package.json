@@ -17,12 +17,12 @@
     "directory": "plugins/midi"
   },
   "files": [
-    "src/*.js"
+    "dist/*.js"
   ],
   "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
   "license": "MIT",
-  "main": "src/index.js",
-  "module": "src/index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
   "scripts": {},
   "dependencies": {
     "webmidi": "^2.5.1",
