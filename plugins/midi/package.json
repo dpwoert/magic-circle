@@ -23,7 +23,11 @@
   "license": "MIT",
   "main": "dist/index.js",
   "module": "dist/index.js",
-  "scripts": {},
+  "scripts": {
+    "watch": "tsc --watch",
+    "build:dev": "tsc",
+    "build:prod": "NODE_ENV=production tsc"
+  },
   "dependencies": {
     "webmidi": "^2.5.1",
     "@magic-circle/state": "^0.1.4",
