@@ -1,4 +1,4 @@
-import { Plugin, App, LayoutHook } from '@magic-circle/schema';
+import { Plugin, App } from '@magic-circle/schema';
 
 export default class Midi implements Plugin {
   ipc: App['ipc'];

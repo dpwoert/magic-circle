@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import Mousetrap from 'mousetrap';
-import dotProp from 'dot-prop';
+import { getProperty } from 'dot-prop';
 import deepMerge from 'deepmerge';
 
 import type {
@@ -218,7 +218,7 @@ class App implements AppBase {
   }
 
   getSetting<T>(path: string, defaultValue: T): T {
-    return dotProp.get(this.config.settings, path, defaultValue);
+    return getProperty(this.config.settings, path, defaultValue);
   }
 
   setLayoutHook(name: LayoutHook, value: ReactNode) {

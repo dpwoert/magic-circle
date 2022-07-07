@@ -29,7 +29,9 @@
     "@magic-circle/state": "^0.1.4",
     "@magic-circle/styles": "^0.1.4"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@magic-circle/schema": "^0.1.4"
+  },
   "peerDependencies": {
     "react": "*",
     "styled-components": "*"
