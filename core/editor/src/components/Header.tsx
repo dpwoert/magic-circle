@@ -64,7 +64,7 @@ const Button = styled.div<ButtonProps>`
   align-items: center;
   justify-content: center;
   width: ${SPACING(3)}px;
-  height: ${SPACING(3)}px;
+  height: ${SPACING(3) - 2}px;
   border-right: 1px solid ${COLORS.accent.css};
   cursor: pointer;
   transition: background 0.2s ease;
