@@ -56,7 +56,7 @@
     "deepmerge": "^4.2.2",
     "dot-prop": "^7.2.0",
     "git-repo-info": "^2.1.1",
-    "minimist": "^1.2.0",
+    "minimist": "^1.2.6",
     "mousetrap": "^1.6.5",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
