@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
 
+import type { App } from '@magic-circle/schema';
 import {
   Metric,
   SPACING,
@@ -62,11 +63,19 @@ const capitalizeFirstLetter = (str: string) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
-const Sidebar = () => {
-  const loadExample = useCallback((url: string) => {
-    const frame: HTMLIFrameElement = document.querySelector('#frame iframe');
-    frame.src = url;
-  }, []);
+type SidebarProps = {
+  app: App;
+};
+
+const Sidebar = ({ app }: SidebarProps) => {
+  const loadExample = useCallback(
+    async (url: string) => {
+      await app.reset();
+      const frame: HTMLIFrameElement = document.querySelector('#frame iframe');
+      frame.src = url;
+    },
+    [app]
+  );
 
   return (
     <Container>

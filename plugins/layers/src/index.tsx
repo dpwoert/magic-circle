@@ -148,6 +148,13 @@ export default class Layers implements Plugin {
     this.ipc.send('control:set', path, newValue);
   }
 
+  async reset() {
+    this.layers.set([]);
+    this.flat.set([]);
+    this.selected.set(null);
+    this.lookup.reset();
+  }
+
   resetControl(path: string) {
     const store = this.lookup.get(path);
 

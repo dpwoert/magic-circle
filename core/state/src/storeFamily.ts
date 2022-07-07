@@ -7,8 +7,7 @@ export default class StoreFamily<T> {
   _keys: string[];
 
   constructor() {
-    this.cache = {};
-    this._keys = [];
+    this.reset();
   }
 
   set(fn: (id: string) => T) {
@@ -50,5 +49,10 @@ export default class StoreFamily<T> {
 
   keys(keys: string[]) {
     this._keys = keys;
+  }
+
+  reset() {
+    this.cache = {};
+    this._keys = [];
   }
 }

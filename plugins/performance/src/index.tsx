@@ -85,4 +85,11 @@ export default class Performance implements Plugin {
       ...(this.loadTimes.value || []),
     };
   }
+
+  async reset() {
+    this.loadTimes.set({});
+    this.fps.set([]);
+    this.memory.set(null);
+    this.renderTime.set([]);
+  }
 }

@@ -364,7 +364,7 @@ const Sidebar = ({ app, screenshots }: SidebarProps) => {
   if (!hasAccess) {
     return (
       <Warning
-        text="Permission needed to view a folder containing screenshots"
+        text="Permission needed to view your folder containing screenshots"
         button={{
           icon: 'CheckCircle',
           label: 'Give access',
