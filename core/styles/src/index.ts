@@ -1,5 +1,6 @@
 export { default as COLORS, Color } from './colors';
 export { default as SPACING } from './spacing';
+export { default as BREAKPOINTS } from './breakpoints';
 export { default as TYPO, rem, base as typoBase } from './typography';
 export { default as Icon, register as registerIcon } from './Icon';
 export { default as Shortcut } from './Shortcut';
