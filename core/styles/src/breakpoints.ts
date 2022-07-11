@@ -10,7 +10,6 @@ export enum Breakpoint {
   IPAD_PRO = 'ipadPro',
 }
 
-// ts-unused-exports:disable-next-line
 export const breakpointSize = {
   [Breakpoint.EXTRA_SMALL]: 640,
   [Breakpoint.SMALL]: 768,
