@@ -1,8 +1,8 @@
 # ![Logo of Magic Circle](https://raw.github.com/dpwoert/magic-circle/develop/docs/assets/logo.png)
 
-This is my attempt of creating a tool for my creative development needs. It's a multifunctional editor inspired by tools like dat.GUI, Unity and Framer. It works as StorybookJS but then for creative coding. It is a very small bit of code (~5kb, no external dependencies) to add to a project but it allows you to use a fully extensible editor.
+This is my attempt at creating a tool for my creative development needs. It's a multi-functional user interface inspired by tools like dat.GUI, Unity and Framer. Think Storybook.js, but then for creative coding. It is a very small bit of code (~5kb, no external dependencies) to add to a project but it allows you to create a fully extensible user interface with tools to play with your project.
 
-The aim of this editor is not only to allow for easier and quicker development but also to promote collaboration and playfulness inside teams. Everyone should be able to play with the tech you make and add a meaningful contribution. You don't need to be a coder to improve a piece of creative tech. With this tool, people can play and share their results.
+The aim of this tool is not only to allow for easier and quicker development but also to promote collaboration and playfulness inside teams. Everyone should be able to play with the tech you make and add a meaningful contribution. You don't need to be a coder to improve a piece of creative tech. With this tool people can play with your project and share their results.
 
 I named this tool **Magic Circle**, which according to Huizinga (Homo Ludens, 1938) is the place where _play_ takes place. A place whereby the rules and reality that guard normal life have been suspended ([read more here](https://uxdesign.cc/why-play-can-improve-the-interdisciplinary-collaboration-in-your-team-8d7fd1ce32f8)).
 
@@ -22,7 +22,7 @@ An online demo environment can be found [here](https://magic-circle.dev/).
 
 **📦 Presets & Seeding** Enables you to create the exact same scene by saving the values of your controls and the _seeding_ value. When a page is reloaded, the last preset is being reapplied.
 
-**🐥 Small client** The editor and your project run in two different frames. This means the client code is very very small since all the heavy lifting is done inside the editor frame. The editor code won't even be bundled with your project. If you load your project outside of magic circle, it will just work as-asual.
+**🐥 Small client** The UI and your project run in two different frames. This means the client code is very very small since all the heavy lifting is done inside the UI frame. The UI code won't even be bundled with your project. If you load your project outside of magic circle, it will just work as-asual.
 
 **📸 Screenshots** Take screenshots easily and in high-quality. Together with a screenshot, the current preset is saved. This means you can recreate that screenshot again. Especially since the current git state is also being stored, you can go back in time to re-create old presets.
 
@@ -138,7 +138,7 @@ export default {
 };
 ```
 
-## Run locally
+## Run UI locally
 
 To run a server locally the following commands can be used:
 
@@ -155,7 +155,7 @@ $ npx magic
 
 ## Build & Deploy
 
-It is possible to create a distribution that can be deployed to wherever (for example via CI/CD) by running the following command:
+It is possible to create a distribution of the UI that can be deployed to wherever (for example via CI/CD) by running the following command:
 
 ```sh
 $ magic build
