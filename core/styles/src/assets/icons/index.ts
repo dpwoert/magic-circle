@@ -75,6 +75,7 @@ import { ReactComponent as FlagIcon } from './flag.svg';
 import { ReactComponent as FolderMinusIcon } from './folder-minus.svg';
 import { ReactComponent as FolderPlusIcon } from './folder-plus.svg';
 import { ReactComponent as FolderIcon } from './folder.svg';
+import { ReactComponent as GithubIcon } from './github.svg';
 import { ReactComponent as GlobeIcon } from './globe.svg';
 import { ReactComponent as GridMasonryIcon } from './grid-masonry.svg';
 import { ReactComponent as GridIcon } from './grid.svg';
@@ -106,6 +107,7 @@ import { ReactComponent as Monitor2Icon } from './monitor-2.svg';
 import { ReactComponent as MonitorIcon } from './monitor.svg';
 import { ReactComponent as MoonIcon } from './moon.svg';
 import { ReactComponent as MusicIcon } from './music.svg';
+import { ReactComponent as NpmIcon } from './npm.svg';
 import { ReactComponent as PaintbucketIcon } from './paintbucket.svg';
 import { ReactComponent as PauseIcon } from './pause.svg';
 import { ReactComponent as PercentageIcon } from './percentage.svg';
@@ -408,6 +410,7 @@ export const FolderPlus: IconDefinition = {
   component: FolderPlusIcon,
 };
 export const Folder: IconDefinition = { name: 'Folder', component: FolderIcon };
+export const Github: IconDefinition = { name: 'Github', component: GithubIcon };
 export const Globe: IconDefinition = { name: 'Globe', component: GlobeIcon };
 export const GridMasonry: IconDefinition = {
   name: 'GridMasonry',
@@ -481,6 +484,7 @@ export const Monitor: IconDefinition = {
 };
 export const Moon: IconDefinition = { name: 'Moon', component: MoonIcon };
 export const Music: IconDefinition = { name: 'Music', component: MusicIcon };
+export const Npm: IconDefinition = { name: 'Npm', component: NpmIcon };
 export const Paintbucket: IconDefinition = {
   name: 'Paintbucket',
   component: PaintbucketIcon,
@@ -754,6 +758,7 @@ export type list =
   | 'FolderMinus'
   | 'FolderPlus'
   | 'Folder'
+  | 'Github'
   | 'Globe'
   | 'GridMasonry'
   | 'Grid'
@@ -785,6 +790,7 @@ export type list =
   | 'Monitor'
   | 'Moon'
   | 'Music'
+  | 'Npm'
   | 'Paintbucket'
   | 'Pause'
   | 'Percentage'
