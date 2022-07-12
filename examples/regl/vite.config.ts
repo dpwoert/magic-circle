@@ -8,6 +8,5 @@ export default defineConfig({
     strictPort: true,
   },
   plugins: [glsl()],
-  base:
-    process.env.NODE_ENV === 'production' ? '/playground/examples/regl/' : '/',
+  base: process.env.NODE_ENV === 'production' ? '/examples/regl/' : '/',
 });

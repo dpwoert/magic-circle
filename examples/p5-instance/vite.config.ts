@@ -6,8 +6,5 @@ export default defineConfig({
     port: 4000,
     strictPort: true,
   },
-  base:
-    process.env.NODE_ENV === 'production'
-      ? '/playground/examples/p5-instance/'
-      : '/',
+  base: process.env.NODE_ENV === 'production' ? '/examples/p5-instance/' : '/',
 });
