@@ -10,7 +10,7 @@ I named this tool **Magic Circle**, which according to Huizinga (Homo Ludens, 19
 
 ## Online demo
 
-An online demo environment can be found [here](https://magic-circle.dev/).
+An online demo environment can be found [here](https://playground.magic-circle.dev/).
 
 ## Features
 
