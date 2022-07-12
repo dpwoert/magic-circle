@@ -34,7 +34,7 @@
   "scripts": {
     "watch": "vite",
     "build:dev": "tsc && vite build",
-    "build:prod": "BUILD_ENV=production npm run build:dev -- --base=/playground/",
+    "build:prod": "BUILD_ENV=production npm run build:dev",
     "build:stats": "STATS=true npm run build:prod"
   },
   "dependencies": {

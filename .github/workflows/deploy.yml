@@ -33,7 +33,6 @@ jobs:
           AWS_REGION: ${{ secrets.AWS_REGION }}
           BUILD_ENV: 'production'
           SOURCE_DIR: 'core/online/magic-circle'
-          DEST_DIR: 'playground'
       # Invalidate Cloudfront
       - name: Invalidate Cloudfront
         uses: chetan/invalidate-cloudfront-action@master
