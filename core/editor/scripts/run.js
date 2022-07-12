@@ -94,6 +94,7 @@ const build = async () => {
     build: {
       outDir,
     },
+    base: argv.base,
   });
 
   console.info(`🎛  Magic Circle build to: ${outDir}`);
