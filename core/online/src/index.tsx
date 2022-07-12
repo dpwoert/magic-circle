@@ -31,6 +31,13 @@ export default class DemoPlugin implements Plugin {
           label: 'Information',
           icon: 'Information' as icons,
           onClick: () => {
+            window.open('https://magic-circle.dev', '_blank');
+          },
+        },
+        {
+          label: 'Github',
+          icon: 'Github' as icons,
+          onClick: () => {
             window.open('https://github.com/dpwoert/magic-circle', '_blank');
           },
         },

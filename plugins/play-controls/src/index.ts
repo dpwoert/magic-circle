@@ -104,6 +104,7 @@ export default class PlayControls implements Plugin {
         },
         ...(buttons.play || []),
       ],
+      ...buttons,
     };
   }
 
