@@ -89,7 +89,11 @@ const Sidebar = ({ app }: SidebarProps) => {
             {capitalizeFirstLetter(example.name)}
             <Metric.Value>
               <Link href={example.repo} target="_blank">
-                <Icon name="Github" width={SPACING(2)} height={SPACING(2)} />
+                <Icon
+                  name="Github"
+                  width={SPACING(1.5)}
+                  height={SPACING(1.5)}
+                />
               </Link>
             </Metric.Value>
           </Example>
