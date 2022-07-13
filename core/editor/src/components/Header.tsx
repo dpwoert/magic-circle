@@ -23,7 +23,7 @@ const Part = styled.div`
   align-items: center;
 `;
 
-const Logo = styled.div`
+const Logo = styled.a`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -129,7 +129,11 @@ const Header = () => {
   return (
     <Container>
       <Part>
-        <Logo />
+        <Logo
+          href="https://magic-circle.dev"
+          target="_blank"
+          rel="noreferrer"
+        />
         <ButtonCollections>
           {Object.keys(buttons)
             .sort((a: string, b: string) => {
