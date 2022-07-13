@@ -1,7 +1,7 @@
 import type Control from './control';
 import Paths from './paths';
 
-type Child = Layer | Control<any>;
+export type Child = Layer | Control<any>;
 
 export default class Layer {
   name: string;

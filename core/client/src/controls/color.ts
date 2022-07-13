@@ -25,7 +25,7 @@ export default class ColorControl extends Control<
     return this;
   }
 
-  alpha(alpha: boolean) {
+  alpha(alpha = true) {
     this.options.alpha = alpha;
     return this;
   }

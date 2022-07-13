@@ -1,5 +1,5 @@
 import type { default as Plugin, PluginBase } from './plugin';
-import Layer from './layer';
+import Layer, { Child } from './layer';
 import { IpcBase, IpcIframe } from './ipc';
 
 import PluginLayers from './plugins/layers';
@@ -317,5 +317,9 @@ export default class MagicCircle {
     }
 
     return this.plugins.find((p) => p.name === name) as T;
+  }
+
+  add(layer: Child | Child[]) {
+    this.layer.add(layer);
   }
 }

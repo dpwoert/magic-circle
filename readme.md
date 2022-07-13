@@ -12,11 +12,19 @@ I named this tool **Magic Circle**, which according to Huizinga (Homo Ludens, 19
 
 An online demo environment can be found [here](https://playground.magic-circle.dev/).
 
+## Works with
+
+Magic Circle is framework and library agnostic and can thus work together with for example:
+
+- Three.js
+- p5.js
+- Regl
+- Pixi.js
+- React
+
 ## Features
 
 **🎛 Custom controls** Enables you to play around with variables. All controls are configurable and adaptable to play nicely with most data sources. Out of the box it comes with a good set of versatile controls for numbers, strings, booleans, functions and colours.
-
-**🏗 Framework agnostic** Magic Circle can work together with most frameworks and libraries, for example Three.js, p5.js, Regl and Pixi.js.
 
 **👁‍🗨 Layers** Layers are used to organise all these controls. This can, for example, mimic the 'scene graph'.
 
@@ -34,8 +42,6 @@ An online demo environment can be found [here](https://playground.magic-circle.d
 
 **🚀 Deploy** Build and deploy your setup so you can share it with others in your team.
 
-**🏎 Command line** Any action can be quickly accessed through the `cmd+k` command line window
-
 ## Roadmap
 
 **🐞 Bug fixes and refactoring etc** This is just a first beta version to test if things are wokring. There are obviously many bugs and things that can be improved.
@@ -50,118 +56,11 @@ An online demo environment can be found [here](https://playground.magic-circle.d
 
 **⏰ Animation timeline** Create an animation timeline where variables can be key-framed.
 
-## Install
+## Documentation
 
-Install the packages needed locally by using npm or yarn.
-
-```sh
-$ npm install @magic-circle/client --save
-$ npm install @magic-circle/editor --save-dev
-```
-
-If you're not using a package manager for your project it is also possible to install the shell to run the editor globally.
-
-```sh
-$ npm install @magic-circle/editor -g
-```
-
-## Load front-end
-
-```js
-// ES5
-// <script type="text/javascript" src="https://unpkg.com/@magic-circle/client/dist/magic-circle.min.js"></script>
-const { MagicCircle, Layer, NumberControl }  = window.magicCircle;
-
-// CommonJS:
-const { MagicCircle, Layer, NumberControl } = require('@magic-circle/client');
-
-// ES6:
-import {
-  MagicCircle,
-  Layer,
-  Folder
-  NumberControl,
-  ColorControl,
-} from '@magic-circle/client';
-
-// Create instance of Magic Circle client
-const magic = new MagicCircle();
-
-magic
-  .setup((gui) => {
-    // Create layer
-    const layer = new Layer('Main').addTo(gui.layer);
-
-    // Create sublayer
-    const sublayer = new Layer('child').addTo(layer);
-
-    // Add folder with controls
-    const folder = new Folder('Position').addTo(subLayer);
-    folder.add([
-      new NumberControl(obj3d, 'x').range(-100, 100),
-      new NumberControl(obj3d, 'y').range(-100, 100),
-      new NumberControl(obj3d, 'z').range(-100, 100),
-    ]);
-
-    // Add control without folder
-    sublayer.add(new ColorControl(obj3d, 'color'));
-  })
-  .loop((delta) => {
-    // this code will run every frame
-  })
-  // auto start
-  .start();
-```
-
-## Settings file
-
-To create your version of magic circle, a settings file is needed. To do see create a new file called `magic.config.js` in the root of your folder or run `npx magic init`.
-
-```js
-export default {
-  // The url to load
-  url: 'http://localhost:4000',
-
-  // Url dependendent on building locally (dev = true) or build for deployment
-  url: (dev) =>
-    dev ? 'http://localhost:4000' : 'https://website.com/visualistion',
-
-  // Load list of plugins, first argument is the default list of plugins
-  // This list can be filtered and extended with custom plugins.
-  plugins: (defaultPlugins) => [...defaultPlugins],
-
-  // Load custom controls
-  controls: (defaultControls) => [...defaultControls],
-
-  // Read plugin pages for specific settings
-  settings: {},
-};
-```
-
-## Run UI locally
-
-To run a server locally the following commands can be used:
-
-```sh
-# run with default config (magic.config.js)
-$ magic
-
-# run with custom config
-$ magic --config custom.config.js
-
-# if not running via a package.json make sure to use npx:
-$ npx magic
-```
-
-## Build & Deploy
-
-It is possible to create a distribution of the UI that can be deployed to wherever (for example via CI/CD) by running the following command:
-
-```sh
-$ magic build
-```
-
-After building is completed the bundle will be available in the `magic-circle` folder,
+- [Quick start (install and launch)](https://github.com/dpwoert/magic-circle/blob/main/docs/01-quick-start.md)
+- [Controls](<(https://github.com/dpwoert/magic-circle/blob/main/docs/02-controls.md)>)
+- [Creating custom plugins](<(https://github.com/dpwoert/magic-circle/blob/main/docs/03-create-plugins.md)>)
 
 ## Plugins
 
@@ -173,7 +72,3 @@ The plugins that are currently bundled by default:
 - **magic-circle/play-controls** ([readme](https://github.com/dpwoert/magic-circle/tree/master/plugins/play-controls))
 - **magic-circle/screenshots** ([readme](https://github.com/dpwoert/magic-circle/tree/master/plugins/screenshots))
 - **magic-circle/seed** ([readme](https://github.com/dpwoert/magic-circle/tree/master/plugins/seed))
-
-## Creating custom plugins
-
-See `docs/creating-plugin.md`
