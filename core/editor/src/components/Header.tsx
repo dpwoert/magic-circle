@@ -105,25 +105,49 @@ const Header = () => {
       <Part>
         <Logo />
         <ButtonCollections>
-          {Object.keys(buttons).map((key) => (
-            <ButtonCollection key={key}>
-              {buttons[key]
-                .filter((button) => !button.hide)
-                .map((button) => (
-                  <Button
-                    disabled={button.disabled}
-                    key={button.label}
-                    onClick={() => button.onClick()}
-                  >
-                    <Icon
-                      name={button.icon}
-                      width={SPACING(2)}
-                      height={SPACING(2)}
-                    />
-                  </Button>
-                ))}
-            </ButtonCollection>
-          ))}
+          {Object.keys(buttons)
+            .sort((a: string, b: string) => {
+              const valueA = buttons[a];
+
+              if (valueA.after) {
+                if (Array.isArray(valueA.after) && valueA.after.includes(b)) {
+                  return 1;
+                }
+                if (!Array.isArray(valueA.after) && valueA.after === b) {
+                  return 1;
+                }
+              }
+
+              if (valueA.before) {
+                if (Array.isArray(valueA.before) && valueA.before.includes(b)) {
+                  return -1;
+                }
+                if (!Array.isArray(valueA.before) && valueA.before === b) {
+                  return -1;
+                }
+              }
+
+              return 0;
+            })
+            .map((key) => (
+              <ButtonCollection key={key}>
+                {buttons[key].list
+                  .filter((button) => !button.hide)
+                  .map((button) => (
+                    <Button
+                      disabled={button.disabled}
+                      key={button.label}
+                      onClick={() => button.onClick()}
+                    >
+                      <Icon
+                        name={button.icon}
+                        width={SPACING(2)}
+                        height={SPACING(2)}
+                      />
+                    </Button>
+                  ))}
+              </ButtonCollection>
+            ))}
         </ButtonCollections>
       </Part>
       <Title>{title}</Title>

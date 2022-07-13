@@ -42,7 +42,7 @@ export default class PlayControls implements Plugin {
     this.playing = play;
 
     const buttons = this.client.buttons.value;
-    const playBtns = buttons.play.map((b): Button => {
+    const playBtns = buttons.play.list.map((b): Button => {
       if (b.label !== 'play') return b;
 
       return {
@@ -57,7 +57,10 @@ export default class PlayControls implements Plugin {
 
     this.client.buttons.set({
       ...buttons,
-      play: playBtns,
+      play: {
+        ...buttons.play,
+        list: playBtns,
+      },
     });
   }
 
@@ -68,42 +71,44 @@ export default class PlayControls implements Plugin {
 
   buttons(buttons: ButtonCollections): ButtonCollections {
     return {
-      play: [
-        {
-          label: 'play',
-          icon: 'Play',
-          onClick: () => {
-            this.play();
+      play: {
+        list: [
+          {
+            label: 'play',
+            icon: 'Play',
+            onClick: () => {
+              this.play();
+            },
           },
-        },
-        {
-          label: 'reload',
-          icon: 'Refresh',
-          onClick: () => {
-            this.refresh();
+          {
+            label: 'reload',
+            icon: 'Refresh',
+            onClick: () => {
+              this.refresh();
+            },
           },
-        },
-        {
-          label: 'reset',
-          icon: 'Rewind',
-          onClick: () => {
-            this.client.reset();
+          {
+            label: 'reset',
+            icon: 'Rewind',
+            onClick: () => {
+              this.client.reset();
+            },
           },
-        },
-        {
-          label: 'fullscreen',
-          icon: 'Maximize',
-          onClick: () => {
-            const element = document.querySelector('#frame iframe');
+          {
+            label: 'fullscreen',
+            icon: 'Maximize',
+            onClick: () => {
+              const element = document.querySelector('#frame iframe');
 
-            if (element) {
-              element.requestFullscreen();
-            }
+              if (element) {
+                element.requestFullscreen();
+              }
+            },
+            hide: !this.client.getSetting('playControls.fullscreen', false),
           },
-          hide: !this.client.getSetting('playControls.fullscreen', false),
-        },
-        ...(buttons.play || []),
-      ],
+          ...(buttons.play?.list || []),
+        ],
+      },
       ...buttons,
     };
   }

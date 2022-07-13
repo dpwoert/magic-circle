@@ -182,7 +182,9 @@ export type icons =
   | 'WifiNoConnection'
   | 'Wifi'
   | 'ZoomIn'
-  | 'ZoomOut';
+  | 'ZoomOut'
+  | 'Npm'
+  | 'Github';
 
 export type StoreHook<T> = (newValue: T) => void;
 
@@ -216,9 +218,13 @@ export type Button = {
   disabled?: boolean;
 };
 
-export type Buttons = Button[];
+export type ButtonCollection = {
+  before?: string | string[];
+  after?: string | string[];
+  list: Button[];
+};
 
-export type ButtonCollections = Record<string, Buttons>;
+export type ButtonCollections = Record<string, ButtonCollection>;
 
 export type CommandLineReference = {
   type: string;

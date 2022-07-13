@@ -33,15 +33,18 @@ export default class DemoPlugin implements Plugin {
   buttons(buttons: ButtonCollections) {
     return {
       ...buttons,
-      website: [
-        {
-          label: 'Information',
-          icon: 'Information' as icons,
-          onClick: () => {
-            window.open('https://magic-circle.dev', '_blank');
+      website: {
+        after: 'screenshots',
+        list: [
+          {
+            label: 'Information',
+            icon: 'Information' as icons,
+            onClick: () => {
+              window.open('https://magic-circle.dev', '_blank');
+            },
           },
-        },
-      ],
+        ],
+      },
     };
   }
 
