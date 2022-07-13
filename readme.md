@@ -30,9 +30,10 @@ Magic Circle is framework and library agnostic and can thus work together with f
 
 **📦 Presets & Seeding** Enables you to create the exact same scene by saving the values of your controls and the _seeding_ value. When a page is reloaded, the last preset is being reapplied.
 
-**🐥 Small client** The UI and your project run in two different frames. This means the client code is very very small since all the heavy lifting is done inside the UI frame. The UI code won't even be bundled with your project. If you load your project outside of magic circle, it will just work as-asual.
+**🐥 Small client** The UI embeds your project into a frame. This means the client code
+(the code you add to your project) is very very small (~5kb) since all the heavy lifting is done inside the UI which isn't part of your project files. You don't have to fear that Magic Circle will get bundled into your project. If you load your project outside of Magic Circle, it will just work as-asual.
 
-**📸 Screenshots** Take screenshots easily and in high-quality. Together with a screenshot, the current preset is saved. This means you can recreate that screenshot again. Especially since the current git state is also being stored, you can go back in time to re-create old presets.
+**📸 Screenshots** Take screenshots easily and in high-quality. The current state of your variables is saved with a screenshot as a preset. This means you can recreate that screenshot again. Especially since the current git state is also being stored, you can go back in time to re-create old presets.
 
 **🎥 Screen recordings** Render your content into a screen recording by exporting it frame by frame. Enabling you to export videos in high quality without loss of quality like for example a manual screen recording would.
 
