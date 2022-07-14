@@ -1,7 +1,7 @@
 {
   "name": "@magic-circle/example-p5-global",
   "private": true,
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Magic Circle P5js (global mode) example",
   "keywords": [
     "controls",
@@ -29,14 +29,14 @@
     "editor": "magic"
   },
   "devDependencies": {
-    "@magic-circle/editor": "^0.1.4",
+    "@magic-circle/editor": "^0.1.5",
     "@types/p5": "^1.4.2",
     "typescript": "^4.7.3",
     "vite": "^2.9.9"
   },
   "dependencies": {
-    "@magic-circle/client": "^0.1.4",
-    "@magic-circle/p5": "^0.1.4",
+    "@magic-circle/client": "^0.1.5",
+    "@magic-circle/p5": "^0.1.5",
     "p5": "^1.4.1"
   },
   "exampleName": "p5.js (global mode)"
