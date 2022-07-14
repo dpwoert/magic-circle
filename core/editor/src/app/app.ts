@@ -136,6 +136,11 @@ class App implements AppBase {
     this.ipc.removeAllListeners('page-information');
     this.ipc.removeAllListeners('connect');
 
+    // run hooks
+    this.plugins.forEach((p) => {
+      if (p.preConnect) p.preConnect();
+    });
+
     await this.ipc.connect();
 
     // run hooks

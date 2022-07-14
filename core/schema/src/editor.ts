@@ -249,6 +249,7 @@ export interface Plugin {
   name: string;
   setup: (app: App) => Promise<void>;
   connect?: () => void;
+  preConnect?: () => void;
   hydrate?: () => any;
   ready?: () => void;
   sidebar?: () => SidebarOpts;

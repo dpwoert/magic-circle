@@ -155,6 +155,10 @@ export default class Layers implements Plugin {
     this.lookup.reset();
   }
 
+  preConnect() {
+    this.reset();
+  }
+
   resetControl(path: string) {
     const store = this.lookup.get(path);
 

@@ -22,7 +22,7 @@ export default class PluginPerformance extends Plugin {
     loadingTime?: number;
   };
 
-  name = 'layers';
+  name = 'performance';
 
   constructor(client: Plugin['client']) {
     super(client);
