@@ -1,5 +1,7 @@
 # ![Logo of Magic Circle](https://raw.github.com/dpwoert/magic-circle/develop/docs/assets/logo.png)
 
+We all need extra tooling while developing creative coding projects. It's always hard and time consuming to make our own UI for every project. Magic Circle allows you to quickly add an interface with an extensive tool set to your project quickly.
+
 This is my attempt at creating a tool for my creative development needs. It's a multi-functional user interface inspired by tools like dat.GUI, Unity and Framer. Think Storybook.js, but then for creative coding. It is a very small bit of code (~5kb, no external dependencies) to add to a project but it allows you to create a fully extensible user interface with tools to play with your project.
 
 The aim of this tool is not only to allow for easier and quicker development but also to promote collaboration and playfulness inside teams. Everyone should be able to play with the tech you make and add a meaningful contribution. You don't need to be a coder to improve a piece of creative tech. With this tool people can play with your project and share their results.
@@ -22,26 +24,24 @@ Magic Circle is framework and library agnostic and can thus work together with f
 - Pixi.js
 - React
 
-## Features
+## Why use Magic Circle?
 
-**🎛 Custom controls** Enables you to play around with variables. All controls are configurable and adaptable to play nicely with most data sources. Out of the box it comes with a good set of versatile controls for numbers, strings, booleans, functions and colours.
+**🎛 Control your variables** Enables you to play around with variables. All controls are configurable and adaptable to play nicely with most data sources. Out of the box it comes with a good set of versatile controls for numbers, strings, booleans, functions and colours.
 
-**👁‍🗨 Layers** Layers are used to organise all these controls. This can, for example, mimic the 'scene graph'.
-
-**📦 Presets & Seeding** Enables you to create the exact same scene by saving the values of your controls and the _seeding_ value. When a page is reloaded, the last preset is being reapplied.
+**📦 Completely reproducable presets** Nothing worse then losing old variants of your project since you know longer know how to get it back in the same way. Magic circle enables you to create the exact same scene by saving the values of your variables, _seeding_ value and your git state. You can save a preset and always go back in time and exactly recreate it.
 
 **🐥 Small client** The UI embeds your project into a frame. This means the client code
 (the code you add to your project) is very very small (~5kb) since all the heavy lifting is done inside the UI which isn't part of your project files. You don't have to fear that Magic Circle will get bundled into your project. If you load your project outside of Magic Circle, it will just work as-asual.
 
 **📸 Screenshots** Take screenshots easily and in high-quality. The current state of your variables is saved with a screenshot as a preset. This means you can recreate that screenshot again. Especially since the current git state is also being stored, you can go back in time to re-create old presets.
 
-**🎥 Screen recordings** Render your content into a screen recording by exporting it frame by frame. Enabling you to export videos in high quality without loss of quality like for example a manual screen recording would.
+**🎥 Recordings** Render your content into a screen recording by exporting it frame by frame without lag. Enabling you to export videos in high quality without loss of quality or jankiness like for example a manual screen recording would.
 
-**⏲ Performance measurement** Measures and displays performance metrics like Frames Per Second and memory usage.
+**⏲ Performance measurements** Measures and displays performance metrics like Frames Per Second and memory usage so you always know if you're project runs smoothly.
 
-**🛠 Custom plugins** Since all projects are unique, some projects need custom plugins that might not exists yet. Make your own if needed.
+**🛠 Custom plugins** Since all projects are unique, some projects need custom plugins that might not exists yet. Make your own if needed, or use community plugins.
 
-**🚀 Deploy** Build and deploy your setup so you can share it with others in your team.
+**🚀 Deploy** Build and deploy your setup so you can share it with others in your team or the outside world.
 
 ## Roadmap
 
@@ -53,7 +53,7 @@ Magic Circle is framework and library agnostic and can thus work together with f
 
 **🎹 MIDI** Use a MIDI controller to play around with your variables.
 
-**🎛 More advanced custom controls** More controls types, like setting images for textures and easing controls.
+**🎛 More advanced custom controls** More control types, like setting images for textures and easing controls.
 
 **⏰ Animation timeline** Create an animation timeline where variables can be key-framed.
 
