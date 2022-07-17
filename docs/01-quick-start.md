@@ -39,7 +39,7 @@ const { MagicCircle, Layer, NumberControl } = require('@magic-circle/client');
 import {
   MagicCircle,
   Layer,
-  Folder
+  Folder,
   NumberControl,
   ColorControl,
 } from '@magic-circle/client';
