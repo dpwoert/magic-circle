@@ -7,6 +7,7 @@ import PluginSeed from './plugins/seed';
 import PluginScreenshot from './plugins/screenshots';
 import PluginRecordings from './plugins/recordings';
 import PluginPerformance from './plugins/performance';
+import PluginTimeline from './plugins/timeline';
 
 type setupFn = (
   client: MagicCircle
@@ -22,6 +23,7 @@ const STANDARD_PLUGINS = [
   PluginPerformance,
   PluginScreenshot,
   PluginRecordings,
+  PluginTimeline,
 ];
 
 export default class MagicCircle {

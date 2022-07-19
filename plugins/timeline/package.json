@@ -1,0 +1,51 @@
+{
+  "name": "@magic-circle/timeline",
+  "version": "0.1.5",
+  "description": "Magic Circle timeline",
+  "keywords": [
+    "controls",
+    "creative coding",
+    "editor",
+    "timeline",
+    "animation",
+    "scene",
+    "editing",
+    "GUI"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dpwoert/magic-circle.git",
+    "directory": "plugins/timelime"
+  },
+  "files": [
+    "dist/*.js",
+    "dist/*.jsx",
+    "dist/*.d.ts"
+  ],
+  "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
+  "license": "MIT",
+  "main": "dist/index.jsx",
+  "module": "dist/index.jsx",
+  "scripts": {
+    "watch": "tsc --watch",
+    "build:dev": "tsc",
+    "build:prod": "NODE_ENV=production tsc"
+  },
+  "dependencies": {
+    "@magic-circle/state": "^0.1.5",
+    "@magic-circle/styles": "^0.1.5",
+    "virtual-scroll": "^2.2.1"
+  },
+  "devDependencies": {
+    "@magic-circle/schema": "^0.1.5",
+    "@types/react": "*",
+    "typescript": "^4.7.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "styled-components": "*"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
