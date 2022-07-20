@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import VirtualScroll from 'virtual-scroll';
 
 import { SPACING, COLORS } from '@magic-circle/styles';
+import { useStore } from '@magic-circle/state';
 
 import type Timeline from './index';
 import type { Scene, ScenePoint } from './index';
-import { useStore } from '@magic-circle/state';
+import { lerp, formatTime } from './utils';
 
 const MIN_TICK_SIZE = 6;
 
@@ -18,23 +19,13 @@ const Container = styled.canvas`
   height: 100%;
 `;
 
-function lerp(t: number, start: number, end: number): number {
-  return start * (1 - t) + end * t;
-}
-
-function addDigit(number: number): string {
-  return number < 10 ? `0${number}` : String(number);
-}
-
-function formatTime(t: number) {
-  const ms = t % 1000;
-  let s = (t - ms) / 1000;
-  const secs = s % 60;
-  s = (s - secs) / 60;
-  const mins = s % 60;
-
-  return `${addDigit(mins)}:${addDigit(secs)}:${addDigit(ms)}`;
-}
+type Hotspot = {
+  x: number;
+  y: number;
+  radius: number;
+  onClick?: () => void;
+  dblClick?: () => void;
+};
 
 class CanvasDisplay {
   element: HTMLCanvasElement;
@@ -48,6 +39,7 @@ class CanvasDisplay {
     dest: number;
     curr: number;
   };
+  hotspots: Hotspot[];
   scene: Scene;
   zoom: number;
   playhead: number;
@@ -78,6 +70,11 @@ class CanvasDisplay {
       const box = this.element.getBoundingClientRect();
       this.click(evt.x - box.x, evt.y - box.y);
     });
+    this.element.addEventListener('dblclick', (evt) => {
+      const box = this.element.getBoundingClientRect();
+      this.dblClick(evt.x - box.x, evt.y - box.y);
+      console.log('double');
+    });
   }
 
   resize() {
@@ -91,6 +88,10 @@ class CanvasDisplay {
 
   px(px: number) {
     return px * this.pixelRatio;
+  }
+
+  pxInvert(px: number) {
+    return px / this.pixelRatio;
   }
 
   position(time: number) {
@@ -135,11 +136,36 @@ class CanvasDisplay {
     this.render();
   }
 
+  hotspot(x: number, y: number): Hotspot {
+    return this.hotspots.find((spot) => {
+      const dist = Math.sqrt(Math.pow(x - spot.x, 2) + Math.pow(y - spot.y, 2));
+      return dist < spot.radius;
+    });
+  }
+
   click(x: number, y: number) {
-    console.log('click', { x, y });
     if (y < SPACING(3)) {
       const time = this.invert(x);
       this.timeline.playhead.set(time);
+    } else {
+      const hotspot = this.hotspot(x, y);
+
+      if (hotspot && hotspot.onClick) {
+        hotspot.onClick();
+      } else {
+        this.timeline.selected.set(null);
+        this.render();
+      }
+    }
+  }
+
+  dblClick(x: number, y: number) {
+    const hotspot = this.hotspot(x, y);
+
+    console.log({ hotspot });
+
+    if (hotspot && hotspot.dblClick) {
+      hotspot.dblClick();
     }
   }
 
@@ -253,7 +279,13 @@ class CanvasDisplay {
 
     // Render points
     points.forEach((point) => {
-      this.context.fillStyle = COLORS.shades.s400.css;
+      const selected = this.timeline.selected.value;
+      console.log({ selected });
+      const isSelected =
+        selected && selected.path === path && selected.time === point.time;
+      this.context.fillStyle = isSelected
+        ? COLORS.shades.s100.css
+        : COLORS.shades.s400.css;
       this.context.strokeStyle = COLORS.shades.s100.css;
 
       const x = this.px(this.position(point.time));
@@ -266,10 +298,28 @@ class CanvasDisplay {
       this.context.fillRect(x - s / 2, y - s / 2, s, s);
       this.context.strokeRect(x - s / 2, y - s / 2, s, s);
       this.context.resetTransform();
-      // this.context.restore();
-      // this.context.translate(-x, -y);
-      // this.context.rotate(0);
-      // this.context.setTransform(1, 0, 0, 1, 0, 0);
+
+      // Make clickable
+      this.hotspots.push({
+        x: this.pxInvert(x),
+        y: this.pxInvert(y),
+        radius: s / 2,
+        onClick: () => {
+          this.timeline.selected.set({
+            path,
+            time: point.time,
+          });
+          this.render();
+        },
+        dblClick: () => {
+          this.timeline.selected.set({
+            path,
+            time: point.time,
+          });
+          this.timeline.playhead.set(point.time);
+          this.render();
+        },
+      });
     });
   }
 
@@ -286,7 +336,7 @@ class CanvasDisplay {
   }
 
   render() {
-    // this.context.clearRect(0, 0, this.px(this.width), this.px(this.height));
+    this.hotspots = [];
 
     // background
     this.context.fillStyle = COLORS.shades.s500.css;

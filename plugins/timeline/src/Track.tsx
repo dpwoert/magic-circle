@@ -42,6 +42,14 @@ const Options = styled.div`
   color: ${COLORS.shades.s100.css};
 `;
 
+type OptionProps = {
+  disabled?: boolean;
+};
+
+const Option = styled.div<OptionProps>`
+  opacity: ${(props) => (props.disabled ? 0.2 : 1)};
+`;
+
 type TrackProps = {
   timeline: Timeline;
   path: string;
@@ -50,6 +58,7 @@ type TrackProps = {
 const Track = ({ timeline, path }: TrackProps) => {
   const control = useStore(timeline.layers.lookup.get(path));
   const playhead = useStore(timeline.playhead);
+  const selected = useStore(timeline.selected);
 
   console.log({ playhead });
 
@@ -62,18 +71,19 @@ const Track = ({ timeline, path }: TrackProps) => {
         </Labels>
         <Options>
           {/* <Icon name="Eye" width={SPACING(1.5)} height={SPACING(1.5)} /> */}
-          <Icon
-            onClick={() => timeline.addKeyframe(path, playhead)}
-            name="PlusCircle"
-            width={SPACING(1.5)}
-            height={SPACING(1.5)}
-          />
-          <Icon
+          <Option onClick={() => timeline.addKeyframe(path, playhead)}>
+            <Icon
+              name="PlusCircle"
+              width={SPACING(1.5)}
+              height={SPACING(1.5)}
+            />
+          </Option>
+          <Option
+            disabled={!selected || selected.path !== path}
             onClick={() => timeline.removeKeyframe(path, playhead)}
-            name="Trash"
-            width={SPACING(1.5)}
-            height={SPACING(1.5)}
-          />
+          >
+            <Icon name="Trash" width={SPACING(1.5)} height={SPACING(1.5)} />
+          </Option>
         </Options>
       </Container>
     );

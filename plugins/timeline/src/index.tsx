@@ -44,6 +44,11 @@ export type Scene = {
   values: Record<string, ScenePoint[]>;
 };
 
+type selection = {
+  time: number;
+  path: string;
+};
+
 const emptyScene: Scene = {
   duration: 1000 * 10,
   loop: false,
@@ -59,6 +64,7 @@ export default class Timeline implements Plugin {
   scene: Store<Scene>;
   playhead: Store<number>;
   playing: Store<boolean>;
+  selected: Store<selection | null>;
 
   name = 'timeline';
 
@@ -75,6 +81,7 @@ export default class Timeline implements Plugin {
     this.scene = new Store<Scene>(emptyScene);
     this.playhead = new Store<number>(0);
     this.playing = new Store<boolean>(false);
+    this.selected = new Store<selection | null>(null);
 
     this.ipc.on('timeline:play', () => {
       this.playing.set(true);
@@ -196,7 +203,7 @@ export default class Timeline implements Plugin {
       // Read current value
     }
 
-    // todo sync again
+    // todo sync again with fe
   }
 
   removeKeyframe(path: string, time: number) {
