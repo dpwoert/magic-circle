@@ -60,8 +60,6 @@ const Track = ({ timeline, path }: TrackProps) => {
   const playhead = useStore(timeline.playhead);
   const selected = useStore(timeline.selected);
 
-  console.log({ playhead });
-
   if ('label' in control) {
     return (
       <Container>
@@ -80,7 +78,7 @@ const Track = ({ timeline, path }: TrackProps) => {
           </Option>
           <Option
             disabled={!selected || selected.path !== path}
-            onClick={() => timeline.removeKeyframe(path, playhead)}
+            onClick={() => timeline.removeKeyframe(path, selected.time)}
           >
             <Icon name="Trash" width={SPACING(1.5)} height={SPACING(1.5)} />
           </Option>

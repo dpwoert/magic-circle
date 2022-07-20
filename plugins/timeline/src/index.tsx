@@ -199,6 +199,26 @@ export default class Timeline implements Plugin {
 
     // Check if keyframe already exists
     else if (current && !current.find((c) => c.time === time)) {
+      const currentValue = this.layers.lookup.get(path).value;
+
+      if ('value' in currentValue) {
+        this.scene.setFn((curr) => ({
+          ...curr,
+          values: {
+            ...curr.values,
+            [path]: [
+              ...curr.values[path],
+              {
+                time,
+                value: currentValue.value,
+              },
+            ].sort((a, b) => {
+              return b.time - a.time;
+            }),
+          },
+        }));
+      }
+
       // Add a keyframe
       // Read current value
     }
@@ -220,5 +240,9 @@ export default class Timeline implements Plugin {
     }
 
     // sync again
+  }
+
+  changeKeyframe(path: string, time: number, newTime: number, newValue: any) {
+    // todo
   }
 }

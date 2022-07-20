@@ -7,7 +7,7 @@ import { useStore } from '@magic-circle/state';
 
 import type Timeline from './index';
 import type { Scene, ScenePoint } from './index';
-import { lerp, formatTime } from './utils';
+import { lerp, formatTime, mapLinear } from './utils';
 
 const MIN_TICK_SIZE = 6;
 
@@ -261,11 +261,31 @@ class CanvasDisplay {
 
   renderTrack(path: string, i: number) {
     const points = this.scene.values[path];
+    const control = this.timeline.layers.lookup.get(path).value;
+    const allPoints = [...points];
+
+    if (points.length > 0) {
+      allPoints.unshift({
+        ...points[0],
+        time: 0,
+      });
+      allPoints.push({
+        ...points[points.length - 1],
+        time: this.scene.duration,
+      });
+    }
+
+    const range: number[] =
+      'options' in control ? control.options.range : [0, 0];
 
     // does this need rendering?
 
-    const bottom = SPACING(3) + (i + 1) * SPACING(6);
-    console.log('track', path, i, bottom);
+    const top = SPACING(3) + i * SPACING(6);
+    const bottom = top + SPACING(6);
+
+    // Create scale
+    const axis = (val: number) =>
+      mapLinear(val, range[1], range[0], top + SPACING(1), bottom - SPACING(1));
 
     // line
     this.context.beginPath();
@@ -276,11 +296,25 @@ class CanvasDisplay {
     this.context.stroke();
 
     // Render path
+    this.context.beginPath();
+    allPoints.forEach((point, i) => {
+      const x = this.px(this.position(point.time));
+      const y = this.px(axis(+point.value));
+
+      if (i === 0) {
+        this.context.moveTo(x, y);
+      } else {
+        this.context.lineTo(x, y);
+      }
+    });
+
+    this.context.strokeStyle = COLORS.shades.s300.css;
+    this.context.lineWidth = this.px(1);
+    this.context.stroke();
 
     // Render points
     points.forEach((point) => {
       const selected = this.timeline.selected.value;
-      console.log({ selected });
       const isSelected =
         selected && selected.path === path && selected.time === point.time;
       this.context.fillStyle = isSelected
@@ -289,7 +323,8 @@ class CanvasDisplay {
       this.context.strokeStyle = COLORS.shades.s100.css;
 
       const x = this.px(this.position(point.time));
-      const y = this.px(bottom - SPACING(3));
+      // const y = this.px(bottom - SPACING(3));
+      const y = this.px(axis(+point.value));
       const s = this.px(SPACING(0.5));
 
       this.context.translate(x, y);
