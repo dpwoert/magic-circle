@@ -9,10 +9,11 @@ import {
 } from '@magic-circle/schema';
 import { Store, StoreFamily } from '@magic-circle/state';
 import {
+  registerIcon,
   Clock,
   ChevronDown,
   ChevronUp,
-  registerIcon,
+  Plus,
 } from '@magic-circle/styles';
 
 import Sidebar from './Sidebar';
@@ -21,6 +22,7 @@ import TimelineBottom from './Timeline';
 registerIcon(ChevronUp);
 registerIcon(ChevronDown);
 registerIcon(Clock);
+registerIcon(Plus);
 
 type ScenePoint = {
   time: number;
@@ -123,5 +125,30 @@ export default class Timeline implements Plugin {
 
   preConnect() {
     this.reset();
+  }
+
+  selectTrack() {
+    if (this.client.selectQuery.value) {
+      this.client.selectQuery.set(null);
+    } else {
+      this.client.selectQuery.set({
+        label: 'Add track',
+        icon: 'Clock',
+        filter: 'timeline',
+        onSelect: (path) => {
+          console.log({ onSelect: path });
+
+          this.scene.set({
+            ...this.scene.value,
+            values: {
+              ...this.scene.value.values,
+              [path]: [],
+            },
+          });
+
+          this.client.selectQuery.set(null);
+        },
+      });
+    }
   }
 }

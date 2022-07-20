@@ -270,12 +270,18 @@ export type ControlProps<T, K> = {
   label: string;
   options: K;
   hasChanges: boolean;
+  select?: {
+    label: string;
+    icon: icons;
+    onSelect: () => void;
+  };
   set: (newValue: T) => void;
   reset: () => void;
 };
 
 export type Control = {
   name: string;
+  supports?: (type: string, options: any) => boolean;
   render: (props: ControlProps<any, any>) => ReactNode;
 };
 
@@ -344,6 +350,13 @@ export enum LayoutHook {
 
 export type layoutHooks = Record<string, ReactNode>;
 
+export type SelectQuery = {
+  label: string;
+  icon: icons;
+  filter: string;
+  onSelect: (path: string) => void;
+};
+
 export interface App {
   plugins: Plugin[];
   controls: Record<string, Control>;
@@ -356,6 +369,7 @@ export interface App {
   layoutHooks: Store<layoutHooks>;
   commandLine: Store<CommandLineScreen | null>;
   commandLineReference: Store<CommandLineReference | null>;
+  selectQuery: Store<SelectQuery | null>;
 
   getPlugin: (name: string) => Plugin | undefined;
   getControl: (name: string) => Control | undefined;

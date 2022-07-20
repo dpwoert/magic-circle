@@ -4,7 +4,7 @@ type Hook<T> = (newValue: T) => void;
 
 export default class Store<T> implements StoreClass<T> {
   value: T;
-  hooks: Hook<T>[];
+  private hooks: Hook<T>[];
 
   constructor(initialValue: T) {
     this.value = initialValue;

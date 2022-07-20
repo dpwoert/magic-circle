@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import shallowEqual from 'shallowequal';
 
-import { App, LayerExport } from '@magic-circle/schema';
+import { App, LayerExport, SelectQuery } from '@magic-circle/schema';
 import { useStore } from '@magic-circle/state';
 import { SPACING, COLORS, TYPO } from '@magic-circle/styles';
 
@@ -35,8 +35,12 @@ type ControlProps = {
 
 const Control = ({ layers, controlPath }: ControlProps) => {
   const control = useStore(layers.lookup.get(controlPath));
+  // @ts-ignore
+  const selectQuery = useStore(layers.client.selectQuery);
+
   if (control && 'type' in control) {
-    const Element = layers.getControlRenderer(control.type);
+    const type = layers.getControl(control.type);
+    const Element = type?.render;
 
     if (!Element) {
       throw new Error(
@@ -44,11 +48,26 @@ const Control = ({ layers, controlPath }: ControlProps) => {
       );
     }
 
+    let select;
+
+    if (selectQuery && type.supports) {
+      select = type.supports(
+        layers.client.selectQuery.value.filter,
+        control.options
+      ) && {
+        label: layers.client.selectQuery.value.label,
+        icon: layers.client.selectQuery.value.icon,
+        onSelect: () => layers.client.selectQuery.value.onSelect(control.path),
+      };
+    }
+
     return (
       <Element
+        key={control.path}
         value={control.value}
         label={control.label}
         options={control.options}
+        select={select}
         hasChanges={!shallowEqual(control.value, control.initialValue)}
         set={(newValue: any) => layers.setControl(control.path, newValue)}
         reset={() => layers.resetControl(control.path)}

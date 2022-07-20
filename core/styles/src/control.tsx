@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import COLORS from './colors';
 import TYPO from './typography';
 import SPACING from './spacing';
-import Icon from './Icon';
+import Icon, { IconName } from './Icon';
+import { ButtonSmall } from './forms';
 
 export const ContainerCSS = styled.div`
   position: relative;
@@ -52,16 +53,39 @@ export const ResetMask = styled.div`
   width: ${SPACING(4)}px;
 `;
 
+const Select = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: ${SPACING(15)}px;
+  background: linear-gradient(
+    270deg,
+    ${COLORS.shades.s600.css} 55%,
+    ${COLORS.shades.s600.opacity(0)} 100%
+  );
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: ${SPACING(1)}px;
+`;
+
 type ContainerProps = {
   hasChanges: boolean;
   reset?: () => void;
   children: ReactNode;
+  select?: {
+    label: string;
+    icon: IconName;
+    onSelect: () => void;
+  };
 };
 
 export const Container = ({
   hasChanges,
   reset,
   children,
+  select,
   ...props
 }: ContainerProps) => {
   return (
@@ -72,6 +96,14 @@ export const Container = ({
         </Reset>
       </ResetMask>
       {children}
+      {select && (
+        <Select>
+          <ButtonSmall onClick={select.onSelect}>
+            <Icon name={select.icon} width={SPACING(1)} height={SPACING(1)} />
+            {select.label}
+          </ButtonSmall>
+        </Select>
+      )}
     </ContainerCSS>
   );
 };

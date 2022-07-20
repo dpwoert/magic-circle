@@ -111,17 +111,42 @@ export const Checkbox = ({ value, onChange, ...props }: CheckboxProps) => {
   );
 };
 
-export const Button = styled.button`
+type ButtonProps = {
+  highlight?: boolean;
+};
+
+export const Button = styled.button<ButtonProps>`
   ${TYPO.regular}
   display: flex;
   align-items: center;
   padding: 0 ${SPACING(1)}px;
   gap: ${SPACING(0.5)}px;
-  border: 1px solid ${COLORS.accent.css};
+  border: 1px solid
+    ${(props) => (props.highlight ? COLORS.accent.css : COLORS.shades.s400.css)};
   border-radius: 5px;
-  color: ${COLORS.white.css};
-  background: ${String(COLORS.accent.opacity(0.15))};
+  color: ${(props) =>
+    props.highlight ? COLORS.white.css : COLORS.shades.s100.css};
+  background: ${(props) =>
+    props.highlight ? COLORS.accent.opacity(0.15) : COLORS.shades.s500.css};
   height: ${SPACING(3)}px;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: ${COLORS.accent.css};
+  }
+`;
+
+export const ButtonSmall = styled.button`
+  ${TYPO.small}
+  display: flex;
+  align-items: center;
+  padding: 0 ${SPACING(0.5)}px;
+  gap: ${SPACING(0.25)}px;
+  border: 1px solid ${COLORS.shades.s400.css};
+  border-radius: 5px;
+  color: ${COLORS.shades.s100.css};
+  background: ${COLORS.shades.s500.css};
+  height: 26px;
   transition: color 0.2s ease;
 
   &:hover {

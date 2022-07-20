@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
-import { COLORS, Icon, SPACING, TYPO } from '@magic-circle/styles';
+import { COLORS, Forms, Icon, SPACING, TYPO } from '@magic-circle/styles';
 import { useStore } from '@magic-circle/state';
 
 import type TimelinePlugin from './index';
@@ -97,6 +97,13 @@ const SidebarRow = styled.div`
   flex-shrink: 0;
 `;
 
+const AddTrack = styled.div`
+  margin-top: ${SPACING(2)}px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+
 const CanvasContainer = styled.div`
   position: relative;
   flex: 1;
@@ -169,6 +176,9 @@ const Timeline = ({ app, timeline }: TimelineProps) => {
 
   const playing = useStore(timeline.playing);
   const playhead = useStore(timeline.playhead);
+  const scene = useStore(timeline.scene);
+  // @ts-ignore
+  const selectQuery = useStore(app.selectQuery);
 
   return (
     <Container show={show}>
@@ -192,12 +202,24 @@ const Timeline = ({ app, timeline }: TimelineProps) => {
             <Sidebar>
               <SidebarHeader>Scene 1</SidebarHeader>
               <SidebarRows>
-                <SidebarRow>Layer 1</SidebarRow>
-                <SidebarRow>Layer 2</SidebarRow>
-                <SidebarRow>Layer 3</SidebarRow>
-                <SidebarRow>Layer 4</SidebarRow>
-                <SidebarRow>Layer 5</SidebarRow>
-                <SidebarRow>Layer 6</SidebarRow>
+                {Object.keys(scene.values).map((path) => (
+                  <SidebarRow>{path}</SidebarRow>
+                ))}
+                <AddTrack>
+                  <Forms.Button
+                    highlight={!!selectQuery}
+                    onClick={() => {
+                      timeline.selectTrack();
+                    }}
+                  >
+                    <Icon
+                      name="Plus"
+                      width={SPACING(1.5)}
+                      height={SPACING(1.5)}
+                    />
+                    Add track
+                  </Forms.Button>
+                </AddTrack>
               </SidebarRows>
             </Sidebar>
             <CanvasContainer>

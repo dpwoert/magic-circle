@@ -170,4 +170,8 @@ export default class Layers implements Plugin {
   getControlRenderer(type: string) {
     return this.client.controls[type]?.render;
   }
+
+  getControl(type: string) {
+    return this.client.controls[type];
+  }
 }
