@@ -18,10 +18,13 @@ import {
   PlusCircle,
   Trash,
   Eye,
+  Ease,
+  Linear,
 } from '@magic-circle/styles';
 
 import Sidebar from './Sidebar';
 import TimelineBottom from './Timeline';
+import { clamp } from './utils';
 
 registerIcon(ChevronUp);
 registerIcon(ChevronDown);
@@ -30,6 +33,8 @@ registerIcon(Plus);
 registerIcon(PlusCircle);
 registerIcon(Trash);
 registerIcon(Eye);
+registerIcon(Ease);
+registerIcon(Linear);
 
 export type ScenePoint = {
   time: number;
@@ -213,7 +218,7 @@ export default class Timeline implements Plugin {
                 value: currentValue.value,
               },
             ].sort((a, b) => {
-              return b.time - a.time;
+              return a.time - b.time;
             }),
           },
         }));
@@ -242,7 +247,48 @@ export default class Timeline implements Plugin {
     // sync again
   }
 
-  changeKeyframe(path: string, time: number, newTime: number, newValue: any) {
-    // todo
+  changeKeyframe(path: string, key: number, newTime: number, newValue: any) {
+    const current = this.scene.value.values[path];
+
+    if (current) {
+      this.scene.setFn((curr) => ({
+        ...curr,
+        values: {
+          ...curr.values,
+          [path]: current.map((c, k) => {
+            // todo clamp time to keyframe before and after
+
+            let left = 0;
+            let right = this.scene.value.duration;
+
+            if (k > 0) {
+              left = current[k - 1].time + 1;
+            }
+            if (k < current.length - 1) {
+              right = current[k + 1].time - 1;
+            }
+
+            console.log({ newTime, left, right });
+
+            if (key === k) {
+              return {
+                ...c,
+                time: clamp(newTime, left, right),
+                value: newValue,
+              };
+            }
+
+            return c;
+          }),
+        },
+      }));
+    }
+
+    // sync again
+  }
+
+  getKeyframeByKey(path: string, key: number) {
+    const current = this.scene.value.values[path];
+    return current[key];
   }
 }

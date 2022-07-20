@@ -59,6 +59,7 @@ import { ReactComponent as DollarIcon } from './dollar.svg';
 import { ReactComponent as DotsHorizontalIcon } from './dots-horizontal.svg';
 import { ReactComponent as DotsVerticalIcon } from './dots-vertical.svg';
 import { ReactComponent as DownloadIcon } from './download.svg';
+import { ReactComponent as EaseIcon } from './ease.svg';
 import { ReactComponent as EditIcon } from './edit.svg';
 import { ReactComponent as EmojiHappyIcon } from './emoji-happy.svg';
 import { ReactComponent as EmojiSadIcon } from './emoji-sad.svg';
@@ -88,6 +89,8 @@ import { ReactComponent as HomeIcon } from './home.svg';
 import { ReactComponent as InboxIcon } from './inbox.svg';
 import { ReactComponent as InformationIcon } from './information.svg';
 import { ReactComponent as KeyIcon } from './key.svg';
+import { ReactComponent as LayersIcon } from './layers.svg';
+import { ReactComponent as LinearIcon } from './linear.svg';
 import { ReactComponent as LinkIcon } from './link.svg';
 import { ReactComponent as LockUnlockedIcon } from './lock-unlocked.svg';
 import { ReactComponent as LockIcon } from './lock.svg';
@@ -370,6 +373,7 @@ export const Download: IconDefinition = {
   name: 'Download',
   component: DownloadIcon,
 };
+export const Ease: IconDefinition = { name: 'Ease', component: EaseIcon };
 export const Edit: IconDefinition = { name: 'Edit', component: EditIcon };
 export const EmojiHappy: IconDefinition = {
   name: 'EmojiHappy',
@@ -438,6 +442,8 @@ export const Information: IconDefinition = {
   component: InformationIcon,
 };
 export const Key: IconDefinition = { name: 'Key', component: KeyIcon };
+export const Layers: IconDefinition = { name: 'Layers', component: LayersIcon };
+export const Linear: IconDefinition = { name: 'Linear', component: LinearIcon };
 export const Link: IconDefinition = { name: 'Link', component: LinkIcon };
 export const LockUnlocked: IconDefinition = {
   name: 'LockUnlocked',
@@ -742,6 +748,7 @@ export type list =
   | 'DotsHorizontal'
   | 'DotsVertical'
   | 'Download'
+  | 'Ease'
   | 'Edit'
   | 'EmojiHappy'
   | 'EmojiSad'
@@ -771,6 +778,8 @@ export type list =
   | 'Inbox'
   | 'Information'
   | 'Key'
+  | 'Layers'
+  | 'Linear'
   | 'Link'
   | 'LockUnlocked'
   | 'Lock'

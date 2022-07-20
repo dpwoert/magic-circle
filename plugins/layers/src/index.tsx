@@ -12,13 +12,13 @@ import {
   ArrowRight,
   ChevronDown,
   registerIcon,
-  Rows,
+  Layers as LayersIcon,
 } from '@magic-circle/styles';
 
 import SidebarLeft from './SidebarLeft';
 import SidebarRight from './SidebarRight';
 
-registerIcon(Rows);
+registerIcon(LayersIcon);
 registerIcon(ChevronDown);
 registerIcon(ArrowRight);
 
@@ -99,7 +99,7 @@ export default class Layers implements Plugin {
 
   sidebar() {
     return {
-      icon: 'Rows' as icons,
+      icon: 'Layers' as icons,
       name: 'layers',
       render: <SidebarLeft layers={this} />,
     };

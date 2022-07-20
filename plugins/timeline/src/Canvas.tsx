@@ -7,7 +7,7 @@ import { useStore } from '@magic-circle/state';
 
 import type Timeline from './index';
 import type { Scene, ScenePoint } from './index';
-import { lerp, formatTime, mapLinear } from './utils';
+import { lerp, formatTime, mapLinear, clamp } from './utils';
 
 const MIN_TICK_SIZE = 6;
 
@@ -25,6 +25,7 @@ type Hotspot = {
   radius: number;
   onClick?: () => void;
   dblClick?: () => void;
+  drag?: (deltaX: number, deltaY: number) => void;
 };
 
 class CanvasDisplay {
@@ -39,6 +40,7 @@ class CanvasDisplay {
     dest: number;
     curr: number;
   };
+  dragging?: Hotspot;
   hotspots: Hotspot[];
   scene: Scene;
   zoom: number;
@@ -73,7 +75,18 @@ class CanvasDisplay {
     this.element.addEventListener('dblclick', (evt) => {
       const box = this.element.getBoundingClientRect();
       this.dblClick(evt.x - box.x, evt.y - box.y);
-      console.log('double');
+    });
+
+    // drag
+    this.element.addEventListener('mousedown', (evt) => {
+      const box = this.element.getBoundingClientRect();
+      this.dragStart(evt.x - box.x, evt.y - box.y);
+    });
+    this.element.addEventListener('mousemove', (evt) => {
+      this.drag(evt.movementX, evt.movementY);
+    });
+    this.element.addEventListener('mouseup', () => {
+      this.dragEnd();
     });
   }
 
@@ -166,6 +179,24 @@ class CanvasDisplay {
 
     if (hotspot && hotspot.dblClick) {
       hotspot.dblClick();
+    }
+  }
+
+  dragStart(x: number, y: number) {
+    const hotspot = this.hotspot(x, y);
+
+    if (hotspot && hotspot.drag) {
+      this.dragging = hotspot;
+    }
+  }
+
+  dragEnd() {
+    this.dragging = null;
+  }
+
+  drag(deltaX: number, deltaY: number) {
+    if (this.dragging) {
+      this.dragging.drag(deltaX, deltaY);
     }
   }
 
@@ -286,6 +317,8 @@ class CanvasDisplay {
     // Create scale
     const axis = (val: number) =>
       mapLinear(val, range[1], range[0], top + SPACING(1), bottom - SPACING(1));
+    const axisInverse = (val: number) =>
+      mapLinear(val, top + SPACING(1), bottom - SPACING(1), range[1], range[0]);
 
     // line
     this.context.beginPath();
@@ -312,8 +345,40 @@ class CanvasDisplay {
     this.context.lineWidth = this.px(1);
     this.context.stroke();
 
+    // Render start and end-point
+    if (allPoints.length > 2) {
+      this.context.fillStyle = COLORS.shades.s400.css;
+      this.context.strokeStyle = COLORS.shades.s300.css;
+      const first = allPoints[0];
+      const last = allPoints[allPoints.length - 1];
+      this.context.fillRect(
+        this.px(this.position(first.time) - 2),
+        this.px(axis(+first.value) - 2),
+        this.px(4),
+        this.px(4)
+      );
+      this.context.strokeRect(
+        this.px(this.position(first.time) - 2),
+        this.px(axis(+first.value) - 2),
+        this.px(4),
+        this.px(4)
+      );
+      this.context.fillRect(
+        this.px(this.position(last.time) - 2),
+        this.px(axis(+last.value) - 2),
+        this.px(4),
+        this.px(4)
+      );
+      this.context.strokeRect(
+        this.px(this.position(last.time) - 2),
+        this.px(axis(+last.value) - 2),
+        this.px(4),
+        this.px(4)
+      );
+    }
+
     // Render points
-    points.forEach((point) => {
+    points.forEach((point, key) => {
       const selected = this.timeline.selected.value;
       const isSelected =
         selected && selected.path === path && selected.time === point.time;
@@ -323,7 +388,6 @@ class CanvasDisplay {
       this.context.strokeStyle = COLORS.shades.s100.css;
 
       const x = this.px(this.position(point.time));
-      // const y = this.px(bottom - SPACING(3));
       const y = this.px(axis(+point.value));
       const s = this.px(SPACING(0.5));
 
@@ -352,6 +416,20 @@ class CanvasDisplay {
             time: point.time,
           });
           this.timeline.playhead.set(point.time);
+          this.render();
+        },
+        drag: (dx, dy) => {
+          // ensure we're updating the same keyframe and not the reference to the old one...
+          const curr = this.timeline.getKeyframeByKey(path, key);
+
+          const newX = this.position(curr.time) + dx;
+          const newY = axis(+curr.value) + dy;
+          const newTime = this.invert(newX);
+          const newValue = clamp(axisInverse(newY), range[0], range[1]);
+
+          console.log({ curr, newTime, newValue, range });
+
+          this.timeline.changeKeyframe(path, key, newTime, newValue);
           this.render();
         },
       });

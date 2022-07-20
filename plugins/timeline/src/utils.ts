@@ -27,3 +27,7 @@ export function mapLinear(
 ): number {
   return b1 + ((x - a1) * (b2 - b1)) / (a2 - a1);
 }
+
+export function clamp(val: number, min: number, max: number): number {
+  return Math.max(min, Math.min(max, val));
+}

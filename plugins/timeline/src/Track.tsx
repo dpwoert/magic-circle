@@ -82,6 +82,12 @@ const Track = ({ timeline, path }: TrackProps) => {
           >
             <Icon name="Trash" width={SPACING(1.5)} height={SPACING(1.5)} />
           </Option>
+          <Option
+            disabled={!selected || selected.path !== path}
+            onClick={() => {}}
+          >
+            <Icon name="Ease" width={SPACING(1.5)} height={SPACING(1.5)} />
+          </Option>
         </Options>
       </Container>
     );
