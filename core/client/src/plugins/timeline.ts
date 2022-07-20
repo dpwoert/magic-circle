@@ -38,14 +38,6 @@ export default class PLuginTimeline extends Plugin {
 
   constructor(client: Plugin['client']) {
     super(client);
-
-    this.scene = {
-      duration: 10000,
-      loop: false,
-      name: 'Untitled',
-      values: {},
-    };
-    this.variables = {};
   }
 
   setup() {
@@ -77,6 +69,16 @@ export default class PLuginTimeline extends Plugin {
     ipc.on('timeline:stop', () => {
       this.stop();
     });
+
+    // Set default scene if needed
+    if (!this.scene) {
+      this.set({
+        duration: 1000 * 10,
+        loop: false,
+        name: 'New scene',
+        values: {},
+      });
+    }
   }
 
   setVariable(path: string, points: ScenePoint[]) {
@@ -108,11 +110,12 @@ export default class PLuginTimeline extends Plugin {
     Object.keys(this.scene.values).forEach((path) => {
       this.setVariable(path, this.scene.values[path]);
     });
+
+    this.client.ipc.send('timeline:scene', scene);
   }
 
   setPlayhead(time: number) {
     this.client.ipc.send('timeline:playhead', time);
-    console.log({ time });
 
     if (!this.scene || !this.variables) {
       this.playhead = 0;
@@ -140,6 +143,15 @@ export default class PLuginTimeline extends Plugin {
 
     //send to ui
     this.client.ipc.send('timeline:playhead', this.playhead);
+
+    // End of timeline
+    if (time >= this.scene.duration) {
+      this.setPlayhead(0);
+
+      if (!this.scene.loop) {
+        this.stop();
+      }
+    }
   }
 
   play() {

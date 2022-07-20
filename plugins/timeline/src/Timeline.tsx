@@ -16,6 +16,7 @@ const Container = styled.div<ContainerProps>`
   display: flex;
   flex-direction: column;
   height: ${(props) => (props.show ? '40vh' : `${SPACING(2)}px`)};
+  min-height: 0;
 `;
 
 const Header = styled.div`
@@ -54,6 +55,7 @@ const Inside = styled.div`
   width: 100%;
   flex: 1;
   display: flex;
+  min-height: 0;
 `;
 
 const Sidebar = styled.div`
@@ -61,6 +63,38 @@ const Sidebar = styled.div`
   flex-direction: column;
   width: ${SPACING(22)}px;
   border-right: 1px solid ${COLORS.shades.s300.css};
+`;
+
+const SidebarHeader = styled.div`
+  ${TYPO.small}
+  display: flex;
+  align-items: center;
+  padding: 0 ${SPACING(1)}px;
+  width: 100%;
+  height: ${SPACING(3)}px;
+  background: ${COLORS.shades.s600.css};
+  color: ${COLORS.white.css};
+  border-bottom: 1px solid ${COLORS.shades.s300.css};
+`;
+
+const SidebarRows = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+`;
+
+const SidebarRow = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 0 ${SPACING(1)}px;
+  width: 100%;
+  height: ${SPACING(6)}px;
+  background: ${COLORS.shades.s600.css};
+  color: ${COLORS.white.css};
+  border-bottom: 1px solid ${COLORS.shades.s300.css};
+  flex-shrink: 0;
 `;
 
 const CanvasContainer = styled.div`
@@ -155,7 +189,17 @@ const Timeline = ({ app, timeline }: TimelineProps) => {
       <Inside>
         {show && (
           <>
-            <Sidebar>todo</Sidebar>
+            <Sidebar>
+              <SidebarHeader>Scene 1</SidebarHeader>
+              <SidebarRows>
+                <SidebarRow>Layer 1</SidebarRow>
+                <SidebarRow>Layer 2</SidebarRow>
+                <SidebarRow>Layer 3</SidebarRow>
+                <SidebarRow>Layer 4</SidebarRow>
+                <SidebarRow>Layer 5</SidebarRow>
+                <SidebarRow>Layer 6</SidebarRow>
+              </SidebarRows>
+            </Sidebar>
             <CanvasContainer>
               <Canvas timeline={timeline} />
               <ClockContainer>

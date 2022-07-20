@@ -5,6 +5,7 @@ import VirtualScroll from 'virtual-scroll';
 import { SPACING, COLORS } from '@magic-circle/styles';
 
 import type Timeline from './index';
+import type { Scene } from './index';
 import { useStore } from '@magic-circle/state';
 
 const MIN_TICK_SIZE = 6;
@@ -46,6 +47,7 @@ class CanvasDisplay {
     dest: number;
     curr: number;
   };
+  scene: Scene;
   zoom: number;
   playhead: number;
   pixelRatio: number;
@@ -53,7 +55,7 @@ class CanvasDisplay {
   constructor(element: HTMLCanvasElement) {
     this.element = element;
     this.context = this.element.getContext('2d');
-    this.scroller = new VirtualScroll(element);
+    this.scroller = new VirtualScroll({ el: element });
     this.scroll = {
       dest: 0,
       curr: 0,
@@ -61,6 +63,7 @@ class CanvasDisplay {
     this.zoom = 0;
     this.pixelRatio = window.devicePixelRatio || 1;
 
+    this.setZoom(0);
     this.resize();
     this.render();
 
@@ -84,6 +87,16 @@ class CanvasDisplay {
     return px * this.pixelRatio;
   }
 
+  position(time: number) {
+    const offset = SPACING(1) + this.scroll.curr;
+    return this.stepSize() * time + offset;
+  }
+
+  invert(px: number) {
+    const offset = SPACING(1) + this.scroll.curr;
+    return (px - offset) / this.stepSize();
+  }
+
   setScroll(scroll: number) {
     this.scroll = {
       dest: Math.min(0, scroll),
@@ -102,6 +115,20 @@ class CanvasDisplay {
     this.render();
   }
 
+  stepSize() {
+    return lerp(this.zoom, 12 / 100, 72 / 100);
+  }
+
+  setZoom(zoom: number) {
+    this.zoom = zoom;
+    this.scrollUpdate();
+  }
+
+  setScene(scene: Scene) {
+    this.scene = scene;
+    this.render();
+  }
+
   scrollUpdate() {
     this.scroll = {
       dest: this.scroll.dest,
@@ -109,7 +136,6 @@ class CanvasDisplay {
     };
 
     if (Math.abs(this.scroll.dest - this.scroll.curr) < 0.05) {
-      console.log('velocity finished');
       this.scroll.curr = this.scroll.dest;
     }
 
@@ -130,15 +156,6 @@ class CanvasDisplay {
       return;
     }
 
-    const stepSize = lerp(this.zoom, 12, 72);
-    // const tickSize = stepSize / 9;
-
-    let pointer = SPACING(1) + this.scroll.curr;
-    // let pointer = SPACING(1) + ((this.scroll.curr * -1) % stepSize);
-    let tick = 0;
-    let time = 0;
-    // let tick = Math.floor((this.scroll.curr * -1) / stepSize);
-
     //background
     this.context.fillStyle = COLORS.shades.s600.css;
     this.context.fillRect(0, 0, this.px(this.width), this.px(SPACING(3)));
@@ -151,9 +168,15 @@ class CanvasDisplay {
     this.context.lineWidth = this.px(1);
     this.context.stroke();
 
+    const stepSize = 100;
+    const startTime = this.invert(0);
+    const startTimeNice = startTime + stepSize - (startTime % stepSize);
+    let time = startTimeNice;
+
     // ticks
-    while (pointer < this.width) {
-      const isBigTick = tick % 10 === 0;
+    while (this.position(time) < this.width) {
+      const isBigTick = time % 1000 === 0;
+      const pointer = this.position(time);
 
       this.context.beginPath();
       this.context.moveTo(this.px(pointer), this.px(SPACING(3)));
@@ -176,15 +199,12 @@ class CanvasDisplay {
         );
       }
 
-      pointer += stepSize;
-      tick += 1;
       time += 100;
     }
   }
 
   renderPlayhead() {
-    const stepSize = lerp(this.zoom, 12, 72);
-    const position = SPACING(1) + this.scroll.curr + this.playhead / stepSize;
+    const position = this.position(this.playhead);
 
     // line
     this.context.beginPath();
@@ -220,6 +240,7 @@ const Canvas = ({ timeline }: CanvasProps) => {
   const display = useRef<CanvasDisplay>();
 
   const playhead = useStore(timeline.playhead);
+  const scene = useStore(timeline.scene);
 
   useEffect(() => {
     if (ref.current) {
@@ -230,6 +251,10 @@ const Canvas = ({ timeline }: CanvasProps) => {
   useEffect(() => {
     display.current.setPlayhead(playhead);
   }, [playhead]);
+
+  useEffect(() => {
+    display.current.setScene(scene);
+  }, [scene]);
 
   return <Container ref={ref} />;
 };

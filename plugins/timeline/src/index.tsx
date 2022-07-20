@@ -22,11 +22,31 @@ registerIcon(ChevronUp);
 registerIcon(ChevronDown);
 registerIcon(Clock);
 
+type ScenePoint = {
+  time: number;
+  value: number | boolean;
+  controlPoint?: number[];
+};
+
+export type Scene = {
+  duration: number;
+  loop: boolean;
+  name: string;
+  values: Record<string, ScenePoint[]>;
+};
+
+const emptyScene: Scene = {
+  duration: 1000 * 10,
+  loop: false,
+  name: 'New scene',
+  values: {},
+};
+
 export default class Timeline implements Plugin {
   ipc: App['ipc'];
   client: App;
 
-  timeline: Store<number>;
+  scene: Store<Scene>;
   playhead: Store<number>;
   playing: Store<boolean>;
 
@@ -37,7 +57,7 @@ export default class Timeline implements Plugin {
     this.client = client;
 
     // Create stores
-    this.timeline = new Store<number>(0);
+    this.scene = new Store<Scene>(emptyScene);
     this.playhead = new Store<number>(0);
     this.playing = new Store<boolean>(false);
 
@@ -49,6 +69,9 @@ export default class Timeline implements Plugin {
     });
     this.ipc.on('timeline:playhead', (_, playhead) => {
       this.playhead.set(playhead);
+    });
+    this.ipc.on('timeline:scene', (_, scene) => {
+      this.scene.set(scene);
     });
 
     // Set controls sidebar
@@ -93,7 +116,9 @@ export default class Timeline implements Plugin {
   // }
 
   async reset() {
-    this.timeline.set(0);
+    this.scene.set(emptyScene);
+    this.playhead.set(0);
+    this.playing.set(false);
   }
 
   preConnect() {

@@ -7,11 +7,13 @@ export function addDigit(number: number): string {
 }
 
 export function formatTime(t: number) {
-  const ms = t % 100;
-  let s = (t - ms) / 100;
+  const ms = t % 1000;
+  let s = (t - ms) / 1000;
   const secs = s % 60;
   s = (s - secs) / 60;
   const mins = s % 60;
 
-  return `${addDigit(mins)}:${addDigit(secs)}:${addDigit(ms)}`;
+  return `${addDigit(mins)}:${addDigit(secs)}:${addDigit(
+    Math.floor(ms / 100)
+  )}`;
 }
