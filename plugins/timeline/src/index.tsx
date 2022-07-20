@@ -7,6 +7,7 @@ import {
   LayoutHook,
   ControlExport,
 } from '@magic-circle/schema';
+import type Layers from '@magic-circle/layers';
 import { Store, StoreFamily } from '@magic-circle/state';
 import {
   registerIcon,
@@ -14,6 +15,9 @@ import {
   ChevronDown,
   ChevronUp,
   Plus,
+  PlusCircle,
+  Trash,
+  Eye,
 } from '@magic-circle/styles';
 
 import Sidebar from './Sidebar';
@@ -23,6 +27,9 @@ registerIcon(ChevronUp);
 registerIcon(ChevronDown);
 registerIcon(Clock);
 registerIcon(Plus);
+registerIcon(PlusCircle);
+registerIcon(Trash);
+registerIcon(Eye);
 
 type ScenePoint = {
   time: number;
@@ -47,6 +54,7 @@ const emptyScene: Scene = {
 export default class Timeline implements Plugin {
   ipc: App['ipc'];
   client: App;
+  layers: Layers;
 
   scene: Store<Scene>;
   playhead: Store<number>;
@@ -57,6 +65,11 @@ export default class Timeline implements Plugin {
   async setup(client: App) {
     this.ipc = client.ipc;
     this.client = client;
+    this.layers = this.client.getPlugin('layers') as Layers;
+
+    if (!this.layers) {
+      throw new Error('Layers plugin is needed when using the timeline plugin');
+    }
 
     // Create stores
     this.scene = new Store<Scene>(emptyScene);

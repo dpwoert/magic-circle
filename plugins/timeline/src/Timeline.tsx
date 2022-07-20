@@ -6,6 +6,7 @@ import { useStore } from '@magic-circle/state';
 
 import type TimelinePlugin from './index';
 import Canvas from './Canvas';
+import Track from './Track';
 import { formatTime } from './utils';
 
 type ContainerProps = {
@@ -99,6 +100,7 @@ const SidebarRow = styled.div`
 
 const AddTrack = styled.div`
   margin-top: ${SPACING(2)}px;
+  padding-bottom: ${SPACING(2)}px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -203,7 +205,7 @@ const Timeline = ({ app, timeline }: TimelineProps) => {
               <SidebarHeader>Scene 1</SidebarHeader>
               <SidebarRows>
                 {Object.keys(scene.values).map((path) => (
-                  <SidebarRow>{path}</SidebarRow>
+                  <Track path={path} timeline={timeline} />
                 ))}
                 <AddTrack>
                   <Forms.Button

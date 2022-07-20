@@ -34,6 +34,7 @@
   "dependencies": {
     "@magic-circle/state": "^0.1.5",
     "@magic-circle/styles": "^0.1.5",
+    "@magic-circle/layers": "^0.1.5",
     "virtual-scroll": "^2.2.1"
   },
   "devDependencies": {
