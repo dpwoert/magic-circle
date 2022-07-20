@@ -5,7 +5,7 @@ import VirtualScroll from 'virtual-scroll';
 import { SPACING, COLORS } from '@magic-circle/styles';
 
 import type Timeline from './index';
-import type { Scene } from './index';
+import type { Scene, ScenePoint } from './index';
 import { useStore } from '@magic-circle/state';
 
 const MIN_TICK_SIZE = 6;
@@ -39,6 +39,7 @@ function formatTime(t: number) {
 class CanvasDisplay {
   element: HTMLCanvasElement;
   context: CanvasRenderingContext2D;
+  timeline: Timeline;
   scroller: VirtualScroll;
   raf: ReturnType<typeof requestAnimationFrame>;
   width: number;
@@ -52,9 +53,10 @@ class CanvasDisplay {
   playhead: number;
   pixelRatio: number;
 
-  constructor(element: HTMLCanvasElement) {
+  constructor(element: HTMLCanvasElement, timeline: Timeline) {
     this.element = element;
     this.context = this.element.getContext('2d');
+    this.timeline = timeline;
     this.scroller = new VirtualScroll({ el: element });
     this.scroll = {
       dest: 0,
@@ -71,6 +73,10 @@ class CanvasDisplay {
 
     this.scroller.on((event) => {
       this.setScroll(this.scroll.dest + event.deltaX);
+    });
+    this.element.addEventListener('click', (evt) => {
+      const box = this.element.getBoundingClientRect();
+      this.click(evt.x - box.x, evt.y - box.y);
     });
   }
 
@@ -127,6 +133,14 @@ class CanvasDisplay {
   setScene(scene: Scene) {
     this.scene = scene;
     this.render();
+  }
+
+  click(x: number, y: number) {
+    console.log('click', { x, y });
+    if (y < SPACING(3)) {
+      const time = this.invert(x);
+      this.timeline.playhead.set(time);
+    }
   }
 
   scrollUpdate() {
@@ -219,6 +233,58 @@ class CanvasDisplay {
     this.context.fillRect(this.px(position - 4), 0, this.px(9), this.px(18));
   }
 
+  renderTrack(path: string, i: number) {
+    const points = this.scene.values[path];
+
+    // does this need rendering?
+
+    const bottom = SPACING(3) + (i + 1) * SPACING(6);
+    console.log('track', path, i, bottom);
+
+    // line
+    this.context.beginPath();
+    this.context.moveTo(0, this.px(bottom));
+    this.context.lineTo(this.px(this.width), this.px(bottom));
+    this.context.strokeStyle = COLORS.shades.s300.css;
+    this.context.lineWidth = this.px(1);
+    this.context.stroke();
+
+    // Render path
+
+    // Render points
+    points.forEach((point) => {
+      this.context.fillStyle = COLORS.shades.s400.css;
+      this.context.strokeStyle = COLORS.shades.s100.css;
+
+      const x = this.px(this.position(point.time));
+      const y = this.px(bottom - SPACING(3));
+      const s = this.px(SPACING(0.5));
+
+      this.context.translate(x, y);
+      this.context.rotate((45 * Math.PI) / 180);
+      this.context.translate(-x, -y);
+      this.context.fillRect(x - s / 2, y - s / 2, s, s);
+      this.context.strokeRect(x - s / 2, y - s / 2, s, s);
+      this.context.resetTransform();
+      // this.context.restore();
+      // this.context.translate(-x, -y);
+      // this.context.rotate(0);
+      // this.context.setTransform(1, 0, 0, 1, 0, 0);
+    });
+  }
+
+  renderTracks() {
+    if (!this.scene || !this.scene.values) {
+      return;
+    }
+
+    console.log('render tracks');
+
+    Object.keys(this.scene.values).forEach((path, i) => {
+      this.renderTrack(path, i);
+    });
+  }
+
   render() {
     // this.context.clearRect(0, 0, this.px(this.width), this.px(this.height));
 
@@ -226,6 +292,7 @@ class CanvasDisplay {
     this.context.fillStyle = COLORS.shades.s500.css;
     this.context.fillRect(0, 0, this.px(this.width), this.px(this.height));
 
+    this.renderTracks();
     this.renderTimeline();
     this.renderPlayhead();
   }
@@ -244,7 +311,7 @@ const Canvas = ({ timeline }: CanvasProps) => {
 
   useEffect(() => {
     if (ref.current) {
-      display.current = new CanvasDisplay(ref.current);
+      display.current = new CanvasDisplay(ref.current, timeline);
     }
   }, []);
 

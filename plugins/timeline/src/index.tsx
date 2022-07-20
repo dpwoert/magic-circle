@@ -31,7 +31,7 @@ registerIcon(PlusCircle);
 registerIcon(Trash);
 registerIcon(Eye);
 
-type ScenePoint = {
+export type ScenePoint = {
   time: number;
   value: number | boolean;
   controlPoint?: number[];
@@ -163,5 +163,55 @@ export default class Timeline implements Plugin {
         },
       });
     }
+  }
+
+  addKeyframe(path: string, time: number) {
+    const current = this.scene.value.values[path];
+
+    console.log({ path, time });
+
+    // Start with first frame
+    if (!current || current.length === 0) {
+      const currentValue = this.layers.lookup.get(path).value;
+
+      if ('value' in currentValue) {
+        this.scene.setFn((curr) => ({
+          ...curr,
+          values: {
+            ...curr.values,
+            [path]: [
+              {
+                time,
+                value: currentValue.value,
+              },
+            ],
+          },
+        }));
+      }
+    }
+
+    // Check if keyframe already exists
+    else if (current && !current.find((c) => c.time === time)) {
+      // Add a keyframe
+      // Read current value
+    }
+
+    // todo sync again
+  }
+
+  removeKeyframe(path: string, time: number) {
+    const current = this.scene.value.values[path];
+
+    if (current) {
+      this.scene.setFn((curr) => ({
+        ...curr,
+        values: {
+          ...curr.values,
+          [path]: current.filter((c) => c.time !== time),
+        },
+      }));
+    }
+
+    // sync again
   }
 }

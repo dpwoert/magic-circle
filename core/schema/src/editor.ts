@@ -191,8 +191,10 @@ export type StoreHook<T> = (newValue: T) => void;
 export interface Store<T> {
   value: T;
   set(value: T): void;
+  setFn(fn: (curr: T) => T): void;
   onChange(hook: StoreHook<T>): void;
   removeListener(hook: StoreHook<T>): void;
+  hooks: StoreHook<T>[];
 }
 
 export interface StoreConstructor<T> {

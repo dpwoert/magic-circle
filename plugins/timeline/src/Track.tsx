@@ -49,6 +49,9 @@ type TrackProps = {
 
 const Track = ({ timeline, path }: TrackProps) => {
   const control = useStore(timeline.layers.lookup.get(path));
+  const playhead = useStore(timeline.playhead);
+
+  console.log({ playhead });
 
   if ('label' in control) {
     return (
@@ -58,9 +61,19 @@ const Track = ({ timeline, path }: TrackProps) => {
           <span>{control.path}</span>
         </Labels>
         <Options>
-          <Icon name="Eye" width={SPACING(1.5)} height={SPACING(1.5)} />
-          <Icon name="PlusCircle" width={SPACING(1.5)} height={SPACING(1.5)} />
-          <Icon name="Trash" width={SPACING(1.5)} height={SPACING(1.5)} />
+          {/* <Icon name="Eye" width={SPACING(1.5)} height={SPACING(1.5)} /> */}
+          <Icon
+            onClick={() => timeline.addKeyframe(path, playhead)}
+            name="PlusCircle"
+            width={SPACING(1.5)}
+            height={SPACING(1.5)}
+          />
+          <Icon
+            onClick={() => timeline.removeKeyframe(path, playhead)}
+            name="Trash"
+            width={SPACING(1.5)}
+            height={SPACING(1.5)}
+          />
         </Options>
       </Container>
     );

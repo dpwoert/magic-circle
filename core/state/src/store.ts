@@ -2,9 +2,11 @@ import { Store as StoreClass } from '@magic-circle/schema';
 
 type Hook<T> = (newValue: T) => void;
 
+type Initializer<T> = T extends any ? T | ((T) => T) : never;
+
 export default class Store<T> implements StoreClass<T> {
   value: T;
-  private hooks: Hook<T>[];
+  hooks: Hook<T>[];
 
   constructor(initialValue: T) {
     this.value = initialValue;
@@ -16,6 +18,10 @@ export default class Store<T> implements StoreClass<T> {
 
     // run all hooks
     this.hooks.forEach((h) => h(value));
+  }
+
+  setFn(fn: (curr: T) => T) {
+    this.set(fn(this.value));
   }
 
   onChange(hook: Hook<T>) {
