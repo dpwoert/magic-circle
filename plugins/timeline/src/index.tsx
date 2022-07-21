@@ -155,6 +155,14 @@ export default class Timeline implements Plugin {
     this.reset();
   }
 
+  sync() {
+    this.ipc.send('timeline:scene', this.scene.value);
+  }
+
+  setPlayhead(time: number) {
+    this.ipc.send('timeline:playhead', time);
+  }
+
   selectTrack() {
     if (this.client.selectQuery.value) {
       this.client.selectQuery.set(null);
@@ -164,8 +172,6 @@ export default class Timeline implements Plugin {
         icon: 'Clock',
         filter: 'timeline',
         onSelect: (path) => {
-          console.log({ onSelect: path });
-
           this.scene.set({
             ...this.scene.value,
             values: {
@@ -182,8 +188,6 @@ export default class Timeline implements Plugin {
 
   addKeyframe(path: string, time: number) {
     const current = this.scene.value.values[path];
-
-    console.log({ path, time });
 
     // Start with first frame
     if (!current || current.length === 0) {
@@ -227,8 +231,7 @@ export default class Timeline implements Plugin {
         }));
       }
 
-      // Add a keyframe
-      // Read current value
+      // Read current value [todo]
     }
 
     // todo sync again with fe
@@ -247,7 +250,7 @@ export default class Timeline implements Plugin {
       }));
     }
 
-    // sync again
+    this.sync();
   }
 
   changeKeyframe(path: string, key: number, newTime: number, newValue: any) {
@@ -284,7 +287,7 @@ export default class Timeline implements Plugin {
       }));
     }
 
-    // sync again
+    this.sync();
   }
 
   changeHandleForKeyframe(
@@ -296,8 +299,6 @@ export default class Timeline implements Plugin {
   ) {
     const current = this.scene.value.values[path];
 
-    console.log({ newX, newY, key });
-
     if (current) {
       this.scene.setFn((curr) => ({
         ...curr,
@@ -306,15 +307,13 @@ export default class Timeline implements Plugin {
           [path]: current.map((c, k) => {
             console.log({ k, key });
             if (key === k) {
-              const update = {
+              return {
                 ...c,
                 controlPoints: {
                   ...c.controlPoints,
                   [direction]: [newX, newY],
                 },
               };
-              console.log('change', { c, direction, update });
-              return update;
             }
             return c;
           }),
@@ -322,7 +321,7 @@ export default class Timeline implements Plugin {
       }));
     }
 
-    // sync again
+    this.sync();
   }
 
   toggleEaseForKeyframe(path: string, key: number) {
@@ -356,6 +355,8 @@ export default class Timeline implements Plugin {
         },
       }));
     }
+
+    this.sync();
   }
 
   getKeyframeByKey(path: string, key: number) {

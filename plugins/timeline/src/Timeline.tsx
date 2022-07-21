@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import styled from 'styled-components';
 
 import { COLORS, Forms, Icon, SPACING, TYPO } from '@magic-circle/styles';
@@ -135,7 +135,7 @@ const Clock = styled.div`
   align-items: center;
   justify-content: center;
   background: ${COLORS.shades.s700.css};
-  color: ${COLORS.shades.s200.css};
+  color: ${COLORS.shades.s300.css};
   border: 1px solid ${COLORS.shades.s400.css};
   border-radius: 5px;
   padding-right: ${SPACING(0.5)}px;
@@ -146,7 +146,7 @@ const Clock = styled.div`
   }
 
   span:nth-child(2) {
-    color: ${COLORS.shades.s300.css};
+    color: ${COLORS.shades.s200.css};
   }
 `;
 
@@ -179,8 +179,17 @@ const Timeline = ({ app, timeline }: TimelineProps) => {
   const playing = useStore(timeline.playing);
   const playhead = useStore(timeline.playhead);
   const scene = useStore(timeline.scene);
-  // @ts-ignore
+  const selected = useStore(timeline.selected);
   const selectQuery = useStore(app.selectQuery);
+
+  const secondClock = useMemo<number>(() => {
+    if (!selected) return scene.duration;
+
+    const value = scene.values[selected.path];
+    return value && selected && value[selected.key]
+      ? value[selected.key].time
+      : scene.duration;
+  }, [selected, scene]);
 
   return (
     <Container show={show}>
@@ -244,7 +253,7 @@ const Timeline = ({ app, timeline }: TimelineProps) => {
                     />
                   </PlayButton>
                   <span>{formatTime(playhead)}</span>
-                  <span>{formatTime(playhead)}</span>
+                  <span>{formatTime(secondClock)}</span>
                 </Clock>
               </ClockContainer>
             </CanvasContainer>

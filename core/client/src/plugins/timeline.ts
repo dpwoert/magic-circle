@@ -61,6 +61,7 @@ export default class PLuginTimeline extends Plugin {
       this.setPlayhead(playhead);
     });
     ipc.on('timeline:scene', (_, scene: Scene) => {
+      console.log({ scene });
       this.set(scene);
     });
     ipc.on('timeline:variable', (_, path: string, points: ScenePoint[]) => {
@@ -95,11 +96,11 @@ export default class PLuginTimeline extends Plugin {
         from: points[i + 0],
         to: points[i + 1],
         curve: bezier(
-          points[i + 0].controlPoints.right[0] || 0,
-          points[i + 0].controlPoints.right[1] || 0,
+          points[i + 0]?.controlPoints?.right[0] || 0,
+          points[i + 0]?.controlPoints?.right[1] || 0,
 
-          points[i + 1].controlPoints.left[0] || 1,
-          points[i + 1].controlPoints.left[1] || 1
+          points[i + 1]?.controlPoints?.left[0] || 1,
+          points[i + 1]?.controlPoints?.left[1] || 1
         ),
       };
 
@@ -109,6 +110,7 @@ export default class PLuginTimeline extends Plugin {
 
   set(scene: Scene) {
     this.scene = scene;
+    this.variables = {};
 
     Object.keys(this.scene.values).forEach((path) => {
       this.setVariable(path, this.scene.values[path]);
@@ -136,9 +138,18 @@ export default class PLuginTimeline extends Plugin {
       );
 
       if (current) {
-        const progress = time / current.to.time - time;
+        const progress =
+          (time - current.from.time) / (current.to.time - current.from.time);
         const relative = current.curve(progress);
         const value = lerp(+current.from.value, +current.to.value, relative);
+
+        console.log({
+          value,
+          path: variable.path,
+          current,
+          relative,
+          progress,
+        });
 
         this.layers.set(variable.path, value);
       }

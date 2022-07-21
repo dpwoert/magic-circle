@@ -167,7 +167,7 @@ class CanvasDisplay {
   click(x: number, y: number) {
     if (y < SPACING(3)) {
       const time = this.invert(x);
-      this.timeline.playhead.set(Math.max(0, time));
+      this.timeline.setPlayhead(Math.max(0, time));
     } else {
       const hotspot = this.hotspot(x, y);
 
@@ -326,16 +326,10 @@ class CanvasDisplay {
         y: this.pxInvert(handle.position[1]),
         radius: 3,
         drag: (dx, dy) => {
-          console.log({ dx, dy });
-
-          // const curr = this.timeline.getKeyframeByKey(handle.path, handle.key);
-
           const newX = handle.position[0] + this.px(dx);
           const newY = handle.position[1] + this.px(dy);
           const relX = mapLinear(newX, handle.axisX[0], handle.axisX[1], 0, 1);
           const relY = mapLinear(newY, handle.axisY[0], handle.axisY[1], 0, 1);
-
-          console.log([...handle.position], [newX, newY]);
 
           // ensure we're updating the same keyframe and not the reference to the old one...
           handle.position = [newX, newY];
@@ -406,8 +400,6 @@ class CanvasDisplay {
       } else if (point.controlPoints?.left || previous?.controlPoints?.right) {
         const prevX = this.px(this.position(previous.time || 0));
         const prevY = previous ? this.px(axis(+previous.value)) : y;
-
-        console.log('right', previous?.controlPoints?.right);
 
         const p1 = [
           lerp(previous?.controlPoints?.right[0] || 0, prevX, x),
@@ -525,7 +517,7 @@ class CanvasDisplay {
             path,
             key,
           });
-          this.timeline.playhead.set(point.time);
+          this.timeline.setPlayhead(point.time);
           this.render();
         },
         drag: (dx, dy) => {
