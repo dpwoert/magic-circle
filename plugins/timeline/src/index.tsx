@@ -157,6 +157,8 @@ export default class Timeline implements Plugin {
 
   sync() {
     this.ipc.send('timeline:scene', this.scene.value);
+
+    console.log(this.scene.value);
   }
 
   setPlayhead(time: number) {

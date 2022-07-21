@@ -32,12 +32,18 @@ export type SceneVariable = {
 };
 
 export default class PLuginTimeline extends Plugin {
-  scene: Scene;
-  variables: Record<string, SceneVariable>;
+  private layers: PluginLayers;
+  private scene: Scene;
+  private start?: {
+    scene: Scene;
+    play: boolean;
+  };
+  private variables: Record<string, SceneVariable>;
+  private startTime: Date;
   playhead: number;
   playing: boolean;
-  startTime: Date;
-  layers: PluginLayers;
+
+  name = 'timeline';
 
   constructor(client: Plugin['client']) {
     super(client);
@@ -61,7 +67,6 @@ export default class PLuginTimeline extends Plugin {
       this.setPlayhead(playhead);
     });
     ipc.on('timeline:scene', (_, scene: Scene) => {
-      console.log({ scene });
       this.set(scene);
     });
     ipc.on('timeline:variable', (_, path: string, points: ScenePoint[]) => {
@@ -75,7 +80,14 @@ export default class PLuginTimeline extends Plugin {
     });
 
     // Set default scene if needed
-    if (!this.scene) {
+    if (this.start) {
+      this.set(this.start.scene);
+
+      // autoplay if needed
+      if (this.start.play) {
+        this.play();
+      }
+    } else {
       this.set({
         duration: 1000 * 10,
         loop: false,
@@ -108,9 +120,18 @@ export default class PLuginTimeline extends Plugin {
     }
   }
 
+  load(scene: Scene, autoPlay = true) {
+    this.start = {
+      scene,
+      play: autoPlay,
+    };
+  }
+
   set(scene: Scene) {
     this.scene = scene;
     this.variables = {};
+
+    console.log({ scene });
 
     Object.keys(this.scene.values).forEach((path) => {
       this.setVariable(path, this.scene.values[path]);
@@ -143,14 +164,6 @@ export default class PLuginTimeline extends Plugin {
         const relative = current.curve(progress);
         const value = lerp(+current.from.value, +current.to.value, relative);
 
-        console.log({
-          value,
-          path: variable.path,
-          current,
-          relative,
-          progress,
-        });
-
         this.layers.set(variable.path, value);
       }
     });
@@ -161,6 +174,7 @@ export default class PLuginTimeline extends Plugin {
     // End of timeline
     if (time >= this.scene.duration) {
       this.setPlayhead(0);
+      this.startTime = new Date();
 
       if (!this.scene.loop) {
         this.stop();
@@ -171,8 +185,6 @@ export default class PLuginTimeline extends Plugin {
   play() {
     this.playing = true;
     this.startTime = new Date();
-
-    console.log('timeline play');
 
     this.client.ipc.send('timeline:play');
   }

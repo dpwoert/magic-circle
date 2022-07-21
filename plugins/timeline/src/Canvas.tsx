@@ -47,8 +47,14 @@ class CanvasDisplay {
   width: number;
   height: number;
   scroll: {
-    dest: number;
-    curr: number;
+    x: {
+      dest: number;
+      curr: number;
+    };
+    y: {
+      dest: number;
+      curr: number;
+    };
   };
   dragging?: Hotspot;
   hotspots: Hotspot[];
@@ -63,8 +69,14 @@ class CanvasDisplay {
     this.timeline = timeline;
     this.scroller = new VirtualScroll({ el: element });
     this.scroll = {
-      dest: 0,
-      curr: 0,
+      x: {
+        dest: 0,
+        curr: 0,
+      },
+      y: {
+        dest: 0,
+        curr: 0,
+      },
     };
     this.zoom = 0;
     this.pixelRatio = window.devicePixelRatio || 1;
@@ -76,7 +88,10 @@ class CanvasDisplay {
     this.scrollUpdate = this.scrollUpdate.bind(this);
 
     this.scroller.on((event) => {
-      this.setScroll(this.scroll.dest + event.deltaX);
+      this.setScroll(
+        this.scroll.x.dest + event.deltaX,
+        this.scroll.y.dest - event.deltaY
+      );
     });
     this.element.addEventListener('click', (evt) => {
       const box = this.element.getBoundingClientRect();
@@ -116,19 +131,30 @@ class CanvasDisplay {
   }
 
   position(time: number) {
-    const offset = SPACING(1) + this.scroll.curr;
+    const offset = SPACING(1) + this.scroll.x.curr;
     return this.stepSize() * time + offset;
   }
 
   invert(px: number) {
-    const offset = SPACING(1) + this.scroll.curr;
+    const offset = SPACING(1) + this.scroll.x.curr;
     return (px - offset) / this.stepSize();
   }
 
-  setScroll(scroll: number) {
+  setScroll(x: number, y: number) {
+    const ySize =
+      this.height -
+      Object.keys(this.scene.values).length * SPACING(6) +
+      SPACING(6.5);
+
     this.scroll = {
-      dest: Math.min(0, scroll),
-      curr: this.scroll.curr,
+      x: {
+        dest: Math.min(0, x),
+        curr: this.scroll.x.curr,
+      },
+      y: {
+        dest: clamp(y, 0, ySize),
+        curr: this.scroll.y.curr,
+      },
     };
 
     if (this.raf) {
@@ -208,19 +234,39 @@ class CanvasDisplay {
 
   scrollUpdate() {
     this.scroll = {
-      dest: this.scroll.dest,
-      curr: this.scroll.curr + (this.scroll.dest - this.scroll.curr) * 0.5,
+      x: {
+        dest: this.scroll.x.dest,
+        curr:
+          this.scroll.x.curr + (this.scroll.x.dest - this.scroll.x.curr) * 0.5,
+      },
+      y: {
+        dest: this.scroll.y.dest,
+        curr:
+          this.scroll.y.curr + (this.scroll.y.dest - this.scroll.y.curr) * 0.5,
+      },
     };
 
-    if (Math.abs(this.scroll.dest - this.scroll.curr) < 0.05) {
-      this.scroll.curr = this.scroll.dest;
+    // hack
+    document.querySelector('#timeline-rows').scrollTop = Math.abs(
+      this.scroll.y.curr
+    );
+
+    // ensure we're not easing too longer
+    if (Math.abs(this.scroll.x.dest - this.scroll.x.curr) < 0.05) {
+      this.scroll.x.curr = this.scroll.x.dest;
+    }
+    if (Math.abs(this.scroll.y.dest - this.scroll.y.curr) < 0.05) {
+      this.scroll.y.curr = this.scroll.y.dest;
     }
 
     if (this.raf) {
       cancelAnimationFrame(this.raf);
     }
 
-    if (this.scroll.curr !== this.scroll.dest) {
+    if (
+      this.scroll.x.curr !== this.scroll.x.dest ||
+      this.scroll.y.curr !== this.scroll.y.dest
+    ) {
       this.raf = requestAnimationFrame(this.scrollUpdate);
     }
 
@@ -369,7 +415,7 @@ class CanvasDisplay {
 
     // does this need rendering?
 
-    const top = SPACING(3) + i * SPACING(6);
+    const top = SPACING(3) + i * SPACING(6) - this.scroll.y.curr;
     const bottom = top + SPACING(6);
 
     // Create scale
@@ -558,6 +604,10 @@ class CanvasDisplay {
     this.renderTracks();
     this.renderTimeline();
     this.renderPlayhead();
+  }
+
+  destroy() {
+    this.scroller.destroy();
   }
 }
 

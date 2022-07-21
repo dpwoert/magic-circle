@@ -83,19 +83,7 @@ const SidebarRows = styled.div`
   flex-direction: column;
   flex: 1;
   min-height: 0;
-  overflow: auto;
-`;
-
-const SidebarRow = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 0 ${SPACING(1)}px;
-  width: 100%;
-  height: ${SPACING(6)}px;
-  background: ${COLORS.shades.s600.css};
-  color: ${COLORS.white.css};
-  border-bottom: 1px solid ${COLORS.shades.s300.css};
-  flex-shrink: 0;
+  overflow: hidden;
 `;
 
 const AddTrack = styled.div`
@@ -211,8 +199,8 @@ const Timeline = ({ app, timeline }: TimelineProps) => {
         {show && (
           <>
             <Sidebar>
-              <SidebarHeader>Scene 1</SidebarHeader>
-              <SidebarRows>
+              <SidebarHeader>{scene.name}</SidebarHeader>
+              <SidebarRows id="timeline-rows">
                 {Object.keys(scene.values).map((path) => (
                   <Track path={path} timeline={timeline} />
                 ))}
