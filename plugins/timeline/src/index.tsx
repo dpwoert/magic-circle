@@ -39,7 +39,10 @@ registerIcon(Linear);
 export type ScenePoint = {
   time: number;
   value: number | boolean;
-  controlPoint?: number[];
+  controlPoints?: {
+    left: number[];
+    right: number[];
+  };
 };
 
 export type Scene = {
@@ -50,7 +53,7 @@ export type Scene = {
 };
 
 type selection = {
-  time: number;
+  key: number;
   path: string;
 };
 
@@ -231,7 +234,7 @@ export default class Timeline implements Plugin {
     // todo sync again with fe
   }
 
-  removeKeyframe(path: string, time: number) {
+  removeKeyframe(path: string, key: number) {
     const current = this.scene.value.values[path];
 
     if (current) {
@@ -239,7 +242,7 @@ export default class Timeline implements Plugin {
         ...curr,
         values: {
           ...curr.values,
-          [path]: current.filter((c) => c.time !== time),
+          [path]: current.filter((c, k) => k !== key),
         },
       }));
     }
@@ -256,19 +259,16 @@ export default class Timeline implements Plugin {
         values: {
           ...curr.values,
           [path]: current.map((c, k) => {
-            // todo clamp time to keyframe before and after
-
             let left = 0;
             let right = this.scene.value.duration;
 
+            // ensure we're not moving this keyframe before/after others
             if (k > 0) {
               left = current[k - 1].time + 1;
             }
             if (k < current.length - 1) {
               right = current[k + 1].time - 1;
             }
-
-            console.log({ newTime, left, right });
 
             if (key === k) {
               return {
@@ -285,6 +285,77 @@ export default class Timeline implements Plugin {
     }
 
     // sync again
+  }
+
+  changeHandleForKeyframe(
+    path: string,
+    key: number,
+    direction: 'left' | 'right',
+    newX: number,
+    newY: number
+  ) {
+    const current = this.scene.value.values[path];
+
+    console.log({ newX, newY, key });
+
+    if (current) {
+      this.scene.setFn((curr) => ({
+        ...curr,
+        values: {
+          ...curr.values,
+          [path]: current.map((c, k) => {
+            console.log({ k, key });
+            if (key === k) {
+              const update = {
+                ...c,
+                controlPoints: {
+                  ...c.controlPoints,
+                  [direction]: [newX, newY],
+                },
+              };
+              console.log('change', { c, direction, update });
+              return update;
+            }
+            return c;
+          }),
+        },
+      }));
+    }
+
+    // sync again
+  }
+
+  toggleEaseForKeyframe(path: string, key: number) {
+    const current = this.scene.value.values[path];
+
+    if (current) {
+      this.scene.setFn((curr) => ({
+        ...curr,
+        values: {
+          ...curr.values,
+          [path]: current.map((c, k) => {
+            if (key === k) {
+              if (c.controlPoints) {
+                return {
+                  ...c,
+                  controlPoints: null,
+                };
+              } else {
+                return {
+                  ...c,
+                  controlPoints: {
+                    left: [0.75, 1.0],
+                    right: [0.25, 0.1],
+                  },
+                };
+              }
+            }
+
+            return c;
+          }),
+        },
+      }));
+    }
   }
 
   getKeyframeByKey(path: string, key: number) {

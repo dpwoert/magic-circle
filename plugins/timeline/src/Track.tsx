@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import styled from 'styled-components';
 
 import { COLORS, Forms, Icon, SPACING, TYPO } from '@magic-circle/styles';
@@ -57,12 +57,23 @@ type TrackProps = {
 
 const Track = ({ timeline, path }: TrackProps) => {
   const control = useStore(timeline.layers.lookup.get(path));
+  const scene = useStore(timeline.scene);
   const playhead = useStore(timeline.playhead);
   const selected = useStore(timeline.selected);
 
+  const isEased = useMemo<boolean>(() => {
+    const value = scene.values[path];
+    return (
+      value &&
+      selected &&
+      value[selected.key] &&
+      !!value[selected.key].controlPoints
+    );
+  }, [selected, scene]);
+
   if ('label' in control) {
     return (
-      <Container>
+      <Container key={path}>
         <Labels>
           <span>{control.label}</span>
           <span>{control.path}</span>
@@ -78,15 +89,21 @@ const Track = ({ timeline, path }: TrackProps) => {
           </Option>
           <Option
             disabled={!selected || selected.path !== path}
-            onClick={() => timeline.removeKeyframe(path, selected.time)}
+            onClick={() => timeline.removeKeyframe(path, selected.key)}
           >
             <Icon name="Trash" width={SPACING(1.5)} height={SPACING(1.5)} />
           </Option>
           <Option
             disabled={!selected || selected.path !== path}
-            onClick={() => {}}
+            onClick={() => {
+              timeline.toggleEaseForKeyframe(path, selected.key);
+            }}
           >
-            <Icon name="Ease" width={SPACING(1.5)} height={SPACING(1.5)} />
+            <Icon
+              name={isEased ? 'Linear' : 'Ease'}
+              width={SPACING(1.5)}
+              height={SPACING(1.5)}
+            />
           </Option>
         </Options>
       </Container>

@@ -28,6 +28,16 @@ type Hotspot = {
   drag?: (deltaX: number, deltaY: number) => void;
 };
 
+type Handle = {
+  path: string;
+  key: number;
+  direction: 'left' | 'right';
+  position: number[];
+  origin: number[];
+  axisX: number[];
+  axisY: number[];
+};
+
 class CanvasDisplay {
   element: HTMLCanvasElement;
   context: CanvasRenderingContext2D;
@@ -95,8 +105,6 @@ class CanvasDisplay {
     this.height = this.element.clientHeight;
     this.element.width = this.width * this.pixelRatio;
     this.element.height = this.height * this.pixelRatio;
-
-    console.log('resize', this.width, this.height);
   }
 
   px(px: number) {
@@ -159,7 +167,7 @@ class CanvasDisplay {
   click(x: number, y: number) {
     if (y < SPACING(3)) {
       const time = this.invert(x);
-      this.timeline.playhead.set(time);
+      this.timeline.playhead.set(Math.max(0, time));
     } else {
       const hotspot = this.hotspot(x, y);
 
@@ -174,8 +182,6 @@ class CanvasDisplay {
 
   dblClick(x: number, y: number) {
     const hotspot = this.hotspot(x, y);
-
-    console.log({ hotspot });
 
     if (hotspot && hotspot.dblClick) {
       hotspot.dblClick();
@@ -290,6 +296,64 @@ class CanvasDisplay {
     this.context.fillRect(this.px(position - 4), 0, this.px(9), this.px(18));
   }
 
+  renderHandles(handles: Handle[]) {
+    handles.forEach((handle) => {
+      // show lines
+      this.context.beginPath();
+      this.context.setLineDash([this.px(1), this.px(1)]);
+      this.context.moveTo(handle.origin[0], handle.origin[1]);
+      this.context.lineTo(handle.position[0], handle.position[1]);
+      this.context.strokeStyle = COLORS.shades.s100.css;
+      this.context.lineWidth = this.px(1);
+      this.context.stroke();
+      this.context.setLineDash([]);
+
+      // show handles
+      this.context.fillStyle = COLORS.shades.s100.css;
+      this.context.beginPath();
+      this.context.arc(
+        handle.position[0],
+        handle.position[1],
+        this.px(1.5),
+        0,
+        2 * Math.PI,
+        false
+      );
+      this.context.fill();
+
+      this.hotspots.push({
+        x: this.pxInvert(handle.position[0]),
+        y: this.pxInvert(handle.position[1]),
+        radius: 3,
+        drag: (dx, dy) => {
+          console.log({ dx, dy });
+
+          // const curr = this.timeline.getKeyframeByKey(handle.path, handle.key);
+
+          const newX = handle.position[0] + this.px(dx);
+          const newY = handle.position[1] + this.px(dy);
+          const relX = mapLinear(newX, handle.axisX[0], handle.axisX[1], 0, 1);
+          const relY = mapLinear(newY, handle.axisY[0], handle.axisY[1], 0, 1);
+
+          console.log([...handle.position], [newX, newY]);
+
+          // ensure we're updating the same keyframe and not the reference to the old one...
+          handle.position = [newX, newY];
+
+          this.timeline.changeHandleForKeyframe(
+            handle.path,
+            handle.key,
+            handle.direction,
+            relX,
+            relY
+          );
+
+          this.render();
+        },
+      });
+    });
+  }
+
   renderTrack(path: string, i: number) {
     const points = this.scene.values[path];
     const control = this.timeline.layers.lookup.get(path).value;
@@ -328,14 +392,60 @@ class CanvasDisplay {
     this.context.lineWidth = this.px(1);
     this.context.stroke();
 
+    let handles: Handle[] = [];
+
     // Render path
     this.context.beginPath();
     allPoints.forEach((point, i) => {
       const x = this.px(this.position(point.time));
       const y = this.px(axis(+point.value));
+      const previous = i > 0 ? allPoints[i - 1] : null;
 
       if (i === 0) {
         this.context.moveTo(x, y);
+      } else if (point.controlPoints?.left || previous?.controlPoints?.right) {
+        const prevX = this.px(this.position(previous.time || 0));
+        const prevY = previous ? this.px(axis(+previous.value)) : y;
+
+        console.log('right', previous?.controlPoints?.right);
+
+        const p1 = [
+          lerp(previous?.controlPoints?.right[0] || 0, prevX, x),
+          lerp(previous?.controlPoints?.right[1] || 0, prevY, y),
+        ];
+        const p2 = [
+          lerp(point?.controlPoints?.left[0] || 1, prevX, x),
+          lerp(point?.controlPoints?.left[1] || 1, prevY, y),
+        ];
+
+        const axisX = [prevX, x];
+        const axisY = [prevY, y];
+        const key = points.findIndex((t) => t.time === point.time);
+
+        if (previous?.controlPoints) {
+          handles.push({
+            path,
+            key: key - 1,
+            direction: 'right',
+            position: p1,
+            origin: [prevX, prevY],
+            axisX,
+            axisY,
+          });
+        }
+        if (point.controlPoints) {
+          handles.push({
+            path,
+            key,
+            direction: 'left',
+            position: p2,
+            origin: [x, y],
+            axisX,
+            axisY,
+          });
+        }
+
+        this.context.bezierCurveTo(p1[0], p1[1], p2[0], p2[1], x, y);
       } else {
         this.context.lineTo(x, y);
       }
@@ -381,7 +491,7 @@ class CanvasDisplay {
     points.forEach((point, key) => {
       const selected = this.timeline.selected.value;
       const isSelected =
-        selected && selected.path === path && selected.time === point.time;
+        selected && selected.path === path && selected.key === key;
       this.context.fillStyle = isSelected
         ? COLORS.shades.s100.css
         : COLORS.shades.s400.css;
@@ -406,14 +516,14 @@ class CanvasDisplay {
         onClick: () => {
           this.timeline.selected.set({
             path,
-            time: point.time,
+            key,
           });
           this.render();
         },
         dblClick: () => {
           this.timeline.selected.set({
             path,
-            time: point.time,
+            key,
           });
           this.timeline.playhead.set(point.time);
           this.render();
@@ -427,21 +537,19 @@ class CanvasDisplay {
           const newTime = this.invert(newX);
           const newValue = clamp(axisInverse(newY), range[0], range[1]);
 
-          console.log({ curr, newTime, newValue, range });
-
           this.timeline.changeKeyframe(path, key, newTime, newValue);
           this.render();
         },
       });
     });
+
+    this.renderHandles(handles);
   }
 
   renderTracks() {
     if (!this.scene || !this.scene.values) {
       return;
     }
-
-    console.log('render tracks');
 
     Object.keys(this.scene.values).forEach((path, i) => {
       this.renderTrack(path, i);

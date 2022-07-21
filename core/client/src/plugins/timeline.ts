@@ -7,7 +7,10 @@ import { lerp, clamp } from '../utils/math';
 type ScenePoint = {
   time: number;
   value: number | boolean;
-  controlPoint?: number[];
+  controlPoints?: {
+    left: number[];
+    right: number[];
+  };
 };
 
 type SceneCurve = {
@@ -92,11 +95,11 @@ export default class PLuginTimeline extends Plugin {
         from: points[i + 0],
         to: points[i + 1],
         curve: bezier(
-          points[i + 0].controlPoint[0] || 0,
-          points[i + 0].controlPoint[1] || 0,
+          points[i + 0].controlPoints.right[0] || 0,
+          points[i + 0].controlPoints.right[1] || 0,
 
-          points[i + 1].controlPoint[0] || 1,
-          points[i + 1].controlPoint[1] || 1
+          points[i + 1].controlPoints.left[0] || 1,
+          points[i + 1].controlPoints.left[1] || 1
         ),
       };
 
