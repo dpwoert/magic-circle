@@ -297,8 +297,6 @@ class App implements AppBase {
       this.showCommandLine();
     });
   }
-
-  selectControl() {}
 }
 
 const app = new App(userConfig);

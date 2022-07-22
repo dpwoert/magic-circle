@@ -45,10 +45,6 @@ export default class PLuginTimeline extends Plugin {
 
   name = 'timeline';
 
-  constructor(client: Plugin['client']) {
-    super(client);
-  }
-
   setup() {
     this.layers = this.client.plugin<PluginLayers>('layers');
 
@@ -132,8 +128,6 @@ export default class PLuginTimeline extends Plugin {
     this.scene = scene;
     this.variables = {};
 
-    console.log({ scene });
-
     Object.keys(this.scene.values).forEach((path) => {
       this.setVariable(path, this.scene.values[path]);
     });
@@ -170,7 +164,7 @@ export default class PLuginTimeline extends Plugin {
       }
     });
 
-    //send to ui
+    // Send to UI
     this.client.ipc.send('timeline:playhead', this.playhead);
 
     // End of timeline

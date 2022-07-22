@@ -15,8 +15,8 @@ type SidebarProps = {
   timeline: Timeline;
 };
 
-const Sidebar = ({}: SidebarProps) => {
-  return <Container>todo</Container>;
+const Sidebar = ({ timeline }: SidebarProps) => {
+  return <Container>{timeline.scene.value.name}</Container>;
 };
 
 export default Sidebar;

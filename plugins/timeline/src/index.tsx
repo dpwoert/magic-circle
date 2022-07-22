@@ -1,14 +1,6 @@
-import {
-  Plugin,
-  icons,
-  App,
-  MainLayerExport,
-  LayerExport,
-  LayoutHook,
-  ControlExport,
-} from '@magic-circle/schema';
+import { Plugin, icons, App, LayoutHook } from '@magic-circle/schema';
 import type Layers from '@magic-circle/layers';
-import { Store, StoreFamily } from '@magic-circle/state';
+import { Store } from '@magic-circle/state';
 import {
   registerIcon,
   Clock,
@@ -107,7 +99,7 @@ export default class Timeline implements Plugin {
     // Set controls sidebar
     this.client.setLayoutHook(
       LayoutHook.BOTTOM,
-      <TimelineBottom timeline={this} app={this.client} />
+      <TimelineBottom timeline={this} />
     );
   }
 
@@ -310,7 +302,6 @@ export default class Timeline implements Plugin {
         values: {
           ...curr.values,
           [path]: current.map((c, k) => {
-            console.log({ k, key });
             if (key === k) {
               return {
                 ...c,
@@ -344,15 +335,15 @@ export default class Timeline implements Plugin {
                   ...c,
                   controlPoints: null,
                 };
-              } else {
-                return {
-                  ...c,
-                  controlPoints: {
-                    left: [0.75, 1.0],
-                    right: [0.25, 0.1],
-                  },
-                };
               }
+
+              return {
+                ...c,
+                controlPoints: {
+                  left: [0.75, 1.0],
+                  right: [0.25, 0.1],
+                },
+              };
             }
 
             return c;

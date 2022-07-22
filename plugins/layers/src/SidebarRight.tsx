@@ -6,7 +6,6 @@ import { useStore } from '@magic-circle/state';
 import { SPACING, COLORS, TYPO } from '@magic-circle/styles';
 
 import type Layers from './index';
-import type { ExternalQuery } from './index';
 
 const Container = styled.div`
   display: flex;

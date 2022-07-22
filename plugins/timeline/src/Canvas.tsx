@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-properties */
 import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import VirtualScroll from 'virtual-scroll';
@@ -6,10 +7,8 @@ import { SPACING, COLORS } from '@magic-circle/styles';
 import { useStore } from '@magic-circle/state';
 
 import type Timeline from './index';
-import type { Scene, ScenePoint } from './index';
+import type { Scene } from './index';
 import { lerp, formatTime, mapLinear, clamp } from './utils';
-
-const MIN_TICK_SIZE = 6;
 
 const Container = styled.canvas`
   position: absolute;
@@ -278,12 +277,12 @@ class CanvasDisplay {
   }
 
   renderTimeline() {
-    // ensure we can't get into an infinite loop
+    // Ensure we can't get into an infinite loop
     if (!this.width) {
       return;
     }
 
-    //background
+    // Background
     this.context.fillStyle = COLORS.shades.s600.css;
     this.context.fillRect(0, 0, this.px(this.width), this.px(SPACING(3)));
 
@@ -410,7 +409,7 @@ class CanvasDisplay {
           const relY = mapLinear(newY, handle.axisY[0], handle.axisY[1], 0, 1);
 
           // ensure we're updating the same keyframe and not the reference to the old one...
-          handle.position = [newX, newY];
+          handle.position = [newX, newY]; // eslint-disable-line
 
           this.timeline.changeHandleForKeyframe(
             handle.path,
@@ -464,7 +463,7 @@ class CanvasDisplay {
     this.context.lineWidth = this.px(1);
     this.context.stroke();
 
-    let handles: Handle[] = [];
+    const handles: Handle[] = [];
 
     // Render path
     this.context.beginPath();
@@ -660,7 +659,7 @@ const Canvas = ({ timeline }: CanvasProps) => {
     if (ref.current) {
       display.current = new CanvasDisplay(ref.current, timeline);
     }
-  }, []);
+  }, [timeline]);
 
   useEffect(() => {
     display.current.setPlayhead(playhead);

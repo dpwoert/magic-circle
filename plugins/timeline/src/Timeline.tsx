@@ -157,11 +157,10 @@ const PlayButton = styled.div`
 `;
 
 type TimelineProps = {
-  app: TimelinePlugin['client'];
   timeline: TimelinePlugin;
 };
 
-const Timeline = ({ app, timeline }: TimelineProps) => {
+const Timeline = ({ timeline }: TimelineProps) => {
   const [show, setShow] = useState(false);
 
   const playing = useStore(timeline.playing);

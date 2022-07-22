@@ -2,8 +2,6 @@ import { Store as StoreClass } from '@magic-circle/schema';
 
 type Hook<T> = (newValue: T) => void;
 
-type Initializer<T> = T extends any ? T | ((T) => T) : never;
-
 export default class Store<T> implements StoreClass<T> {
   value: T;
   hooks: Hook<T>[];

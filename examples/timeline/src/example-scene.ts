@@ -99,7 +99,6 @@ export function setup(gui: MagicCircle) {
   ]);
 
   // Add animation timeline
-  console.log(gui.plugin<PluginTimeline>('timeline'));
   gui.plugin<PluginTimeline>('timeline').load(ANIMATION.scene, true);
 
   // Save element for screenshots

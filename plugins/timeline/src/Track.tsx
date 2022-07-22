@@ -1,7 +1,7 @@
-import { useState, useMemo } from 'react';
+import { useMemo } from 'react';
 import styled from 'styled-components';
 
-import { COLORS, Forms, Icon, SPACING, TYPO } from '@magic-circle/styles';
+import { COLORS, Icon, SPACING, TYPO } from '@magic-circle/styles';
 import { useStore } from '@magic-circle/state';
 
 import Timeline from './index';
@@ -69,7 +69,7 @@ const Track = ({ timeline, path }: TrackProps) => {
       value[selected.key] &&
       !!value[selected.key].controlPoints
     );
-  }, [selected, scene]);
+  }, [selected, scene, path]);
 
   if ('label' in control) {
     return (
@@ -109,6 +109,8 @@ const Track = ({ timeline, path }: TrackProps) => {
       </Container>
     );
   }
+
+  return null;
 };
 
 export default Track;
