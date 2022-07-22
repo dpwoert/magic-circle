@@ -118,11 +118,15 @@ class CanvasDisplay {
     window.addEventListener('resize', this.resize);
   }
 
-  resize() {
+  resize(evt?: any) {
     this.width = this.element.clientWidth;
     this.height = this.element.clientHeight;
     this.element.width = this.width * this.pixelRatio;
     this.element.height = this.height * this.pixelRatio;
+
+    if (evt) {
+      this.render();
+    }
   }
 
   px(px: number) {
