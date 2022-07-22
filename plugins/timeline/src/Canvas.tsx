@@ -86,11 +86,12 @@ class CanvasDisplay {
     this.render();
 
     this.scrollUpdate = this.scrollUpdate.bind(this);
+    this.resize = this.resize.bind(this);
 
     this.scroller.on((event) => {
       this.setScroll(
         this.scroll.x.dest + event.deltaX,
-        this.scroll.y.dest - event.deltaY
+        this.scroll.y.dest - event.deltaY * 0.2
       );
     });
     this.element.addEventListener('click', (evt) => {
@@ -113,6 +114,9 @@ class CanvasDisplay {
     this.element.addEventListener('mouseup', () => {
       this.dragEnd();
     });
+
+    // resize
+    window.addEventListener('resize', this.resize);
   }
 
   resize() {
@@ -323,6 +327,34 @@ class CanvasDisplay {
       }
 
       time += 100;
+    }
+  }
+
+  renderEnd() {
+    // No scene means no need to render
+    if (!this.scene) return;
+
+    // Get position of ending
+    const position = this.position(this.scene.duration);
+
+    // Only render when visible
+    if (position > 0 && position < this.width) {
+      // line
+      this.context.beginPath();
+      this.context.moveTo(this.px(position), this.px(0));
+      this.context.lineTo(this.px(position), this.px(this.height));
+      this.context.strokeStyle = COLORS.black.css;
+      this.context.lineWidth = this.px(1);
+      this.context.stroke();
+
+      // area
+      this.context.fillStyle = COLORS.shades.s600.css;
+      this.context.fillRect(
+        this.px(position + 1),
+        0,
+        this.px(this.width - position),
+        this.px(this.height)
+      );
     }
   }
 
@@ -601,6 +633,7 @@ class CanvasDisplay {
     this.context.fillStyle = COLORS.shades.s500.css;
     this.context.fillRect(0, 0, this.px(this.width), this.px(this.height));
 
+    this.renderEnd();
     this.renderTracks();
     this.renderTimeline();
     this.renderPlayhead();
@@ -608,6 +641,7 @@ class CanvasDisplay {
 
   destroy() {
     this.scroller.destroy();
+    window.removeEventListener('resize', this.resize);
   }
 }
 

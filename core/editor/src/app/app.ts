@@ -17,7 +17,6 @@ import type {
   CommandLineAction,
   CommandLineReference,
   LayoutHook,
-  SelectQuery,
 } from '@magic-circle/schema';
 import { IpcIframe, IpcBase } from '@magic-circle/client';
 import { Store } from '@magic-circle/state';
@@ -38,7 +37,6 @@ class App implements AppBase {
   commandLineReference: Store<CommandLineReference | null>;
   pageInfo: Store<PageInfo>;
   layoutHooks: Store<layoutHooks>;
-  selectQuery: Store<SelectQuery | null>;
 
   constructor(userConf: UserConfig) {
     // merge with default config
@@ -56,7 +54,6 @@ class App implements AppBase {
     this.commandLine = new Store<CommandLineScreen | null>(null);
     this.commandLineReference = new Store<CommandLineReference | null>(null);
     this.layoutHooks = new Store<layoutHooks>({});
-    this.selectQuery = new Store<SelectQuery>(null);
 
     // Get controls
     this.controls = {};

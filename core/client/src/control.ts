@@ -91,6 +91,7 @@ export default class Control<T> {
       value: this.value,
       initialValue: this.initialValue,
       blockHydrate: !!this.blockHydrate,
+      watching: !!this.watchChanges,
     };
   }
 }

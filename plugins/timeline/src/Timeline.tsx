@@ -168,7 +168,7 @@ const Timeline = ({ app, timeline }: TimelineProps) => {
   const playhead = useStore(timeline.playhead);
   const scene = useStore(timeline.scene);
   const selected = useStore(timeline.selected);
-  const selectQuery = useStore(app.selectQuery);
+  const setExternal = useStore(timeline.layers.setExternal);
 
   const secondClock = useMemo<number>(() => {
     if (!selected) return scene.duration;
@@ -206,7 +206,7 @@ const Timeline = ({ app, timeline }: TimelineProps) => {
                 ))}
                 <AddTrack>
                   <Forms.Button
-                    highlight={!!selectQuery}
+                    highlight={!!setExternal}
                     onClick={() => {
                       timeline.selectTrack();
                     }}

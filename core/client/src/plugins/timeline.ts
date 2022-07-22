@@ -65,6 +65,7 @@ export default class PLuginTimeline extends Plugin {
     const { ipc } = this.client;
     ipc.on('timeline:playhead', (_, playhead: number) => {
       this.setPlayhead(playhead);
+      this.stop();
     });
     ipc.on('timeline:scene', (_, scene: Scene) => {
       this.set(scene);
@@ -165,6 +166,7 @@ export default class PLuginTimeline extends Plugin {
         const value = lerp(+current.from.value, +current.to.value, relative);
 
         this.layers.set(variable.path, value);
+        this.client.ipc.send('control:set-value', variable.path, value);
       }
     });
 
@@ -172,7 +174,7 @@ export default class PLuginTimeline extends Plugin {
     this.client.ipc.send('timeline:playhead', this.playhead);
 
     // End of timeline
-    if (time >= this.scene.duration) {
+    if (time >= this.scene.duration && this.playing) {
       this.setPlayhead(0);
       this.startTime = new Date();
 
@@ -184,7 +186,7 @@ export default class PLuginTimeline extends Plugin {
 
   play() {
     this.playing = true;
-    this.startTime = new Date();
+    this.startTime = new Date(Date.now() - this.playhead);
 
     this.client.ipc.send('timeline:play');
   }

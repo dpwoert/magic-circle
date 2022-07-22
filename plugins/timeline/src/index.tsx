@@ -158,7 +158,10 @@ export default class Timeline implements Plugin {
   sync() {
     this.ipc.send('timeline:scene', this.scene.value);
 
-    console.log(this.scene.value);
+    this.layers.external.setFn((curr) => ({
+      ...curr,
+      [this.name]: Object.keys(this.scene.value.values),
+    }));
   }
 
   setPlayhead(time: number) {
@@ -166,10 +169,10 @@ export default class Timeline implements Plugin {
   }
 
   selectTrack() {
-    if (this.client.selectQuery.value) {
-      this.client.selectQuery.set(null);
+    if (this.layers.setExternal.value) {
+      this.layers.setExternal.set(null);
     } else {
-      this.client.selectQuery.set({
+      this.layers.setExternal.set({
         label: 'Add track',
         icon: 'Clock',
         filter: 'timeline',
@@ -182,7 +185,7 @@ export default class Timeline implements Plugin {
             },
           });
 
-          this.client.selectQuery.set(null);
+          this.layers.setExternal.set(null);
         },
       });
     }

@@ -324,6 +324,7 @@ export type ControlExport = {
   value: any;
   initialValue: any;
   blockHydrate: boolean;
+  watching: boolean;
 };
 
 export type LayerExport = {
@@ -352,13 +353,6 @@ export enum LayoutHook {
 
 export type layoutHooks = Record<string, ReactNode>;
 
-export type SelectQuery = {
-  label: string;
-  icon: icons;
-  filter: string;
-  onSelect: (path: string) => void;
-};
-
 export interface App {
   plugins: Plugin[];
   controls: Record<string, Control>;
@@ -371,7 +365,6 @@ export interface App {
   layoutHooks: Store<layoutHooks>;
   commandLine: Store<CommandLineScreen | null>;
   commandLineReference: Store<CommandLineReference | null>;
-  selectQuery: Store<SelectQuery | null>;
 
   getPlugin: (name: string) => Plugin | undefined;
   getControl: (name: string) => Control | undefined;

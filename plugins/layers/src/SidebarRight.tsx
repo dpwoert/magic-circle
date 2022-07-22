@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 import shallowEqual from 'shallowequal';
 
-import { App, LayerExport, SelectQuery } from '@magic-circle/schema';
+import { App, LayerExport } from '@magic-circle/schema';
 import { useStore } from '@magic-circle/state';
 import { SPACING, COLORS, TYPO } from '@magic-circle/styles';
 
 import type Layers from './index';
+import type { ExternalQuery } from './index';
 
 const Container = styled.div`
   display: flex;
@@ -35,8 +36,7 @@ type ControlProps = {
 
 const Control = ({ layers, controlPath }: ControlProps) => {
   const control = useStore(layers.lookup.get(controlPath));
-  // @ts-ignore
-  const selectQuery = useStore(layers.client.selectQuery);
+  const setExternal = useStore(layers.setExternal);
 
   if (control && 'type' in control) {
     const type = layers.getControl(control.type);
@@ -50,14 +50,14 @@ const Control = ({ layers, controlPath }: ControlProps) => {
 
     let select;
 
-    if (selectQuery && type.supports) {
+    if (setExternal && type.supports) {
       select = type.supports(
-        layers.client.selectQuery.value.filter,
+        layers.setExternal.value.filter,
         control.options
       ) && {
-        label: layers.client.selectQuery.value.label,
-        icon: layers.client.selectQuery.value.icon,
-        onSelect: () => layers.client.selectQuery.value.onSelect(control.path),
+        label: layers.setExternal.value.label,
+        icon: layers.setExternal.value.icon,
+        onSelect: () => layers.setExternal.value.onSelect(control.path),
       };
     }
 
