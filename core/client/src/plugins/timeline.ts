@@ -1,5 +1,5 @@
 import Plugin from '../plugin';
-import PluginLayers from './layers';
+import type PluginLayers from './layers';
 
 import bezier from '../utils/bezier';
 import { lerp, clamp } from '../utils/math';
@@ -57,6 +57,29 @@ export default class PLuginTimeline extends Plugin {
     // Reset playhead
     this.setPlayhead(0);
 
+    // Set default scene if needed
+    if (this.start) {
+      if (!this.client.ipc) {
+        this.layers.sync();
+      }
+
+      this.set(this.start.scene);
+
+      // autoplay if needed
+      if (this.start.play) {
+        this.play();
+      }
+    } else {
+      this.set({
+        duration: 1000 * 10,
+        loop: false,
+        name: 'New scene',
+        values: {},
+      });
+    }
+  }
+
+  connect() {
     // Listen to events
     const { ipc } = this.client;
     ipc.on('timeline:playhead', (_, playhead: number) => {
@@ -75,23 +98,6 @@ export default class PLuginTimeline extends Plugin {
     ipc.on('timeline:stop', () => {
       this.stop();
     });
-
-    // Set default scene if needed
-    if (this.start) {
-      this.set(this.start.scene);
-
-      // autoplay if needed
-      if (this.start.play) {
-        this.play();
-      }
-    } else {
-      this.set({
-        duration: 1000 * 10,
-        loop: false,
-        name: 'New scene',
-        values: {},
-      });
-    }
   }
 
   setVariable(path: string, points: ScenePoint[]) {
@@ -132,11 +138,15 @@ export default class PLuginTimeline extends Plugin {
       this.setVariable(path, this.scene.values[path]);
     });
 
-    this.client.ipc.send('timeline:scene', scene);
+    if (this.client.ipc) {
+      this.client.ipc.send('timeline:scene', scene);
+    }
   }
 
   setPlayhead(time: number) {
-    this.client.ipc.send('timeline:playhead', time);
+    if (this.client.ipc) {
+      this.client.ipc.send('timeline:playhead', time);
+    }
 
     if (!this.scene || !this.variables) {
       this.playhead = 0;
@@ -160,12 +170,17 @@ export default class PLuginTimeline extends Plugin {
         const value = lerp(+current.from.value, +current.to.value, relative);
 
         this.layers.set(variable.path, value);
-        this.client.ipc.send('control:set-value', variable.path, value);
+
+        if (this.client.ipc) {
+          this.client.ipc.send('control:set-value', variable.path, value);
+        }
       }
     });
 
     // Send to UI
-    this.client.ipc.send('timeline:playhead', this.playhead);
+    if (this.client.ipc) {
+      this.client.ipc.send('timeline:playhead', this.playhead);
+    }
 
     // End of timeline
     if (time >= this.scene.duration && this.playing) {
@@ -182,14 +197,18 @@ export default class PLuginTimeline extends Plugin {
     this.playing = true;
     this.startTime = new Date(Date.now() - this.playhead);
 
-    this.client.ipc.send('timeline:play');
+    if (this.client.ipc) {
+      this.client.ipc.send('timeline:play');
+    }
   }
 
   stop() {
     this.playing = false;
     this.startTime = null;
 
-    this.client.ipc.send('timeline:stop');
+    if (this.client.ipc) {
+      this.client.ipc.send('timeline:stop');
+    }
   }
 
   startFrame() {
