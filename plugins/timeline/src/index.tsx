@@ -56,6 +56,11 @@ const emptyScene: Scene = {
   values: {},
 };
 
+type Data = {
+  scene: Scene;
+  playhead: number;
+};
+
 export default class Timeline implements Plugin {
   ipc: App['ipc'];
   client: App;
@@ -111,9 +116,10 @@ export default class Timeline implements Plugin {
     };
   }
 
-  // async load(data: Record<string, any>) {
-  //   Object.keys(data).forEach((key) => this.setControl(key, data[key]));
-  // }
+  async load(data: Data) {
+    this.scene.set(data.scene);
+    this.playhead.set(data.playhead);
+  }
 
   // hydrate() {
   //   const hydrate: Record<string, any> = {};
@@ -125,17 +131,12 @@ export default class Timeline implements Plugin {
   //   return hydrate;
   // }
 
-  // async save() {
-  //   const toSave = {};
-
-  //   this.lookup.export((key, value) => {
-  //     if (value && 'value' in value && value.value) {
-  //       toSave[key] = value.value;
-  //     }
-  //   });
-
-  //   return toSave;
-  // }
+  async save(): Promise<Data> {
+    return {
+      playhead: this.playhead.value,
+      scene: this.scene.value,
+    };
+  }
 
   async reset() {
     this.scene.set(emptyScene);
