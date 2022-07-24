@@ -92,6 +92,12 @@ export default class PLuginTimeline extends Plugin {
     ipc.on('timeline:variable', (_, path: string, points: ScenePoint[]) => {
       this.setVariable(path, points);
     });
+    ipc.on('timeline:get-value', (_, path: string, time: number) => {
+      this.client.ipc.send(
+        'timeline:get-value',
+        this.getValueForVariable(path, time)
+      );
+    });
     ipc.on('timeline:play', () => {
       this.play();
     });
@@ -143,6 +149,28 @@ export default class PLuginTimeline extends Plugin {
     }
   }
 
+  private getValueForVariable(variableName: string, time: number) {
+    const variable = this.variables[variableName];
+
+    if (variable) {
+      const current = variable.curves.find(
+        (curve) =>
+          this.playhead >= curve.from.time && this.playhead < curve.to.time
+      );
+
+      if (current) {
+        const progress =
+          (time - current.from.time) / (current.to.time - current.from.time);
+        const relative = current.curve(progress);
+        const value = lerp(+current.from.value, +current.to.value, relative);
+
+        return value;
+      }
+    }
+
+    return null;
+  }
+
   setPlayhead(time: number) {
     if (this.client.ipc) {
       this.client.ipc.send('timeline:playhead', time);
@@ -158,22 +186,11 @@ export default class PLuginTimeline extends Plugin {
 
     // Set variables with new values
     Object.values(this.variables).forEach((variable) => {
-      const current = variable.curves.find(
-        (curve) =>
-          this.playhead >= curve.from.time && this.playhead < curve.to.time
-      );
+      const value = this.getValueForVariable(variable.path, time);
+      this.layers.set(variable.path, value);
 
-      if (current) {
-        const progress =
-          (time - current.from.time) / (current.to.time - current.from.time);
-        const relative = current.curve(progress);
-        const value = lerp(+current.from.value, +current.to.value, relative);
-
-        this.layers.set(variable.path, value);
-
-        if (this.client.ipc) {
-          this.client.ipc.send('control:set-value', variable.path, value);
-        }
+      if (this.client.ipc) {
+        this.client.ipc.send('control:set-value', variable.path, value);
       }
     });
 

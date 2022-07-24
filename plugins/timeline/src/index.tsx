@@ -184,14 +184,19 @@ export default class Timeline implements Plugin {
     }
   }
 
-  addKeyframe(path: string, time: number) {
+  async addKeyframe(path: string, time: number) {
     const current = this.scene.value.values[path];
 
     // Start with first frame
     if (!current || current.length === 0) {
-      const currentValue = this.layers.lookup.get(path).value;
+      // Ask the client to interpolate the current value
+      const interpolated = await this.ipc.invoke<number>(
+        'timeline:get-value',
+        path,
+        time
+      );
 
-      if ('value' in currentValue) {
+      if (interpolated) {
         this.scene.setFn((curr) => ({
           ...curr,
           values: {
@@ -199,7 +204,8 @@ export default class Timeline implements Plugin {
             [path]: [
               {
                 time,
-                value: currentValue.value,
+                value: interpolated,
+                // value: currentValue.value,
               },
             ],
           },
@@ -207,11 +213,16 @@ export default class Timeline implements Plugin {
       }
     }
 
-    // Check if keyframe already exists
+    // Check if keyframe already exists (if so, we can't add a second one)
     else if (current && !current.find((c) => c.time === time)) {
-      const currentValue = this.layers.lookup.get(path).value;
+      // Ask the client to interpolate the current value
+      const interpolated = await this.ipc.invoke<number>(
+        'timeline:get-value',
+        path,
+        time
+      );
 
-      if ('value' in currentValue) {
+      if (interpolated) {
         this.scene.setFn((curr) => ({
           ...curr,
           values: {
@@ -220,7 +231,7 @@ export default class Timeline implements Plugin {
               ...curr.values[path],
               {
                 time,
-                value: currentValue.value,
+                value: interpolated,
               },
             ].sort((a, b) => {
               return a.time - b.time;
@@ -228,11 +239,9 @@ export default class Timeline implements Plugin {
           },
         }));
       }
-
-      // Read current value [todo]
     }
 
-    // todo sync again with fe
+    this.sync();
   }
 
   removeKeyframe(path: string, key: number) {
