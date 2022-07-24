@@ -21,10 +21,13 @@ const Container = styled.canvas`
 type Hotspot = {
   x: number;
   y: number;
-  radius: number;
+  radius?: number;
+  width?: number;
+  height?: number;
   onClick?: () => void;
   dblClick?: () => void;
   drag?: (deltaX: number, deltaY: number) => void;
+  cursor?: string;
 };
 
 type Handle = {
@@ -108,6 +111,8 @@ class CanvasDisplay {
       this.dragStart(evt.x - box.x, evt.y - box.y);
     });
     this.element.addEventListener('mousemove', (evt) => {
+      const box = this.element.getBoundingClientRect();
+      this.mouseMove(evt.x - box.x, evt.y - box.y);
       this.drag(evt.movementX, evt.movementY);
     });
     this.element.addEventListener('mouseup', () => {
@@ -192,9 +197,32 @@ class CanvasDisplay {
 
   hotspot(x: number, y: number): Hotspot {
     return this.hotspots.find((spot) => {
-      const dist = Math.sqrt(Math.pow(x - spot.x, 2) + Math.pow(y - spot.y, 2));
-      return dist < spot.radius;
+      if (spot.radius) {
+        const dist = Math.sqrt(
+          Math.pow(x - spot.x, 2) + Math.pow(y - spot.y, 2)
+        );
+        return dist < spot.radius;
+      } else if (spot.width || spot.height) {
+        return (
+          x >= spot.x &&
+          x < spot.x + spot.width &&
+          y >= spot.y &&
+          y < spot.y + spot.height
+        );
+      } else {
+        return false;
+      }
     });
+  }
+
+  mouseMove(x: number, y: number) {
+    const hotspot = this.hotspot(x, y);
+
+    if (hotspot && hotspot.cursor) {
+      this.element.style.cursor = hotspot.cursor;
+    } else {
+      this.element.style.cursor = 'default';
+    }
   }
 
   click(x: number, y: number) {
@@ -358,6 +386,21 @@ class CanvasDisplay {
         this.px(this.width - position),
         this.px(this.height)
       );
+
+      this.hotspots.push({
+        x: position,
+        y: 0,
+        width: 3,
+        height: this.height,
+        cursor: 'col-resize',
+        drag: (dx) => {
+          const curr = this.position(this.scene.duration);
+          const newPos = curr + dx;
+          const newTime = this.invert(newPos);
+          console.log({ newPos, newTime, curr });
+          this.timeline.changeDuration(newTime);
+        },
+      });
     }
   }
 
@@ -406,6 +449,7 @@ class CanvasDisplay {
         x: this.pxInvert(handle.position[0]),
         y: this.pxInvert(handle.position[1]),
         radius: 3,
+        cursor: 'move',
         drag: (dx, dy) => {
           const newX = handle.position[0] + this.px(dx);
           const newY = handle.position[1] + this.px(dy);
@@ -586,6 +630,7 @@ class CanvasDisplay {
         x: this.pxInvert(x),
         y: this.pxInvert(y),
         radius: s / 2,
+        cursor: 'pointer',
         onClick: () => {
           this.timeline.selected.set({
             path,

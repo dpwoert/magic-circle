@@ -138,21 +138,44 @@ const Clock = styled.div`
   }
 `;
 
-const PlayButton = styled.div`
+const Buttons = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+type ButtonProps = {
+  active?: boolean;
+};
+
+const Button = styled.div<ButtonProps>`
+  position: relative;
   width: 26px;
   height: 26px;
-  background: ${COLORS.shades.s600.css};
+  background: ${(props) =>
+    props.active ? COLORS.shades.s500.css : COLORS.shades.s600.css};
   color: ${COLORS.white.css};
-  border: 1px solid ${COLORS.shades.s300.css};
+  border: 1px solid
+    ${(props) => (props.active ? COLORS.white.css : COLORS.shades.s300.css)};
   border-radius: 5px;
   margin-left: -1px;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: border 0.2s ease;
+  cursor: pointer;
 
   &:hover {
     border: 1px solid ${COLORS.white.css};
+    z-index: 1;
+  }
+
+  &:first-child {
+    border-radius: 5px 0 0 5px;
+  }
+
+  &:nth-child(2) {
+    border-radius: 0 5px 5px 0;
+    left: -1px;
   }
 `;
 
@@ -201,7 +224,7 @@ const Timeline = ({ timeline }: TimelineProps) => {
               <SidebarHeader>{scene.name}</SidebarHeader>
               <SidebarRows id="timeline-rows">
                 {Object.keys(scene.values).map((path) => (
-                  <Track path={path} timeline={timeline} />
+                  <Track path={path} key={path} timeline={timeline} />
                 ))}
                 <AddTrack>
                   <Forms.Button
@@ -224,21 +247,35 @@ const Timeline = ({ timeline }: TimelineProps) => {
               <Canvas timeline={timeline} />
               <ClockContainer>
                 <Clock>
-                  <PlayButton
-                    onClick={() => {
-                      if (playing) {
-                        timeline.ipc.send('timeline:stop');
-                      } else {
-                        timeline.ipc.send('timeline:play');
-                      }
-                    }}
-                  >
-                    <Icon
-                      name={playing ? 'Pause' : 'Play'}
-                      width={SPACING(1)}
-                      height={SPACING(1)}
-                    />
-                  </PlayButton>
+                  <Buttons>
+                    <Button
+                      onClick={() => {
+                        if (playing) {
+                          timeline.ipc.send('timeline:stop');
+                        } else {
+                          timeline.ipc.send('timeline:play');
+                        }
+                      }}
+                    >
+                      <Icon
+                        name={playing ? 'Pause' : 'Play'}
+                        width={SPACING(1)}
+                        height={SPACING(1)}
+                      />
+                    </Button>
+                    <Button
+                      active={scene.loop}
+                      onClick={() => {
+                        timeline.toggleLoop();
+                      }}
+                    >
+                      <Icon
+                        name="Refresh"
+                        width={SPACING(1)}
+                        height={SPACING(1)}
+                      />
+                    </Button>
+                  </Buttons>
                   <span>{formatTime(playhead)}</span>
                   <span>{formatTime(secondClock)}</span>
                 </Clock>

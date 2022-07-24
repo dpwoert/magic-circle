@@ -34,7 +34,9 @@ export default class Control<T> {
   }
 
   set value(value: T) {
-    if (typeof value === 'object') {
+    if (value === null || value === undefined) {
+      console.warn('Trying to set null or undefined value to a control');
+    } else if (typeof value === 'object') {
       // set objects per key, so to not destroy references
       Object.keys(value).forEach((k) => {
         this.reference[this.key][k] = value[k];

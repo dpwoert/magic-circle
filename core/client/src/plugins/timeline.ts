@@ -112,16 +112,28 @@ export default class PLuginTimeline extends Plugin {
       curves: [],
     };
 
-    for (let i = 0; i < points.length - 1; i += 1) {
-      const curve = {
-        from: points[i + 0],
-        to: points[i + 1],
-        curve: bezier(
-          points[i + 0]?.controlPoints?.right[0] || 0,
-          points[i + 0]?.controlPoints?.right[1] || 0,
+    const allPoints: ScenePoint[] = [
+      {
+        ...points[0],
+        time: 0,
+      },
+      ...points,
+      {
+        ...points[points.length - 1],
+        time: this.scene.duration + 1,
+      },
+    ];
 
-          points[i + 1]?.controlPoints?.left[0] || 1,
-          points[i + 1]?.controlPoints?.left[1] || 1
+    for (let i = 0; i < allPoints.length - 1; i += 1) {
+      const curve = {
+        from: allPoints[i + 0],
+        to: allPoints[i + 1],
+        curve: bezier(
+          allPoints[i + 0]?.controlPoints?.right[0] || 0,
+          allPoints[i + 0]?.controlPoints?.right[1] || 0,
+
+          allPoints[i + 1]?.controlPoints?.left[0] || 1,
+          allPoints[i + 1]?.controlPoints?.left[1] || 1
         ),
       };
 

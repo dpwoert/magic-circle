@@ -369,4 +369,20 @@ export default class Timeline implements Plugin {
     const current = this.scene.value.values[path];
     return current[key];
   }
+
+  changeDuration(duration: number) {
+    this.scene.setFn((curr) => ({
+      ...curr,
+      duration,
+    }));
+    this.sync();
+  }
+
+  toggleLoop() {
+    this.scene.setFn((curr) => ({
+      ...curr,
+      loop: !curr.loop,
+    }));
+    this.sync();
+  }
 }
