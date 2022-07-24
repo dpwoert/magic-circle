@@ -9,6 +9,7 @@ export { default as PluginScreenshot } from './plugins/screenshots';
 export { default as PluginSeed } from './plugins/seed';
 export { default as PluginLayers } from './plugins/layers';
 export { default as PluginTimeline } from './plugins/timeline';
+export type { Scene, SceneVariable } from './plugins/timeline';
 export { default as PluginPerformance } from './plugins/performance';
 
 export { default as TextControl } from './controls/text';
