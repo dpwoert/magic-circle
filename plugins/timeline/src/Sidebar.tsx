@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 
 import { useStore } from '@magic-circle/state';
@@ -111,6 +111,7 @@ const SceneEntry = ({ scene, id, timeline }: SceneEntryProps) => {
               height={SPACING(1.5)}
               onClick={() => {
                 timeline.editScene(id);
+                timeline.show.set(true);
               }}
             />
           </IconButton>
@@ -144,6 +145,7 @@ const SceneEntry = ({ scene, id, timeline }: SceneEntryProps) => {
           </Option>
           <Option
             onClick={() => {
+              // eslint-disable-next-line
               const newName = prompt(
                 'Which name do you want to give this scene?',
                 scene.name

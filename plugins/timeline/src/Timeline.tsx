@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useMemo } from 'react';
 import styled from 'styled-components';
 
 import { COLORS, Forms, Icon, SPACING, TYPO } from '@magic-circle/styles';
@@ -137,7 +137,7 @@ const ClockContainer = styled.div`
   position: absolute;
   top: 0;
   right: 0;
-  width: ${SPACING(18)}px;
+  width: ${SPACING(26)}px;
   height: ${SPACING(3)}px;
   display: flex;
   padding-right: ${SPACING(0.5)}px;
@@ -185,31 +185,42 @@ const Button = styled.div<ButtonProps>`
   position: relative;
   width: 26px;
   height: 26px;
+  border: 1px solid ${COLORS.black.opacity(0)};
   background: ${(props) =>
     props.active ? COLORS.shades.s500.css : COLORS.shades.s600.css};
   color: ${COLORS.white.css};
-  border: 1px solid
-    ${(props) => (props.active ? COLORS.white.css : COLORS.shades.s300.css)};
-  border-radius: 5px;
-  margin-left: -1px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: border 0.2s ease;
   cursor: pointer;
+  margin-left: -1px;
+  top: -1px;
+  z-index: ${(props) => (props.active ? 2 : 'inherit')};
+  box-sizing: border-box;
 
-  &:hover {
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: calc(100% - 0px);
+    height: calc(100% - 0px);
+    transition: border 0.2s ease;
+    border: 1px solid
+      ${(props) => (props.active ? COLORS.white.css : COLORS.shades.s300.css)};
+  }
+
+  &:hover:after {
     border: 1px solid ${COLORS.white.css};
     z-index: 1;
   }
 
-  &:first-child {
+  &:first-child:after {
     border-radius: 5px 0 0 5px;
   }
 
-  &:nth-child(2) {
+  &:last-child:after {
     border-radius: 0 5px 5px 0;
-    left: -1px;
   }
 `;
 
@@ -218,8 +229,7 @@ type TimelineProps = {
 };
 
 const Timeline = ({ timeline }: TimelineProps) => {
-  const [show, setShow] = useState(false);
-
+  const show = useStore(timeline.show);
   const playing = useStore(timeline.playing);
   const playhead = useStore(timeline.playhead);
   const zoom = useStore(timeline.zoom);
@@ -240,7 +250,7 @@ const Timeline = ({ timeline }: TimelineProps) => {
     <Container show={show}>
       <Header
         onClick={() => {
-          setShow(!show);
+          timeline.show.set(!show);
         }}
       >
         <Icon name="Clock" width={SPACING(1)} height={SPACING(1)} /> Timeline
@@ -339,6 +349,18 @@ const Timeline = ({ timeline }: TimelineProps) => {
                     >
                       <Icon
                         name="Refresh"
+                        width={SPACING(1)}
+                        height={SPACING(1)}
+                      />
+                    </Button>
+                    <Button
+                      active={scene.seamlessLoop}
+                      onClick={() => {
+                        timeline.toggleSeamlessLoop();
+                      }}
+                    >
+                      <Icon
+                        name="Spinner"
                         width={SPACING(1)}
                         height={SPACING(1)}
                       />

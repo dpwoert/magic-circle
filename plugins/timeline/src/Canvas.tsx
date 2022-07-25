@@ -207,7 +207,9 @@ class CanvasDisplay {
           Math.pow(x - spot.x, 2) + Math.pow(y - spot.y, 2)
         );
         return dist < spot.radius;
-      } else if (spot.width || spot.height) {
+      }
+
+      if (spot.width || spot.height) {
         return (
           x >= spot.x &&
           x < spot.x + spot.width &&

@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import { get, set } from 'idb-keyval';
 import { saveAs } from 'file-saver';
 
@@ -23,6 +24,7 @@ import {
   Copy,
   Share,
   FloppyDisc,
+  Spinner,
 } from '@magic-circle/styles';
 
 import Sidebar from './Sidebar';
@@ -46,6 +48,7 @@ registerIcon(Tag);
 registerIcon(Copy);
 registerIcon(Share);
 registerIcon(FloppyDisc);
+registerIcon(Spinner);
 
 export type ScenePoint = {
   time: number;
@@ -94,6 +97,7 @@ export default class Timeline implements Plugin {
   playing: Store<boolean>;
   zoom: Store<number>;
   selected: Store<selection | null>;
+  show: Store<boolean>;
 
   name = 'timeline';
 
@@ -114,6 +118,7 @@ export default class Timeline implements Plugin {
     this.playing = new Store<boolean>(false);
     this.zoom = new Store<number>(0.1);
     this.selected = new Store<selection | null>(null);
+    this.show = new Store<boolean>(false);
 
     this.ipc.on('timeline:play', () => {
       this.playing.set(true);
@@ -414,6 +419,14 @@ export default class Timeline implements Plugin {
     this.sync();
   }
 
+  toggleSeamlessLoop() {
+    this.scene.setFn((curr) => ({
+      ...curr,
+      seamlessLoop: !curr.seamlessLoop,
+    }));
+    this.sync();
+  }
+
   async editScene(key: string) {
     if (this.scenes.value[key]) {
       this.activeScene.set(key);
@@ -440,7 +453,7 @@ export default class Timeline implements Plugin {
       return;
     }
 
-    return this.saveScene(key, this.scene.value);
+    await this.saveScene(key, this.scene.value);
   }
 
   async createNewScene() {
@@ -449,7 +462,7 @@ export default class Timeline implements Plugin {
 
   async duplicateScene(sceneId: string) {
     if (this.scenes.value[sceneId]) {
-      return this.saveScene(String(Date.now()), this.scenes.value[sceneId]);
+      await this.saveScene(String(Date.now()), this.scenes.value[sceneId]);
     }
   }
 

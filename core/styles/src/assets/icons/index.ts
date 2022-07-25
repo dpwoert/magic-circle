@@ -152,6 +152,7 @@ import { ReactComponent as SkipBackIcon } from './skip-back.svg';
 import { ReactComponent as SkipForwardIcon } from './skip-forward.svg';
 import { ReactComponent as SmartphoneIcon } from './smartphone.svg';
 import { ReactComponent as SpeakerIcon } from './speaker.svg';
+import { ReactComponent as SpinnerIcon } from './spinner.svg';
 import { ReactComponent as StarIcon } from './star.svg';
 import { ReactComponent as StickerIcon } from './sticker.svg';
 import { ReactComponent as StopIcon } from './stop.svg';
@@ -605,6 +606,10 @@ export const Speaker: IconDefinition = {
   name: 'Speaker',
   component: SpeakerIcon,
 };
+export const Spinner: IconDefinition = {
+  name: 'Spinner',
+  component: SpinnerIcon,
+};
 export const Star: IconDefinition = { name: 'Star', component: StarIcon };
 export const Sticker: IconDefinition = {
   name: 'Sticker',
@@ -846,6 +851,7 @@ export type list =
   | 'SkipForward'
   | 'Smartphone'
   | 'Speaker'
+  | 'Spinner'
   | 'Star'
   | 'Sticker'
   | 'Stop'
