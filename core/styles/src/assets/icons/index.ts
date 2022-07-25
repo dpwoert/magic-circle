@@ -73,6 +73,7 @@ import { ReactComponent as FileIcon } from './file.svg';
 import { ReactComponent as FilmIcon } from './film.svg';
 import { ReactComponent as FilterIcon } from './filter.svg';
 import { ReactComponent as FlagIcon } from './flag.svg';
+import { ReactComponent as FloppyDiscIcon } from './floppy-disc.svg';
 import { ReactComponent as FolderMinusIcon } from './folder-minus.svg';
 import { ReactComponent as FolderPlusIcon } from './folder-plus.svg';
 import { ReactComponent as FolderIcon } from './folder.svg';
@@ -405,6 +406,10 @@ export const File: IconDefinition = { name: 'File', component: FileIcon };
 export const Film: IconDefinition = { name: 'Film', component: FilmIcon };
 export const Filter: IconDefinition = { name: 'Filter', component: FilterIcon };
 export const Flag: IconDefinition = { name: 'Flag', component: FlagIcon };
+export const FloppyDisc: IconDefinition = {
+  name: 'FloppyDisc',
+  component: FloppyDiscIcon,
+};
 export const FolderMinus: IconDefinition = {
   name: 'FolderMinus',
   component: FolderMinusIcon,
@@ -762,6 +767,7 @@ export type list =
   | 'Film'
   | 'Filter'
   | 'Flag'
+  | 'FloppyDisc'
   | 'FolderMinus'
   | 'FolderPlus'
   | 'Folder'

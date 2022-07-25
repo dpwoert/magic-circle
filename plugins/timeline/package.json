@@ -35,7 +35,9 @@
     "@magic-circle/state": "^0.1.5",
     "@magic-circle/styles": "^0.1.5",
     "@magic-circle/layers": "^0.1.5",
-    "virtual-scroll": "^2.2.1"
+    "virtual-scroll": "^2.2.1",
+    "idb-keyval": "^6.2.0",
+    "file-saver": "^2.0.5"
   },
   "devDependencies": {
     "@magic-circle/schema": "^0.1.5",

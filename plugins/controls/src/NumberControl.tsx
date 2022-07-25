@@ -38,11 +38,14 @@ const Slider = styled.input`
   }
 `;
 
-const Progress = styled.div`
+const Progress = styled.div.attrs((props) => ({
+  style: {
+    left: `${props.left}%`,
+    width: `${props.width}%`,
+  },
+}))`
   position: absolute;
   top: 0;
-  left: ${(props) => props.left}%;
-  width: ${(props) => props.width}%;
   height: 100%;
   background: ${COLORS.accent.opacity(0.15)};
   cursor: grab;

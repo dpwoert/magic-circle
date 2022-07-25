@@ -1,3 +1,6 @@
+import { get, set } from 'idb-keyval';
+import { saveAs } from 'file-saver';
+
 import { Plugin, icons, App, LayoutHook } from '@magic-circle/schema';
 import type Layers from '@magic-circle/layers';
 import { Store } from '@magic-circle/state';
@@ -14,6 +17,12 @@ import {
   Linear,
   ZoomIn,
   ZoomOut,
+  Edit,
+  DotsVertical,
+  Tag,
+  Copy,
+  Share,
+  FloppyDisc,
 } from '@magic-circle/styles';
 
 import Sidebar from './Sidebar';
@@ -31,6 +40,12 @@ registerIcon(Ease);
 registerIcon(Linear);
 registerIcon(ZoomIn);
 registerIcon(ZoomOut);
+registerIcon(Edit);
+registerIcon(DotsVertical);
+registerIcon(Tag);
+registerIcon(Copy);
+registerIcon(Share);
+registerIcon(FloppyDisc);
 
 export type ScenePoint = {
   time: number;
@@ -73,6 +88,8 @@ export default class Timeline implements Plugin {
   layers: Layers;
 
   scene: Store<Scene>;
+  scenes: Store<Record<string, Scene>>;
+  activeScene: Store<string | null>;
   playhead: Store<number>;
   playing: Store<boolean>;
   zoom: Store<number>;
@@ -91,6 +108,8 @@ export default class Timeline implements Plugin {
 
     // Create stores
     this.scene = new Store<Scene>(emptyScene);
+    this.scenes = new Store<Record<string, Scene>>({});
+    this.activeScene = new Store(null);
     this.playhead = new Store<number>(0);
     this.playing = new Store<boolean>(false);
     this.zoom = new Store<number>(0.1);
@@ -130,13 +149,10 @@ export default class Timeline implements Plugin {
   }
 
   // hydrate() {
-  //   const hydrate: Record<string, any> = {};
-  //   this.lookup.export((key, value) => {
-  //     if ('value' in value && !value.blockHydrate) {
-  //       hydrate[key] = value.value;
-  //     }
-  //   });
-  //   return hydrate;
+  //   return {
+  //     playhead: this.playhead.value,
+  //     scene: this.scene.value,
+  //   };
   // }
 
   async save(): Promise<Data> {
@@ -150,6 +166,10 @@ export default class Timeline implements Plugin {
     this.scene.set(emptyScene);
     this.playhead.set(0);
     this.playing.set(false);
+    this.activeScene.set(null);
+
+    const scenes = await get<Record<string, Scene>>('scenes');
+    this.scenes.set(scenes || {});
   }
 
   preConnect() {
@@ -392,5 +412,74 @@ export default class Timeline implements Plugin {
       loop: !curr.loop,
     }));
     this.sync();
+  }
+
+  async editScene(key: string) {
+    if (this.scenes.value[key]) {
+      this.activeScene.set(key);
+      this.scene.set(this.scenes.value[key]);
+    }
+  }
+
+  async saveScene(key: string, value: Scene) {
+    this.scenes.setFn((curr) => ({
+      ...curr,
+      [key]: value,
+    }));
+    await set('scenes', this.scenes.value);
+  }
+
+  async saveCurrentScene() {
+    const key = this.activeScene.value || String(Date.now());
+    this.activeScene.set(key);
+
+    if (
+      !this.activeScene.value &&
+      !window.confirm('Are you sure you want to save a new scene?')
+    ) {
+      return;
+    }
+
+    return this.saveScene(key, this.scene.value);
+  }
+
+  async createNewScene() {
+    return this.saveScene(String(Date.now()), { ...emptyScene });
+  }
+
+  async duplicateScene(sceneId: string) {
+    if (this.scenes.value[sceneId]) {
+      return this.saveScene(String(Date.now()), this.scenes.value[sceneId]);
+    }
+  }
+
+  async renameScene(sceneId: string, newName: string) {
+    return this.saveScene(sceneId, {
+      ...this.scenes.value[sceneId],
+      name: newName,
+    });
+  }
+
+  async deleteScene(sceneId: string) {
+    if (window.confirm('Are you sure you want to delete this scene?')) {
+      this.scenes.setFn((curr) => {
+        const newList = { ...curr };
+        delete newList[sceneId];
+        return newList;
+      });
+      await set('scenes', this.scenes.value);
+    }
+  }
+
+  exportScene(sceneId: string) {
+    if (this.scenes.value[sceneId]) {
+      const blob = new Blob(
+        [JSON.stringify(this.scenes.value[sceneId], null, 2)],
+        {
+          type: 'text/plain;charset=utf-8',
+        }
+      );
+      saveAs(blob, `${this.scenes.value[sceneId].name}.json`);
+    }
   }
 }

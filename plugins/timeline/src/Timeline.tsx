@@ -83,9 +83,12 @@ const SceneSelector = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
+  gap: ${SPACING(0.5)}px;
+  color: ${COLORS.shades.s100.css};
 
-  &:hover {
+  svg:hover {
     color: ${COLORS.accent.css};
+    cursor: pointer;
   }
 `;
 
@@ -257,9 +260,10 @@ const Timeline = ({ timeline }: TimelineProps) => {
                 <SceneSelector>
                   {scene.name}
                   <Icon
-                    name="ChevronDown"
+                    name="FloppyDisc"
                     width={SPACING(1.5)}
                     height={SPACING(1.5)}
+                    onClick={() => timeline.saveCurrentScene()}
                   />
                 </SceneSelector>
                 <ZoomControls>

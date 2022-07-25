@@ -32,6 +32,11 @@ export type SceneVariable = {
   curves: SceneCurve[];
 };
 
+type Hydration = {
+  scene: Scene;
+  playhead: number;
+};
+
 export default class PLuginTimeline extends Plugin {
   private layers: PluginLayers;
   private scene: Scene;
@@ -106,6 +111,13 @@ export default class PLuginTimeline extends Plugin {
     ipc.on('timeline:stop', () => {
       this.stop();
     });
+  }
+
+  hydrate(data: Hydration) {
+    if (data.scene) {
+      this.set(data.scene);
+      this.setPlayhead(data.playhead || 0);
+    }
   }
 
   setVariable(path: string, points: ScenePoint[]) {
