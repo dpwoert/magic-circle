@@ -3,6 +3,7 @@
     "name": "Example scene",
     "duration": 4000,
     "loop": true,
+    "seamlessLoop": true,
     "values": {
       "base.scene.box-4.position.y": [
         {

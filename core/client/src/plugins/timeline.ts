@@ -22,6 +22,7 @@ type SceneCurve = {
 export type Scene = {
   duration: number;
   loop: boolean;
+  seamlessLoop: boolean;
   name: string;
   values: Record<string, ScenePoint[]>;
 };
@@ -74,6 +75,7 @@ export default class PLuginTimeline extends Plugin {
         duration: 1000 * 10,
         loop: false,
         name: 'New scene',
+        seamlessLoop: false,
         values: {},
       });
     }
@@ -119,7 +121,7 @@ export default class PLuginTimeline extends Plugin {
       },
       ...points,
       {
-        ...points[points.length - 1],
+        ...points[this.scene.seamlessLoop ? 0 : points.length - 1],
         time: this.scene.duration + 1,
       },
     ];

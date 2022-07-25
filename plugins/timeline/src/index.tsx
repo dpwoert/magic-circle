@@ -12,6 +12,8 @@ import {
   Eye,
   Ease,
   Linear,
+  ZoomIn,
+  ZoomOut,
 } from '@magic-circle/styles';
 
 import Sidebar from './Sidebar';
@@ -27,6 +29,8 @@ registerIcon(Trash);
 registerIcon(Eye);
 registerIcon(Ease);
 registerIcon(Linear);
+registerIcon(ZoomIn);
+registerIcon(ZoomOut);
 
 export type ScenePoint = {
   time: number;
@@ -40,6 +44,7 @@ export type ScenePoint = {
 export type Scene = {
   duration: number;
   loop: boolean;
+  seamlessLoop: boolean;
   name: string;
   values: Record<string, ScenePoint[]>;
 };
@@ -52,6 +57,7 @@ type selection = {
 const emptyScene: Scene = {
   duration: 1000 * 10,
   loop: false,
+  seamlessLoop: false,
   name: 'New scene',
   values: {},
 };
@@ -69,6 +75,7 @@ export default class Timeline implements Plugin {
   scene: Store<Scene>;
   playhead: Store<number>;
   playing: Store<boolean>;
+  zoom: Store<number>;
   selected: Store<selection | null>;
 
   name = 'timeline';
@@ -86,6 +93,7 @@ export default class Timeline implements Plugin {
     this.scene = new Store<Scene>(emptyScene);
     this.playhead = new Store<number>(0);
     this.playing = new Store<boolean>(false);
+    this.zoom = new Store<number>(0.1);
     this.selected = new Store<selection | null>(null);
 
     this.ipc.on('timeline:play', () => {

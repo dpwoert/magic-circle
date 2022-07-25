@@ -26,7 +26,7 @@ type Hotspot = {
   height?: number;
   onClick?: () => void;
   dblClick?: () => void;
-  drag?: (deltaX: number, deltaY: number) => void;
+  drag?: (deltaX: number, deltaY: number, x: number, y: number) => void;
   cursor?: string;
 };
 
@@ -83,7 +83,7 @@ class CanvasDisplay {
     this.zoom = 0;
     this.pixelRatio = window.devicePixelRatio || 1;
 
-    this.setZoom(0);
+    this.setZoom(timeline.zoom.value);
     this.resize();
     this.render();
 
@@ -112,10 +112,15 @@ class CanvasDisplay {
     });
     this.element.addEventListener('mousemove', (evt) => {
       const box = this.element.getBoundingClientRect();
-      this.mouseMove(evt.x - box.x, evt.y - box.y);
-      this.drag(evt.movementX, evt.movementY);
+      const x = evt.x - box.x;
+      const y = evt.y - box.y;
+      this.mouseMove(x, y);
+      this.drag(evt.movementX, evt.movementY, x, y);
     });
     this.element.addEventListener('mouseup', () => {
+      this.dragEnd();
+    });
+    this.element.addEventListener('mouseleave', () => {
       this.dragEnd();
     });
 
@@ -182,7 +187,7 @@ class CanvasDisplay {
   }
 
   stepSize() {
-    return lerp(this.zoom, 12 / 100, 72 / 100);
+    return lerp(this.zoom, 6 / 100, 72 / 100);
   }
 
   setZoom(zoom: number) {
@@ -209,9 +214,9 @@ class CanvasDisplay {
           y >= spot.y &&
           y < spot.y + spot.height
         );
-      } else {
-        return false;
       }
+
+      return false;
     });
   }
 
@@ -261,9 +266,9 @@ class CanvasDisplay {
     this.dragging = null;
   }
 
-  drag(deltaX: number, deltaY: number) {
+  drag(deltaX: number, deltaY: number, x: number, y: number) {
     if (this.dragging) {
-      this.dragging.drag(deltaX, deltaY);
+      this.dragging.drag(deltaX, deltaY, x, y);
     }
   }
 
@@ -397,7 +402,6 @@ class CanvasDisplay {
           const curr = this.position(this.scene.duration);
           const newPos = curr + dx;
           const newTime = this.invert(newPos);
-          console.log({ newPos, newTime, curr });
           this.timeline.changeDuration(newTime);
         },
       });
@@ -418,6 +422,18 @@ class CanvasDisplay {
     // Rect
     this.context.fillStyle = COLORS.accent.css;
     this.context.fillRect(this.px(position - 4), 0, this.px(9), this.px(18));
+
+    // Drag
+    this.hotspots.push({
+      x: 0,
+      y: 0,
+      width: this.width,
+      height: SPACING(3),
+      drag: (dx, dy, x) => {
+        const time = this.invert(x);
+        this.timeline.setPlayhead(Math.max(0, time));
+      },
+    });
   }
 
   renderHandles(handles: Handle[]) {
@@ -484,7 +500,7 @@ class CanvasDisplay {
         time: 0,
       });
       allPoints.push({
-        ...points[points.length - 1],
+        ...points[this.scene.seamlessLoop ? 0 : points.length - 1],
         time: this.scene.duration,
       });
     }
@@ -703,6 +719,7 @@ const Canvas = ({ timeline }: CanvasProps) => {
 
   const playhead = useStore(timeline.playhead);
   const scene = useStore(timeline.scene);
+  const zoom = useStore(timeline.zoom);
 
   useEffect(() => {
     if (ref.current) {
@@ -717,6 +734,10 @@ const Canvas = ({ timeline }: CanvasProps) => {
   useEffect(() => {
     display.current.setScene(scene);
   }, [scene]);
+
+  useEffect(() => {
+    display.current.setZoom(zoom);
+  }, [zoom]);
 
   return <Container ref={ref} />;
 };

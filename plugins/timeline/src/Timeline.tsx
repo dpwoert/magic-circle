@@ -70,12 +70,43 @@ const SidebarHeader = styled.div`
   ${TYPO.small}
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 0 ${SPACING(1)}px;
   width: 100%;
   height: ${SPACING(3)}px;
   background: ${COLORS.shades.s600.css};
   color: ${COLORS.white.css};
   border-bottom: 1px solid ${COLORS.shades.s300.css};
+`;
+
+const SceneSelector = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    color: ${COLORS.accent.css};
+  }
+`;
+
+const ZoomControls = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${SPACING(0.25)}px;
+
+  span {
+    margin-right: ${SPACING(0.25)}px;
+  }
+`;
+
+type ZoomControlProps = {
+  active: boolean;
+};
+
+const ZoomControl = styled.div<ZoomControlProps>`
+  display: flex;
+  opacity: ${(props) => (props.active ? 1 : 0.2)};
+  cursor: ${(props) => (props.active ? 'pointer' : 'default')};
 `;
 
 const SidebarRows = styled.div`
@@ -188,6 +219,7 @@ const Timeline = ({ timeline }: TimelineProps) => {
 
   const playing = useStore(timeline.playing);
   const playhead = useStore(timeline.playhead);
+  const zoom = useStore(timeline.zoom);
   const scene = useStore(timeline.scene);
   const selected = useStore(timeline.selected);
   const setExternal = useStore(timeline.layers.setExternal);
@@ -221,7 +253,39 @@ const Timeline = ({ timeline }: TimelineProps) => {
         {show && (
           <>
             <Sidebar>
-              <SidebarHeader>{scene.name}</SidebarHeader>
+              <SidebarHeader>
+                <SceneSelector>
+                  {scene.name}
+                  <Icon
+                    name="ChevronDown"
+                    width={SPACING(1.5)}
+                    height={SPACING(1.5)}
+                  />
+                </SceneSelector>
+                <ZoomControls>
+                  <span>{Math.round(zoom * 100)}%</span>
+                  <ZoomControl active={zoom > 0}>
+                    <Icon
+                      name="ZoomOut"
+                      width={SPACING(1.5)}
+                      height={SPACING(1.5)}
+                      onClick={() => {
+                        timeline.zoom.set(Math.max(0, zoom - 0.1));
+                      }}
+                    />
+                  </ZoomControl>
+                  <ZoomControl active={zoom < 1}>
+                    <Icon
+                      name="ZoomIn"
+                      width={SPACING(1.5)}
+                      height={SPACING(1.5)}
+                      onClick={() => {
+                        timeline.zoom.set(Math.min(1, zoom + 0.1));
+                      }}
+                    />
+                  </ZoomControl>
+                </ZoomControls>
+              </SidebarHeader>
               <SidebarRows id="timeline-rows">
                 {Object.keys(scene.values).map((path) => (
                   <Track path={path} key={path} timeline={timeline} />
