@@ -83,6 +83,7 @@ export default class PlayControls implements Plugin {
           {
             label: 'reload',
             icon: 'Refresh',
+            tooltip: 'Reload page',
             onClick: () => {
               this.refresh();
             },
@@ -90,6 +91,7 @@ export default class PlayControls implements Plugin {
           {
             label: 'reset',
             icon: 'Rewind',
+            tooltip: 'Reset all state to defaults',
             onClick: () => {
               this.client.reset();
             },
@@ -97,6 +99,7 @@ export default class PlayControls implements Plugin {
           {
             label: 'fullscreen',
             icon: 'Maximize',
+            tooltip: 'Toggle fullscreen',
             onClick: () => {
               const element = document.querySelector('#frame iframe');
 

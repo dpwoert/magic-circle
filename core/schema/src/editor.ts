@@ -215,6 +215,7 @@ export type Sidebar = {
 export type Button = {
   label: string;
   icon: icons;
+  tooltip?: string;
   onClick: () => void;
   hide?: boolean;
   disabled?: boolean;

@@ -142,6 +142,7 @@ export default class Screenshots implements Plugin {
           {
             label: 'screenshot',
             icon: 'Camera',
+            tooltip: 'Take screenshot',
             onClick: () => {
               this.ipc.send('screenshot:take');
             },
@@ -149,6 +150,7 @@ export default class Screenshots implements Plugin {
           {
             label: 'directory',
             icon: 'Folder',
+            tooltip: 'Change screenshot folder',
             onClick: () => {
               this.changeFolder();
             },

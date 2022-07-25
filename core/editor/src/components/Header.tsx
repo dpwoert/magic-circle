@@ -3,7 +3,14 @@ import styled from 'styled-components';
 
 import { useStore } from '@magic-circle/state';
 import { LayoutHook } from '@magic-circle/schema';
-import { SPACING, COLORS, TYPO, Icon } from '@magic-circle/styles';
+import {
+  SPACING,
+  COLORS,
+  TYPO,
+  Icon,
+  Tooltip,
+  Placement,
+} from '@magic-circle/styles';
 
 import APP from '../app/app';
 
@@ -56,10 +63,10 @@ const ButtonCollection = styled.div`
 `;
 
 type ButtonProps = {
-  disabled?: boolean;
+  inactive?: boolean;
 };
 
-const Button = styled.div<ButtonProps>`
+const Button = styled(Tooltip)<ButtonProps>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -68,8 +75,8 @@ const Button = styled.div<ButtonProps>`
   border-right: 1px solid ${COLORS.accent.css};
   cursor: pointer;
   transition: background 0.2s ease;
-  opacity: ${(props) => (props.disabled ? 0.4 : 1)};
-  pointer-events: ${(props) => (props.disabled ? 'none' : 'all')};
+  opacity: ${(props) => (props.inactive ? 0.4 : 1)};
+  pointer-events: ${(props) => (props.inactive ? 'none' : 'all')};
 
   &:last-child {
     border-right: none;
@@ -151,9 +158,12 @@ const Header = () => {
                   .filter((button) => !button.hide)
                   .map((button) => (
                     <Button
-                      disabled={button.disabled}
+                      disabled={!button.tooltip}
+                      inactive={button.disabled}
                       key={button.label}
                       onClick={() => button.onClick()}
+                      content={button.tooltip}
+                      placement={Placement.BOTTOM}
                     >
                       <Icon
                         name={button.icon}

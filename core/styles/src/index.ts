@@ -10,6 +10,8 @@ export { default as Icon, register as registerIcon } from './Icon';
 export { default as Shortcut } from './Shortcut';
 export { default as Inner } from './Inner';
 export { default as Warning } from './Warning';
+export { default as Popup, Placement, Alignment } from './Popover';
+export { default as Tooltip } from './Tooltip';
 export * as Control from './control';
 export * as Forms from './forms';
 export * as Metric from './metric';
