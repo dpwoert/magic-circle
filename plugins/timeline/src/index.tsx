@@ -25,6 +25,8 @@ import {
   Share,
   FloppyDisc,
   Spinner,
+  Download,
+  FilePlus,
 } from '@magic-circle/styles';
 
 import Sidebar from './Sidebar';
@@ -49,6 +51,8 @@ registerIcon(Copy);
 registerIcon(Share);
 registerIcon(FloppyDisc);
 registerIcon(Spinner);
+registerIcon(Download);
+registerIcon(FilePlus);
 
 export type ScenePoint = {
   time: number;
@@ -188,6 +192,14 @@ export default class Timeline implements Plugin {
       ...curr,
       [this.name]: Object.keys(this.scene.value.values),
     }));
+  }
+
+  play() {
+    this.ipc.send('timeline:play');
+  }
+
+  stop() {
+    this.ipc.send('timeline:stop');
   }
 
   setPlayhead(time: number) {

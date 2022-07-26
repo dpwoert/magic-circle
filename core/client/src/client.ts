@@ -265,18 +265,18 @@ export default class MagicCircle {
   }
 
   tick(customDelta?: number) {
-    this.plugins.forEach((p) => {
-      if (p.startFrame) {
-        p.startFrame();
-      }
-    });
-
     // calculate delta
     const newTime = (
       typeof performance === 'undefined' ? Date : performance
     ).now();
     const delta = this.lastTime ? (newTime - this.lastTime) / 1000 : 0;
     this.lastTime = newTime;
+
+    this.plugins.forEach((p) => {
+      if (p.startFrame) {
+        p.startFrame(delta);
+      }
+    });
 
     // do user action
     if (this.hooks.loop) {

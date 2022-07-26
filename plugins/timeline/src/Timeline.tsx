@@ -337,9 +337,9 @@ const Timeline = ({ timeline }: TimelineProps) => {
                     <Button
                       onClick={() => {
                         if (playing) {
-                          timeline.ipc.send('timeline:stop');
+                          timeline.stop();
                         } else {
-                          timeline.ipc.send('timeline:play');
+                          timeline.play();
                         }
                       }}
                       disabled

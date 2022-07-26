@@ -237,8 +237,8 @@ const Popover = ({
   ...props
 }: PopoverProps) => {
   // create a unique id for each instance of this component
-  const idGen = String(Math.round(Math.random() * 1000));
-  const [id] = useState<string>(`popover-trigger-${idGen}`);
+  // const idGen = String(Math.round(Math.random() * 1000));
+  // const [id] = useState<string>(`popover-trigger-${idGen}`);
   const container = useRef(null);
   const contentRef = useRef(null);
   const portal = useRef(null);

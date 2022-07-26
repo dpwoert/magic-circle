@@ -20,6 +20,7 @@ type CurrentData = {
   frame: number;
   directory: any;
   isRecording: boolean;
+  sync: boolean;
 };
 
 export default class Recordings implements Plugin {
@@ -43,6 +44,7 @@ export default class Recordings implements Plugin {
       frame: 0,
       directory: null,
       isRecording: false,
+      sync: false,
     });
 
     this.ipc.on('recordings:save', (_, data: ScreenshotExport) => {
@@ -65,6 +67,12 @@ export default class Recordings implements Plugin {
       throw new Error(
         'The screenshot plugin is needed to use the recordings plugin'
       );
+    }
+
+    const timeline = this.client.getPlugin('timeline') as any;
+    if (this.current.value.sync && timeline) {
+      timeline.setPlayhead(0);
+      timeline.play();
     }
 
     // create directory

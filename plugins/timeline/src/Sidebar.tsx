@@ -2,7 +2,15 @@ import { useState } from 'react';
 import styled from 'styled-components';
 
 import { useStore } from '@magic-circle/state';
-import { SPACING, COLORS, TYPO, Icon, Forms } from '@magic-circle/styles';
+import {
+  SPACING,
+  COLORS,
+  TYPO,
+  Icon,
+  Forms,
+  MenuPortal,
+  Menu,
+} from '@magic-circle/styles';
 
 import type Timeline from './index';
 import type { Scene } from './index';
@@ -179,16 +187,45 @@ type SidebarProps = {
 
 const Sidebar = ({ timeline }: SidebarProps) => {
   const scenes = useStore(timeline.scenes);
+
+  const menu: Menu = {
+    items: [
+      {
+        label: 'New empty scene',
+        icon: 'FilePlus',
+        onSelect: () => {
+          timeline.createNewScene();
+        },
+      },
+      {
+        label: 'Import from file',
+        icon: 'Download',
+        onSelect: () => {
+          // todo
+        },
+      },
+    ],
+  };
+
   return (
     <Container>
       {Object.keys(scenes).map((id) => (
         <SceneEntry key={id} id={id} scene={scenes[id]} timeline={timeline} />
       ))}
       <ButtonArea>
-        <Forms.Button highlight onClick={() => timeline.createNewScene()}>
-          <Icon name="Plus" width={SPACING(1.5)} height={SPACING(1.5)} />
-          Add new scene
-        </Forms.Button>
+        <MenuPortal menu={menu}>
+          {(toggle) => (
+            <Forms.Button
+              highlight
+              onClick={() => {
+                toggle();
+              }}
+            >
+              <Icon name="Plus" width={SPACING(1.5)} height={SPACING(1.5)} />
+              Add new scene
+            </Forms.Button>
+          )}
+        </MenuPortal>
       </ButtonArea>
     </Container>
   );
