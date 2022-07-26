@@ -48,6 +48,7 @@
     "@magic-circle/recordings": "^0.1.5",
     "@magic-circle/schema": "^0.1.5",
     "@magic-circle/screenshots": "^0.1.5",
+    "@magic-circle/timeline": "^0.1.5",
     "@magic-circle/seed": "^0.1.5",
     "@magic-circle/state": "^0.1.5",
     "@magic-circle/styles": "^0.1.5",

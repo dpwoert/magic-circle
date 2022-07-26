@@ -42,7 +42,7 @@ export default class PluginLayers extends Plugin {
 
     // Create watcher if needed
     const watcherKeys = Object.keys(watchers);
-    const createWatcher = watcherKeys.length > 0;
+    const createWatcher = watcherKeys.length > 0 && this.client.ipc;
 
     if (createWatcher) {
       // Stop old watcher
@@ -65,8 +65,10 @@ export default class PluginLayers extends Plugin {
     this.generateCache();
 
     // Send to back-end
-    const layers = this.client.layer.toJSON('', new Paths()).children;
-    this.client.ipc.send('layers', layers);
+    if (this.client.ipc) {
+      const layers = this.client.layer.toJSON('', new Paths()).children;
+      this.client.ipc.send('layers', layers);
+    }
   }
 
   destroy() {

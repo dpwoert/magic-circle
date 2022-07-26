@@ -3,6 +3,7 @@ import Layers from '@magic-circle/layers';
 import Screenshots from '@magic-circle/screenshots';
 import Performance from '@magic-circle/performance';
 import Recordings from '@magic-circle/recordings';
+import Timeline from '@magic-circle/timeline';
 import Seed from '@magic-circle/seed';
 
 import {
@@ -17,7 +18,15 @@ import { Config } from '@magic-circle/schema';
 
 const config: Config = {
   url: '',
-  plugins: [Layers, PlayControls, Seed, Screenshots, Recordings, Performance],
+  plugins: [
+    Layers,
+    PlayControls,
+    Seed,
+    Screenshots,
+    Recordings,
+    Performance,
+    Timeline,
+  ],
   controls: [
     TextControl,
     NumberControl,

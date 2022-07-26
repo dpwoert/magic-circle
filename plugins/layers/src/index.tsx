@@ -12,13 +12,13 @@ import {
   ArrowRight,
   ChevronDown,
   registerIcon,
-  Rows,
+  Layers as LayersIcon,
 } from '@magic-circle/styles';
 
 import SidebarLeft from './SidebarLeft';
 import SidebarRight from './SidebarRight';
 
-registerIcon(Rows);
+registerIcon(LayersIcon);
 registerIcon(ChevronDown);
 registerIcon(ArrowRight);
 
@@ -58,6 +58,13 @@ const convert = (main: MainLayerExport) => {
   return { flat, lookup };
 };
 
+export type ExternalQuery = {
+  label: string;
+  icon: icons;
+  filter: string;
+  onSelect: (path: string) => void;
+};
+
 export default class Layers implements Plugin {
   ipc: App['ipc'];
   client: App;
@@ -66,6 +73,8 @@ export default class Layers implements Plugin {
   flat: Store<FlatListItem[]>;
   lookup: StoreFamily<LayerExport | ControlExport>;
   selected: Store<string>;
+  external: Store<Record<string, string[]>>;
+  setExternal: Store<ExternalQuery | null>;
 
   name = 'layers';
 
@@ -78,6 +87,8 @@ export default class Layers implements Plugin {
     this.flat = new Store<FlatListItem[]>([]);
     this.selected = new Store<string>(null);
     this.lookup = new StoreFamily<LayerExport | ControlExport>();
+    this.external = new Store({});
+    this.setExternal = new Store(null);
 
     this.ipc.on('layers', (_, layers: MainLayerExport) => {
       const { flat, lookup } = convert(layers);
@@ -99,7 +110,7 @@ export default class Layers implements Plugin {
 
   sidebar() {
     return {
-      icon: 'Rows' as icons,
+      icon: 'Layers' as icons,
       name: 'layers',
       render: <SidebarLeft layers={this} />,
     };
@@ -153,6 +164,8 @@ export default class Layers implements Plugin {
     this.flat.set([]);
     this.selected.set(null);
     this.lookup.reset();
+    this.external.set({});
+    this.setExternal.set(null);
   }
 
   preConnect() {
@@ -169,5 +182,9 @@ export default class Layers implements Plugin {
 
   getControlRenderer(type: string) {
     return this.client.controls[type]?.render;
+  }
+
+  getControl(type: string) {
+    return this.client.controls[type];
   }
 }

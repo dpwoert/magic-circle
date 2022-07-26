@@ -110,7 +110,7 @@ const Sidebar = ({ recordings }: SidebarProps) => {
           </Control.Container>
 
           <ButtonArea>
-            <Forms.Button onClick={() => recordings.start()}>
+            <Forms.Button highlight onClick={() => recordings.start()}>
               <Icon
                 name="VideoCamera"
                 width={SPACING(1.5)}

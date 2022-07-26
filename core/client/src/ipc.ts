@@ -48,9 +48,9 @@ export class IpcBase {
     this.on(channel, handler);
   }
 
-  invoke<T>(channel: string, payload?: any): Promise<T> {
+  invoke<T>(channel: string, ...payload: any[]): Promise<T> {
     return new Promise((resolve) => {
-      this.send(channel, payload);
+      this.send(channel, ...payload);
       this.once(channel, (_, response) => {
         resolve(response);
       });

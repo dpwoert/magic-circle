@@ -18,6 +18,10 @@ export default class Store<T> implements StoreClass<T> {
     this.hooks.forEach((h) => h(value));
   }
 
+  setFn(fn: (curr: T) => T) {
+    this.set(fn(this.value));
+  }
+
   onChange(hook: Hook<T>) {
     this.hooks.push(hook);
   }

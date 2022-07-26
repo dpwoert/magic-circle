@@ -38,11 +38,14 @@ const Slider = styled.input`
   }
 `;
 
-const Progress = styled.div`
+const Progress = styled.div.attrs((props) => ({
+  style: {
+    left: `${props.left}%`,
+    width: `${props.width}%`,
+  },
+}))`
   position: absolute;
   top: 0;
-  left: ${(props) => props.left}%;
-  width: ${(props) => props.width}%;
   height: 100%;
   background: ${COLORS.accent.opacity(0.15)};
   cursor: grab;
@@ -78,6 +81,7 @@ const NumberControlContinuous = ({
   options,
   set,
   hasChanges,
+  select,
   reset,
 }: ControlProps<number, options>) => {
   const { range, stepSize } = options;
@@ -93,7 +97,7 @@ const NumberControlContinuous = ({
   const left = biDirectional ? Math.min(x1, x2) : 0;
 
   return (
-    <Control.Container hasChanges={hasChanges} reset={reset}>
+    <Control.Container hasChanges={hasChanges} reset={reset} select={select}>
       <Control.Label>{label}</Control.Label>
       <Control.Inside>
         <InputContainer>
@@ -198,6 +202,13 @@ const NumberControlStepper = ({
 
 const NumberControl: ControlSchema = {
   name: 'number',
+  supports: (type, options: options) => {
+    if (type === 'timeline' && options.range) {
+      return true;
+    }
+
+    return false;
+  },
   render: (props: ControlProps<number, options>) => {
     const { range } = props.options;
 

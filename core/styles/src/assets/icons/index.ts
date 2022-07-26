@@ -59,6 +59,7 @@ import { ReactComponent as DollarIcon } from './dollar.svg';
 import { ReactComponent as DotsHorizontalIcon } from './dots-horizontal.svg';
 import { ReactComponent as DotsVerticalIcon } from './dots-vertical.svg';
 import { ReactComponent as DownloadIcon } from './download.svg';
+import { ReactComponent as EaseIcon } from './ease.svg';
 import { ReactComponent as EditIcon } from './edit.svg';
 import { ReactComponent as EmojiHappyIcon } from './emoji-happy.svg';
 import { ReactComponent as EmojiSadIcon } from './emoji-sad.svg';
@@ -72,6 +73,7 @@ import { ReactComponent as FileIcon } from './file.svg';
 import { ReactComponent as FilmIcon } from './film.svg';
 import { ReactComponent as FilterIcon } from './filter.svg';
 import { ReactComponent as FlagIcon } from './flag.svg';
+import { ReactComponent as FloppyDiscIcon } from './floppy-disc.svg';
 import { ReactComponent as FolderMinusIcon } from './folder-minus.svg';
 import { ReactComponent as FolderPlusIcon } from './folder-plus.svg';
 import { ReactComponent as FolderIcon } from './folder.svg';
@@ -88,6 +90,8 @@ import { ReactComponent as HomeIcon } from './home.svg';
 import { ReactComponent as InboxIcon } from './inbox.svg';
 import { ReactComponent as InformationIcon } from './information.svg';
 import { ReactComponent as KeyIcon } from './key.svg';
+import { ReactComponent as LayersIcon } from './layers.svg';
+import { ReactComponent as LinearIcon } from './linear.svg';
 import { ReactComponent as LinkIcon } from './link.svg';
 import { ReactComponent as LockUnlockedIcon } from './lock-unlocked.svg';
 import { ReactComponent as LockIcon } from './lock.svg';
@@ -148,6 +152,7 @@ import { ReactComponent as SkipBackIcon } from './skip-back.svg';
 import { ReactComponent as SkipForwardIcon } from './skip-forward.svg';
 import { ReactComponent as SmartphoneIcon } from './smartphone.svg';
 import { ReactComponent as SpeakerIcon } from './speaker.svg';
+import { ReactComponent as SpinnerIcon } from './spinner.svg';
 import { ReactComponent as StarIcon } from './star.svg';
 import { ReactComponent as StickerIcon } from './sticker.svg';
 import { ReactComponent as StopIcon } from './stop.svg';
@@ -370,6 +375,7 @@ export const Download: IconDefinition = {
   name: 'Download',
   component: DownloadIcon,
 };
+export const Ease: IconDefinition = { name: 'Ease', component: EaseIcon };
 export const Edit: IconDefinition = { name: 'Edit', component: EditIcon };
 export const EmojiHappy: IconDefinition = {
   name: 'EmojiHappy',
@@ -401,6 +407,10 @@ export const File: IconDefinition = { name: 'File', component: FileIcon };
 export const Film: IconDefinition = { name: 'Film', component: FilmIcon };
 export const Filter: IconDefinition = { name: 'Filter', component: FilterIcon };
 export const Flag: IconDefinition = { name: 'Flag', component: FlagIcon };
+export const FloppyDisc: IconDefinition = {
+  name: 'FloppyDisc',
+  component: FloppyDiscIcon,
+};
 export const FolderMinus: IconDefinition = {
   name: 'FolderMinus',
   component: FolderMinusIcon,
@@ -438,6 +448,8 @@ export const Information: IconDefinition = {
   component: InformationIcon,
 };
 export const Key: IconDefinition = { name: 'Key', component: KeyIcon };
+export const Layers: IconDefinition = { name: 'Layers', component: LayersIcon };
+export const Linear: IconDefinition = { name: 'Linear', component: LinearIcon };
 export const Link: IconDefinition = { name: 'Link', component: LinkIcon };
 export const LockUnlocked: IconDefinition = {
   name: 'LockUnlocked',
@@ -594,6 +606,10 @@ export const Speaker: IconDefinition = {
   name: 'Speaker',
   component: SpeakerIcon,
 };
+export const Spinner: IconDefinition = {
+  name: 'Spinner',
+  component: SpinnerIcon,
+};
 export const Star: IconDefinition = { name: 'Star', component: StarIcon };
 export const Sticker: IconDefinition = {
   name: 'Sticker',
@@ -742,6 +758,7 @@ export type list =
   | 'DotsHorizontal'
   | 'DotsVertical'
   | 'Download'
+  | 'Ease'
   | 'Edit'
   | 'EmojiHappy'
   | 'EmojiSad'
@@ -755,6 +772,7 @@ export type list =
   | 'Film'
   | 'Filter'
   | 'Flag'
+  | 'FloppyDisc'
   | 'FolderMinus'
   | 'FolderPlus'
   | 'Folder'
@@ -771,6 +789,8 @@ export type list =
   | 'Inbox'
   | 'Information'
   | 'Key'
+  | 'Layers'
+  | 'Linear'
   | 'Link'
   | 'LockUnlocked'
   | 'Lock'
@@ -831,6 +851,7 @@ export type list =
   | 'SkipForward'
   | 'Smartphone'
   | 'Speaker'
+  | 'Spinner'
   | 'Star'
   | 'Sticker'
   | 'Stop'

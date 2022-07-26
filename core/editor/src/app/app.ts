@@ -90,11 +90,15 @@ class App implements AppBase {
         ? this.config.plugins(defaultPlugins)
         : this.config.plugins;
 
+    // Create all plugins
+    plugins.forEach((P) => {
+      const plugin = new P();
+      this.plugins.push(plugin);
+    });
+
     // Load all plugins
     await Promise.all(
-      plugins.map(async (P) => {
-        const plugin = new P();
-
+      this.plugins.map(async (plugin) => {
         await plugin.setup(this);
 
         // load plugins

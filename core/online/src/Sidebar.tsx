@@ -107,6 +107,7 @@ const Sidebar = ({ app }: SidebarProps) => {
       </Top>
       <Bottom>
         <Forms.Button
+          highlight
           onClick={() => {
             // eslint-disable-next-line
             const url = prompt(

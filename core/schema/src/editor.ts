@@ -191,8 +191,10 @@ export type StoreHook<T> = (newValue: T) => void;
 export interface Store<T> {
   value: T;
   set(value: T): void;
+  setFn(fn: (curr: T) => T): void;
   onChange(hook: StoreHook<T>): void;
   removeListener(hook: StoreHook<T>): void;
+  hooks: StoreHook<T>[];
 }
 
 export interface StoreConstructor<T> {
@@ -270,12 +272,18 @@ export type ControlProps<T, K> = {
   label: string;
   options: K;
   hasChanges: boolean;
+  select?: {
+    label: string;
+    icon: icons;
+    onSelect: () => void;
+  };
   set: (newValue: T) => void;
   reset: () => void;
 };
 
 export type Control = {
   name: string;
+  supports?: (type: string, options: any) => boolean;
   render: (props: ControlProps<any, any>) => ReactNode;
 };
 
@@ -316,6 +324,7 @@ export type ControlExport = {
   value: any;
   initialValue: any;
   blockHydrate: boolean;
+  watching: boolean;
 };
 
 export type LayerExport = {
@@ -339,6 +348,7 @@ export enum LayoutHook {
   SIDEBAR_RIGHT = 'sidebar_right',
   HEADER_RIGHT = 'header_right',
   INNER = 'inner',
+  BOTTOM = 'bottom',
 }
 
 export type layoutHooks = Record<string, ReactNode>;

@@ -23,6 +23,7 @@ module.exports = {
     'default-param-last': 0,
     'no-restricted-exports': 0,
     'import/no-named-default': 0,
+    'prefer-exponentiation-operator': 0,
     // 'import/no-cycle': 2,
 
     // Typescript

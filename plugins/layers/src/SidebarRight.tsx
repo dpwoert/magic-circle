@@ -35,8 +35,11 @@ type ControlProps = {
 
 const Control = ({ layers, controlPath }: ControlProps) => {
   const control = useStore(layers.lookup.get(controlPath));
+  const setExternal = useStore(layers.setExternal);
+
   if (control && 'type' in control) {
-    const Element = layers.getControlRenderer(control.type);
+    const type = layers.getControl(control.type);
+    const Element = type?.render;
 
     if (!Element) {
       throw new Error(
@@ -44,11 +47,26 @@ const Control = ({ layers, controlPath }: ControlProps) => {
       );
     }
 
+    let select;
+
+    if (setExternal && type.supports) {
+      select = type.supports(
+        layers.setExternal.value.filter,
+        control.options
+      ) && {
+        label: layers.setExternal.value.label,
+        icon: layers.setExternal.value.icon,
+        onSelect: () => layers.setExternal.value.onSelect(control.path),
+      };
+    }
+
     return (
       <Element
+        key={control.path}
         value={control.value}
         label={control.label}
         options={control.options}
+        select={select}
         hasChanges={!shallowEqual(control.value, control.initialValue)}
         set={(newValue: any) => layers.setControl(control.path, newValue)}
         reset={() => layers.resetControl(control.path)}

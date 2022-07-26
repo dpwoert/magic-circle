@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { AppProvider } from '@magic-circle/state';
+import { AppProvider, useStore } from '@magic-circle/state';
+import { LayoutHook } from '@magic-circle/schema';
 import {
   COLORS,
   SPACING,
@@ -64,6 +65,8 @@ const Iframe = styled.iframe`
   `}
 `;
 
+const Bottom = styled.div``;
+
 // const SpacerFrame = styled.div`
 //   flex: 1;
 //   height: 100%;
@@ -91,6 +94,7 @@ const MobileWarning = styled.div`
 `;
 
 export default function App() {
+  const hooks = useStore(APP.layoutHooks);
   const url =
     typeof APP.config.url === 'string'
       ? APP.config.url
@@ -112,6 +116,7 @@ export default function App() {
           </Frame>
           <SidebarRight />
         </Inside>
+        <Bottom>{hooks[LayoutHook.BOTTOM]}</Bottom>
         <CommandLine />
       </Container>
       <MobileWarning>
