@@ -537,8 +537,6 @@ export default class Timeline implements Plugin {
         ) {
           this.saveScene(String(Date.now()), json);
         }
-
-        console.log({ fileHandle, json });
       }
     }
   }
