@@ -507,4 +507,39 @@ export default class Timeline implements Plugin {
       saveAs(blob, `${this.scenes.value[sceneId].name}.json`);
     }
   }
+
+  async importScene() {
+    if ('showOpenFilePicker' in window) {
+      // @ts-ignore
+      const [fileHandle] = await window.showOpenFilePicker({
+        types: [
+          {
+            description: 'Scene files',
+            accept: {
+              'application/json': ['.json'],
+            },
+          },
+        ],
+        multiple: false,
+      });
+
+      if (fileHandle) {
+        const data = await fileHandle.getFile();
+        const text = await data.text();
+        const json: Scene = JSON.parse(text);
+
+        // Do check check to see if json is valid
+        if (
+          json.duration > 0 &&
+          json.name &&
+          json.values &&
+          typeof json.values === 'object'
+        ) {
+          this.saveScene(String(Date.now()), json);
+        }
+
+        console.log({ fileHandle, json });
+      }
+    }
+  }
 }

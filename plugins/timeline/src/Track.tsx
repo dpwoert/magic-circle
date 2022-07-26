@@ -82,12 +82,12 @@ const Track = ({ timeline, path }: TrackProps) => {
 
   const canAddNew = useMemo<boolean>(() => {
     const values = scene.values[path];
-    if (values && values[selected.key]) {
+    if (values && selected && values[selected.key]) {
       return playhead !== values[selected.key].time;
     }
 
     return true;
-  }, [playhead, selected, scene]);
+  }, [playhead, selected, scene, path]);
 
   if ('label' in control) {
     return (

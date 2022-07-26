@@ -201,7 +201,7 @@ const Sidebar = ({ timeline }: SidebarProps) => {
         label: 'Import from file',
         icon: 'Download',
         onSelect: () => {
-          // todo
+          timeline.importScene();
         },
       },
     ],
