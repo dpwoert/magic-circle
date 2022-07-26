@@ -80,6 +80,15 @@ const Track = ({ timeline, path }: TrackProps) => {
     );
   }, [selected, scene, path]);
 
+  const canAddNew = useMemo<boolean>(() => {
+    const values = scene.values[path];
+    if (values && values[selected.key]) {
+      return playhead !== values[selected.key].time;
+    }
+
+    return true;
+  }, [playhead, selected, scene]);
+
   if ('label' in control) {
     return (
       <Container key={path}>
@@ -92,6 +101,7 @@ const Track = ({ timeline, path }: TrackProps) => {
             onClick={() => timeline.addKeyframe(path, playhead)}
             content="Add new keyframe"
             placement={Placement.BOTTOM}
+            disabled={!canAddNew}
           >
             <Icon
               name="PlusCircle"
