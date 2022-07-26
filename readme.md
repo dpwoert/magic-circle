@@ -37,6 +37,8 @@ Magic Circle is framework and library agnostic and can thus work together with f
 
 **🎥 Recordings** Render your content into a screen recording by exporting it frame by frame without lag. Enabling you to export videos in high quality without loss of quality or jankiness like for example a manual screen recording would.
 
+**🎬 Timelines** Create a timeline with keyframed values based on your variables. Use it to experiment with values or create production-ready animations.
+
 **⏲ Performance measurements** Measures and displays performance metrics like Frames Per Second and memory usage so you always know if you're project runs smoothly.
 
 **🛠 Custom plugins** Since all projects are unique, some projects need custom plugins that might not exists yet. Make your own if needed, or use community plugins.
