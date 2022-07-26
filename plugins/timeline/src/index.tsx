@@ -241,7 +241,9 @@ export default class Timeline implements Plugin {
         time
       );
 
-      if (interpolated) {
+      const currentValue = this.layers.lookup.get(path).value;
+
+      if ('value' in currentValue) {
         this.scene.setFn((curr) => ({
           ...curr,
           values: {
@@ -249,8 +251,7 @@ export default class Timeline implements Plugin {
             [path]: [
               {
                 time,
-                value: interpolated,
-                // value: currentValue.value,
+                value: currentValue.value,
               },
             ],
           },
