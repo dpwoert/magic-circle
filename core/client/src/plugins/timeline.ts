@@ -45,7 +45,6 @@ export default class PLuginTimeline extends Plugin {
     play: boolean;
   };
   private variables: Record<string, SceneVariable>;
-  private startTime: Date;
   playhead: number;
   playing: boolean;
 
@@ -228,7 +227,6 @@ export default class PLuginTimeline extends Plugin {
     // End of timeline
     if (time >= this.scene.duration && this.playing) {
       this.setPlayhead(0);
-      this.startTime = new Date();
 
       if (!this.scene.loop) {
         this.stop();
@@ -238,7 +236,6 @@ export default class PLuginTimeline extends Plugin {
 
   play() {
     this.playing = true;
-    this.startTime = new Date(Date.now() - this.playhead);
 
     if (this.client.ipc) {
       this.client.ipc.send('timeline:play');
@@ -247,17 +244,15 @@ export default class PLuginTimeline extends Plugin {
 
   stop() {
     this.playing = false;
-    this.startTime = null;
 
     if (this.client.ipc) {
       this.client.ipc.send('timeline:stop');
     }
   }
 
-  startFrame() {
+  startFrame(delta: number) {
     if (this.playing) {
-      const now = Date.now();
-      this.setPlayhead(now - this.startTime.valueOf());
+      this.setPlayhead(this.playhead + delta * 1000);
     }
   }
 }

@@ -1,7 +1,15 @@
 import { useMemo } from 'react';
 import styled from 'styled-components';
 
-import { COLORS, Forms, Icon, SPACING, TYPO } from '@magic-circle/styles';
+import {
+  COLORS,
+  Forms,
+  Icon,
+  SPACING,
+  TYPO,
+  Placement,
+  Tooltip,
+} from '@magic-circle/styles';
 import { useStore } from '@magic-circle/state';
 
 import type TimelinePlugin from './index';
@@ -181,7 +189,7 @@ type ButtonProps = {
   active?: boolean;
 };
 
-const Button = styled.div<ButtonProps>`
+const Button = styled<ButtonProps>(Tooltip)`
   position: relative;
   width: 26px;
   height: 26px;
@@ -329,11 +337,12 @@ const Timeline = ({ timeline }: TimelineProps) => {
                     <Button
                       onClick={() => {
                         if (playing) {
-                          timeline.ipc.send('timeline:stop');
+                          timeline.stop();
                         } else {
-                          timeline.ipc.send('timeline:play');
+                          timeline.play();
                         }
                       }}
+                      disabled
                     >
                       <Icon
                         name={playing ? 'Pause' : 'Play'}
@@ -346,6 +355,8 @@ const Timeline = ({ timeline }: TimelineProps) => {
                       onClick={() => {
                         timeline.toggleLoop();
                       }}
+                      content="Loop scene"
+                      placement={Placement.BOTTOM}
                     >
                       <Icon
                         name="Refresh"
@@ -358,6 +369,8 @@ const Timeline = ({ timeline }: TimelineProps) => {
                       onClick={() => {
                         timeline.toggleSeamlessLoop();
                       }}
+                      content="Seamlessly loop start and end values"
+                      placement={Placement.BOTTOM}
                     >
                       <Icon
                         name="Spinner"

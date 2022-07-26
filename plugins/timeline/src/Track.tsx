@@ -1,7 +1,14 @@
 import { useMemo } from 'react';
 import styled from 'styled-components';
 
-import { COLORS, Icon, SPACING, TYPO } from '@magic-circle/styles';
+import {
+  COLORS,
+  Icon,
+  SPACING,
+  TYPO,
+  Tooltip,
+  Placement,
+} from '@magic-circle/styles';
 import { useStore } from '@magic-circle/state';
 
 import Timeline from './index';
@@ -46,8 +53,10 @@ type OptionProps = {
   disabled?: boolean;
 };
 
-const Option = styled.div<OptionProps>`
+const Option = styled<OptionProps>(Tooltip)`
+  cursor: pointer;
   opacity: ${(props) => (props.disabled ? 0.2 : 1)};
+  pointer-events: ${(props) => (props.disabled ? 'none' : 'all')};
 `;
 
 type TrackProps = {
@@ -71,6 +80,15 @@ const Track = ({ timeline, path }: TrackProps) => {
     );
   }, [selected, scene, path]);
 
+  const canAddNew = useMemo<boolean>(() => {
+    const values = scene.values[path];
+    if (values && selected && values[selected.key]) {
+      return playhead !== values[selected.key].time;
+    }
+
+    return true;
+  }, [playhead, selected, scene, path]);
+
   if ('label' in control) {
     return (
       <Container key={path}>
@@ -79,8 +97,12 @@ const Track = ({ timeline, path }: TrackProps) => {
           <span>{control.path}</span>
         </Labels>
         <Options>
-          {/* <Icon name="Eye" width={SPACING(1.5)} height={SPACING(1.5)} /> */}
-          <Option onClick={() => timeline.addKeyframe(path, playhead)}>
+          <Option
+            onClick={() => timeline.addKeyframe(path, playhead)}
+            content="Add new keyframe"
+            placement={Placement.BOTTOM}
+            disabled={!canAddNew}
+          >
             <Icon
               name="PlusCircle"
               width={SPACING(1.5)}
@@ -90,6 +112,8 @@ const Track = ({ timeline, path }: TrackProps) => {
           <Option
             disabled={!selected || selected.path !== path}
             onClick={() => timeline.removeKeyframe(path, selected.key)}
+            content="Remove selected keyframe"
+            placement={Placement.BOTTOM}
           >
             <Icon name="Trash" width={SPACING(1.5)} height={SPACING(1.5)} />
           </Option>
@@ -98,6 +122,8 @@ const Track = ({ timeline, path }: TrackProps) => {
             onClick={() => {
               timeline.toggleEaseForKeyframe(path, selected.key);
             }}
+            content="Toggle easing for selected keyframe"
+            placement={Placement.BOTTOM}
           >
             <Icon
               name={isEased ? 'Linear' : 'Ease'}

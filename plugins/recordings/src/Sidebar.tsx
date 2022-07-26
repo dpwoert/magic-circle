@@ -23,6 +23,10 @@ const ButtonArea = styled.div`
   margin-top: ${SPACING(1)}px;
 `;
 
+const BooleanInside = styled(Control.Inside)`
+  justify-content: flex-end;
+`;
+
 type SidebarProps = {
   recordings: Recordings;
 };
@@ -107,6 +111,21 @@ const Sidebar = ({ recordings }: SidebarProps) => {
                 }}
               />
             </Control.Inside>
+          </Control.Container>
+
+          <Control.Container hasChanges={false}>
+            <Control.Label>Scene sync</Control.Label>
+            <BooleanInside>
+              <Forms.Checkbox
+                value={current.sync}
+                onChange={(val) => {
+                  recordings.current.setFn((curr) => ({
+                    ...curr,
+                    sync: val,
+                  }));
+                }}
+              />
+            </BooleanInside>
           </Control.Container>
 
           <ButtonArea>
