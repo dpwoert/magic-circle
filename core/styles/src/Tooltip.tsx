@@ -7,7 +7,7 @@ import SPACING from './spacing';
 import COLORS from './colors';
 import TYPO from './typography';
 
-export const Label = styled.div`
+const Label = styled.div`
   background: ${COLORS.shades.s700.css};
   color: ${COLORS.shades.s100.css};
   padding: ${SPACING(0.5)}px ${SPACING(0.75)}px;
@@ -22,7 +22,7 @@ export const Label = styled.div`
   }
 `;
 
-export interface TooltipProps extends PopoverProps {
+interface TooltipProps extends PopoverProps {
   content: string | React.ReactNode;
 }
 

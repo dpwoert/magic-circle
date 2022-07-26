@@ -7,7 +7,7 @@ import Popover, { Alignment, Placement, PopoverProps } from './Popover';
 
 import COLORS from './colors';
 
-export interface MenuPortalProps extends Omit<PopoverProps, 'content'> {
+interface MenuPortalProps extends Omit<PopoverProps, 'content'> {
   menu: Menu;
 }
 
