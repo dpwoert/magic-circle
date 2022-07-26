@@ -234,13 +234,7 @@ export default class Timeline implements Plugin {
 
     // Start with first frame
     if (!current || current.length === 0) {
-      // Ask the client to interpolate the current value
-      const interpolated = await this.ipc.invoke<number>(
-        'timeline:get-value',
-        path,
-        time
-      );
-
+      // Get the current value
       const currentValue = this.layers.lookup.get(path).value;
 
       if ('value' in currentValue) {
