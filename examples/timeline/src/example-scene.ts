@@ -101,8 +101,19 @@ export function setup(gui: MagicCircle) {
   // Add animation timeline
   gui.plugin<PluginTimeline>('timeline').load(ANIMATION.scene, true);
 
+  // Listen to resizes of the window
+  window.addEventListener('resize', () => {
+    resize(window.innerWidth, window.innerHeight);
+  });
+
   // Save element for screenshots
   return renderer.domElement;
+}
+
+export function resize(width: number, height: number) {
+  camera.aspect = width / height;
+  camera.updateProjectionMatrix();
+  renderer.setSize(width, height);
 }
 
 export function loop() {
