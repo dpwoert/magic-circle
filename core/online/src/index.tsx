@@ -39,7 +39,7 @@ export default class DemoPlugin implements Plugin {
           {
             label: 'Information',
             icon: 'Information' as icons,
-            tooltip: 'Visit website',
+            tooltip: 'Visit Magic Circle website',
             onClick: () => {
               window.open('https://magic-circle.dev', '_blank');
             },
