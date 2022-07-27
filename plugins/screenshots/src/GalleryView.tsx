@@ -152,8 +152,6 @@ const GalleryView = ({
             }),
           };
 
-          console.log({ menu });
-
           return (
             <Screenshot key={file.fileName}>
               <ImageContainer>
