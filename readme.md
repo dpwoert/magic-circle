@@ -57,7 +57,7 @@ Magic Circle is framework and library agnostic and can thus work together with f
 
 **🎛 More advanced custom controls** More control types, like setting images for textures and easing controls.
 
-**⏰ Animation timeline** Create an animation timeline where variables can be key-framed.
+**⏰ Animation timeline** Improve the animation timeline, making it better to use.
 
 ## Documentation
 
