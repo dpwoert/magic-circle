@@ -75,3 +75,4 @@ The plugins that are currently bundled by default:
 - **magic-circle/play-controls** ([readme](https://github.com/dpwoert/magic-circle/tree/master/plugins/play-controls))
 - **magic-circle/screenshots** ([readme](https://github.com/dpwoert/magic-circle/tree/master/plugins/screenshots))
 - **magic-circle/seed** ([readme](https://github.com/dpwoert/magic-circle/tree/master/plugins/seed))
+- **magic-circle/timeline** ([readme](https://github.com/dpwoert/magic-circle/tree/master/plugins/timeline))
