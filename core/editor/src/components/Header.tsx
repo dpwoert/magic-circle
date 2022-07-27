@@ -13,6 +13,7 @@ import {
 } from '@magic-circle/styles';
 
 import APP from '../app/app';
+import sortHelper from '../utils/sort';
 
 const Container = styled.div`
   position: relative;
@@ -102,32 +103,6 @@ const Title = styled.div`
   pointer-events: none;
 `;
 
-const sortHelper = (
-  key: string,
-  after?: string | string[],
-  before?: string | string[]
-) => {
-  if (after) {
-    if (Array.isArray(after) && after.includes(key)) {
-      return 1;
-    }
-    if (!Array.isArray(after) && after === key) {
-      return 1;
-    }
-  }
-
-  if (before) {
-    if (Array.isArray(before) && before.includes(key)) {
-      return -1;
-    }
-    if (!Array.isArray(before) && before === key) {
-      return -1;
-    }
-  }
-
-  return 0;
-};
-
 const Header = () => {
   const buttons = useStore(APP.buttons);
   const { title } = useStore(APP.pageInfo);
@@ -149,7 +124,7 @@ const Header = () => {
 
               return (
                 sortHelper(b, valueA.after, valueA.before) ||
-                sortHelper(a, valueB.after, valueA.before) * -1
+                sortHelper(a, valueB.after, valueB.before) * -1
               );
             })
             .map((key) => (

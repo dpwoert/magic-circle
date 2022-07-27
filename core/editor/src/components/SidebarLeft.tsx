@@ -5,6 +5,7 @@ import { useStore } from '@magic-circle/state';
 import { SPACING, COLORS, Icon } from '@magic-circle/styles';
 
 import APP from '../app/app';
+import sortHelper from '../utils/sort';
 
 const Container = styled.div`
   display: flex;
@@ -59,20 +60,27 @@ const SidebarLeft = () => {
   return (
     <Container>
       <Tabs>
-        {panels.map((s, key) => (
-          <Tab
-            selected={key === current}
-            key={s.name}
-            onClick={() => {
-              APP.sidebar.set({
-                panels,
-                current: key,
-              });
-            }}
-          >
-            <Icon name={s.icon} width={SPACING(2)} height={SPACING(2)} />
-          </Tab>
-        ))}
+        {panels
+          .sort((a, b) => {
+            return (
+              sortHelper(b.name, a.after, a.before) ||
+              sortHelper(a.name, b.after, b.before) * -1
+            );
+          })
+          .map((s, key) => (
+            <Tab
+              selected={key === current}
+              key={s.name}
+              onClick={() => {
+                APP.sidebar.set({
+                  panels,
+                  current: key,
+                });
+              }}
+            >
+              <Icon name={s.icon} width={SPACING(2)} height={SPACING(2)} />
+            </Tab>
+          ))}
       </Tabs>
       <Inside>{panels[current]?.render}</Inside>
     </Container>

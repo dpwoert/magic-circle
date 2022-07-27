@@ -49,8 +49,8 @@ const Container = styled.div`
   min-width: ${SPACING(18)}px;
   background: ${COLORS.shades.s500.css};
   box-shadow: 0px 4px 10px 5px rgba(0, 0, 0, 0.12);
-  border-radius: 3px;
-  color: ${COLORS.shades.s200.css};
+  border-radius: 5px;
+  color: ${COLORS.shades.s100.css};
   pointer-events: none;
   padding: ${SPACING(0.5)}px;
   opacity: 0;
@@ -96,21 +96,29 @@ const Label = styled.div`
 `;
 
 const Item = styled.a<ItemProps>`
-  ${TYPO.small}
+  ${TYPO.regular}
   position: relative;
   height: ${SPACING(3)}px;
   display: flex;
   align-items: center;
   padding: 0 ${SPACING(1)}px;
-  border-bottom: 1px solid ${COLORS.shades.s300.css};
   opacity: ${(props) => (props.disabled ? 0.5 : 1)};
-  border-radius: 3px;
+  border-radius: 5px;
   background: ${(props) =>
-    props.checked ? COLORS.shades.s600.css : 'initial'};
+    props.checked ? COLORS.shades.s500.css : 'initial'};
   color: ${(props) =>
-    props.checked || props.active ? COLORS.white.css : COLORS.shades.s200.css};
+    props.checked || props.active ? COLORS.white.css : COLORS.shades.s100.css};
   text-decoration: none;
   cursor: pointer;
+
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: 0px;
+    height: 1px;
+    width: calc(100% - ${SPACING(2)}px);
+    background: ${COLORS.shades.s300.css};
+  }
 
   &:hover {
     background: ${COLORS.shades.s600.css};
@@ -122,8 +130,8 @@ const Item = styled.a<ItemProps>`
     pointer-events: all;
   }
 
-  &:last-of-type {
-    border-bottom: none;
+  &:last-of-type:after {
+    display: none;
   }
 
   & > ${Label} > ${Ellipsis} {
@@ -143,8 +151,8 @@ const Item = styled.a<ItemProps>`
 
 const IconPart = styled.div`
   margin-right: ${SPACING(1)}px;
-  width: ${SPACING(1)}px;
-  height: ${SPACING(1)}px;
+  width: ${SPACING(1.5)}px;
+  height: ${SPACING(1.5)}px;
 `;
 
 const EndPart = styled.div``;
@@ -235,7 +243,11 @@ const MenuContainer = ({ items, close }: MenuContainerProps) => {
           >
             <IconPart>
               {item.icon && (
-                <Icon name={item.icon} width={SPACING(1)} height={SPACING(1)} />
+                <Icon
+                  name={item.icon}
+                  width={SPACING(1.5)}
+                  height={SPACING(1.5)}
+                />
               )}
             </IconPart>
             <Label>
@@ -251,8 +263,8 @@ const MenuContainer = ({ items, close }: MenuContainerProps) => {
               {item.items && item.items.length > 0 && (
                 <Triangle
                   name="ChevronRight"
-                  width={SPACING(1)}
-                  height={SPACING(1)}
+                  width={SPACING(1.5)}
+                  height={SPACING(1.5)}
                 />
               )}
               {item.badge && item.badge === MenuBadge.BETA && (

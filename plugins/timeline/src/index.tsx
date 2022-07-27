@@ -149,6 +149,8 @@ export default class Timeline implements Plugin {
       icon: 'Clock' as icons,
       name: 'timeline',
       render: <Sidebar timeline={this} />,
+      before: 'performance',
+      after: 'recordings',
     };
   }
 

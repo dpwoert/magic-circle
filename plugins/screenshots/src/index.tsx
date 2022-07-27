@@ -165,6 +165,7 @@ export default class Screenshots implements Plugin {
     return {
       icon: 'Photo' as icons,
       name: 'screenshots',
+      after: 'layers',
       render: <Sidebar app={this.client} screenshots={this} />,
     };
   }

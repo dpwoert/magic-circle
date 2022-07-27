@@ -56,6 +56,7 @@ export default class Recordings implements Plugin {
     return {
       icon: 'VideoCamera' as icons,
       name: 'recording',
+      after: 'screenshots',
       render: <Sidebar recordings={this} />,
     };
   }

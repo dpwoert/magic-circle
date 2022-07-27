@@ -205,6 +205,8 @@ export interface SidebarOpts {
   icon: icons;
   name: string;
   render: ReactNode;
+  before?: string | string[];
+  after?: string | string[];
 }
 
 export type Sidebar = {
