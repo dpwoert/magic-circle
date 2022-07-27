@@ -9,6 +9,8 @@ import {
   Icon,
   Forms,
   COLORS,
+  Tooltip,
+  Placement,
 } from '@magic-circle/styles';
 
 import { list } from './list.json';
@@ -88,13 +90,18 @@ const Sidebar = ({ app }: SidebarProps) => {
           >
             {capitalizeFirstLetter(example.name)}
             <Metric.Value>
-              <Link href={example.repo} target="_blank">
-                <Icon
-                  name="Github"
-                  width={SPACING(1.5)}
-                  height={SPACING(1.5)}
-                />
-              </Link>
+              <Tooltip
+                placement={Placement.BOTTOM}
+                content="View source code on Github"
+              >
+                <Link href={example.repo} target="_blank">
+                  <Icon
+                    name="Github"
+                    width={SPACING(1.5)}
+                    height={SPACING(1.5)}
+                  />
+                </Link>
+              </Tooltip>
             </Metric.Value>
           </Example>
         ))}
