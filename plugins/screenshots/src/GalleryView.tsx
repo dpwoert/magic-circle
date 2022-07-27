@@ -1,6 +1,15 @@
 import styled from 'styled-components';
 
-import { Inner, TYPO, COLORS, SPACING, Icon } from '@magic-circle/styles';
+import {
+  Inner,
+  TYPO,
+  COLORS,
+  SPACING,
+  Icon,
+  MenuPortal,
+  Menu,
+  Placement,
+} from '@magic-circle/styles';
 
 import type { ScreenshotFile } from './index';
 import Screenshots from './index';
@@ -135,54 +144,70 @@ const GalleryView = ({
       onClose={close}
     >
       <Container>
-        {files.map((file) => (
-          <Screenshot key={file.fileName}>
-            <ImageContainer>
-              <Image
-                src={file.dataUrl}
-                onClick={() => {
-                  screenshots.loadScreenshot(file);
-                  close();
-                }}
-              />
-              <ImageHover>
-                <Icon
-                  name="StreamToTv"
-                  width={SPACING(2)}
-                  height={SPACING(2)}
-                />
-              </ImageHover>
-            </ImageContainer>
-            <Bar>
-              {file.fileName}
-              <Options>
-                <Star selected={file.data.favourite}>
-                  <Icon
-                    onClick={() => {
-                      screenshots.toggleFavourite(file);
-                      reload();
-                    }}
-                    name="Star"
-                    width={SPACING(1.5)}
-                    height={SPACING(1.5)}
-                  />
-                </Star>
-                <Icon
-                  name="DotsVertical"
-                  width={SPACING(1.5)}
-                  height={SPACING(1.5)}
+        {files.map((file) => {
+          const menu: Menu = {
+            items: screenshots.commands({
+              type: 'screenshot',
+              id: file.fileName,
+            }),
+          };
+
+          console.log({ menu });
+
+          return (
+            <Screenshot key={file.fileName}>
+              <ImageContainer>
+                <Image
+                  src={file.dataUrl}
                   onClick={() => {
-                    const screen = screenshots.client.getCommandLine({
-                      type: 'screenshot',
-                      id: file.fileName,
-                    });
-                    screenshots.client.showCommandLine(screen);
+                    screenshots.loadScreenshot(file);
+                    close();
                   }}
                 />
-              </Options>
-            </Bar>
-          </Screenshot>
-        ))}
+                <ImageHover>
+                  <Icon
+                    name="StreamToTv"
+                    width={SPACING(2)}
+                    height={SPACING(2)}
+                  />
+                </ImageHover>
+              </ImageContainer>
+              <Bar>
+                {file.fileName}
+                <Options>
+                  <Star selected={file.data.favourite}>
+                    <Icon
+                      onClick={() => {
+                        screenshots.toggleFavourite(file);
+                        reload();
+                      }}
+                      name="Star"
+                      width={SPACING(1.5)}
+                      height={SPACING(1.5)}
+                    />
+                  </Star>
+                  <MenuPortal menu={menu} placement={Placement.TOP}>
+                    {(toggle) => (
+                      <Icon
+                        name="DotsVertical"
+                        width={SPACING(1.5)}
+                        height={SPACING(1.5)}
+                        onClick={() => {
+                          toggle();
+                          // const screen = screenshots.client.getCommandLine({
+                          //   type: 'screenshot',
+                          //   id: file.fileName,
+                          // });
+                          // screenshots.client.showCommandLine(screen);
+                        }}
+                      />
+                    )}
+                  </MenuPortal>
+                </Options>
+              </Bar>
+            </Screenshot>
+          );
+        })}
       </Container>
     </Inner>
   );

@@ -14,6 +14,7 @@ import { useStore } from '@magic-circle/state';
 import Timeline from './index';
 
 const Container = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -57,6 +58,39 @@ const Option = styled<OptionProps>(Tooltip)`
   cursor: pointer;
   opacity: ${(props) => (props.disabled ? 0.2 : 1)};
   pointer-events: ${(props) => (props.disabled ? 'none' : 'all')};
+`;
+
+const Delete = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: ${COLORS.accent.css};
+  color: ${COLORS.white.css};
+  height: 100%;
+  width: ${SPACING(4)}px;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  pointer-events: none;
+
+  ${Container}:hover & {
+    transform: translateX(-100%) translateX(4px);
+    pointer-events: all;
+  }
+
+  ${Container}:hover &:hover {
+    transform: translateX(0);
+  }
+`;
+
+const DeleteMask = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: ${SPACING(4)}px;
 `;
 
 type TrackProps = {
@@ -132,6 +166,15 @@ const Track = ({ timeline, path }: TrackProps) => {
             />
           </Option>
         </Options>
+        <DeleteMask>
+          <Delete
+            onClick={() => {
+              timeline.removeTrack(path);
+            }}
+          >
+            <Icon name="Trash" width={SPACING(1.5)} height={SPACING(1.5)} />
+          </Delete>
+        </DeleteMask>
       </Container>
     );
   }

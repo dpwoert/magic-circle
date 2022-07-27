@@ -213,7 +213,16 @@ const CommandLine = () => {
             ref={actionsRef}
           >
             {actions.map((action, key) => (
-              <Action selected={selected === key} key={action.label}>
+              <Action
+                selected={selected === key}
+                key={action.label}
+                onMouseEnter={() => {
+                  _setSelected(key);
+                }}
+                onClick={() => {
+                  select();
+                }}
+              >
                 <ActionLabel>
                   <Icon
                     name={action.icon}

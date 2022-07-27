@@ -231,6 +231,17 @@ export default class Timeline implements Plugin {
     }
   }
 
+  removeTrack(path: string) {
+    this.scene.setFn((curr) => {
+      const newValues = { ...curr.values };
+      delete newValues[path];
+      return {
+        ...this.scene.value,
+        values: newValues,
+      };
+    });
+  }
+
   async addKeyframe(path: string, time: number) {
     const current = this.scene.value.values[path];
 
