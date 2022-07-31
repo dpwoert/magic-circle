@@ -71,7 +71,7 @@ export type Scene = {
   values: Record<string, ScenePoint[]>;
 };
 
-type selection = {
+export type selection = {
   key: number;
   path: string;
 };
@@ -102,6 +102,7 @@ export default class Timeline implements Plugin {
   zoom: Store<number>;
   selected: Store<selection | null>;
   show: Store<boolean>;
+  valuePopup: Store<boolean>;
 
   name = 'timeline';
 
@@ -123,6 +124,7 @@ export default class Timeline implements Plugin {
     this.zoom = new Store<number>(0.1);
     this.selected = new Store<selection | null>(null);
     this.show = new Store<boolean>(false);
+    this.valuePopup = new Store<boolean>(false);
 
     this.ipc.on('timeline:play', () => {
       this.playing.set(true);
@@ -275,7 +277,7 @@ export default class Timeline implements Plugin {
         time
       );
 
-      if (interpolated) {
+      if (interpolated !== undefined) {
         this.scene.setFn((curr) => ({
           ...curr,
           values: {
@@ -313,7 +315,7 @@ export default class Timeline implements Plugin {
     this.sync();
   }
 
-  changeKeyframe(path: string, key: number, newTime: number, newValue: any) {
+  changeKeyframe(path: string, key: number, newValue: any, newTime?: number) {
     const current = this.scene.value.values[path];
 
     if (current) {
@@ -336,7 +338,8 @@ export default class Timeline implements Plugin {
             if (key === k) {
               return {
                 ...c,
-                time: clamp(newTime, left, right),
+                time:
+                  newTime !== undefined ? clamp(newTime, left, right) : c.time,
                 value: newValue,
               };
             }

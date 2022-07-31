@@ -87,6 +87,10 @@ export default class PluginLayers extends Plugin {
     }
   }
 
+  get(path: string): Control<any> | null {
+    return this.cache[path];
+  }
+
   reset(path: string) {
     const control = this.cache[path];
 

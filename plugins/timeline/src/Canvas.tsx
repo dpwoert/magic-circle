@@ -158,10 +158,9 @@ class CanvasDisplay {
   }
 
   setScroll(x: number, y: number) {
-    const ySize =
-      this.height -
-      Object.keys(this.scene.values).length * SPACING(6) +
-      SPACING(6.5);
+    const innerHeight =
+      Object.keys(this.scene.values).length * SPACING(6) + SPACING(9.5);
+    const scrollLength = innerHeight - this.height;
 
     this.scroll = {
       x: {
@@ -169,7 +168,7 @@ class CanvasDisplay {
         curr: this.scroll.x.curr,
       },
       y: {
-        dest: clamp(y, 0, ySize),
+        dest: clamp(y, 0, scrollLength),
         curr: this.scroll.y.curr,
       },
     };
@@ -293,7 +292,7 @@ class CanvasDisplay {
       this.scroll.y.curr
     );
 
-    // ensure we're not easing too longer
+    // ensure we're not easing too long
     if (Math.abs(this.scroll.x.dest - this.scroll.x.curr) < 0.05) {
       this.scroll.x.curr = this.scroll.x.dest;
     }
@@ -507,13 +506,15 @@ class CanvasDisplay {
       });
     }
 
+    const isNumber = 'type' in control ? control.type === 'number' : false;
     const range: number[] =
-      'options' in control ? control.options.range : [0, 0];
-
-    // does this need rendering?
+      'options' in control && isNumber ? control.options.range : [0, 1];
 
     const top = SPACING(3) + i * SPACING(6) - this.scroll.y.curr;
     const bottom = top + SPACING(6);
+
+    // Is this in view?
+    // todo
 
     // Create scale
     const axis = (val: number) =>
@@ -535,7 +536,7 @@ class CanvasDisplay {
     this.context.beginPath();
     allPoints.forEach((point, i) => {
       const x = this.px(this.position(point.time));
-      const y = this.px(axis(+point.value));
+      const y = isNumber ? this.px(axis(+point.value)) : this.px(axis(0.5));
       const previous = i > 0 ? allPoints[i - 1] : null;
 
       if (i === 0) {
@@ -596,27 +597,31 @@ class CanvasDisplay {
       this.context.strokeStyle = COLORS.shades.s300.css;
       const first = allPoints[0];
       const last = allPoints[allPoints.length - 1];
+
+      const firstY = axis(isNumber ? +first.value : 0.5);
+      const lastY = axis(isNumber ? +last.value : 0.5);
+
       this.context.fillRect(
         this.px(this.position(first.time) - 2),
-        this.px(axis(+first.value) - 2),
+        this.px(firstY - 2),
         this.px(4),
         this.px(4)
       );
       this.context.strokeRect(
         this.px(this.position(first.time) - 2),
-        this.px(axis(+first.value) - 2),
+        this.px(firstY - 2),
         this.px(4),
         this.px(4)
       );
       this.context.fillRect(
         this.px(this.position(last.time) - 2),
-        this.px(axis(+last.value) - 2),
+        this.px(lastY - 2),
         this.px(4),
         this.px(4)
       );
       this.context.strokeRect(
         this.px(this.position(last.time) - 2),
-        this.px(axis(+last.value) - 2),
+        this.px(lastY - 2),
         this.px(4),
         this.px(4)
       );
@@ -633,7 +638,7 @@ class CanvasDisplay {
       this.context.strokeStyle = COLORS.shades.s100.css;
 
       const x = this.px(this.position(point.time));
-      const y = this.px(axis(+point.value));
+      const y = isNumber ? this.px(axis(+point.value)) : this.px(axis(0.5));
       const s = this.px(SPACING(0.5));
 
       this.context.translate(x, y);
@@ -665,16 +670,18 @@ class CanvasDisplay {
           this.render();
         },
         drag: (dx, dy) => {
-          // ensure we're updating the same keyframe and not the reference to the old one...
-          const curr = this.timeline.getKeyframeByKey(path, key);
+          if (isNumber) {
+            // ensure we're updating the same keyframe and not the reference to the old one...
+            const curr = this.timeline.getKeyframeByKey(path, key);
 
-          const newX = this.position(curr.time) + dx;
-          const newY = axis(+curr.value) + dy;
-          const newTime = this.invert(newX);
-          const newValue = clamp(axisInverse(newY), range[0], range[1]);
+            const newX = this.position(curr.time) + dx;
+            const newY = axis(+curr.value) + dy;
+            const newTime = this.invert(newX);
+            const newValue = clamp(axisInverse(newY), range[0], range[1]);
 
-          this.timeline.changeKeyframe(path, key, newTime, newValue);
-          this.render();
+            this.timeline.changeKeyframe(path, key, newValue, newTime);
+            this.render();
+          }
         },
       });
     });

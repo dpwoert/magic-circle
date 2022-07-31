@@ -2,11 +2,11 @@ import Plugin from '../plugin';
 import type PluginLayers from './layers';
 
 import bezier from '../utils/bezier';
-import { lerp, clamp } from '../utils/math';
+import { clamp } from '../utils/math';
 
 type ScenePoint = {
   time: number;
-  value: number | boolean;
+  value: unknown;
   controlPoints?: {
     left: number[];
     right: number[];
@@ -176,8 +176,9 @@ export default class PLuginTimeline extends Plugin {
 
   private getValueForVariable(variableName: string, time: number) {
     const variable = this.variables[variableName];
+    const control = this.layers.get(variableName);
 
-    if (variable) {
+    if (variable && control) {
       const current = variable.curves.find(
         (curve) =>
           this.playhead >= curve.from.time && this.playhead < curve.to.time
@@ -187,9 +188,12 @@ export default class PLuginTimeline extends Plugin {
         const progress =
           (time - current.from.time) / (current.to.time - current.from.time);
         const relative = current.curve(progress);
-        const value = lerp(+current.from.value, +current.to.value, relative);
 
-        return value;
+        return control.interpolate(
+          current.from.value,
+          current.to.value,
+          relative
+        );
       }
     }
 

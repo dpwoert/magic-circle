@@ -15,11 +15,12 @@ const TextControlSelect = ({
   set,
   reset,
   hasChanges,
+  select,
 }: ControlProps<string, options>) => {
   const values = options.selection.keys;
   const labels = options.selection.labels || [...values];
   return (
-    <Control.Container hasChanges={hasChanges} reset={reset}>
+    <Control.Container hasChanges={hasChanges} reset={reset} select={select}>
       <Control.Label>{label}</Control.Label>
       <Control.Inside>
         <Forms.Select
@@ -45,9 +46,10 @@ const TextControlField = ({
   set,
   hasChanges,
   reset,
+  select,
 }: ControlProps<string, options>) => {
   return (
-    <Control.Container hasChanges={hasChanges} reset={reset}>
+    <Control.Container hasChanges={hasChanges} reset={reset} select={select}>
       <Control.Label>{label}</Control.Label>
       <Control.Inside>
         <Forms.Field
@@ -63,6 +65,13 @@ const TextControlField = ({
 
 const TextControl: ControlSchema = {
   name: 'text',
+  supports: (type) => {
+    if (type === 'timeline') {
+      return true;
+    }
+
+    return false;
+  },
   render: (props: ControlProps<string, options>) => {
     const { selection } = props.options;
 

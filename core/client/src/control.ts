@@ -83,6 +83,11 @@ export default class Control<T> {
     return this;
   }
 
+  // eslint-disable-next-line
+  interpolate(from: T, to: T, alpha: number) {
+    return from;
+  }
+
   toJSON(basePath: string, paths: Paths) {
     const path = this.getPath(basePath, paths);
     return {

@@ -18,6 +18,7 @@ const Inside = styled.div`
   height: 100%;
   overflow: auto;
   border-left: 1px solid ${COLORS.shades.s300.css};
+  background: ${COLORS.shades.s500.css};
 `;
 
 const SidebarRight = () => {

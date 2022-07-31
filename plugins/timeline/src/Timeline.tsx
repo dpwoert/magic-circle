@@ -15,6 +15,7 @@ import { useStore } from '@magic-circle/state';
 import type TimelinePlugin from './index';
 import Canvas from './Canvas';
 import Track from './Track';
+import ValuePopup from './ValuePopup';
 import { formatTime } from './utils';
 
 type ContainerProps = {
@@ -387,6 +388,7 @@ const Timeline = ({ timeline }: TimelineProps) => {
           </>
         )}
       </Inside>
+      <ValuePopup timeline={timeline} />
     </Container>
   );
 };

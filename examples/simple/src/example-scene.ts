@@ -25,6 +25,12 @@ let camera;
 
 const animation = { x: 0.005, y: 0.01 };
 
+export function resize(width: number, height: number) {
+  camera.aspect = width / height;
+  camera.updateProjectionMatrix();
+  renderer.setSize(width, height);
+}
+
 export function setup(gui: MagicCircle) {
   // Create renderer
   renderer = new WebGLRenderer({ antialias: true, alpha: true });
@@ -102,12 +108,6 @@ export function setup(gui: MagicCircle) {
 
   // Save element for screenshots
   return renderer.domElement;
-}
-
-export function resize(width: number, height: number) {
-  camera.aspect = width / height;
-  camera.updateProjectionMatrix();
-  renderer.setSize(width, height);
 }
 
 export function loop() {

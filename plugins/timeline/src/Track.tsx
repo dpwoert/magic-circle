@@ -152,7 +152,19 @@ const Track = ({ timeline, path }: TrackProps) => {
             <Icon name="Trash" width={SPACING(1.5)} height={SPACING(1.5)} />
           </Option>
           <Option
+            onClick={() => {
+              timeline.valuePopup.set(true);
+            }}
+            content="Edit keyframe value"
+            placement={Placement.BOTTOM}
             disabled={!selected || selected.path !== path}
+          >
+            <Icon name="Edit" width={SPACING(1.5)} height={SPACING(1.5)} />
+          </Option>
+          <Option
+            disabled={
+              !selected || selected.path !== path || control.type !== 'number'
+            }
             onClick={() => {
               timeline.toggleEaseForKeyframe(path, selected.key);
             }}

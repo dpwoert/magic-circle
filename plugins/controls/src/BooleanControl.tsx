@@ -13,9 +13,10 @@ const BooleanControlField = ({
   set,
   hasChanges,
   reset,
+  select,
 }: ControlProps<boolean, never>) => {
   return (
-    <Control.Container hasChanges={hasChanges} reset={reset}>
+    <Control.Container hasChanges={hasChanges} reset={reset} select={select}>
       <Control.Label>{label}</Control.Label>
       <Inside>
         <Forms.Checkbox
@@ -31,6 +32,13 @@ const BooleanControlField = ({
 
 const BooleanControl: ControlSchema = {
   name: 'boolean',
+  supports: (type) => {
+    if (type === 'timeline') {
+      return true;
+    }
+
+    return false;
+  },
   render: (props: ControlProps<boolean, never>) => {
     return <BooleanControlField {...props} />;
   },
