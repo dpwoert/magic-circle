@@ -32,6 +32,11 @@ const Labels = styled.div`
   flex-direction: column;
   gap: ${SPACING(0.5)}px;
 
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: ${SPACING(10)}px;
+
   span:nth-child(1) {
     ${TYPO.regular}
     color: ${COLORS.white.css};
@@ -128,7 +133,7 @@ const Track = ({ timeline, path }: TrackProps) => {
       <Container key={path}>
         <Labels>
           <span>{control.label}</span>
-          <span>{control.path}</span>
+          <span>{control.path.replace('base.', '')}</span>
         </Labels>
         <Options>
           <Option
