@@ -116,7 +116,7 @@ export default function App() {
               allow="display-capture"
               src={url}
               onLoad={() => {
-                // APP.setup()
+                // APP.setup();
               }}
             />
             <Inner />

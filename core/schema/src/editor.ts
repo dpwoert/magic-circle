@@ -380,4 +380,6 @@ export interface App {
   save: () => Promise<Record<string, any>>;
   load: (data: Record<string, any>) => Promise<void>;
   reset: () => Promise<void>;
+
+  setup: () => Promise<void>;
 }

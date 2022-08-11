@@ -72,7 +72,9 @@ type SidebarProps = {
 const Sidebar = ({ app }: SidebarProps) => {
   const loadExample = useCallback(
     async (url: string) => {
-      await app.reset();
+      // await app.reset();
+      app.setup();
+
       const frame: HTMLIFrameElement = document.querySelector('#frame iframe');
       frame.src = url;
     },
