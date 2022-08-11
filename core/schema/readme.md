@@ -37,6 +37,8 @@ Magic Circle is framework and library agnostic and can thus work together with f
 
 **🎥 Recordings** Render your content into a screen recording by exporting it frame by frame without lag. Enabling you to export videos in high quality without loss of quality or jankiness like for example a manual screen recording would.
 
+**🎬 Timelines** Create a timeline with keyframed values based on your variables. Use it to experiment with values or create production-ready animations.
+
 **⏲ Performance measurements** Measures and displays performance metrics like Frames Per Second and memory usage so you always know if you're project runs smoothly.
 
 **🛠 Custom plugins** Since all projects are unique, some projects need custom plugins that might not exists yet. Make your own if needed, or use community plugins.
@@ -55,7 +57,7 @@ Magic Circle is framework and library agnostic and can thus work together with f
 
 **🎛 More advanced custom controls** More control types, like setting images for textures and easing controls.
 
-**⏰ Animation timeline** Create an animation timeline where variables can be key-framed.
+**⏰ Animation timeline** Improve the animation timeline, making it better to use.
 
 ## Documentation
 
@@ -73,3 +75,4 @@ The plugins that are currently bundled by default:
 - **magic-circle/play-controls** ([readme](https://github.com/dpwoert/magic-circle/tree/master/plugins/play-controls))
 - **magic-circle/screenshots** ([readme](https://github.com/dpwoert/magic-circle/tree/master/plugins/screenshots))
 - **magic-circle/seed** ([readme](https://github.com/dpwoert/magic-circle/tree/master/plugins/seed))
+- **magic-circle/timeline** ([readme](https://github.com/dpwoert/magic-circle/tree/master/plugins/timeline))
