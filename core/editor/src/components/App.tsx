@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import { AppProvider, useStore } from '@magic-circle/state';
@@ -100,6 +100,11 @@ export default function App() {
       ? APP.config.url
       : APP.config.url(process.env.BUILD_ENV === 'develop');
 
+  // Setup on start
+  useEffect(() => {
+    APP.setup();
+  }, []);
+
   return (
     <AppProvider app={APP}>
       <Container>
@@ -110,7 +115,9 @@ export default function App() {
             <Iframe
               allow="display-capture"
               src={url}
-              onLoad={() => APP.setup()}
+              onLoad={() => {
+                // APP.setup()
+              }}
             />
             <Inner />
           </Frame>

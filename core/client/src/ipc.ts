@@ -131,22 +131,22 @@ export class IpcIframe extends IpcBase {
 
   async connect() {
     return new Promise<boolean>((resolve) => {
-      if (this.mode === IframeMode.CHILD) {
-        if (this.isConnected) {
-          resolve(true);
-          return;
-        }
+      if (this.isConnected) {
+        resolve(true);
+        return;
+      }
 
-        this.once('connect', () => {
-          this.isConnected = true;
-          resolve(true);
-          this.send('connect', true);
-        });
-      } else {
+      if (this.mode === IframeMode.CHILD) {
         this.send('connect', true);
         this.once('connect', () => {
           this.isConnected = true;
           resolve(true);
+        });
+      } else {
+        this.once('connect', () => {
+          this.isConnected = true;
+          resolve(true);
+          this.send('connect', true);
         });
       }
     });
