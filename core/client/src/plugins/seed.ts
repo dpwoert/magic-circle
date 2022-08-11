@@ -31,7 +31,9 @@ export default class PluginSeed extends Plugin {
   }
 
   sync() {
-    this.client.ipc.send('seed', this.seed);
+    if (this.client.ipc) {
+      this.client.ipc.send('seed', this.seed);
+    }
   }
 
   set(seed: number) {
