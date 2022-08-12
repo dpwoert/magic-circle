@@ -73,6 +73,7 @@ const Sidebar = ({ app }: SidebarProps) => {
   const loadExample = useCallback(
     async (url: string) => {
       // await app.reset();
+      app.ipc.reset();
       app.setup();
 
       const frame: HTMLIFrameElement = document.querySelector('#frame iframe');

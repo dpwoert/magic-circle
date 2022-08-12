@@ -73,6 +73,10 @@ export class IpcBase {
     }
   }
 
+  reset() {
+    this.listeners = {};
+  }
+
   destroy() {
     this.listeners = {};
   }
@@ -154,6 +158,11 @@ export class IpcIframe extends IpcBase {
 
   send(channel: string, ...payload: any[]) {
     this.connection.postMessage({ channel, payload }, '*');
+  }
+
+  reset() {
+    this.listeners = {};
+    this.isConnected = false;
   }
 
   destroy() {
