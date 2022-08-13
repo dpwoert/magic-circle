@@ -2,9 +2,11 @@ type hook = (channel: string, ...payload: any[]) => void;
 
 export class IpcBase {
   listeners: Record<string, Set<hook>>;
+  isConnected: boolean;
 
   constructor() {
     this.listeners = {};
+    this.isConnected = false;
   }
 
   setup() {
@@ -12,6 +14,7 @@ export class IpcBase {
   }
 
   async connect() {
+    this.isConnected = true;
     return true;
   }
 
@@ -73,8 +76,9 @@ export class IpcBase {
     }
   }
 
-  reset() {
-    this.listeners = {};
+  disconnect() {
+    this.send('disconnect', true);
+    this.isConnected = false;
   }
 
   destroy() {
@@ -90,7 +94,6 @@ enum IframeMode {
 export class IpcIframe extends IpcBase {
   mode: IframeMode;
   connection: HTMLIFrameElement['contentWindow'] | Window['parent'];
-  isConnected: boolean;
 
   constructor() {
     super();
@@ -158,11 +161,6 @@ export class IpcIframe extends IpcBase {
 
   send(channel: string, ...payload: any[]) {
     this.connection.postMessage({ channel, payload }, '*');
-  }
-
-  reset() {
-    this.listeners = {};
-    this.isConnected = false;
   }
 
   destroy() {

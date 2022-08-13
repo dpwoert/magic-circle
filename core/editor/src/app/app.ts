@@ -139,6 +139,7 @@ class App implements AppBase {
     this.ipc.removeAllListeners('hydrate');
     this.ipc.removeAllListeners('page-information');
     this.ipc.removeAllListeners('connect');
+    this.ipc.removeAllListeners('disconnect');
 
     // run hooks
     this.plugins.forEach((p) => {
@@ -157,9 +158,9 @@ class App implements AppBase {
       this.pageInfo.set(info);
     });
 
-    // Reconnect if needed (HMR for example)
+    // Reconnect if needed
     this.ipc.on('connect', () => {
-      this.connect();
+      this.ipc.send('connect', true);
     });
 
     // Send hydration when needed
@@ -176,6 +177,15 @@ class App implements AppBase {
 
       this.ipc.send('hydrate', hydration);
     });
+
+    // Listen for disconnects
+    this.ipc.once('disconnect', this.disconnect.bind(this));
+  }
+
+  async disconnect() {
+    await this.reset();
+    this.ipc.disconnect();
+    this.connect();
   }
 
   async reset() {
