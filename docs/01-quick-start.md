@@ -30,7 +30,7 @@ To interact with the UI you need to create a `Magic Circle` instance inside your
 ```js
 // ES5
 // <script type="text/javascript" src="https://unpkg.com/@magic-circle/client/dist/magic-circle.min.js"></script>
-const { MagicCircle, Layer, NumberControl }  = window.magicCircle;
+const { MagicCircle, Layer, NumberControl } = window.magicCircle;
 
 // CommonJS:
 const { MagicCircle, Layer, NumberControl } = require('@magic-circle/client');
@@ -121,4 +121,12 @@ It is possible to create a static distribution of the UI that can be deployed to
 $ magic build
 ```
 
-After building is completed the bundle will be available in the `magic-circle` folder,
+After building is completed the bundle will be available in the `magic-circle` folder. If needed this folder can be changed as well. Also the base path can be changed if `/` isn't correct.
+
+```sh
+# Build to custom folder
+$ magic build --output "folderName"
+
+# Set a different base path
+$ magic build --base "/magic-circle"
+```

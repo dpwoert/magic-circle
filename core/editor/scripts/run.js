@@ -11,6 +11,10 @@ const commonjs = require('rollup-plugin-commonjs');
 const babel = require('rollup-plugin-babel');
 const json = require('@rollup/plugin-json');
 
+const PORT = argv.port || argv.p || 8080;
+const OUTPUT_DIR = argv.output || argv.o || 'magic-circle';
+const BASE = argv.base || argv.b || '/';
+
 const filesToDelete = [];
 
 // Cleanup helpers
@@ -84,17 +88,14 @@ const generateViteSettings = async (dev) => {
 const build = async () => {
   const viteSettings = await generateViteSettings(false);
 
-  const outDirSettings = argv.outDir || argv.O;
-  const outDir = outDirSettings
-    ? path.join(process.cwd(), outDirSettings)
-    : path.join(process.cwd(), 'magic-circle');
+  const outDir = path.join(process.cwd(), OUTPUT_DIR);
 
   await vite.build({
     ...viteSettings,
     build: {
       outDir,
     },
-    base: argv.base,
+    base: BASE,
   });
 
   console.info(`🎛  Magic Circle build to: ${outDir}`);
@@ -111,7 +112,7 @@ const run = async () => {
   const previewServer = await vite.preview({
     root: path.resolve(__dirname, '../'),
     preview: {
-      port: 8080,
+      port: PORT,
       open: true,
     },
   });
@@ -125,7 +126,7 @@ const serve = async () => {
   const server = await vite.createServer({
     ...viteSettings,
     server: {
-      port: 8080,
+      port: PORT,
     },
   });
   await server.listen();
