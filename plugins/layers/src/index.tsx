@@ -91,7 +91,6 @@ export default class Layers implements Plugin {
     this.setExternal = new Store(null);
 
     this.ipc.on('layers', (_, layers: MainLayerExport) => {
-      console.info({ layers });
       const { flat, lookup } = convert(layers);
       this.layers.set(layers);
       this.flat.set(flat);

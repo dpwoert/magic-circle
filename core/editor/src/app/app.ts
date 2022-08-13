@@ -165,7 +165,6 @@ class App implements AppBase {
 
     // Reconnect if needed
     this.ipc.on('connect', () => {
-      console.info('reconnect');
       this.ipc.send('connect', true);
     });
 
