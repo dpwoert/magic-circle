@@ -135,6 +135,11 @@ class App implements AppBase {
   }
 
   async connect() {
+    // Already connected
+    if (this.ipc.isConnected) {
+      return;
+    }
+
     // remove redundant listeners
     this.ipc.removeAllListeners('hydrate');
     this.ipc.removeAllListeners('page-information');
@@ -160,6 +165,7 @@ class App implements AppBase {
 
     // Reconnect if needed
     this.ipc.on('connect', () => {
+      console.info('reconnect');
       this.ipc.send('connect', true);
     });
 

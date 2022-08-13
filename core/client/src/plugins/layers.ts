@@ -105,7 +105,7 @@ export default class PluginLayers extends Plugin {
     });
   }
 
-  resetAll() {
+  resetAll(sync = true) {
     const { layer } = this.client;
 
     layer.forEachRecursive((control) => {
@@ -115,6 +115,8 @@ export default class PluginLayers extends Plugin {
     });
 
     // and sync again so editor is correct
-    this.sync();
+    if (sync) {
+      this.sync();
+    }
   }
 }

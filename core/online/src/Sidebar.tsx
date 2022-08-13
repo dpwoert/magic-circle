@@ -86,7 +86,11 @@ const Sidebar = ({ app }: SidebarProps) => {
         <Header>Code examples</Header>
         {list.map((example) => (
           <Example
-            onClick={() => loadExample(`examples/${example.path}`)}
+            onClick={() =>
+              loadExample(
+                `https://playground.magic-circle.dev/examples/${example.path}`
+              )
+            }
             key={example.name}
           >
             {capitalizeFirstLetter(example.name)}
