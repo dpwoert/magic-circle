@@ -4,6 +4,7 @@ const fs = require('fs');
 const argv = require('minimist')(process.argv.slice(2));
 const vite = require('vite');
 const getRepoInfo = require('git-repo-info');
+const prompts = require('prompts');
 
 const rollup = require('rollup');
 const nodeResolve = require('rollup-plugin-node-resolve');
@@ -13,6 +14,7 @@ const json = require('@rollup/plugin-json');
 
 const PORT = argv.port || argv.p || 8080;
 const OUTPUT_DIR = argv.output || argv.o || 'magic-circle';
+const CONFIG_FILE = argv.config || argv.c || 'magic.config.js';
 const BASE = argv.base || argv.b || '/';
 
 const filesToDelete = [];
@@ -26,10 +28,26 @@ process.on('SIGINT', () => {
 });
 
 const generateConfig = async () => {
-  const config = argv.config || argv.C;
-  const configFile = config
-    ? path.join(process.cwd(), config)
-    : path.join(process.cwd(), 'magic.config.js');
+  const configFile = path.join(process.cwd(), CONFIG_FILE);
+
+  if (!fs.existsSync(configFile)) {
+    const response = await prompts([
+      {
+        type: 'confirm',
+        name: 'create',
+        message: 'Config file does not exist yet, do you want to create one?',
+        validate: (value) => !!value,
+      },
+    ]);
+
+    if (response.create) {
+      await init();
+    }
+  }
+
+  if (!fs.existsSync(configFile)) {
+    throw new Error(`Config file (${CONFIG_FILE}) not found`);
+  }
 
   const tmpName = path.join(__dirname, '../build.tmp.js');
 
@@ -135,13 +153,27 @@ const serve = async () => {
 
 const init = async () => {
   const templateFile = path.join(__dirname, '../src/app/template-config.js');
-  const configFile = path.join(process.cwd(), 'magic.config.js');
+  const configFile = path.join(process.cwd(), CONFIG_FILE);
 
   if (!fs.existsSync(configFile)) {
-    await fs.promises.copyFile(
-      templateFile,
-      path.join(process.cwd(), 'magic.config.js')
-    );
+    const response = await prompts([
+      {
+        type: 'text',
+        name: 'url',
+        message: 'URL to load inside of Magic Circle frame',
+        validate: (value) => !!value,
+      },
+    ]);
+
+    // Copy file first
+    await fs.promises.copyFile(templateFile, configFile);
+
+    // Change url
+    const file = fs.readFileSync(configFile).toString('utf8');
+    const replaced = file.replace('{URL}', response.url);
+    fs.writeFileSync(configFile, replaced);
+  } else {
+    throw new Error('Config file already exists');
   }
 };
 
