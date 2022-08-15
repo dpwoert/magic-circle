@@ -264,7 +264,7 @@ export default class MagicCircle {
     return this;
   }
 
-  tick(customDelta?: number) {
+  step(customDelta?: number) {
     // calculate delta
     const newTime = (
       typeof performance === 'undefined' ? Date : performance
@@ -274,7 +274,7 @@ export default class MagicCircle {
 
     this.plugins.forEach((p) => {
       if (p.startFrame) {
-        p.startFrame(delta);
+        p.startFrame(customDelta ?? delta);
       }
     });
 
@@ -283,16 +283,20 @@ export default class MagicCircle {
       this.hooks.loop(customDelta ?? delta);
     }
 
-    // playing?
-    if (this.isPlaying) {
-      this.frameRequest = requestAnimationFrame(this.tick);
-    }
-
     this.plugins.forEach((p) => {
       if (p.endFrame) {
         p.endFrame();
       }
     });
+  }
+
+  tick() {
+    this.step();
+
+    // playing?
+    if (this.isPlaying) {
+      this.frameRequest = requestAnimationFrame(this.tick);
+    }
   }
 
   destroy() {

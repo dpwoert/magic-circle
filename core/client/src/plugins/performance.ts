@@ -21,6 +21,11 @@ export default class PluginPerformance extends Plugin {
     firstContentfulPaint?: number;
     loadingTime?: number;
   };
+  stats: {
+    fps: number;
+    renderTime: number;
+    memory?: number;
+  };
 
   name = 'performance';
 
@@ -30,6 +35,7 @@ export default class PluginPerformance extends Plugin {
     this.frames = 0;
     this.previousPerformanceUpdate = (performance || Date).now();
     this.loadMetrics = {};
+    this.stats = { fps: 0, renderTime: 0 };
 
     this.getLoadMetrics = this.getLoadMetrics.bind(this);
     window.addEventListener('load', this.getLoadMetrics);
@@ -83,12 +89,14 @@ export default class PluginPerformance extends Plugin {
         // @ts-expect-error
         'memory' in performance ? performance.memory.usedJSHeapSize : null;
 
+      this.stats = {
+        fps: (this.frames * 1000) / (time - this.previousPerformanceUpdate),
+        renderTime: time - this.startFrameTime,
+        memory: memory ? memory / 1048576 : null,
+      };
+
       if (this.client.ipc) {
-        this.client.ipc.send('performance:fps', {
-          fps: (this.frames * 1000) / (time - this.previousPerformanceUpdate),
-          renderTime: time - this.startFrameTime,
-          memory: memory ? memory / 1048576 : null,
-        });
+        this.client.ipc.send('performance:fps', this.stats);
       }
 
       // Reset
