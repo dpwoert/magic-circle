@@ -2,7 +2,7 @@
 
 ## Setup your own development setup
 
-To work with Magic Circle you will first need to setup your own development environment. This can be just a folder with some html/js files but also a fully fledged setup with for example webpack. Magic Circle tries to be agnostic and flexible to how you run your projects. Magic Circle is seperate from your project and embeds your page via a frame.
+To work with Magic Circle you will first need to setup your own development environment. This can be just a folder with some html/js files but also a fully fledged setup with, for example, Webpack. Magic Circle tries to be agnostic and flexible to how you run your projects. Magic Circle is seperate from your project and embeds your page via a frame.
 
 ## Install
 
@@ -75,7 +75,7 @@ magic
 
 ## Settings file
 
-To create your version of magic circle, a settings file is needed. To do see create a new file called `magic.config.js` in the root of your folder. It is also possible to run `npx magic init`.
+To create your version of magic circle, a settings file is needed. To do see create a new file called `magic.config.js` in the root of your folder. It is also possible to run `npx magic init` which will help you getting setup.
 
 ```js
 export default {
@@ -115,18 +115,4 @@ $ npx magic
 
 ## Build & Deploy
 
-It is possible to create a static distribution of the UI that can be deployed to wherever (for example via CI/CD) by running the following command:
-
-```sh
-$ magic build
-```
-
-After building is completed the bundle will be available in the `magic-circle` folder. If needed this folder can be changed as well. Also the base path can be changed if `/` isn't correct.
-
-```sh
-# Build to custom folder
-$ magic build --output "folderName"
-
-# Set a different base path
-$ magic build --base "/magic-circle"
-```
+See [deployment & bundling documentation](https://github.com/dpwoert/magic-circle/blob/main/docs/03-deploy.md).

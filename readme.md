@@ -63,7 +63,8 @@ Magic Circle is framework and library agnostic and can thus work together with f
 
 - [Quick start (install and launch)](https://github.com/dpwoert/magic-circle/blob/main/docs/01-quick-start.md)
 - [Controls](https://github.com/dpwoert/magic-circle/blob/main/docs/02-controls.md)
-- [Creating custom plugins](https://github.com/dpwoert/magic-circle/blob/main/docs/03-create-plugins.md)
+- [Deploy](https://github.com/dpwoert/magic-circle/blob/main/docs/03-deploy.md)
+- [Creating custom plugins](https://github.com/dpwoert/magic-circle/blob/main/docs/04-create-plugins.md)
 
 ## Plugins
 

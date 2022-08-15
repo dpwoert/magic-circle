@@ -46,7 +46,6 @@ const config: Config = {
       fps: [12, 24, 25, 30, 60],
     },
   },
-  // target: BuildTarget.IFRAME,
 };
 
 export default config;

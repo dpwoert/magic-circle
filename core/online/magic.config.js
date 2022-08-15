@@ -5,5 +5,8 @@ export default {
   plugins: (defaultPlugins) => [DemoPlugin, ...defaultPlugins],
   settings: {
     directoryBasedOnFrameUrl: true,
+    screenshots: {
+      gitInfo: false,
+    },
   },
 };
