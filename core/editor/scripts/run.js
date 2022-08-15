@@ -27,6 +27,32 @@ process.on('SIGINT', () => {
   process.exit();
 });
 
+const init = async () => {
+  const templateFile = path.join(__dirname, '../src/app/template-config.js');
+  const configFile = path.join(process.cwd(), CONFIG_FILE);
+
+  if (!fs.existsSync(configFile)) {
+    const response = await prompts([
+      {
+        type: 'text',
+        name: 'url',
+        message: 'URL to load inside of Magic Circle frame',
+        validate: (value) => !!value,
+      },
+    ]);
+
+    // Copy file first
+    await fs.promises.copyFile(templateFile, configFile);
+
+    // Change url
+    const file = fs.readFileSync(configFile).toString('utf8');
+    const replaced = file.replace('{URL}', response.url);
+    fs.writeFileSync(configFile, replaced);
+  } else {
+    throw new Error('Config file already exists');
+  }
+};
+
 const generateConfig = async () => {
   const configFile = path.join(process.cwd(), CONFIG_FILE);
 
@@ -149,32 +175,6 @@ const serve = async () => {
   });
   await server.listen();
   server.printUrls();
-};
-
-const init = async () => {
-  const templateFile = path.join(__dirname, '../src/app/template-config.js');
-  const configFile = path.join(process.cwd(), CONFIG_FILE);
-
-  if (!fs.existsSync(configFile)) {
-    const response = await prompts([
-      {
-        type: 'text',
-        name: 'url',
-        message: 'URL to load inside of Magic Circle frame',
-        validate: (value) => !!value,
-      },
-    ]);
-
-    // Copy file first
-    await fs.promises.copyFile(templateFile, configFile);
-
-    // Change url
-    const file = fs.readFileSync(configFile).toString('utf8');
-    const replaced = file.replace('{URL}', response.url);
-    fs.writeFileSync(configFile, replaced);
-  } else {
-    throw new Error('Config file already exists');
-  }
 };
 
 if (argv._[0] === 'init') {
