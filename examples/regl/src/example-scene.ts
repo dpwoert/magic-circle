@@ -134,7 +134,7 @@ export default function create() {
       return regl._gl.canvas;
     },
     loop: (delta: number) => {
-      settings.offset += (delta * settings.speed) / 1000000;
+      settings.offset += delta * settings.speed;
       document.body.style.backgroundColor = settings.backgroundColor;
 
       // renders noise to a buffer

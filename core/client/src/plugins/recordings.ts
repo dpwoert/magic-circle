@@ -54,7 +54,7 @@ export default class PluginRecordings extends Plugin {
   async next() {
     // Get next frame
     const delta = this.options.fps / 1000;
-    this.client.tick(delta);
+    this.client.step(delta);
 
     const plugin = this.client.plugin('screenshot') as PluginScreenshot;
 
