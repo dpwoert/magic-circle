@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/client",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Magic Circle front-end client to embed in projects",
   "keywords": [],
   "repository": {

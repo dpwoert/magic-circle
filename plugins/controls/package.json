@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/controls",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Magic Circle default controls",
   "keywords": [
     "controls",
@@ -44,8 +44,8 @@
     "styled-components": "*"
   },
   "dependencies": {
-    "@magic-circle/schema": "^0.1.7",
-    "@magic-circle/styles": "^0.1.7",
+    "@magic-circle/schema": "^0.1.8",
+    "@magic-circle/styles": "^0.1.8",
     "color-rgba": "^2.4.0",
     "rc-color-picker": "^1.2.6"
   },
