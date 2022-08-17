@@ -51,7 +51,7 @@ const Progress = styled.div.attrs((props) => ({
   cursor: grab;
 `;
 
-const Value = styled.div`
+const Value = styled(Control.Value)`
   ${TYPO.small}
   display: flex;
   justify-content: flex-end;
@@ -65,8 +65,12 @@ const NumberStepper = styled(Forms.Field)`
   cursor: ns-resize;
 `;
 
-const mapLinear = (x, a1, a2, b1, b2) =>
+const mapLinear = (x, a1, a2, b1, b2): number =>
   b1 + ((x - a1) * (b2 - b1)) / (a2 - a1);
+
+const clamp = (val: number, min: number, max: number): number => {
+  return Math.max(min, Math.min(max, val));
+};
 
 const STEP_SIZE = 25;
 
@@ -87,12 +91,13 @@ const NumberControlContinuous = ({
   const { range, stepSize } = options;
   const biDirectional = Math.abs(range[0]) === Math.abs(range[1]);
 
-  const progress = ((value - range[0]) * 100) / (range[1] - range[0]);
+  const valSafe = clamp(value, range[0], range[1]);
+  const progress = ((valSafe - range[0]) * 100) / (range[1] - range[0]);
   const extent = Math.abs(range[1] - range[0]);
-  const step = stepSize === 0 ? extent / 100 : stepSize;
+  const step = !stepSize || stepSize === 0 ? extent / 100 : stepSize;
 
   const x1 = mapLinear(0, range[0], range[1], 0, 100);
-  const x2 = mapLinear(value, range[0], range[1], 0, 100);
+  const x2 = mapLinear(valSafe, range[0], range[1], 0, 100);
   const width = biDirectional ? Math.abs(x1 - x2) : progress;
   const left = biDirectional ? Math.min(x1, x2) : 0;
 
@@ -103,7 +108,7 @@ const NumberControlContinuous = ({
         <InputContainer>
           <Progress left={left} width={width} />
           <Slider
-            value={value}
+            value={valSafe}
             onChange={(evt) => {
               set(+evt.target.value);
             }}

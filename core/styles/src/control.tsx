@@ -35,7 +35,7 @@ export const Reset = styled.div<ResetProps>`
   width: ${SPACING(4)}px;
   transform: ${(props) =>
     props.hasChanges
-      ? 'translateX(-100%) translateX(3px)'
+      ? 'translateX(-100%) translateX(4px)'
       : 'translateX(-100%)'};
   transition: transform 0.3s ease;
   pointer-events: ${(props) => (props.hasChanges ? 'all' : 'none')};
@@ -108,7 +108,7 @@ export const Container = ({
   );
 };
 
-export const Label = styled.div`
+const LabelStyled = styled.div`
   ${TYPO.regular}
   display: flex;
   align-items: center;
@@ -116,7 +116,22 @@ export const Label = styled.div`
   height: 100%;
   colors: ${COLORS.shades.s100.css};
   padding-left: ${SPACING(1)}px;
+  padding-right: ${SPACING(0.5)}px;
+
+  & > span {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
 `;
+
+export const Label = ({ children, ...props }) => {
+  return (
+    <LabelStyled {...props}>
+      <span>{children}</span>
+    </LabelStyled>
+  );
+};
 
 export const Inside = styled.div`
   display: flex;
@@ -125,3 +140,17 @@ export const Inside = styled.div`
   flex: 1;
   padding-right: ${SPACING(1)}px;
 `;
+
+const formatNumber = (n: number, maxDigits = 5) => {
+  const digits = n.toString().split('.')[1];
+  return digits && digits.length >= 5 ? n.toFixed(maxDigits) : n.toString();
+};
+
+type ValueProps = {
+  children: number;
+  maxDigits?: number;
+};
+
+export const Value = ({ children, maxDigits, ...props }: ValueProps) => {
+  return <div {...props}>{formatNumber(children, maxDigits)}</div>;
+};
