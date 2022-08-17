@@ -42,4 +42,32 @@ describe('core/client:control', () => {
       new Control<string>(null, 'value');
     }).toThrow();
   });
+
+  test('Should trigger update hook correctly', () => {
+    const ref = { value: 'test' };
+    const control = new Control<string>(ref, 'value');
+    const fn = jest.fn();
+    control.onUpdate(fn);
+
+    control.value = 'new';
+
+    expect(fn).toBeCalledTimes(1);
+    expect(fn).toBeCalledWith('new');
+  });
+
+  test('Should trigger update hook correctly when having multiple listeners', () => {
+    const ref = { value: 'test' };
+    const control = new Control<string>(ref, 'value');
+    const fn1 = jest.fn();
+    const fn2 = jest.fn();
+    control.onUpdate(fn1);
+    control.onUpdate(fn2);
+
+    control.value = 'new';
+
+    expect(fn1).toBeCalledTimes(1);
+    expect(fn1).toBeCalledWith('new');
+    expect(fn2).toBeCalledTimes(1);
+    expect(fn2).toBeCalledWith('new');
+  });
 });

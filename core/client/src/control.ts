@@ -2,6 +2,8 @@ import type Paths from './paths';
 
 type Reference = Record<string, any>;
 
+type UpdateHook<T> = (newValue: T) => void;
+
 export default class Control<T> {
   type: string;
   reference: Reference;
@@ -10,6 +12,8 @@ export default class Control<T> {
   options: Record<string, unknown>;
   blockHydrate?: boolean;
   watchChanges?: boolean;
+
+  private updateHooks: Set<UpdateHook<T>>;
 
   constructor(reference: Reference, key: string) {
     if (!reference) {
@@ -21,6 +25,7 @@ export default class Control<T> {
 
     this.reference = reference;
     this.key = key;
+    this.updateHooks = new Set();
 
     this.options = {
       label: key,
@@ -44,6 +49,9 @@ export default class Control<T> {
     } else {
       this.reference[this.key] = value;
     }
+
+    // Run update hooks
+    this.updateHooks.forEach((fn) => fn(value));
   }
 
   label(label: string) {
@@ -88,6 +96,10 @@ export default class Control<T> {
     return from;
   }
 
+  onUpdate(fn: UpdateHook<T>) {
+    this.updateHooks.add(fn);
+  }
+
   toJSON(basePath: string, paths: Paths) {
     const path = this.getPath(basePath, paths);
     return {
@@ -100,5 +112,10 @@ export default class Control<T> {
       blockHydrate: !!this.blockHydrate,
       watching: !!this.watchChanges,
     };
+  }
+
+  destroy() {
+    this.reference = null;
+    this.updateHooks.clear();
   }
 }
