@@ -5,5 +5,9 @@ export const copyGitCommit = (screenshot: ScreenshotFile) => {
 };
 
 export const copyJSON = (screenshot: ScreenshotFile) => {
-  navigator.clipboard.writeText(JSON.stringify(screenshot.data));
+  navigator.clipboard.writeText(JSON.stringify(screenshot.data, null, 2));
+};
+
+export const copyObject = (data: Record<string, any>) => {
+  navigator.clipboard.writeText(JSON.stringify(data, null, 2));
 };

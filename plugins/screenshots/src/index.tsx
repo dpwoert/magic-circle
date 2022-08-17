@@ -28,12 +28,13 @@ import {
   Code,
   StreamToTv,
   CheckCircle,
+  Clipboard,
 } from '@magic-circle/styles';
 
 import Sidebar from './Sidebar';
 import ImagePreview from './ImagePreview';
 import JsonViewer from './JsonViewer';
-import { copyGitCommit, copyJSON } from './utils';
+import { copyGitCommit, copyJSON, copyObject } from './utils';
 
 // Register icons
 registerIcon(Camera);
@@ -49,6 +50,7 @@ registerIcon(Tag);
 registerIcon(Code);
 registerIcon(StreamToTv);
 registerIcon(CheckCircle);
+registerIcon(Clipboard);
 
 function dataURLtoBlob(dataUrl: string) {
   const arr = dataUrl.split(',');
@@ -155,6 +157,14 @@ export default class Screenshots implements Plugin {
               this.changeFolder();
             },
             disabled: 'showOpenFilePicker' in window === false,
+          },
+          {
+            label: 'copy',
+            icon: 'Clipboard',
+            tooltip: 'Copy current settings',
+            onClick: () => {
+              this.copyData();
+            },
           },
         ],
       },
@@ -555,5 +565,10 @@ export default class Screenshots implements Plugin {
       dataUrl,
       data: JSON.parse(text),
     };
+  }
+
+  async copyData() {
+    const data = await this.client.save();
+    copyObject(data);
   }
 }
