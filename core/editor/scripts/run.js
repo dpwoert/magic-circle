@@ -113,6 +113,18 @@ const generateViteSettings = async (dev) => {
   const configPath = await generateConfig();
   const git = getRepoInfo(process.cwd());
 
+  let projectName = '';
+
+  // Set project name based on package.json when possible
+  if (fs.existsSync(path.join(process.cwd(), 'package.json'))) {
+    const file = fs
+      .readFileSync(path.join(process.cwd(), 'package.json'))
+      .toString('utf8');
+    const pkg = JSON.parse(file);
+
+    projectName = pkg.name;
+  }
+
   return {
     root: path.resolve(__dirname, '../'), // base: '/foo/',
     define: {
@@ -120,6 +132,7 @@ const generateViteSettings = async (dev) => {
       'process.env.GIT_BRANCH': JSON.stringify(git.branch),
       'process.env.GIT_COMMIT_MESSAGE': JSON.stringify(git.commitMessage),
       'process.env.GIT_COMMIT_SHA': JSON.stringify(git.sha),
+      'process.env.PROJECT_NAME': JSON.stringify(projectName),
     },
     resolve: {
       alias: {

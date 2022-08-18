@@ -298,6 +298,10 @@ export default class Screenshots implements Plugin {
       return `directory-${frame.src}`;
     }
 
+    if (this.client.config.projectName) {
+      return `directory-${this.client.config.projectName}`;
+    }
+
     return 'directory';
   }
 

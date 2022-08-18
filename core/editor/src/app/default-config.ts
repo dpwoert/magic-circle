@@ -18,6 +18,7 @@ import { Config } from '@magic-circle/schema';
 
 const config: Config = {
   url: '',
+  projectName: process.env.PROJECT_NAME,
   plugins: [
     Layers,
     PlayControls,
