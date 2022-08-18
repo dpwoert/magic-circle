@@ -219,6 +219,7 @@ export type Button = {
   icon: icons;
   tooltip?: string;
   onClick: () => void;
+  wrap?: (inside: ReactNode) => ReactNode;
   hide?: boolean;
   disabled?: boolean;
 };

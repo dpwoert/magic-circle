@@ -339,6 +339,11 @@ const Popover = ({
         ref={container}
         onMouseEnter={() => handleHover(true)}
         onMouseOver={() => handleHover(true)}
+        onClick={() => {
+          if (showOnClick) {
+            toggle();
+          }
+        }}
         onMouseLeave={(e) => {
           // check if next element is the popover.
           // if it is not, set visible to false

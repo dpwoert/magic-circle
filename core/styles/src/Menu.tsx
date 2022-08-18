@@ -52,7 +52,7 @@ const Container = styled.div`
   border-radius: 5px;
   color: ${COLORS.shades.s100.css};
   pointer-events: none;
-  padding: ${SPACING(0.5)}px;
+  padding: ${SPACING(0.25)}px;
   opacity: 0;
   transition: opacity ${DURATION}ms ease;
   top: -${SPACING(0.5)}px;
@@ -98,17 +98,18 @@ const Label = styled.div`
 const Item = styled.a<ItemProps>`
   ${TYPO.regular}
   position: relative;
-  height: ${SPACING(3)}px;
+  height: ${SPACING(3.5)}px;
   display: flex;
   align-items: center;
   padding: 0 ${SPACING(1)}px;
   opacity: ${(props) => (props.disabled ? 0.5 : 1)};
-  border-radius: 5px;
+  border-radius: 0px;
   background: ${(props) =>
-    props.checked ? COLORS.shades.s500.css : 'initial'};
+    props.checked ? COLORS.shades.s500.css : COLORS.shades.s600.css};
   color: ${(props) =>
     props.checked || props.active ? COLORS.white.css : COLORS.shades.s100.css};
   text-decoration: none;
+  padding-bottom: 1px;
   cursor: pointer;
 
   &:after {
@@ -117,17 +118,26 @@ const Item = styled.a<ItemProps>`
     bottom: 0px;
     height: 1px;
     width: calc(100% - ${SPACING(2)}px);
-    background: ${COLORS.shades.s300.css};
+    background: ${COLORS.shades.s400.css};
+    opacity: 0;
   }
 
   &:hover {
-    background: ${COLORS.shades.s600.css};
-    color: ${COLORS.white.css};
+    background: ${COLORS.accent.opacity(0.1)};
+    color: ${COLORS.accent.css};
   }
 
   &:hover > ${Container} {
     opacity: 1;
     pointer-events: all;
+  }
+
+  &:first-child {
+    border-radius: 5px 5px 0 0;
+  }
+
+  &:last-child {
+    border-radius: 0 0 5px 5px;
   }
 
   &:last-of-type:after {

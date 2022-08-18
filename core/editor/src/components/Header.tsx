@@ -131,22 +131,26 @@ const Header = () => {
               <ButtonCollection key={key}>
                 {buttons[key].list
                   .filter((button) => !button.hide)
-                  .map((button) => (
-                    <Button
-                      disabled={!button.tooltip}
-                      inactive={button.disabled}
-                      key={button.label}
-                      onClick={() => button.onClick()}
-                      content={button.tooltip}
-                      placement={Placement.BOTTOM}
-                    >
-                      <Icon
-                        name={button.icon}
-                        width={SPACING(2)}
-                        height={SPACING(2)}
-                      />
-                    </Button>
-                  ))}
+                  .map((button) => {
+                    const inside = (
+                      <Button
+                        disabled={!button.tooltip}
+                        inactive={button.disabled}
+                        key={button.label}
+                        onClick={() => button.onClick()}
+                        content={button.tooltip}
+                        placement={Placement.BOTTOM}
+                      >
+                        <Icon
+                          name={button.icon}
+                          width={SPACING(2)}
+                          height={SPACING(2)}
+                        />
+                      </Button>
+                    );
+
+                    return button.wrap ? button.wrap(inside) : inside;
+                  })}
               </ButtonCollection>
             ))}
         </ButtonCollections>

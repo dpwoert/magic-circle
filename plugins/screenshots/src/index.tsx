@@ -29,6 +29,7 @@ import {
   StreamToTv,
   CheckCircle,
   Clipboard,
+  MenuPortal,
 } from '@magic-circle/styles';
 
 import Sidebar from './Sidebar';
@@ -160,8 +161,40 @@ export default class Screenshots implements Plugin {
           },
           {
             label: 'copy',
-            icon: 'Clipboard',
-            tooltip: 'Copy current settings',
+            icon: 'Share',
+            tooltip: 'Share current settings',
+            wrap: (inside) => (
+              <MenuPortal
+                showOnClick
+                menu={{
+                  items: [
+                    {
+                      label: 'Copy settings to clipboard',
+                      icon: 'Clipboard',
+                      onSelect: () => {
+                        this.copyData();
+                      },
+                    },
+                    {
+                      label: 'Save settings to file',
+                      icon: 'FloppyDisc',
+                      onSelect: () => {
+                        this.saveData();
+                      },
+                    },
+                    {
+                      label: 'Import file',
+                      icon: 'Download',
+                      onSelect: () => {
+                        this.loadDataFromFile();
+                      },
+                    },
+                  ],
+                }}
+              >
+                {inside}
+              </MenuPortal>
+            ),
             onClick: () => {
               this.copyData();
             },
@@ -408,7 +441,7 @@ export default class Screenshots implements Plugin {
 
       // Save JSON
       const writable2 = await fileHandleJSON.createWritable();
-      await writable2.write(JSON.stringify(data));
+      await writable2.write(JSON.stringify(data, null, 2));
       await writable2.close();
     }
   }
@@ -570,5 +603,38 @@ export default class Screenshots implements Plugin {
   async copyData() {
     const data = await this.client.save();
     copyObject(data);
+  }
+
+  async saveData() {
+    // Get data
+    const data = await this.client.save();
+
+    // Save to file
+    const blob = new Blob([JSON.stringify(data, null, 2)], {
+      type: 'application/json',
+    });
+    saveAs(blob, 'data.json');
+  }
+
+  async loadDataFromFile() {
+    // @ts-ignore
+    const [fileHandle] = await window.showOpenFilePicker({
+      types: [
+        {
+          description: 'Magic Circle settings',
+          accept: {
+            'application/json': ['.json'],
+          },
+        },
+      ],
+      excludeAcceptAllOption: true,
+      multiple: false,
+    });
+
+    const file = await fileHandle.getFile();
+    const text = await file.text();
+
+    // const
+    await this.client.load(JSON.parse(text));
   }
 }
