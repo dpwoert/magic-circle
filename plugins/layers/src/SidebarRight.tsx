@@ -25,6 +25,7 @@ const GroupHeader = styled.div`
   align-items: center;
   padding: 0 ${SPACING(1)}px;
   height: ${SPACING(5)}px;
+  background: ${COLORS.shades.s600.css};
   border-bottom: 1px solid ${String(COLORS.shades.s400.opacity(0.5))};
 `;
 

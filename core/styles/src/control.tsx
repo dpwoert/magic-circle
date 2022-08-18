@@ -30,7 +30,7 @@ export const Reset = styled.div<ResetProps>`
   align-items: center;
   justify-content: center;
   background: ${COLORS.accent.css};
-  color: ${COLORS.white.css};
+  color: ${COLORS.black.css};
   height: 100%;
   width: ${SPACING(4)}px;
   transform: ${(props) =>

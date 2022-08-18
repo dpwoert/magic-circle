@@ -161,6 +161,9 @@ class App implements AppBase {
     // Update page information when needed
     this.ipc.on('page-information', (_, info: PageInfo) => {
       this.pageInfo.set(info);
+      const pageTitle =
+        this.config.settings.pageTitle || 'Magic Circle - {title}';
+      document.title = pageTitle.replace('{title}', info.title);
     });
 
     // Reconnect if needed

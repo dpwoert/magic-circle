@@ -302,6 +302,7 @@ export interface Config {
     | ((defaultPlugins: PluginConstructor[]) => PluginConstructor[]);
   controls: Control[] | ((defaultControls: Control[]) => Control[]);
   settings: {
+    pageTitle?: string;
     screenshots?: {
       directoryBasedOnFrameUrl?: boolean;
       gitInfo?: boolean;
