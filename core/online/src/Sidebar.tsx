@@ -76,6 +76,12 @@ const Sidebar = ({ app }: SidebarProps) => {
 
       const frame: HTMLIFrameElement = document.querySelector('#frame iframe');
       frame.src = url;
+
+      // Show layers
+      app.sidebar.setFn((curr) => ({
+        ...curr,
+        current: 1,
+      }));
     },
     [app]
   );
