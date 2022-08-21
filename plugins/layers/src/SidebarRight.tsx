@@ -89,7 +89,7 @@ const Group = ({ layers, group }: GroupProps) => {
       <GroupHeader>{group.name}</GroupHeader>
       {group.children.map((c) => {
         if ('value' in c) {
-          return <Control layers={layers} controlPath={c.path} />;
+          return <Control key={c.path} layers={layers} controlPath={c.path} />;
         }
 
         return null;
@@ -112,11 +112,17 @@ const SidebarRight = ({ layers }: SidebarProps) => {
       <Container>
         {layer.children.map((item) => {
           if ('label' in item) {
-            return <Control layers={layers} controlPath={item.path} />;
+            return (
+              <Control
+                key={item.path}
+                layers={layers}
+                controlPath={item.path}
+              />
+            );
           }
 
           if (item.folder) {
-            return <Group layers={layers} group={item} />;
+            return <Group key={item.path} layers={layers} group={item} />;
           }
 
           return null;

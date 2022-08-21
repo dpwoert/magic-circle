@@ -196,10 +196,10 @@ class App implements AppBase {
     this.connect();
   }
 
-  async reset() {
+  async reset(sync = true) {
     await Promise.all(
       this.plugins.map(async (plugin) => {
-        if (plugin.reset) await plugin.reset();
+        if (plugin.reset) await plugin.reset(sync);
       })
     );
   }

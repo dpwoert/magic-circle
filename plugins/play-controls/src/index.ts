@@ -138,7 +138,7 @@ export default class PlayControls implements Plugin {
           label: 'Reset',
           icon: 'Rewind',
           onSelect: async () => {
-            this.rewind();
+            this.client.reset();
           },
         },
       ];
@@ -159,11 +159,7 @@ export default class PlayControls implements Plugin {
     this.ipc.send('refresh', false);
   }
 
-  async reset() {
-    this.rewind(false);
-  }
-
-  async rewind(sync = true) {
+  async reset(sync: boolean) {
     this.ipc.send('controls:reset', sync);
   }
 }

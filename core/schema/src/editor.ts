@@ -262,7 +262,7 @@ export interface Plugin {
   buttons?: (buttons: ButtonCollections) => ButtonCollections;
   load?: (data: any) => Promise<void>;
   save?: () => Promise<any>;
-  reset?: () => Promise<void>;
+  reset?: (sync: boolean) => Promise<void>;
   commands?: (reference?: CommandLineReference) => CommandLineAction[];
   // electron?: string;
 }
