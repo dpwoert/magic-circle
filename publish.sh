@@ -35,6 +35,12 @@ npm install
 echo "Running prettier to ensure not detecting wrong changes"
 npm run prettier
 
+echo "Running tests"
+npm run test
+npm run lint
+npm run lint:types
+npm run lint:dependencies
+
 echo "building packages"
 npm run build:prod
 

@@ -45,7 +45,6 @@ export default class MagicCircle {
   private frameRequest: ReturnType<typeof requestAnimationFrame>;
   private autoPlay: boolean;
   private setupCalled: boolean;
-  private syncRequest: ReturnType<typeof requestIdleCallback>;
   element: HTMLElement;
   isPlaying: boolean;
   isConnected: boolean;
@@ -203,20 +202,11 @@ export default class MagicCircle {
   }
 
   sync() {
-    // Make sure we're not making too many sync calls
-    if (this.syncRequest) cancelIdleCallback(this.syncRequest);
-
-    // Schedule sync call
-    this.syncRequest = requestIdleCallback(
-      () => {
-        this.plugins.forEach((p) => {
-          if (p.sync) {
-            p.sync();
-          }
-        });
-      },
-      { timeout: 1000 }
-    );
+    this.plugins.forEach((p) => {
+      if (p.sync) {
+        p.sync();
+      }
+    });
   }
 
   start() {
@@ -315,10 +305,6 @@ export default class MagicCircle {
 
     if (this.ipc) {
       this.ipc.destroy();
-    }
-
-    if (this.syncRequest) {
-      cancelIdleCallback(this.syncRequest);
     }
 
     this.plugins.forEach((p) => {
