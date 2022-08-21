@@ -1,1 +1,49 @@
-{"list":[{"name":"p5.js (global mode)","path":"p5-global","repo":"https://github.com/dpwoert/magic-circle/tree/master/examples/p5-global"},{"name":"p5.js (instance mode)","path":"p5-instance","repo":"https://github.com/dpwoert/magic-circle/tree/master/examples/p5"},{"name":"p5.js (SVG renderer)","path":"p5-svg","repo":"https://github.com/dpwoert/magic-circle/tree/master/examples/p5-global"},{"name":"Pixi.js","path":"pixi","repo":"https://github.com/dpwoert/magic-circle/tree/master/examples/pixi"},{"name":"regl","path":"regl","repo":"https://github.com/dpwoert/magic-circle/tree/master/examples/regl"},{"name":"simple","path":"simple","repo":"https://github.com/dpwoert/magic-circle/tree/master/examples/simple"},{"name":"textures","path":"textures","repo":"https://github.com/dpwoert/magic-circle/tree/master/examples/simple"},{"name":"timeline","path":"timeline","repo":"https://github.com/dpwoert/magic-circle/tree/master/examples/timeline"},{"name":"watchers","path":"watchers","repo":"https://github.com/dpwoert/magic-circle/tree/master/examples/watchers"}]}
+{
+  "list": [
+    {
+      "name": "p5.js (global mode)",
+      "path": "p5-global",
+      "repo": "https://github.com/dpwoert/magic-circle/tree/master/examples/p5-global"
+    },
+    {
+      "name": "p5.js (instance mode)",
+      "path": "p5-instance",
+      "repo": "https://github.com/dpwoert/magic-circle/tree/master/examples/p5"
+    },
+    {
+      "name": "p5.js (SVG renderer)",
+      "path": "p5-svg",
+      "repo": "https://github.com/dpwoert/magic-circle/tree/master/examples/p5-global"
+    },
+    {
+      "name": "Pixi.js",
+      "path": "pixi",
+      "repo": "https://github.com/dpwoert/magic-circle/tree/master/examples/pixi"
+    },
+    {
+      "name": "regl",
+      "path": "regl",
+      "repo": "https://github.com/dpwoert/magic-circle/tree/master/examples/regl"
+    },
+    {
+      "name": "simple",
+      "path": "simple",
+      "repo": "https://github.com/dpwoert/magic-circle/tree/master/examples/simple"
+    },
+    {
+      "name": "textures",
+      "path": "textures",
+      "repo": "https://github.com/dpwoert/magic-circle/tree/master/examples/simple"
+    },
+    {
+      "name": "timeline",
+      "path": "timeline",
+      "repo": "https://github.com/dpwoert/magic-circle/tree/master/examples/timeline"
+    },
+    {
+      "name": "watchers",
+      "path": "watchers",
+      "repo": "https://github.com/dpwoert/magic-circle/tree/master/examples/watchers"
+    }
+  ]
+}
