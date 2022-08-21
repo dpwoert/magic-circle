@@ -17,3 +17,4 @@ export { default as NumberControl } from './controls/number';
 export { default as ColorControl } from './controls/color';
 export { default as BooleanControl } from './controls/boolean';
 export { default as ButtonControl } from './controls/button';
+export { default as ImageControl } from './controls/image';

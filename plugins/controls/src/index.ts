@@ -3,3 +3,4 @@ export { default as NumberControl } from './NumberControl';
 export { default as ColorControl } from './ColorControl';
 export { default as ButtonControl } from './ButtonControl';
 export { default as BooleanControl } from './BooleanControl';
+export { default as ImageControl } from './ImageControl';

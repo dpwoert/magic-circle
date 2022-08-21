@@ -12,6 +12,7 @@ import {
   ColorControl,
   ButtonControl,
   BooleanControl,
+  ImageControl,
 } from '@magic-circle/controls';
 
 import { Config } from '@magic-circle/schema';
@@ -34,6 +35,7 @@ const config: Config = {
     ColorControl,
     ButtonControl,
     BooleanControl,
+    ImageControl,
   ],
   settings: {
     screenshots: {

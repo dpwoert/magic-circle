@@ -154,3 +154,14 @@ type ValueProps = {
 export const Value = ({ children, maxDigits, ...props }: ValueProps) => {
   return <div {...props}>{formatNumber(children, maxDigits)}</div>;
 };
+
+type LargeProps = ContainerProps & { header: ReactNode };
+
+export const Large = ({ header, children, ...props }: LargeProps) => {
+  return (
+    <div>
+      <Container {...props}>{header}</Container>
+      {children}
+    </div>
+  );
+};

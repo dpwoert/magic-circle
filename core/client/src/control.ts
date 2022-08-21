@@ -98,6 +98,7 @@ export default class Control<T> {
 
   onUpdate(fn: UpdateHook<T>) {
     this.updateHooks.add(fn);
+    return this;
   }
 
   toJSON(basePath: string, paths: Paths) {
