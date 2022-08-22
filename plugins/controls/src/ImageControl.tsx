@@ -25,9 +25,23 @@ const Inside = styled(Control.Inside)`
   }
 `;
 
-const Image = styled.img`
+const checkColor = COLORS.shades.s700.css;
+
+const Placeholder = styled.div`
   width: 100%;
   height: ${SPACING(16)}px;
+  background-color: ${COLORS.shades.s500.css};
+  background-image: linear-gradient(45deg, ${checkColor} 25%, transparent 25%),
+    linear-gradient(-45deg, ${checkColor} 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, ${checkColor} 75%),
+    linear-gradient(-45deg, transparent 75%, ${checkColor} 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+`;
+
+const Image = styled.img`
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 `;
 
@@ -87,7 +101,9 @@ const ImageControlField = ({
         </>
       }
     >
-      <Image src={value} />
+      <Placeholder>
+        <Image src={value} />
+      </Placeholder>
     </Control.Large>
   );
 };
