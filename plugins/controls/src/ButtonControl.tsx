@@ -6,6 +6,7 @@ import { Control, SPACING, COLORS, Icon } from '@magic-circle/styles';
 const Container = styled(Control.Container)`
   background: ${COLORS.shades.s600.css};
   color: ${COLORS.white.css};
+  cursor: pointer;
 
   svg {
     color: ${COLORS.accent.css};
