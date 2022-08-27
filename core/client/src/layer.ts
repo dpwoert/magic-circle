@@ -7,6 +7,7 @@ export default class Layer {
   name: string;
   children: Child[];
   folder: boolean;
+  collapsed: boolean;
 
   constructor(name: string) {
     this.name = name;
@@ -39,9 +40,15 @@ export default class Layer {
 
   add(child: Child | Child[]) {
     if (Array.isArray(child)) {
-      this.children.push(...child);
+      // Add one by one
+      child.forEach((c) => {
+        this.add(c);
+      });
     } else {
-      this.children.push(child);
+      // Make sure we're not duplicating
+      if (this.children.indexOf(child) === -1) {
+        this.children.push(child);
+      }
     }
 
     return this;
@@ -51,6 +58,20 @@ export default class Layer {
     layer.add(this);
 
     return this;
+  }
+
+  remove(layer: Child | Child[]) {
+    this.children = this.children.filter((c) => {
+      if (Array.isArray(layer)) {
+        return !layer.includes(c);
+      } else {
+        return c !== layer;
+      }
+    });
+  }
+
+  collapse(collapsed = true) {
+    this.collapsed = collapsed;
   }
 
   getPath(basePath: string, paths: Paths) {
@@ -64,6 +85,7 @@ export default class Layer {
       name: this.name,
       folder: this.folder,
       children: this.children.map((child) => child.toJSON(path, paths)),
+      collapse: this.collapsed,
     };
   }
 }
