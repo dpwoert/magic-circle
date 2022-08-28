@@ -12,6 +12,8 @@ const commonjs = require('rollup-plugin-commonjs');
 const babel = require('rollup-plugin-babel');
 const json = require('@rollup/plugin-json');
 
+const magicPkg = require('../package.json');
+
 const PORT = argv.port || argv.p || 8080;
 const OUTPUT_DIR = argv.output || argv.o || 'magic-circle';
 const CONFIG_FILE = argv.config || argv.c || 'magic.config.js';
@@ -129,6 +131,7 @@ const generateViteSettings = async (dev) => {
     root: path.resolve(__dirname, '../'), // base: '/foo/',
     define: {
       'process.env.BUILD_ENV': JSON.stringify(dev ? 'develop' : 'production'),
+      'process.env.MAGIC_CIRCLE_VERSION': JSON.stringify(magicPkg.version),
       'process.env.GIT_BRANCH': JSON.stringify(git.branch),
       'process.env.GIT_COMMIT_MESSAGE': JSON.stringify(git.commitMessage),
       'process.env.GIT_COMMIT_SHA': JSON.stringify(git.sha),
