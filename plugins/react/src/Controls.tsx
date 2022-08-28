@@ -6,7 +6,7 @@ import {
   ButtonControl as ButtonControlMC,
 } from '@magic-circle/client';
 
-import createWrapper from './Wrapper';
+import createWrapper from './wrapper';
 
 export const NumberControl = createWrapper<
   number,
