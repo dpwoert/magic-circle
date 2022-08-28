@@ -207,6 +207,14 @@ class App implements AppBase {
   async save() {
     const data: Record<string, any> = {};
 
+    // Add meta data
+    data.meta = {
+      magicCircleVersion: process.env.MAGIC_CIRCLE_VERSION,
+      projectName: this.config.projectName,
+      url: this.config.url,
+    };
+
+    // Add data from plugins
     await Promise.all(
       this.plugins.map(async (plugin) => {
         if (plugin.save) {
