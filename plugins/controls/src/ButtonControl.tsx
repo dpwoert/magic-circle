@@ -17,6 +17,10 @@ const Inside = styled(Control.Inside)`
   justify-content: flex-end;
 `;
 
+const Label = styled(Control.Label)`
+  width: auto;
+`;
+
 const ButtonControlField = ({
   value,
   label,
@@ -25,7 +29,7 @@ const ButtonControlField = ({
 }: ControlProps<() => void, never>) => {
   return (
     <Container hasChanges={false} reset={reset} onClick={() => set(value)}>
-      <Control.Label>{label}</Control.Label>
+      <Label>{label}</Label>
       <Inside>
         <Icon name="ArrowRight" width={SPACING(2)} height={SPACING(2)} />
       </Inside>
