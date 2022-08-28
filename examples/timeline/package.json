@@ -38,6 +38,6 @@
   },
   "dependencies": {
     "@magic-circle/client": "^0.1.10",
-    "three": "^0.125.0"
+    "three": "^0.143.0"
   }
 }

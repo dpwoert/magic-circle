@@ -43,6 +43,7 @@ export default class MagicCircle {
 
   private lastTime: number;
   private frameRequest: ReturnType<typeof requestAnimationFrame>;
+  private syncRequest: ReturnType<typeof setTimeout>;
   private autoPlay: boolean;
   private setupCalled: boolean;
   element: HTMLElement;
@@ -162,7 +163,7 @@ export default class MagicCircle {
     });
 
     // sync values
-    this.sync();
+    this.flush();
 
     // Let editor know we're ready
     this.ipc.send('ready', true);
@@ -202,6 +203,16 @@ export default class MagicCircle {
   }
 
   sync() {
+    if (this.syncRequest) {
+      clearTimeout(this.syncRequest);
+    }
+
+    this.syncRequest = setTimeout(() => {
+      this.flush();
+    }, 12);
+  }
+
+  flush() {
     this.plugins.forEach((p) => {
       if (p.sync) {
         p.sync();
@@ -305,6 +316,10 @@ export default class MagicCircle {
 
     if (this.ipc) {
       this.ipc.destroy();
+    }
+
+    if (this.syncRequest) {
+      clearTimeout(this.syncRequest);
     }
 
     this.plugins.forEach((p) => {

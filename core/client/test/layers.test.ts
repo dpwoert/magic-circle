@@ -36,7 +36,7 @@ describe('core/client:plugin/layers', () => {
 
     const control = new Control<string>(ref, 'value');
     client.layer.add(control);
-    client.sync();
+    client.flush();
 
     expect(() => layers.set('base.value', 'test2')).not.toThrow();
     expect(console.warn).not.toBeCalled();
@@ -51,7 +51,7 @@ describe('core/client:plugin/layers', () => {
 
     const control = new Control<string>(ref, 'value');
     client.layer.add(control);
-    client.sync();
+    client.flush();
 
     expect(() => layers.set('base.value', 'test2')).not.toThrow();
     expect(ref.value).toBe('test2');
@@ -70,7 +70,7 @@ describe('core/client:plugin/layers', () => {
     const control1 = new Control<string>(ref, 'value1');
     const control2 = new Control<string>(ref, 'value2');
     client.layer.add([control1, control2]);
-    client.sync();
+    client.flush();
 
     layers.set('base.value1', 'test1-update');
     layers.set('base.value2', 'test2-update');
@@ -93,7 +93,7 @@ describe('core/client:plugin/layers', () => {
     const control1 = new Control<string>(ref, 'value1');
     const control2 = new Control<string>(ref, 'value2');
     client.layer.add([control1, control2]);
-    client.sync();
+    client.flush();
 
     layers.setAll({
       'base.value1': 'test1-update',
@@ -113,7 +113,7 @@ describe('core/client:plugin/layers', () => {
     const control1 = new Control<string>(ref, 'value1');
     const control2 = new Control<string>(ref, 'value2');
     client.layer.add([control1, control2]);
-    client.sync();
+    client.flush();
 
     layers.setAll({
       'base.value1': 'test1-update',

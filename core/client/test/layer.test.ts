@@ -30,4 +30,35 @@ describe('core/client:layer', () => {
 
     expect(parent.children.length).toBe(2);
   });
+
+  test('Should not add duplicate layers via add()', () => {
+    const parent = new Layer('parent');
+    const child = new Layer('child');
+    parent.add([child, child, child]);
+
+    expect(parent.children.length).toBe(1);
+  });
+
+  test('Should be able to add and remove layer', () => {
+    const parent = new Layer('parent');
+    const child = new Layer('child');
+
+    parent.add(child);
+    expect(parent.children.length).toBe(1);
+
+    parent.remove(child);
+    expect(parent.children.length).toBe(0);
+  });
+
+  test('Should be able to add and remove multiple layers', () => {
+    const parent = new Layer('parent');
+    const child1 = new Layer('child 1');
+    const child2 = new Layer('child 2');
+
+    parent.add([child1, child2]);
+    expect(parent.children.length).toBe(2);
+
+    parent.remove([child1, child2]);
+    expect(parent.children.length).toBe(0);
+  });
 });

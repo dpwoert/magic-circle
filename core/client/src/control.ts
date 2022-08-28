@@ -1,3 +1,4 @@
+import type Layer from './layer';
 import type Paths from './paths';
 
 type Reference = Record<string, any>;
@@ -98,6 +99,11 @@ export default class Control<T> {
 
   onUpdate(fn: UpdateHook<T>) {
     this.updateHooks.add(fn);
+    return this;
+  }
+
+  addTo(layer: Layer) {
+    layer.add(this);
     return this;
   }
 

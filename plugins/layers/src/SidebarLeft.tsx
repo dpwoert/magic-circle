@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { useStore } from '@magic-circle/state';
-import { SPACING, COLORS, TYPO } from '@magic-circle/styles';
+import { SPACING, COLORS, TYPO, Icon } from '@magic-circle/styles';
 
 import type Layers from './index';
 
@@ -12,18 +12,18 @@ const Container = styled.div`
   width: 100%;
 `;
 
-type LayerProps = {
+type LayerRowProps = {
   depth: number;
   selected?: boolean;
 };
 
-const Layer = styled.div<LayerProps>`
+const LayerRow = styled.div<LayerRowProps>`
   ${TYPO.regular}
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-left ${(props) => SPACING(props.depth * 2) + SPACING(1)}px;
-  padding-right ${SPACING(1)}px;
+  padding-left: ${(props) => SPACING(props.depth * 2) + SPACING(1)}px;
+  padding-right: ${SPACING(1)}px;
   align-items: center;
   height: ${SPACING(4)}px;
   color: ${COLORS.white.css};
@@ -50,12 +50,62 @@ const Layer = styled.div<LayerProps>`
   }
 `;
 
+type LayerProps = {
+  layers: Layers;
+  layer: Layers['layers']['value'][0];
+  depth: number;
+};
+
+const Layer = ({ layers, layer, depth }: LayerProps) => {
+  const selected = useStore(layers.selected);
+  const [expand, setExpand] = useState(true);
+
+  return (
+    <div key={layer.path}>
+      <LayerRow
+        key={layer.path}
+        depth={depth}
+        selected={selected === layer.path}
+        onClick={() => {
+          layers.selected.set(layer.path);
+        }}
+      >
+        <span>{layer.name}</span>
+        {layer.children.filter((c) => 'children' in c).length > 0 && (
+          <Icon
+            name="ChevronDown"
+            width={SPACING(2)}
+            height={SPACING(2)}
+            onClick={() => setExpand(!expand)}
+          />
+        )}
+      </LayerRow>
+      {expand &&
+        (layer.children || []).map((child) => {
+          if ('children' in child && !child.folder) {
+            return (
+              <Layer
+                key={child.path}
+                layers={layers}
+                layer={child}
+                depth={depth + 1}
+              />
+            );
+          }
+
+          return null;
+        })}
+    </div>
+  );
+};
+
 type SidebarProps = {
   layers: Layers;
 };
 
 const Sidebar = ({ layers }: SidebarProps) => {
   const list = useStore(layers.flat);
+  const tree = useStore(layers.layers);
   const selected = useStore(layers.selected);
 
   useEffect(() => {
@@ -70,21 +120,12 @@ const Sidebar = ({ layers }: SidebarProps) => {
 
   return (
     <Container>
-      {list.map((layer) => (
-        <Layer
-          key={layer.path}
-          depth={layer.depth}
-          selected={selected === layer.path}
-          onClick={() => {
-            layers.selected.set(layer.path);
-          }}
-        >
-          <span>{layer.name}</span>
-          {/* {layer.hasChildren && (
-            <Icon name="ChevronDown" width={SPACING(2)} height={SPACING(2)} />
-          )} */}
-        </Layer>
-      ))}
+      {tree.map(
+        (layer) =>
+          !layer.folder && (
+            <Layer key={layer.path} layers={layers} layer={layer} depth={0} />
+          )
+      )}
     </Container>
   );
 };
