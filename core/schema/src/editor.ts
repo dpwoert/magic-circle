@@ -372,6 +372,7 @@ export interface App {
   layoutHooks: Store<layoutHooks>;
   commandLine: Store<CommandLineScreen | null>;
   commandLineReference: Store<CommandLineReference | null>;
+  hasLoop: Store<boolean>;
 
   getPlugin: (name: string) => Plugin | undefined;
   getControl: (name: string) => Control | undefined;

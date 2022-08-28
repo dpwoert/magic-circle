@@ -76,8 +76,11 @@ const Button = styled(Tooltip)<ButtonProps>`
   border-right: 1px solid ${COLORS.accent.css};
   cursor: pointer;
   transition: background 0.2s ease;
-  opacity: ${(props) => (props.inactive ? 0.4 : 1)};
   pointer-events: ${(props) => (props.inactive ? 'none' : 'all')};
+
+  svg {
+    opacity: ${(props) => (props.inactive ? 0.4 : 1)};
+  }
 
   &:last-child {
     border-right: none;

@@ -144,6 +144,9 @@ export default class MagicCircle {
       location: JSON.parse(JSON.stringify(window.location)),
     });
 
+    // Does the client have a loop?
+    this.ipc.send('loop-set', !!this.hooks.loop);
+
     // run setup hooks
     await this.runSetupHook();
 
@@ -191,6 +194,9 @@ export default class MagicCircle {
 
   loop(fn: loopFn) {
     this.hooks.loop = fn;
+
+    if (this.ipc) this.ipc.send('loop-set', true);
+
     return this;
   }
 
