@@ -337,6 +337,7 @@ export type LayerExport = {
   path: string;
   name: string;
   folder: boolean;
+  collapse: boolean;
   children: Array<LayerExport | ControlExport>;
 };
 

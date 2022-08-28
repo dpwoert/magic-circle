@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { useStore } from '@magic-circle/state';
-import { SPACING, COLORS, TYPO, Icon } from '@magic-circle/styles';
+import { SPACING, COLORS, TYPO, Icon, Expand } from '@magic-circle/styles';
 
 import type Layers from './index';
 
@@ -50,6 +50,15 @@ const LayerRow = styled.div<LayerRowProps>`
   }
 `;
 
+type ChevronProps = {
+  collapsed: boolean;
+};
+
+const Chevron = styled(Icon)<ChevronProps>`
+  transform: rotate(${(props) => (props.collapsed ? 0 : -180)}deg);
+  transition: transform 0.2s ease;
+`;
+
 type LayerProps = {
   layers: Layers;
   layer: Layers['layers']['value'][0];
@@ -58,7 +67,9 @@ type LayerProps = {
 
 const Layer = ({ layers, layer, depth }: LayerProps) => {
   const selected = useStore(layers.selected);
-  const [expand, setExpand] = useState(true);
+  const [expand, setExpand] = useState(!layer.collapse);
+  const hasChildLayers =
+    layer.children.filter((c) => 'children' in c && !c.folder).length > 0;
 
   return (
     <div key={layer.path}>
@@ -71,17 +82,18 @@ const Layer = ({ layers, layer, depth }: LayerProps) => {
         }}
       >
         <span>{layer.name}</span>
-        {layer.children.filter((c) => 'children' in c).length > 0 && (
-          <Icon
+        {hasChildLayers && (
+          <Chevron
             name="ChevronDown"
             width={SPACING(2)}
             height={SPACING(2)}
             onClick={() => setExpand(!expand)}
+            collapsed={!expand}
           />
         )}
       </LayerRow>
-      {expand &&
-        (layer.children || []).map((child) => {
+      <Expand expand={expand}>
+        {(layer.children || []).map((child) => {
           if ('children' in child && !child.folder) {
             return (
               <Layer
@@ -95,6 +107,7 @@ const Layer = ({ layers, layer, depth }: LayerProps) => {
 
           return null;
         })}
+      </Expand>
     </div>
   );
 };

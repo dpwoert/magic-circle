@@ -13,6 +13,7 @@ export default class Layer {
     this.name = name;
     this.children = [];
     this.folder = false;
+    this.collapsed = false;
   }
 
   forEach(fn: (child: Child) => void) {
@@ -62,10 +63,13 @@ export default class Layer {
     this.children = this.children.filter((c) =>
       Array.isArray(layer) ? !layer.includes(c) : c !== layer
     );
+
+    return this;
   }
 
   collapse(collapsed = true) {
     this.collapsed = collapsed;
+    return this;
   }
 
   getPath(basePath: string, paths: Paths) {

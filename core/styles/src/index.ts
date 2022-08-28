@@ -14,6 +14,7 @@ export { default as Popup, Placement, Alignment } from './Popover';
 export type { Menu, MenuItem } from './Menu';
 export { default as MenuList, MenuItemType, MenuBadge } from './Menu';
 export { default as MenuPortal } from './MenuPortal';
+export { default as Expand } from './Expand';
 export { default as Tooltip } from './Tooltip';
 export * as Control from './control';
 export * as Forms from './forms';
