@@ -11,15 +11,15 @@ type ClientProps = {
 
 export const Folder = ({ name, children }: ClientProps) => {
   const client = useContext(ClientContext);
-  const parent = useContext(ParentContext);
-  const [folder] = useState<FolderMC>(new FolderMC(name).addTo(parent));
+  const [folder] = useState<FolderMC>(new FolderMC(name));
   useSync(folder);
 
   useEffect(() => {
+    folder.name = name;
     if (client) {
       client.sync();
     }
-  }, [name]);
+  }, [name, client, folder]);
 
   return (
     <ParentContext.Provider value={folder}>{children}</ParentContext.Provider>

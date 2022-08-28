@@ -4,3 +4,4 @@ dist
 build
 magic-circle
 build.tmp.js
+*.d.ts

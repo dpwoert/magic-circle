@@ -11,8 +11,6 @@ export default function useSync(instance: Child) {
 
   const myParent = useRef<typeof parent>();
 
-  console.log({ client });
-
   useEffect(() => {
     if (!client) {
       return;
@@ -27,12 +25,13 @@ export default function useSync(instance: Child) {
       myParent.current = parent;
       client.sync();
     }
-  }, [parent]);
+  }, [parent, client, instance]);
 
   useEffect(() => {
     return () => {
-      parent.remove(instance);
-      client.sync();
+      myParent.current.remove(instance);
+      if (client) client.sync();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 }

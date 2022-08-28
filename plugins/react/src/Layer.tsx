@@ -11,16 +11,17 @@ type ClientProps = {
 
 export const Layer = ({ name, children }: ClientProps) => {
   const client = useContext(ClientContext);
-  const [folder] = useState<LayerMC>(new LayerMC(name));
-  useSync(folder);
+  const [layer] = useState<LayerMC>(new LayerMC(name));
+  useSync(layer);
 
   useEffect(() => {
+    layer.name = name;
     if (client) {
       client.sync();
     }
-  }, [name]);
+  }, [name, client, layer]);
 
   return (
-    <ParentContext.Provider value={folder}>{children}</ParentContext.Provider>
+    <ParentContext.Provider value={layer}>{children}</ParentContext.Provider>
   );
 };

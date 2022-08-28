@@ -4,7 +4,7 @@ import { Control } from '@magic-circle/client';
 import { ClientContext, ParentContext } from './Contexts';
 import useSync from './useSync';
 
-type withDefaultProps<T> = { label?: string; watch?: boolean } & T;
+type withDefaultProps<T> = { name: string } & T;
 
 type allProps<T, V> = {
   value: V;
@@ -12,27 +12,29 @@ type allProps<T, V> = {
 } & withDefaultProps<T>;
 
 const createWrapper = <V, C extends Control<V>, T>(
-  constr: typeof Control<V>,
-  mapping: (instance: C, props: withDefaultProps<T>) => void
+  Constrol: typeof Control<V>,
+  mapping?: (instance: C, props: withDefaultProps<T>) => void
 ) => {
   return ({ value, onUpdate, ...props }: allProps<T, V>) => {
-    const reference = useRef<V>(value);
+    const { name } = props;
+    const reference = useRef<Record<string, V>>({ [name]: value });
     const client = useContext(ClientContext);
     const [instance] = useState<C>(
-      () => new constr(reference, 'current').onUpdate(onUpdate) as C
+      () => new Control(reference.current, name).onUpdate(onUpdate) as C
     );
     useSync(instance);
 
     useEffect(() => {
-      mapping(instance, props as withDefaultProps<T>);
+      instance.label(props.name);
+      if (mapping) mapping(instance, props as withDefaultProps<T>);
 
       if (client) client.sync();
     }, [instance, client, props]);
 
     useEffect(() => {
-      reference.current = value;
+      reference.current = { [name]: value };
       if (client) client.sync();
-    }, [client, value]);
+    }, [client, value, name]);
 
     return null;
   };

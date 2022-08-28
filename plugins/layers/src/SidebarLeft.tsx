@@ -22,8 +22,8 @@ const LayerRow = styled.div<LayerRowProps>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-left ${(props) => SPACING(props.depth * 2) + SPACING(1)}px;
-  padding-right ${SPACING(1)}px;
+  padding-left: ${(props) => SPACING(props.depth * 2) + SPACING(1)}px;
+  padding-right: ${SPACING(1)}px;
   align-items: center;
   height: ${SPACING(4)}px;
   color: ${COLORS.white.css};
@@ -60,8 +60,6 @@ const Layer = ({ layers, layer, depth }: LayerProps) => {
   const selected = useStore(layers.selected);
   const [expand, setExpand] = useState(true);
 
-  console.log({ layer });
-
   return (
     <div key={layer.path}>
       <LayerRow
@@ -84,8 +82,7 @@ const Layer = ({ layers, layer, depth }: LayerProps) => {
       </LayerRow>
       {expand &&
         (layer.children || []).map((child) => {
-          if ('children' in child) {
-            console.log('render child');
+          if ('children' in child && !child.folder) {
             return (
               <Layer
                 key={child.path}
@@ -123,9 +120,12 @@ const Sidebar = ({ layers }: SidebarProps) => {
 
   return (
     <Container>
-      {tree.map((layer) => (
-        <Layer layers={layers} layer={layer} depth={0} />
-      ))}
+      {tree.map(
+        (layer) =>
+          !layer.folder && (
+            <Layer key={layer.path} layers={layers} layer={layer} depth={0} />
+          )
+      )}
     </Container>
   );
 };

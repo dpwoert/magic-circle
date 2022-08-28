@@ -44,11 +44,9 @@ export default class Layer {
       child.forEach((c) => {
         this.add(c);
       });
-    } else {
+    } else if (this.children.indexOf(child) === -1) {
       // Make sure we're not duplicating
-      if (this.children.indexOf(child) === -1) {
-        this.children.push(child);
-      }
+      this.children.push(child);
     }
 
     return this;
@@ -61,13 +59,9 @@ export default class Layer {
   }
 
   remove(layer: Child | Child[]) {
-    this.children = this.children.filter((c) => {
-      if (Array.isArray(layer)) {
-        return !layer.includes(c);
-      } else {
-        return c !== layer;
-      }
-    });
+    this.children = this.children.filter((c) =>
+      Array.isArray(layer) ? !layer.includes(c) : c !== layer
+    );
   }
 
   collapse(collapsed = true) {
