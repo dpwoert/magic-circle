@@ -17,7 +17,7 @@
     "postinstall": "lerna bootstrap",
     "prepare": "husky install",
     "watch": "lerna run watch",
-    "build:dev": "lerna run build:dev",
+    "build:dev": "lerna run build:dev --ignore @magic-circle/example-*",
     "build:prod": "lerna run build:prod",
     "build:stats": "lerna run build:stats",
     "generate:icons": "lerna run generate:icons --scope @magic-circle/styles",
