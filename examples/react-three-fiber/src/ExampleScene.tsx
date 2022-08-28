@@ -1,5 +1,5 @@
 import React, { useMemo, useRef, useState } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Scene } from 'three';
 import { PerspectiveCamera } from '@react-three/drei';
 
@@ -10,6 +10,7 @@ import {
   NumberControl,
   ColorControl,
   BooleanControl,
+  useLoop,
 } from '@magic-circle/react';
 
 type BoxProps = {
@@ -184,7 +185,11 @@ const Camera = () => {
   );
 };
 
-const ExampleScene = () => {
+const Inner = () => {
+  const { invalidate } = useThree();
+
+  useLoop(invalidate);
+
   const boxes = useMemo<BoxProps[]>(() => {
     const list: BoxProps[] = [];
 
@@ -202,14 +207,20 @@ const ExampleScene = () => {
   }, []);
 
   return (
-    <Canvas>
+    <Layer name={`Scene`}>
+      <ambientLight />
+      <Camera />
+      <pointLight position={[10, 10, 10]} />
+      <Boxes boxes={boxes} />
+    </Layer>
+  );
+};
+
+const ExampleScene = () => {
+  return (
+    <Canvas frameloop="demand">
       <MagicCircle>
-        <Layer name={`Scene`}>
-          <ambientLight />
-          <Camera />
-          <pointLight position={[10, 10, 10]} />
-          <Boxes boxes={boxes} />
-        </Layer>
+        <Inner />
       </MagicCircle>
     </Canvas>
   );

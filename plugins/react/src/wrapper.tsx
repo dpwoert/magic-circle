@@ -12,7 +12,7 @@ type allProps<T, V> = {
 } & withDefaultProps<T>;
 
 const createWrapper = <V, C extends Control<V>, T>(
-  Constrol: typeof Control<V>,
+  ControlConstructor: typeof Control<V>,
   mapping?: (instance: C, props: withDefaultProps<T>) => void
 ) => {
   return ({ value, onUpdate, ...props }: allProps<T, V>) => {
@@ -20,7 +20,8 @@ const createWrapper = <V, C extends Control<V>, T>(
     const reference = useRef<Record<string, V>>({ [name]: value });
     const client = useContext(ClientContext);
     const [instance] = useState<C>(
-      () => new Control(reference.current, name).onUpdate(onUpdate) as C
+      () =>
+        new ControlConstructor(reference.current, name).onUpdate(onUpdate) as C
     );
     useSync(instance);
 
