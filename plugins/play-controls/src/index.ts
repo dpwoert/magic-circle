@@ -36,6 +36,9 @@ export default class PlayControls implements Plugin {
     this.ipc.on('play', (_, playing: boolean) => {
       this.setPlayButton(playing);
     });
+    this.ipc.on('loop-set', () => {
+      this.setPlayButton(this.playing);
+    });
   }
 
   setPlayButton(play: boolean) {
@@ -48,6 +51,7 @@ export default class PlayControls implements Plugin {
       return {
         label: 'play',
         icon: play ? 'Pause' : 'Play',
+        disabled: !this.client.hasLoop.value,
         onClick: () => {
           if (play) this.pause();
           else this.play();
@@ -76,6 +80,7 @@ export default class PlayControls implements Plugin {
           {
             label: 'play',
             icon: 'Play',
+            disabled: !this.client.hasLoop.value,
             onClick: () => {
               this.play();
             },

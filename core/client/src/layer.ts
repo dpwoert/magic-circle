@@ -8,12 +8,14 @@ export default class Layer {
   children: Child[];
   folder: boolean;
   collapsed: boolean;
+  isBaseLayer: boolean;
 
-  constructor(name: string) {
+  constructor(name: string, isBaseLayer = false) {
     this.name = name;
     this.children = [];
     this.folder = false;
     this.collapsed = false;
+    this.isBaseLayer = isBaseLayer;
   }
 
   forEach(fn: (child: Child) => void) {
@@ -36,7 +38,7 @@ export default class Layer {
       });
     };
 
-    recursive(this.children, this.name);
+    recursive(this.children, this.isBaseLayer ? '' : this.name);
   }
 
   add(child: Child | Child[]) {
@@ -78,11 +80,12 @@ export default class Layer {
 
   toJSON(basePath: string, paths: Paths) {
     const path = this.getPath(basePath, paths);
+    const startPath = this.isBaseLayer ? '' : path;
     return {
       path,
       name: this.name,
       folder: this.folder,
-      children: this.children.map((child) => child.toJSON(path, paths)),
+      children: this.children.map((child) => child.toJSON(startPath, paths)),
       collapse: this.collapsed,
     };
   }

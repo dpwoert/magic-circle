@@ -2,6 +2,7 @@ import PluginLayers from '../src/plugins/layers';
 import Client from '../src/client';
 import Control from '../src/control';
 import IpcMock from './mock-ipc';
+import Layer from '../src/layer';
 
 describe('core/client:plugin/layers', () => {
   beforeEach(() => {
@@ -24,7 +25,7 @@ describe('core/client:plugin/layers', () => {
     const client = new Client([PluginLayers], IpcMock).setup();
     const layers = client.plugin<PluginLayers>('layers');
 
-    expect(() => layers.set('base.value', 'test2')).not.toThrow();
+    expect(() => layers.set('value', 'test2')).not.toThrow();
     expect(console.warn).toBeCalled();
   });
 
@@ -38,7 +39,25 @@ describe('core/client:plugin/layers', () => {
     client.layer.add(control);
     client.flush();
 
-    expect(() => layers.set('base.value', 'test2')).not.toThrow();
+    expect(() => layers.set('value', 'test2')).not.toThrow();
+    expect(console.warn).not.toBeCalled();
+    expect(ref.value).toBe('test2');
+  });
+
+  test('Should be able to change control multiple layers deep', () => {
+    const ref = { value: 'test' };
+
+    const client = new Client([PluginLayers], IpcMock).setup();
+    const layers = client.plugin<PluginLayers>('layers');
+
+    const layer = new Layer('child').addTo(client.layer);
+
+    const control = new Control<string>(ref, 'value');
+    layer.add(control);
+    client.flush();
+
+    expect(ref.value).toBe('test');
+    expect(() => layers.set('child.value', 'test2')).not.toThrow();
     expect(console.warn).not.toBeCalled();
     expect(ref.value).toBe('test2');
   });
@@ -53,10 +72,10 @@ describe('core/client:plugin/layers', () => {
     client.layer.add(control);
     client.flush();
 
-    expect(() => layers.set('base.value', 'test2')).not.toThrow();
+    expect(() => layers.set('value', 'test2')).not.toThrow();
     expect(ref.value).toBe('test2');
 
-    layers.reset('base.value');
+    layers.reset('value');
     expect(ref.value).toBe('test');
     expect(console.warn).not.toBeCalled();
   });
@@ -72,8 +91,8 @@ describe('core/client:plugin/layers', () => {
     client.layer.add([control1, control2]);
     client.flush();
 
-    layers.set('base.value1', 'test1-update');
-    layers.set('base.value2', 'test2-update');
+    layers.set('value1', 'test1-update');
+    layers.set('value2', 'test2-update');
 
     expect(ref.value1).toBe('test1-update');
     expect(ref.value2).toBe('test2-update');
@@ -96,8 +115,8 @@ describe('core/client:plugin/layers', () => {
     client.flush();
 
     layers.setAll({
-      'base.value1': 'test1-update',
-      'base.value2': 'test2-update',
+      value1: 'test1-update',
+      value2: 'test2-update',
     });
 
     expect(ref.value1).toBe('test1-update');
@@ -116,9 +135,9 @@ describe('core/client:plugin/layers', () => {
     client.flush();
 
     layers.setAll({
-      'base.value1': 'test1-update',
-      'base.value2': 'test2-update',
-      'base.value3': 'test3-update',
+      value1: 'test1-update',
+      value2: 'test2-update',
+      value3: 'test3-update',
     });
 
     expect(ref.value1).toBe('test1-update');

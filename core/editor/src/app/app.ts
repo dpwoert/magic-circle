@@ -37,6 +37,7 @@ class App implements AppBase {
   commandLineReference: Store<CommandLineReference | null>;
   pageInfo: Store<PageInfo>;
   layoutHooks: Store<layoutHooks>;
+  hasLoop: Store<boolean>;
 
   constructor(userConf: UserConfig) {
     // merge with default config
@@ -54,6 +55,7 @@ class App implements AppBase {
     this.commandLine = new Store<CommandLineScreen | null>(null);
     this.commandLineReference = new Store<CommandLineReference | null>(null);
     this.layoutHooks = new Store<layoutHooks>({});
+    this.hasLoop = new Store<boolean>(false);
 
     // Get controls
     this.controls = {};
@@ -145,6 +147,7 @@ class App implements AppBase {
     this.ipc.removeAllListeners('page-information');
     this.ipc.removeAllListeners('connect');
     this.ipc.removeAllListeners('disconnect');
+    this.ipc.removeAllListeners('loop-set');
 
     // run hooks
     this.plugins.forEach((p) => {
@@ -164,6 +167,11 @@ class App implements AppBase {
       const pageTitle =
         this.config.settings.pageTitle || 'Magic Circle - {title}';
       document.title = pageTitle.replace('{title}', info.title);
+    });
+
+    // Do we have a loop?
+    this.ipc.on('loop-set', (_, hasLoop: boolean) => {
+      this.hasLoop.set(hasLoop);
     });
 
     // Reconnect if needed
