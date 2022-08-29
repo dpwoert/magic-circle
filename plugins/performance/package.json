@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/performance",
-  "version": "0.1.10",
+  "version": "0.2.0",
   "description": "Magic Circle performance management",
   "keywords": [
     "controls",
@@ -33,11 +33,11 @@
     "build:prod": "NODE_ENV=production tsc"
   },
   "dependencies": {
-    "@magic-circle/state": "^0.1.10",
-    "@magic-circle/styles": "^0.1.10"
+    "@magic-circle/state": "^0.2.0",
+    "@magic-circle/styles": "^0.2.0"
   },
   "devDependencies": {
-    "@magic-circle/schema": "^0.1.10",
+    "@magic-circle/schema": "^0.2.0",
     "@types/react": "*",
     "typescript": "^4.7.3"
   },
