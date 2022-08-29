@@ -18,3 +18,4 @@ export { default as ColorControl } from './controls/color';
 export { default as BooleanControl } from './controls/boolean';
 export { default as ButtonControl } from './controls/button';
 export { default as ImageControl } from './controls/image';
+export { default as VectorControl } from './controls/vector';
