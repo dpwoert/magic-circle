@@ -65,7 +65,7 @@ export default class MagicCircle {
     this.stop = this.stop.bind(this);
 
     this.arguments = { plugins, ipc };
-    this.layer = new Layer('base');
+    this.layer = new Layer('base', true);
     this.isPlaying = false;
     this.autoPlay = false;
     this.isConnected = false;
