@@ -6,6 +6,7 @@ import TYPO from './typography';
 import SPACING from './spacing';
 import Icon, { IconName } from './Icon';
 import { ButtonSmall } from './forms';
+import { formatNumber } from './utils';
 
 export const ContainerCSS = styled.div`
   position: relative;
@@ -140,11 +141,6 @@ export const Inside = styled.div`
   flex: 1;
   padding-right: ${SPACING(1)}px;
 `;
-
-const formatNumber = (n: number, maxDigits = 5) => {
-  const digits = n.toString().split('.')[1];
-  return digits && digits.length >= 5 ? n.toFixed(maxDigits) : n.toString();
-};
 
 type ValueProps = {
   children: number;

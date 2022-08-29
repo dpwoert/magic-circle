@@ -19,4 +19,5 @@ export { default as Tooltip } from './Tooltip';
 export * as Control from './control';
 export * as Forms from './forms';
 export * as Metric from './metric';
+export * as utils from './utils';
 export * from './assets/icons/index';

@@ -2,7 +2,14 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { Control as ControlSchema, ControlProps } from '@magic-circle/schema';
-import { SPACING, COLORS, TYPO, Control, Forms } from '@magic-circle/styles';
+import {
+  SPACING,
+  COLORS,
+  TYPO,
+  Control,
+  Forms,
+  utils,
+} from '@magic-circle/styles';
 
 const InputContainer = styled.div`
   position: relative;
@@ -70,6 +77,11 @@ const mapLinear = (x, a1, a2, b1, b2): number =>
 
 const clamp = (val: number, min: number, max: number): number => {
   return Math.max(min, Math.min(max, val));
+};
+
+const nrDigits = (val: number): number => {
+  const split = String(val).split('.');
+  return split.length > 1 ? split[1].length : 0;
 };
 
 const STEP_SIZE = 25;
@@ -144,7 +156,11 @@ const NumberControlStepper = ({
       const steps = Math.floor(delta / STEP_SIZE);
       const stepSize = options.stepSize || 1;
 
-      set(drag.current.value + steps * stepSize);
+      const newValue = drag.current.value + steps * stepSize;
+      const digits = Math.max(nrDigits(stepSize), nrDigits(value));
+      const rounded = utils.formatNumber(newValue, digits);
+
+      set(+rounded);
     },
     [options, set]
   );
