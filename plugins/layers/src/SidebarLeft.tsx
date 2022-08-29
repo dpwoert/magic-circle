@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
-import { useStore } from '@magic-circle/state';
+import { useStore, usePermanentState } from '@magic-circle/state';
 import { SPACING, COLORS, TYPO, Icon, Expand } from '@magic-circle/styles';
 
 import type Layers from './index';
@@ -67,7 +67,10 @@ type LayerProps = {
 
 const Layer = ({ layers, layer, depth }: LayerProps) => {
   const selected = useStore(layers.selected);
-  const [expand, setExpand] = useState(!layer.collapse);
+  const [expand, setExpand] = usePermanentState(
+    `collapsed-${layer.path}`,
+    !layer.collapse
+  );
   const hasChildLayers =
     layer.children.filter((c) => 'children' in c && !c.folder).length > 0;
 

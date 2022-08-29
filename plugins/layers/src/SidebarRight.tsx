@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import shallowEqual from 'shallowequal';
 
 import { App, LayerExport } from '@magic-circle/schema';
-import { useStore } from '@magic-circle/state';
-import { SPACING, COLORS, TYPO } from '@magic-circle/styles';
+import { useStore, usePermanentState } from '@magic-circle/state';
+import { SPACING, COLORS, TYPO, Icon, Expand } from '@magic-circle/styles';
 
 import type Layers from './index';
 
@@ -23,10 +23,21 @@ const GroupHeader = styled.div`
   ${TYPO.title}
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 0 ${SPACING(1)}px;
   height: ${SPACING(5)}px;
   background: ${COLORS.shades.s600.css};
   border-bottom: 1px solid ${String(COLORS.shades.s400.opacity(0.5))};
+`;
+
+type ChevronProps = {
+  collapsed: boolean;
+};
+
+const Chevron = styled(Icon)<ChevronProps>`
+  transform: rotate(${(props) => (props.collapsed ? 0 : -180)}deg);
+  transition: transform 0.2s ease;
+  cursor: pointer;
 `;
 
 type ControlProps = {
@@ -84,16 +95,36 @@ type GroupProps = {
 };
 
 const Group = ({ layers, group }: GroupProps) => {
+  const [expand, setExpand] = usePermanentState(
+    `collapsed-${group.path}`,
+    !group.collapse
+  );
+  const hasChildren = group.children.length > 0;
   return (
     <GroupContainer>
-      <GroupHeader>{group.name}</GroupHeader>
-      {group.children.map((c) => {
-        if ('value' in c) {
-          return <Control key={c.path} layers={layers} controlPath={c.path} />;
-        }
+      <GroupHeader>
+        {group.name}
+        {hasChildren && (
+          <Chevron
+            name="ChevronDown"
+            width={SPACING(2)}
+            height={SPACING(2)}
+            onClick={() => setExpand(!expand)}
+            collapsed={!expand}
+          />
+        )}
+      </GroupHeader>
+      <Expand expand={expand}>
+        {group.children.map((c) => {
+          if ('value' in c) {
+            return (
+              <Control key={c.path} layers={layers} controlPath={c.path} />
+            );
+          }
 
-        return null;
-      })}
+          return null;
+        })}
+      </Expand>
     </GroupContainer>
   );
 };
