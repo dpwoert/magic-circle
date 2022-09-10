@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { Folder as FolderMC } from '@magic-circle/client';
 
 import { ClientContext, ParentContext } from './Contexts';

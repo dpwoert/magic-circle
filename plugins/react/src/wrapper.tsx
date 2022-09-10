@@ -1,7 +1,7 @@
-import React, { useContext, useState, useEffect, useRef } from 'react';
+import { useContext, useState, useEffect, useRef } from 'react';
 import { Control } from '@magic-circle/client';
 
-import { ClientContext, ParentContext } from './Contexts';
+import { ClientContext } from './Contexts';
 import useSync from './useSync';
 
 type withDefaultProps<T> = { name: string } & T;

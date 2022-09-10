@@ -3,7 +3,6 @@ import replace from '@rollup/plugin-replace';
 import typescript from '@rollup/plugin-typescript';
 import dts from 'rollup-plugin-dts';
 import path from 'path';
-import { terser } from 'rollup-plugin-terser';
 
 export default [
   {

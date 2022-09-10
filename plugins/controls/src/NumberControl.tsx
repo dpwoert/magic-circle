@@ -162,7 +162,7 @@ const NumberControlStepper = ({
 
       set(+rounded);
     },
-    [options, set]
+    [options, set, value]
   );
 
   const endDrag = useCallback(() => {

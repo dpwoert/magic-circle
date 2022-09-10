@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { MagicCircle } from '@magic-circle/client';
 
 import { ClientContext, LoopContext, ParentContext } from './Contexts';
