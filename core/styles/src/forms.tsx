@@ -4,14 +4,20 @@ import COLORS from './colors';
 import TYPO from './typography';
 import SPACING from './spacing';
 
-export const Field = styled.input`
+type FieldProps = {
+  focus?: boolean;
+};
+
+export const Field = styled.input<FieldProps>`
   ${TYPO.input}
   height: ${SPACING(2.75)}px;
   width: 100%;
   background: ${COLORS.shades.s600.css};
   color: ${COLORS.shades.s100.css};
   outline: none;
-  border: 1px solid ${String(COLORS.shades.s400.opacity(0))};
+  border: 1px solid
+    ${(props) =>
+      props.focus ? COLORS.accent.css : COLORS.shades.s400.opacity(0)};
   border-radius: 3px;
   transition: border-color 0.2s ease;
   padding: 0 ${SPACING(1)}px;
@@ -28,7 +34,8 @@ export const Field = styled.input`
   }
 
   &:focus {
-    border: 1px solid ${COLORS.shades.s400.css};
+    border: 1px solid
+      ${(props) => (props.focus ? COLORS.accent.css : COLORS.shades.s400.css)};
   }
 `;
 

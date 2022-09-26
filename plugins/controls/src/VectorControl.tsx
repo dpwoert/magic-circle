@@ -2,14 +2,7 @@ import { useCallback, useRef, useState, useMemo } from 'react';
 import styled from 'styled-components';
 
 import { Control as ControlSchema, ControlProps } from '@magic-circle/schema';
-import {
-  Control,
-  Icon,
-  SPACING,
-  COLORS,
-  TYPO,
-  Forms,
-} from '@magic-circle/styles';
+import { Control, SPACING, COLORS, TYPO, Forms } from '@magic-circle/styles';
 
 const Inside = styled(Control.Inside)`
   justify-content: space-between;
@@ -73,10 +66,6 @@ const LegendItem = styled.div<LegendItemProps>`
 const mapLinear = (x, a1, a2, b1, b2): number =>
   b1 + ((x - a1) * (b2 - b1)) / (a2 - a1);
 
-const clamp = (val: number, min: number, max: number): number => {
-  return Math.max(min, Math.min(max, val));
-};
-
 type vector = number[] | { x: number; y: number; z?: number };
 
 const vectorObject = (vector: vector) => {
@@ -113,10 +102,12 @@ const setVector = (
 };
 
 type VectorControlProps = {
-  range?: number;
+  range?: number[];
   precision?: number;
   defaultSecondaryAxis?: 'y' | 'z';
 };
+
+const DEFAULT_RANGE = [-10, 10];
 
 const VectorControlField = ({
   value,
@@ -129,8 +120,10 @@ const VectorControlField = ({
 }: ControlProps<vector, VectorControlProps>) => {
   const element = useRef(null);
   const clicked = useRef(false);
-  const [axis, setAxis] = useState<'y' | 'z'>(options.defaultSecondaryAxis);
-  const range = options.range || [-10, 10];
+  const [axis, setAxis] = useState<'y' | 'z'>(
+    options.defaultSecondaryAxis || 'y'
+  );
+  const range = options.range || DEFAULT_RANGE;
   const precision = options.precision || 2;
   const hasZero = Math.abs(range[0]) === Math.abs(range[1]);
 
@@ -145,7 +138,8 @@ const VectorControlField = ({
     // Get dimensions
     if (Array.isArray(value) && value.length > 2) {
       return 3;
-    } else if (!Array.isArray(value) && value.z) {
+    }
+    if (!Array.isArray(value) && value.z) {
       return 3;
     }
     return 2;
@@ -163,17 +157,20 @@ const VectorControlField = ({
       const newY = mapLinear(relY, 0, 1, range[1], range[0]).toFixed(precision);
 
       let newValue = setVector(value, 'x', +newX);
-      newValue = setVector(newValue, 'y', +newY);
+      newValue = setVector(newValue, axis, +newY);
 
       set(newValue);
     },
-    [range, precision]
+    [range, precision, axis, set, value]
   );
 
-  const onMouseDown = useCallback((evt: React.MouseEvent) => {
-    clicked.current = true;
-    setFromJoystick(evt);
-  }, []);
+  const onMouseDown = useCallback(
+    (evt: React.MouseEvent) => {
+      clicked.current = true;
+      setFromJoystick(evt);
+    },
+    [setFromJoystick]
+  );
 
   const onMouseUp = useCallback(() => {
     clicked.current = false;
@@ -199,22 +196,29 @@ const VectorControlField = ({
           <Inside>
             <Forms.Field
               value={val.x}
+              focus={dimensions > 2}
               onChange={(evt) => {
                 set(setVector(value, 'x', +evt.target.value));
               }}
             />
             <Forms.Field
               value={val.y}
+              focus={dimensions > 2 && axis === 'y'}
               onChange={(evt) => {
                 set(setVector(value, 'y', +evt.target.value));
               }}
+              onClick={() => setAxis('y')}
             />
-            <Forms.Field
-              value={val.z}
-              onChange={(evt) => {
-                set(setVector(value, 'z', +evt.target.value));
-              }}
-            />
+            {dimensions > 2 && (
+              <Forms.Field
+                value={val.z}
+                focus={axis === 'z'}
+                onChange={(evt) => {
+                  set(setVector(value, 'z', +evt.target.value));
+                }}
+                onClick={() => setAxis('z')}
+              />
+            )}
           </Inside>
         </>
       }

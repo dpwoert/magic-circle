@@ -170,7 +170,7 @@ const Camera = () => {
           <NumberControl
             name="y"
             value={positionY}
-            onUpdate={setPositionZ}
+            onUpdate={setPositionY}
             range={[-400, 400]}
           />
           <NumberControl
