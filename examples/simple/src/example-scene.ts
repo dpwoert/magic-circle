@@ -16,6 +16,7 @@ import {
   ColorControl,
   ButtonControl,
   BooleanControl,
+  VectorControl,
   TextControl,
 } from '@magic-circle/client';
 
@@ -68,11 +69,9 @@ export function setup(gui: MagicCircle) {
         const scaleFolder = new Folder('Scale').addTo(meshLayer);
         const materialFolder = new Folder('Material').addTo(meshLayer);
 
-        positionFolder.add([
-          new NumberControl(mesh.position, 'x').range(-200, 200),
-          new NumberControl(mesh.position, 'y').range(-200, 200),
-          new NumberControl(mesh.position, 'z').range(-200, 200),
-        ]);
+        positionFolder.add(
+          new VectorControl(mesh, 'position').range(-200, 200)
+        );
 
         scaleFolder.add([
           new NumberControl(mesh.scale, 'x').range(0, 15),
