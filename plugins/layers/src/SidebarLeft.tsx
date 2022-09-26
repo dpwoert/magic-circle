@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import { useStore, usePermanentState } from '@magic-circle/state';
-import { SPACING, COLORS, TYPO, Icon, Expand } from '@magic-circle/styles';
+import { SPACING, COLORS, TYPO, Icon } from '@magic-circle/styles';
 
 import type Layers from './index';
 
@@ -95,8 +95,8 @@ const Layer = ({ layers, layer, depth }: LayerProps) => {
           />
         )}
       </LayerRow>
-      <Expand expand={expand}>
-        {(layer.children || []).map((child) => {
+      {expand &&
+        (layer.children || []).map((child) => {
           if ('children' in child && !child.folder) {
             return (
               <Layer
@@ -110,7 +110,6 @@ const Layer = ({ layers, layer, depth }: LayerProps) => {
 
           return null;
         })}
-      </Expand>
     </div>
   );
 };

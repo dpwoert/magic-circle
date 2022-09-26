@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 
 import { Control as ControlSchema, ControlProps } from '@magic-circle/schema';
@@ -52,7 +52,21 @@ const ImageControlField = ({
   hasChanges,
   reset,
   select,
-}: ControlProps<string, never>) => {
+}: ControlProps<string | ImageBitmap, never>) => {
+  const src = useMemo<string>(() => {
+    if (typeof value === 'string') {
+      return value;
+    }
+
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    canvas.width = value.width;
+    canvas.height = value.height;
+
+    context.drawImage(value, 0, 0, value.width, value.height);
+    return canvas.toDataURL('image/png');
+  }, [value]);
+
   const upload = useCallback(async () => {
     // @ts-ignore
     const [fileHandle] = await window.showOpenFilePicker({
@@ -73,14 +87,20 @@ const ImageControlField = ({
     const arr: ArrayBuffer = await file.arrayBuffer();
     const blob = new Blob([arr], { type: fileHandle.type });
 
-    // Create base64 string
-    const reader = new FileReader();
-    reader.readAsDataURL(blob);
-    reader.onloadend = () => {
-      const base64data = reader.result;
-      set(String(base64data));
-    };
-  }, [set]);
+    if (typeof value === 'string') {
+      // Create base64 string
+      const reader = new FileReader();
+      reader.readAsDataURL(blob);
+      reader.onloadend = () => {
+        const base64data = reader.result;
+        set(String(base64data));
+      };
+    } else {
+      // Create new bitmap
+      const newBitmap = await createImageBitmap(blob);
+      set(newBitmap);
+    }
+  }, [set, value]);
 
   return (
     <Control.Large
@@ -102,7 +122,7 @@ const ImageControlField = ({
       }
     >
       <Placeholder>
-        <Image src={value} />
+        <Image src={src} />
       </Placeholder>
     </Control.Large>
   );
@@ -110,7 +130,7 @@ const ImageControlField = ({
 
 const ImageControl: ControlSchema = {
   name: 'image',
-  render: (props: ControlProps<string, never>) => {
+  render: (props: ControlProps<string | ImageBitmap, never>) => {
     return <ImageControlField {...props} />;
   },
 };

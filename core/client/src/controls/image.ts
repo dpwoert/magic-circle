@@ -1,36 +1,15 @@
 import Control from '../control';
 
-export default class ImageControl extends Control<string> {
+export default class ImageControl extends Control<string | ImageBitmap> {
   type = 'image';
 
   constructor(
-    reference: Control<string>['reference'] | HTMLImageElement | ImageBitmap,
+    reference: Control<string>['reference'] | HTMLImageElement,
     key?: string
   ) {
-    let safeKey = key;
-    let referenceSafe = reference;
-
-    if (!key && 'src' in reference) {
-      safeKey = 'src';
-    } else if (
-      !key &&
-      'close' in reference &&
-      reference.toString() === '[object ImageBitmap]'
-    ) {
-      const canvas = document.createElement('canvas');
-      const context = canvas.getContext('2d');
-      canvas.width = reference.width;
-      canvas.height = reference.height;
-
-      // @ts-expect-error
-      context.drawImage(reference, 0, 0, reference.width, reference.height);
-      const url = canvas.toDataURL('image/png');
-
-      referenceSafe = { value: url };
-      safeKey = 'value';
-    }
-
-    super(referenceSafe, safeKey);
+    // if key is not present, it must be an HTMLImageElement and we can use the 'src' key
+    const isHTMLImageElement = !key && 'src' in reference;
+    super(reference, isHTMLImageElement ? 'src' : key);
 
     if (!key) {
       this.label('Image');
