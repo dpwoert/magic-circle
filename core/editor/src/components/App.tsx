@@ -95,6 +95,7 @@ const MobileWarning = styled.div`
 
 export default function App() {
   const hooks = useStore(APP.layoutHooks);
+  const readyToConnect = useStore(APP.readyToConnect);
   const url =
     typeof APP.config.url === 'string'
       ? APP.config.url
@@ -114,7 +115,7 @@ export default function App() {
           <Frame id="frame">
             <Iframe
               allow="display-capture"
-              src={url}
+              src={readyToConnect && url}
               onLoad={() => {
                 // APP.setup();
               }}

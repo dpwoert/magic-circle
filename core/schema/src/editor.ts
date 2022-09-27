@@ -301,7 +301,8 @@ export interface Config {
   projectName?: string;
   plugins:
     | PluginConstructor[]
-    | ((defaultPlugins: PluginConstructor[]) => PluginConstructor[]);
+    | ((defaultPlugins: PluginConstructor[]) => PluginConstructor[])
+    | ((defaultPlugins: PluginConstructor[]) => Promise<PluginConstructor[]>);
   controls: Control[] | ((defaultControls: Control[]) => Control[]);
   settings: {
     pageTitle?: string;

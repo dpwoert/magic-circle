@@ -17,12 +17,20 @@ import type {
   CommandLineAction,
   CommandLineReference,
   LayoutHook,
+  PluginConstructor,
 } from '@magic-circle/schema';
 import { IpcIframe, IpcBase } from '@magic-circle/client';
 import { Store } from '@magic-circle/state';
 
 import defaultConfig from './default-config';
 import userConfig from './user-config';
+
+const getPlugins = async (
+  plugins: Config['plugins'],
+  defaultPlugins: PluginConstructor[]
+): Promise<PluginConstructor[]> => {
+  return typeof plugins === 'function' ? plugins(defaultPlugins) : plugins;
+};
 
 class App implements AppBase {
   plugins: Plugin[];
@@ -38,6 +46,7 @@ class App implements AppBase {
   pageInfo: Store<PageInfo>;
   layoutHooks: Store<layoutHooks>;
   hasLoop: Store<boolean>;
+  readyToConnect: Store<boolean>;
 
   constructor(userConf: UserConfig) {
     // merge with default config
@@ -56,6 +65,7 @@ class App implements AppBase {
     this.commandLineReference = new Store<CommandLineReference | null>(null);
     this.layoutHooks = new Store<layoutHooks>({});
     this.hasLoop = new Store<boolean>(false);
+    this.readyToConnect = new Store<boolean>(false);
 
     // Get controls
     this.controls = {};
@@ -83,14 +93,8 @@ class App implements AppBase {
     let buttons: ButtonCollections = {};
 
     // Get list of plugins
-    const defaultPlugins =
-      typeof defaultConfig.plugins === 'function'
-        ? defaultConfig.plugins([])
-        : defaultConfig.plugins;
-    const plugins =
-      typeof this.config.plugins === 'function'
-        ? this.config.plugins(defaultPlugins)
-        : this.config.plugins;
+    const defaultPlugins = await getPlugins(defaultConfig.plugins, []);
+    const plugins = await getPlugins(this.config.plugins, defaultPlugins);
 
     // Create all plugins
     plugins.forEach((P) => {
@@ -122,7 +126,13 @@ class App implements AppBase {
     this.buttons.set(buttons);
     this.sidebar.set({ ...this.sidebar.value, panels: sidebar });
 
+    this.readyToConnect.set(true);
+
+    console.log('pre connect');
+
     await this.connect();
+
+    console.log('post connect');
 
     // ready now
     this.plugins.forEach((p) => {
@@ -154,7 +164,11 @@ class App implements AppBase {
       if (p.preConnect) p.preConnect();
     });
 
+    console.log('pre ipc connect');
+
     await this.ipc.connect();
+
+    console.log('post ipc connect');
 
     // run hooks
     this.plugins.forEach((p) => {

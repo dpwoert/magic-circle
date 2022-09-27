@@ -1,5 +1,5 @@
-import PlayControls from '@magic-circle/play-controls';
-import Layers from '@magic-circle/layers';
+// import PlayControls from '@magic-circle/play-controls';
+// import Layers from '@magic-circle/layers';
 import Screenshots from '@magic-circle/screenshots';
 import Performance from '@magic-circle/performance';
 import Recordings from '@magic-circle/recordings';
@@ -16,20 +16,31 @@ import {
   VectorControl,
 } from '@magic-circle/controls';
 
-import { Config } from '@magic-circle/schema';
+import { Config, Plugin, PluginConstructor } from '@magic-circle/schema';
+
+const plugins = async () => [
+  (await import('@magic-circle/layers')).default,
+  (await import('@magic-circle/play-controls')).default,
+  (await import('@magic-circle/seed')).default,
+  (await import('@magic-circle/screenshots')).default,
+  (await import('@magic-circle/recordings')).default,
+  (await import('@magic-circle/performance')).default,
+  (await import('@magic-circle/timeline')).default,
+];
 
 const config: Config = {
   url: '',
   projectName: process.env.PROJECT_NAME,
-  plugins: [
-    Layers,
-    PlayControls,
-    Seed,
-    Screenshots,
-    Recordings,
-    Performance,
-    Timeline,
-  ],
+  // plugins: [
+  //   Layers,
+  //   PlayControls,
+  //   Seed,
+  //   Screenshots,
+  //   Recordings,
+  //   Performance,
+  //   Timeline,
+  // ],
+  plugins,
   controls: [
     TextControl,
     NumberControl,
