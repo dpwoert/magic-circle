@@ -3,6 +3,8 @@ import Control from '../control';
 export default class ImageControl extends Control<string | ImageBitmap> {
   type = 'image';
 
+  blockObjectMerge = true;
+
   constructor(
     reference: Control<string>['reference'] | HTMLImageElement,
     key?: string

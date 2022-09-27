@@ -14,6 +14,7 @@ export default class Control<T, U extends options = options> {
   initialValue: T;
   options: { label: string } & Partial<U>;
   blockHydrate?: boolean;
+  blockObjectMerge?: boolean;
   watchChanges?: boolean;
 
   private updateHooks: Set<UpdateHook<T>>;
@@ -44,7 +45,7 @@ export default class Control<T, U extends options = options> {
   set value(value: T) {
     if (value === null || value === undefined) {
       console.warn('Trying to set null or undefined value to a control');
-    } else if (typeof value === 'object') {
+    } else if (typeof value === 'object' && !this.blockObjectMerge) {
       // set objects per key, so to not destroy references
       Object.keys(value).forEach((k) => {
         this.reference[this.key][k] = value[k];
