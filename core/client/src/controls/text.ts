@@ -1,6 +1,13 @@
 import Control from '../control';
 
-export default class TextControl extends Control<string> {
+type options = {
+  selection?: {
+    keys: string[];
+    labels: string[];
+  };
+};
+
+export default class TextControl extends Control<string, options> {
   type = 'text';
 
   selection(keys: string[], labels?: string[]) {
