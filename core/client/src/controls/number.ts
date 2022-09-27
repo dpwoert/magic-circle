@@ -1,7 +1,12 @@
 import Control from '../control';
 import { lerp } from '../utils/math';
 
-export default class NumberControl extends Control<number> {
+type options = {
+  stepSize?: number;
+  range?: number[];
+};
+
+export default class NumberControl extends Control<number, options> {
   type = 'number';
 
   range(start: number, end: number) {

@@ -5,12 +5,14 @@ type Reference = Record<string, any>;
 
 type UpdateHook<T> = (newValue: T) => void;
 
-export default class Control<T> {
+type options = Record<string, unknown>;
+
+export default class Control<T, U extends options = options> {
   type: string;
   reference: Reference;
   key: string;
   initialValue: T;
-  options: Record<string, unknown>;
+  options: { label: string } & Partial<U>;
   blockHydrate?: boolean;
   watchChanges?: boolean;
 
@@ -30,7 +32,7 @@ export default class Control<T> {
 
     this.options = {
       label: key,
-    };
+    } as Control<T, U>['options'];
 
     this.setDefault();
   }

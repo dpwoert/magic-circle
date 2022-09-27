@@ -3,7 +3,13 @@ import { lerp } from '../utils/math';
 
 type vector = number[] | { x: number; y: number; z?: number };
 
-export default class VectorControl extends Control<vector> {
+type options = {
+  range?: number[];
+  precision?: number;
+  defaultSecondaryAxis?: string;
+};
+
+export default class VectorControl extends Control<vector, options> {
   dimensions: 2 | 3;
   mode: 'array' | 'object';
 

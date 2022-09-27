@@ -14,8 +14,15 @@ type color2 = {
   alpha?: number;
 };
 
+type options = {
+  range?: number;
+  rangeAlpha?: number;
+  alpha?: boolean;
+};
+
 export default class ColorControl extends Control<
-  string | number | number[] | color | color2
+  string | number | number[] | color | color2,
+  options
 > {
   type = 'color';
 
