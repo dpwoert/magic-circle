@@ -303,7 +303,10 @@ export interface Config {
     | PluginConstructor[]
     | ((defaultPlugins: PluginConstructor[]) => PluginConstructor[])
     | ((defaultPlugins: PluginConstructor[]) => Promise<PluginConstructor[]>);
-  controls: Control[] | ((defaultControls: Control[]) => Control[]);
+  controls:
+    | Control[]
+    | ((defaultControls: Control[]) => Control[])
+    | ((defaultControls: Control[]) => Promise<Control[]>);
   settings: {
     pageTitle?: string;
     screenshots?: {

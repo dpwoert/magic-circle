@@ -18,6 +18,7 @@ import type {
   CommandLineReference,
   LayoutHook,
   PluginConstructor,
+  Control,
 } from '@magic-circle/schema';
 import { IpcIframe, IpcBase } from '@magic-circle/client';
 import { Store } from '@magic-circle/state';
@@ -30,6 +31,13 @@ const getPlugins = async (
   defaultPlugins: PluginConstructor[]
 ): Promise<PluginConstructor[]> => {
   return typeof plugins === 'function' ? plugins(defaultPlugins) : plugins;
+};
+
+const getControls = async (
+  controls: Config['controls'],
+  defaultControls: Control[]
+): Promise<Control[]> => {
+  return typeof controls === 'function' ? controls(defaultControls) : controls;
 };
 
 class App implements AppBase {
@@ -69,15 +77,6 @@ class App implements AppBase {
 
     // Get controls
     this.controls = {};
-    const defaultControls = Array.isArray(defaultConfig.controls)
-      ? defaultConfig.controls
-      : [];
-    const controls = Array.isArray(this.config.controls)
-      ? this.config.controls
-      : this.config.controls(defaultControls);
-    controls.forEach((control) => {
-      this.controls[control.name] = control;
-    });
   }
 
   async setup() {
@@ -86,6 +85,13 @@ class App implements AppBase {
       await this.connect();
       return;
     }
+
+    // Create controls
+    const defaultControls = await getControls(defaultConfig.controls, []);
+    const controls = await getControls(defaultConfig.controls, defaultControls);
+    controls.forEach((control) => {
+      this.controls[control.name] = control;
+    });
 
     this.ipc.setup();
 
@@ -128,11 +134,7 @@ class App implements AppBase {
 
     this.readyToConnect.set(true);
 
-    console.log('pre connect');
-
     await this.connect();
-
-    console.log('post connect');
 
     // ready now
     this.plugins.forEach((p) => {
@@ -164,11 +166,7 @@ class App implements AppBase {
       if (p.preConnect) p.preConnect();
     });
 
-    console.log('pre ipc connect');
-
     await this.ipc.connect();
-
-    console.log('post ipc connect');
 
     // run hooks
     this.plugins.forEach((p) => {

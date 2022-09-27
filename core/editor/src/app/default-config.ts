@@ -1,22 +1,4 @@
-// import PlayControls from '@magic-circle/play-controls';
-// import Layers from '@magic-circle/layers';
-import Screenshots from '@magic-circle/screenshots';
-import Performance from '@magic-circle/performance';
-import Recordings from '@magic-circle/recordings';
-import Timeline from '@magic-circle/timeline';
-import Seed from '@magic-circle/seed';
-
-import {
-  TextControl,
-  NumberControl,
-  ColorControl,
-  ButtonControl,
-  BooleanControl,
-  ImageControl,
-  VectorControl,
-} from '@magic-circle/controls';
-
-import { Config, Plugin, PluginConstructor } from '@magic-circle/schema';
+import { Config } from '@magic-circle/schema';
 
 const plugins = async () => [
   (await import('@magic-circle/layers')).default,
@@ -28,28 +10,24 @@ const plugins = async () => [
   (await import('@magic-circle/timeline')).default,
 ];
 
+const controls = async () => {
+  const controls = await import('@magic-circle/controls');
+  return [
+    controls.TextControl,
+    controls.NumberControl,
+    controls.ColorControl,
+    controls.ButtonControl,
+    controls.BooleanControl,
+    controls.ImageControl,
+    controls.VectorControl,
+  ];
+};
+
 const config: Config = {
   url: '',
   projectName: process.env.PROJECT_NAME,
-  // plugins: [
-  //   Layers,
-  //   PlayControls,
-  //   Seed,
-  //   Screenshots,
-  //   Recordings,
-  //   Performance,
-  //   Timeline,
-  // ],
   plugins,
-  controls: [
-    TextControl,
-    NumberControl,
-    ColorControl,
-    ButtonControl,
-    BooleanControl,
-    ImageControl,
-    VectorControl,
-  ],
+  controls,
   settings: {
     screenshots: {
       directoryBasedOnFrameUrl: false,
