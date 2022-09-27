@@ -111,9 +111,12 @@ export async function setup(gui: MagicCircle) {
         ]);
 
         textureFolder.add([
-          new ImageControl(texDiffuse.image).label('Diffuse').onUpdate(() => {
-            texDiffuse.needsUpdate = true;
-          }),
+          new ImageControl(texDiffuse.source.data)
+            .label('Diffuse')
+            .onUpdate((newVal) => {
+              console.info({ newVal });
+              texDiffuse.needsUpdate = true;
+            }),
           new ImageControl(texBump.image).label('Bump').onUpdate(() => {
             texBump.needsUpdate = true;
           }),
