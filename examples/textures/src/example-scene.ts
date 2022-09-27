@@ -113,14 +113,13 @@ export async function setup(gui: MagicCircle) {
         textureFolder.add([
           new ImageControl(texDiffuse.source.data)
             .label('Diffuse')
-            .onUpdate((newVal) => {
-              console.info({ newVal });
+            .onUpdate(() => {
               texDiffuse.needsUpdate = true;
             }),
-          new ImageControl(texBump.image).label('Bump').onUpdate(() => {
+          new ImageControl(texBump.source.data).label('Bump').onUpdate(() => {
             texBump.needsUpdate = true;
           }),
-          new ImageControl(texRoughness.image)
+          new ImageControl(texRoughness.source.data)
             .label('Roughness')
             .onUpdate(() => {
               texRoughness.needsUpdate = true;
