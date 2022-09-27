@@ -25,7 +25,7 @@ export default class VectorControl extends Control<vector, options> {
       this.dimensions = 3;
     } else if (Array.isArray(this.value) && this.value.length < 3) {
       this.dimensions = 2;
-    } else if (!Array.isArray(this.value) && this.value.z) {
+    } else if (!Array.isArray(this.value) && this.value.z !== undefined) {
       this.dimensions = 3;
     } else {
       this.dimensions = 2;

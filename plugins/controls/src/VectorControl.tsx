@@ -139,7 +139,7 @@ const VectorControlField = ({
     if (Array.isArray(value) && value.length > 2) {
       return 3;
     }
-    if (!Array.isArray(value) && value.z) {
+    if (!Array.isArray(value) && value.z !== undefined) {
       return 3;
     }
     return 2;
