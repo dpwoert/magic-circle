@@ -17,12 +17,28 @@ import type {
   CommandLineAction,
   CommandLineReference,
   LayoutHook,
+  PluginConstructor,
+  Control,
 } from '@magic-circle/schema';
 import { IpcIframe, IpcBase } from '@magic-circle/client';
 import { Store } from '@magic-circle/state';
 
 import defaultConfig from './default-config';
 import userConfig from './user-config';
+
+const getPlugins = async (
+  plugins: Config['plugins'],
+  defaultPlugins: PluginConstructor[]
+): Promise<PluginConstructor[]> => {
+  return typeof plugins === 'function' ? plugins(defaultPlugins) : plugins;
+};
+
+const getControls = async (
+  controls: Config['controls'],
+  defaultControls: Control[]
+): Promise<Control[]> => {
+  return typeof controls === 'function' ? controls(defaultControls) : controls;
+};
 
 class App implements AppBase {
   plugins: Plugin[];
@@ -38,6 +54,7 @@ class App implements AppBase {
   pageInfo: Store<PageInfo>;
   layoutHooks: Store<layoutHooks>;
   hasLoop: Store<boolean>;
+  readyToConnect: Store<boolean>;
 
   constructor(userConf: UserConfig) {
     // merge with default config
@@ -56,18 +73,10 @@ class App implements AppBase {
     this.commandLineReference = new Store<CommandLineReference | null>(null);
     this.layoutHooks = new Store<layoutHooks>({});
     this.hasLoop = new Store<boolean>(false);
+    this.readyToConnect = new Store<boolean>(false);
 
     // Get controls
     this.controls = {};
-    const defaultControls = Array.isArray(defaultConfig.controls)
-      ? defaultConfig.controls
-      : [];
-    const controls = Array.isArray(this.config.controls)
-      ? this.config.controls
-      : this.config.controls(defaultControls);
-    controls.forEach((control) => {
-      this.controls[control.name] = control;
-    });
   }
 
   async setup() {
@@ -77,20 +86,21 @@ class App implements AppBase {
       return;
     }
 
+    // Create controls
+    const defaultControls = await getControls(defaultConfig.controls, []);
+    const controls = await getControls(defaultConfig.controls, defaultControls);
+    controls.forEach((control) => {
+      this.controls[control.name] = control;
+    });
+
     this.ipc.setup();
 
     const sidebar: SidebarOpts[] = [];
     let buttons: ButtonCollections = {};
 
     // Get list of plugins
-    const defaultPlugins =
-      typeof defaultConfig.plugins === 'function'
-        ? defaultConfig.plugins([])
-        : defaultConfig.plugins;
-    const plugins =
-      typeof this.config.plugins === 'function'
-        ? this.config.plugins(defaultPlugins)
-        : this.config.plugins;
+    const defaultPlugins = await getPlugins(defaultConfig.plugins, []);
+    const plugins = await getPlugins(this.config.plugins, defaultPlugins);
 
     // Create all plugins
     plugins.forEach((P) => {
@@ -121,6 +131,8 @@ class App implements AppBase {
     // store data in effects
     this.buttons.set(buttons);
     this.sidebar.set({ ...this.sidebar.value, panels: sidebar });
+
+    this.readyToConnect.set(true);
 
     await this.connect();
 

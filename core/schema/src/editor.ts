@@ -301,8 +301,12 @@ export interface Config {
   projectName?: string;
   plugins:
     | PluginConstructor[]
-    | ((defaultPlugins: PluginConstructor[]) => PluginConstructor[]);
-  controls: Control[] | ((defaultControls: Control[]) => Control[]);
+    | ((defaultPlugins: PluginConstructor[]) => PluginConstructor[])
+    | ((defaultPlugins: PluginConstructor[]) => Promise<PluginConstructor[]>);
+  controls:
+    | Control[]
+    | ((defaultControls: Control[]) => Control[])
+    | ((defaultControls: Control[]) => Promise<Control[]>);
   settings: {
     pageTitle?: string;
     screenshots?: {
