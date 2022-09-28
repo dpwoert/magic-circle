@@ -11,6 +11,8 @@ import {
   utils,
 } from '@magic-circle/styles';
 
+import { clamp, mapLinear, nrDigits } from './utils';
+
 const InputContainer = styled.div`
   position: relative;
   flex: 1;
@@ -71,18 +73,6 @@ const Value = styled(Control.Value)`
 const NumberStepper = styled(Forms.Field)`
   cursor: ns-resize;
 `;
-
-const mapLinear = (x, a1, a2, b1, b2): number =>
-  b1 + ((x - a1) * (b2 - b1)) / (a2 - a1);
-
-const clamp = (val: number, min: number, max: number): number => {
-  return Math.max(min, Math.min(max, val));
-};
-
-const nrDigits = (val: number): number => {
-  const split = String(val).split('.');
-  return split.length > 1 ? split[1].length : 0;
-};
 
 const STEP_SIZE = 25;
 

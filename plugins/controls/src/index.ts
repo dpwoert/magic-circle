@@ -5,3 +5,4 @@ export { default as ButtonControl } from './ButtonControl';
 export { default as BooleanControl } from './BooleanControl';
 export { default as ImageControl } from './ImageControl';
 export { default as VectorControl } from './VectorControl';
+export { default as RotationControl } from './RotationControl';

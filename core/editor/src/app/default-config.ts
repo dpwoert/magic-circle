@@ -20,6 +20,7 @@ const controls = async () => {
     controls.BooleanControl,
     controls.ImageControl,
     controls.VectorControl,
+    controls.RotationControl,
   ];
 };
 

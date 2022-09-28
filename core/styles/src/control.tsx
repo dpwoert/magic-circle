@@ -145,10 +145,21 @@ export const Inside = styled.div`
 type ValueProps = {
   children: number;
   maxDigits?: number;
+  suffix?: string;
 };
 
-export const Value = ({ children, maxDigits, ...props }: ValueProps) => {
-  return <div {...props}>{formatNumber(children, maxDigits)}</div>;
+export const Value = ({
+  children,
+  maxDigits,
+  suffix,
+  ...props
+}: ValueProps) => {
+  return (
+    <div {...props}>
+      {formatNumber(children, maxDigits)}
+      {suffix}
+    </div>
+  );
 };
 
 type LargeProps = ContainerProps & { header: ReactNode };
