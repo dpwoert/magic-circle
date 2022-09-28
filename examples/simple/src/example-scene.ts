@@ -17,6 +17,7 @@ import {
   ButtonControl,
   BooleanControl,
   VectorControl,
+  RotationControl,
   TextControl,
 } from '@magic-circle/client';
 
@@ -67,6 +68,7 @@ export function setup(gui: MagicCircle) {
         const meshLayer = new Layer(`Box ${i}`).addTo(sceneLayer);
         const positionFolder = new Folder('Position').addTo(meshLayer);
         const scaleFolder = new Folder('Scale').addTo(meshLayer);
+        const rotationFolder = new Folder('Rotation').addTo(meshLayer);
         const materialFolder = new Folder('Material').addTo(meshLayer);
 
         positionFolder.add(
@@ -74,9 +76,15 @@ export function setup(gui: MagicCircle) {
         );
 
         scaleFolder.add([
-          new NumberControl(mesh.scale, 'x').range(0, 15),
-          new NumberControl(mesh.scale, 'y').range(0, 15),
-          new NumberControl(mesh.scale, 'z').range(0, 15),
+          new NumberControl(mesh.scale, 'x').range(0, 3),
+          new NumberControl(mesh.scale, 'y').range(0, 3),
+          new NumberControl(mesh.scale, 'z').range(0, 3),
+        ]);
+
+        rotationFolder.add([
+          new RotationControl(mesh.rotation, 'x'),
+          new RotationControl(mesh.rotation, 'y'),
+          new RotationControl(mesh.rotation, 'z'),
         ]);
 
         materialFolder.add([
