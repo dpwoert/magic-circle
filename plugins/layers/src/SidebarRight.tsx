@@ -55,7 +55,7 @@ const Control = ({ layers, controlPath }: ControlProps) => {
 
     if (!Element) {
       throw new Error(
-        'Could not find control type, make sure to include it in the config file'
+        `Could not find control type named ${control.type}, make sure to include it in the config file`
       );
     }
 
