@@ -20,6 +20,7 @@
     "url": "https://github.com/dpwoert/magic-circle.git",
     "directory": "plugins/controls"
   },
+  "homepage": "https://magic-circle.dev",
   "files": [
     "dist/*.js",
     "dist/*.jsx",
@@ -36,8 +37,8 @@
     "build:prod": "NODE_ENV=production tsc"
   },
   "devDependencies": {
-    "@types/react": "*",
-    "typescript": "^4.7.3"
+    "@types/react": "^18.0.21",
+    "typescript": "^4.8.4"
   },
   "peerDependencies": {
     "react": "*",
