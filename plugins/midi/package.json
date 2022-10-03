@@ -16,6 +16,7 @@
     "url": "https://github.com/dpwoert/magic-circle.git",
     "directory": "plugins/midi"
   },
+  "homepage": "https://magic-circle.dev",
   "files": [
     "dist/*.js"
   ],
