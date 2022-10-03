@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/schema",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Magic Circle shares typescript schemas",
   "keywords": [
     "controls",
@@ -28,7 +28,7 @@
     "build:prod": "NODE_ENV=production tsc"
   },
   "devDependencies": {
-    "@magic-circle/client": "^0.2.1",
+    "@magic-circle/client": "^0.2.2",
     "typescript": "^4.8.4"
   },
   "peerDependencies": {
