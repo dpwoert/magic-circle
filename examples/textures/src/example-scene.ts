@@ -1,7 +1,7 @@
 import {
   PerspectiveCamera,
   Scene,
-  BoxBufferGeometry,
+  BoxGeometry,
   Mesh,
   WebGLRenderer,
   Color,
@@ -78,7 +78,7 @@ export async function setup(gui: MagicCircle) {
   for (let x = 0; x < 2; x += 1) {
     for (let y = 0; y < 2; y += 1) {
       for (let z = 0; z < 2; z += 1) {
-        const geometry = new BoxBufferGeometry(50, 50, 50);
+        const geometry = new BoxGeometry(50, 50, 50);
         const material = new MeshStandardMaterial({
           color: new Color('#ffffff'),
           map: texDiffuse,

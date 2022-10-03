@@ -38,8 +38,8 @@
   "devDependencies": {
     "@babel/core": "^7.19.3",
     "@types/jest": "^29.1.1",
-    "@typescript-eslint/eslint-plugin": "^5.38.1",
-    "@typescript-eslint/parser": "^5.38.1",
+    "@typescript-eslint/eslint-plugin": "^5.39.0",
+    "@typescript-eslint/parser": "^5.39.0",
     "babel-eslint": "^10.0.1",
     "builtin-modules": "^3.1.0",
     "depcheck": "^1.4.3",
