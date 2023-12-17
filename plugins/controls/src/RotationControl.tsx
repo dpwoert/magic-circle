@@ -33,6 +33,10 @@ const Value = styled(Control.Value)`
   height: 100%;
   width: ${SPACING(4)}px;
   text-align: right;
+
+  sup {
+    font-size: 60%;
+  }
 `;
 
 type options = {
@@ -40,6 +44,8 @@ type options = {
   range?: number[];
   stepSize?: number;
 };
+
+type DisplayMode = 'degrees' | 'radians';
 
 const RotationControlField = ({
   value,
@@ -50,6 +56,7 @@ const RotationControlField = ({
   select,
   reset,
 }: ControlProps<number, options>) => {
+  const [displayMode, setDisplayMode] = useState<DisplayMode>('degrees');
   const [moved, setMoved] = useState(0);
   const isDragging = useRef(false);
   const lastX = useRef<number>(null);
@@ -63,8 +70,14 @@ const RotationControlField = ({
     [stepSize, value]
   );
 
+  const displayDigits = displayMode === 'radians' ? 3 : 1;
+
   const degrees = useMemo(() => {
     return mode === 'degrees' ? value : value * (180 / Math.PI);
+  }, [value, mode]);
+
+  const radians = useMemo(() => {
+    return mode === 'radians' ? value : value * (Math.PI / 180);
   }, [value, mode]);
 
   const lines = useMemo(() => {
@@ -144,13 +157,20 @@ const RotationControlField = ({
                   y2={SPACING(2)}
                   stroke={COLORS.shades.s400.css}
                   strokeWidth={1}
+                  key={l}
                 />
               ))}
             </g>
           </Svg>
         </InputContainer>
-        <Value maxDigits={digits} suffix="°">
-          {degrees}
+        <Value
+          maxDigits={displayDigits}
+          suffix={displayMode === 'degrees' ? '°' : <sup>R</sup>}
+          onClick={() =>
+            setDisplayMode(displayMode === 'radians' ? 'degrees' : 'radians')
+          }
+        >
+          {displayMode === 'degrees' ? degrees : radians}
         </Value>
       </Control.Inside>
     </Control.Container>

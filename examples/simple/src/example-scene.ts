@@ -21,9 +21,9 @@ import {
   TextControl,
 } from '@magic-circle/client';
 
-let renderer;
-let scene;
-let camera;
+let renderer: WebGLRenderer;
+let scene: Scene;
+let camera: PerspectiveCamera;
 
 const animation = { x: 0.005, y: 0.01 };
 

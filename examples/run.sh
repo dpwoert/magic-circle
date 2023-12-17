@@ -4,7 +4,7 @@ if [ -z "$1" ]
 then
   echo "running example: simple"
   cd examples/simple
-  npm run start
+  npm run serve
   cd ../..
 else
   echo "running example: $1"

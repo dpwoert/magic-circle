@@ -145,7 +145,7 @@ export const Inside = styled.div`
 type ValueProps = {
   children: number;
   maxDigits?: number;
-  suffix?: string;
+  suffix?: string | ReactNode;
 };
 
 export const Value = ({
