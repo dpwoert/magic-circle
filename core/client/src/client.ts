@@ -65,7 +65,7 @@ export default class MagicCircle {
     this.stop = this.stop.bind(this);
 
     this.arguments = { plugins, ipc };
-    this.layer = new Layer('base', true);
+    this.layer = new Layer('base', this);
     this.isPlaying = false;
     this.autoPlay = false;
     this.isConnected = false;
@@ -209,7 +209,7 @@ export default class MagicCircle {
   }
 
   sync() {
-    if (this.syncRequest) {
+    if (this.syncRequest && this.setupDone) {
       clearTimeout(this.syncRequest);
     }
 

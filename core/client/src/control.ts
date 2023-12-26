@@ -16,6 +16,7 @@ export default class Control<T, U extends options = options> {
   blockHydrate?: boolean;
   blockObjectMerge?: boolean;
   watchChanges?: boolean;
+  parent?: Layer;
 
   private updateHooks: Set<UpdateHook<T>>;
 
@@ -106,8 +107,20 @@ export default class Control<T, U extends options = options> {
   }
 
   addTo(layer: Layer) {
+    if (this.parent) {
+      this.removeFromParent();
+    }
+
+    this.parent = null;
     layer.add(this);
+
     return this;
+  }
+
+  sync() {
+    if (this.parent) {
+      this.parent.getMagicInstance().sync();
+    }
   }
 
   toJSON(basePath: string, paths: Paths) {
@@ -124,7 +137,18 @@ export default class Control<T, U extends options = options> {
     };
   }
 
+  removeFromParent() {
+    if (this.parent) {
+      this.parent.remove(this);
+      this.parent = null;
+    }
+  }
+
   destroy() {
+    if (this.parent) {
+      this.removeFromParent();
+    }
+
     this.reference = null;
     this.updateHooks.clear();
   }
