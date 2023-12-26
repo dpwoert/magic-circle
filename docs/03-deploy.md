@@ -12,7 +12,7 @@ After building is completed the bundle will be available in the `magic-circle` f
 # Build to custom folder
 $ npx magic build --output "folderName"
 
-# Set a different base path
+# Set a different base path (ensure this starts with "/")
 $ npx magic build --base "/magic-circle"
 ```
 
