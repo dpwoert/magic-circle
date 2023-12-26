@@ -6,7 +6,7 @@ export type Child = Layer | Control<any>;
 
 export default class Layer {
   name: string;
-  children: Set<Child>;
+  children: Child[];
   parent?: Layer;
   magicInstance?: MagicCircle;
   folder: boolean;
@@ -15,7 +15,7 @@ export default class Layer {
 
   constructor(name: string, magicInstance?: MagicCircle) {
     this.name = name;
-    this.children = new Set<Child>();
+    this.children = [];
     this.folder = false;
     this.collapsed = false;
     this.isBaseLayer = !!magicInstance;
@@ -36,7 +36,7 @@ export default class Layer {
   traverse(fn: (child: Child, path: string) => void) {
     const path = new Paths();
 
-    const recursive = (children: Set<Child>, basePath: string) => {
+    const recursive = (children: Child[], basePath: string) => {
       children.forEach((child) => {
         const currentPath = child.getPath(basePath, path);
         fn(child, currentPath);
@@ -83,12 +83,13 @@ export default class Layer {
       child.forEach((c) => {
         this.add(c);
       });
-    } else {
-      this.children.add(child);
-    }
+    } else if (this.children.indexOf(child) === -1) {
+      // Make sure we're not duplicating
+      this.children.push(child);
 
-    // ensure we're syncing magic instance after
-    this.getMagicInstance()?.sync();
+      // ensure we're syncing magic instance after
+      this.getMagicInstance()?.sync();
+    }
 
     return this;
   }
@@ -105,11 +106,9 @@ export default class Layer {
   }
 
   remove(layer: Child | Child[]) {
-    if (Array.isArray(layer)) {
-      layer.forEach((l) => this.children.delete(l));
-    } else {
-      this.children.delete(layer);
-    }
+    this.children = this.children.filter((c) =>
+      Array.isArray(layer) ? !layer.includes(c) : c !== layer
+    );
 
     return this;
   }
@@ -133,7 +132,7 @@ export default class Layer {
       });
     }
 
-    this.children.clear();
+    this.children = [];
     this.magicInstance = undefined;
   }
 
