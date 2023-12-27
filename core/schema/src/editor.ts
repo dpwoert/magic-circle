@@ -271,7 +271,7 @@ export interface PluginConstructor {
   new (): Plugin;
 }
 
-export type ControlProps<T, K> = {
+export type ControlProps<T = unknown, K = Record<string, unknown>> = {
   value: T;
   label: string;
   options: K;
@@ -285,10 +285,10 @@ export type ControlProps<T, K> = {
   reset: () => void;
 };
 
-export type Control = {
+export type Control<T = unknown, K = Record<string, unknown>> = {
   name: string;
   supports?: (type: string, options: any) => boolean;
-  render: (props: ControlProps<any, any>) => ReactNode;
+  render: React.FunctionComponent<ControlProps<T, K>>;
 };
 
 // export enum BuildTarget {
@@ -362,7 +362,7 @@ export enum LayoutHook {
   BOTTOM = 'bottom',
 }
 
-export type layoutHooks = Record<string, ReactNode>;
+export type layoutHooks = Record<string, ReactNode | undefined>;
 
 export interface App {
   plugins: Plugin[];

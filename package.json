@@ -11,12 +11,17 @@
     "type": "git",
     "url": "https://github.com/dpwoert/magic-circle.git"
   },
+  "workspaces": [
+    "./core/*",
+    "./examples/*",
+    "./plugins/*"
+  ],
   "homepage": "https://magic-circle.dev",
   "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
   "license": "MIT",
   "scripts": {
     "prepare": "husky install",
-    "watch": "lerna run watch",
+    "watch": "lerna watch -- lerna run build:dev --scope=$LERNA_PACKAGE_NAME",
     "build:dev": "lerna run build:dev --ignore @magic-circle/example-*",
     "build:prod": "lerna run build:prod",
     "build:stats": "lerna run build:stats",

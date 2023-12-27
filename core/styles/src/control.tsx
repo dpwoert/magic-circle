@@ -80,6 +80,7 @@ type ContainerProps = {
     icon: IconName;
     onSelect: () => void;
   };
+  onClick?: () => void;
 };
 
 export const Container = ({
@@ -146,6 +147,7 @@ type ValueProps = {
   children: number;
   maxDigits?: number;
   suffix?: string | ReactNode;
+  onClick?: () => void;
 };
 
 export const Value = ({

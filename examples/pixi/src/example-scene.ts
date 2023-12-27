@@ -72,7 +72,7 @@ export function setup(gui: MagicCircle) {
     new ColorControl(app.renderer, 'backgroundColor'),
   ]);
 
-  return app.view;
+  return canvas;
 }
 
 export function loop() {

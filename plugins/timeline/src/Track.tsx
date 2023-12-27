@@ -59,7 +59,7 @@ type OptionProps = {
   disabled?: boolean;
 };
 
-const Option = styled<OptionProps>(Tooltip)`
+const Option = styled(Tooltip)<OptionProps>`
   cursor: pointer;
   opacity: ${(props) => (props.disabled ? 0.2 : 1)};
   pointer-events: ${(props) => (props.disabled ? 'none' : 'all')};

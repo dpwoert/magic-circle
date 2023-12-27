@@ -177,7 +177,7 @@ const RotationControlField = ({
   );
 };
 
-const RotationControl: ControlSchema = {
+const RotationControl: ControlSchema<number, options> = {
   name: 'rotation',
   supports: (type, options: options) => {
     if (type === 'timeline' && options.range) {
@@ -186,7 +186,7 @@ const RotationControl: ControlSchema = {
 
     return false;
   },
-  render: (props: ControlProps<number, options>) => {
+  render: (props) => {
     return <RotationControlField {...props} />;
   },
 };
