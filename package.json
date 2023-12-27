@@ -34,7 +34,7 @@
     "test:snapshot": "jest --updateSnapshot",
     "test:coverage": "jest --coverage",
     "update": "ncu",
-    "update:upgrade": "ncu --upgrade --doctor --doctorTest \"npm run test && npm run build\"",
+    "update:upgrade": "ncu --upgrade --doctor --doctorTest \"npm run test && npm run build:dev\"",
     "clean": "find . -name 'node_modules' -type d | xargs rm -rf && find . -name 'dist' -type d | xargs rm -rf && find . -name '.cache' -type d"
   },
   "devDependencies": {
