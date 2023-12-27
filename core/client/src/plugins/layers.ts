@@ -31,7 +31,7 @@ export default class PluginLayers extends Plugin {
     const controls: typeof this.cache = {};
     const watchers = {};
 
-    this.client.layer.forEachRecursive((child, path) => {
+    this.client.layer.traverse((child, path) => {
       if ('value' in child) {
         controls[path] = child;
       }
@@ -108,7 +108,7 @@ export default class PluginLayers extends Plugin {
   resetAll(sync = true) {
     const { layer } = this.client;
 
-    layer.forEachRecursive((control) => {
+    layer.traverse((control) => {
       if (control && 'value' in control && !control.blockHydrate) {
         control.reset();
       }
