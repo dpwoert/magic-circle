@@ -119,7 +119,7 @@ export default class Control<T, U extends options = options> {
 
   sync() {
     if (this.parent) {
-      this.parent.getMagicInstance().sync();
+      this.parent.getMagicInstance()?.sync();
     }
   }
 

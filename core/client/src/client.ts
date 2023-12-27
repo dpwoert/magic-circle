@@ -209,10 +209,13 @@ export default class MagicCircle {
   }
 
   sync() {
-    if (this.syncRequest && this.setupDone) {
+    if (!this.setupDone) return;
+
+    if (this.syncRequest) {
       clearTimeout(this.syncRequest);
     }
 
+    // debounce sync
     this.syncRequest = setTimeout(() => {
       this.flush();
     }, 12);

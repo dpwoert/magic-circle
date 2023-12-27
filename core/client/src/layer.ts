@@ -81,14 +81,17 @@ export default class Layer {
     if (Array.isArray(child)) {
       // Add one by one
       child.forEach((c) => {
-        this.add(c);
+        this.children.push(c);
       });
     } else if (this.children.indexOf(child) === -1) {
       // Make sure we're not duplicating
       this.children.push(child);
+    }
 
-      // ensure we're syncing magic instance after
-      this.getMagicInstance()?.sync();
+    // ensure we're syncing magic instance after
+    const mc = this.getMagicInstance();
+    if (mc) {
+      mc.sync();
     }
 
     return this;
@@ -152,9 +155,7 @@ export default class Layer {
       path,
       name: this.name,
       folder: this.folder,
-      children: Array.from(this.children).map((child) =>
-        child.toJSON(startPath, paths)
-      ),
+      children: this.children.map((child) => child.toJSON(startPath, paths)),
       collapse: this.collapsed,
     };
   }
