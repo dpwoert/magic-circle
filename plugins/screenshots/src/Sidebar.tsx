@@ -55,7 +55,9 @@ const HeaderFilter = styled.div<HeaderFilterProps>`
     props.selected
       ? COLORS.shades.s500.opacity(1)
       : COLORS.shades.s500.opacity(0)};
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
   cursor: pointer;
 `;
 

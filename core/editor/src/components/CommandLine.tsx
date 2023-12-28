@@ -84,7 +84,9 @@ const Action = styled.div<ActionProps>`
   color: ${(props) =>
     props.selected ? COLORS.white.css : COLORS.shades.s200.css};
   background: ${(props) => (props.selected ? COLORS.shades.s600.css : 'none')};
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
   flex-shrink: 0;
 
   &:before {

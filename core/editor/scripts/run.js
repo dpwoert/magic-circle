@@ -12,7 +12,8 @@ import commonjs from 'rollup-plugin-commonjs';
 import babel from 'rollup-plugin-babel';
 import json from '@rollup/plugin-json';
 
-const magicPkg = require('../package.json');
+import magicPkg from '../package.json';
+
 const argv = minimist(process.argv.slice(2));
 
 const PORT = argv.port || argv.p || 8080;
