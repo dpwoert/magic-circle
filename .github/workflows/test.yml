@@ -17,8 +17,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 21.x
+          cache: 'npm'
       - name: Setup repo
-        run: npm i --no-optional
+        run: npm ci
       - name: Linting
         run: npm run lint
       - name: Types
@@ -34,8 +35,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 21.x
+          cache: 'npm'
       - name: Setup repo
-        run: npm i --omit=optional
+        run: npm ci
       - name: Jest
         run: npm run test
   build:
@@ -47,8 +49,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 21.x
+          cache: 'npm'
       - name: Setup repo
-        run: npm i
+        run: npm ci
       - name: Build all files to check types
         run: npm run build:dev
       - name: Generate bundle stats
