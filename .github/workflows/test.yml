@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: 21.x
       - name: Setup repo
-        run: npm ci --no-optional
+        run: npm i --no-optional
       - name: Linting
         run: npm run lint
       - name: Types
@@ -35,7 +35,7 @@ jobs:
         with:
           node-version: 21.x
       - name: Setup repo
-        run: npm i
+        run: npm i --omit=optional
       - name: Jest
         run: npm run test
   build:
