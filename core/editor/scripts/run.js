@@ -1,18 +1,19 @@
 #!/usr/bin/env node
-const path = require('path');
-const fs = require('fs');
-const argv = require('minimist')(process.argv.slice(2));
-const vite = require('vite');
-const getRepoInfo = require('git-repo-info');
-const prompts = require('prompts');
+import path from 'path';
+import fs from 'fs';
+import minimist from 'minimist';
+import vite from 'vite';
+import getRepoInfo from 'git-repo-info';
+import prompts from 'prompts';
 
-const rollup = require('rollup');
-const nodeResolve = require('rollup-plugin-node-resolve');
-const commonjs = require('rollup-plugin-commonjs');
-const babel = require('rollup-plugin-babel');
-const json = require('@rollup/plugin-json');
+import rollup from 'rollup';
+import nodeResolve from 'rollup-plugin-node-resolve';
+import commonjs from 'rollup-plugin-commonjs';
+import babel from 'rollup-plugin-babel';
+import json from '@rollup/plugin-json';
 
 const magicPkg = require('../package.json');
+const argv = minimist(process.argv.slice(2));
 
 const PORT = argv.port || argv.p || 8080;
 const OUTPUT_DIR = argv.output || argv.o || 'magic-circle';
