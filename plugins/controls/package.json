@@ -58,5 +58,6 @@
       "react": "*",
       "react-dom": "*"
     }
-  }
+  },
+  "gitHead": "fb69528b2c0d5c4788de965447d9d7203caa1527"
 }
