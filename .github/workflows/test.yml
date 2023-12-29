@@ -52,7 +52,9 @@ jobs:
           cache: 'npm'
       - name: Setup repo
         run: npm ci
-      - name: Build all files to check types
+      - name: Build all files to check types (dev)
+        run: npm run build:dev
+      - name: Build all files to check types (prod)
         run: npm run build:prod
       - name: Generate bundle stats
         run: npm run build:stats
