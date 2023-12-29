@@ -2,6 +2,8 @@
   "name": "magic-circle",
   "private": true,
   "description": "Magic Circle main repo",
+  "homepage": "https://magic-circle.dev",
+  "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
   "keywords": [
     "controls",
     "creative coding",
@@ -16,8 +18,6 @@
     "./examples/*",
     "./plugins/*"
   ],
-  "homepage": "https://magic-circle.dev",
-  "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
   "license": "MIT",
   "scripts": {
     "prepare": "husky install",
@@ -29,6 +29,7 @@
     "example": "sh examples/run.sh",
     "publish:npm": "sh publish.sh",
     "publish:online": "lerna run package --scope @magic-circle/online",
+    "publish:online:serve": "npm run publish:online && lerna run serve --scope @magic-circle/online",
     "prettier": "prettier --config --write \"{core,examples,plugins,scripts}/**/*.{js,jsx,ts,tsx,json,css}\"",
     "lint": "eslint \"{core,examples,plugins,scripts}/**/*.{js,jsx,ts,tsx}\" --cache",
     "lint:types": "node scripts/unused-types",
@@ -40,6 +41,9 @@
     "update": "ncu",
     "update:upgrade": "ncu --upgrade --doctor --doctorTest \"npm run test && npm run build:dev\"",
     "clean": "find . -name 'node_modules' -type d | xargs rm -rf && find . -name 'dist' -type d | xargs rm -rf && find . -name '.cache' -type d"
+  },
+  "engines": {
+    "npm": ">=20.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.23.6",
