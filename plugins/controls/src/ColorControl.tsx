@@ -1,6 +1,6 @@
 /* eslint-disable no-bitwise */
 import rgba from 'color-rgba';
-import ColorPicker from 'rc-color-picker';
+import ColorPicker from '@rc-component/color-picker';
 import styled from 'styled-components';
 
 import { Control as ControlSchema, ControlProps } from '@magic-circle/schema';

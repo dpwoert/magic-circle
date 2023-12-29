@@ -46,7 +46,7 @@
     "@types/jest": "^29.5.11",
     "@typescript-eslint/eslint-plugin": "^6.16.0",
     "@typescript-eslint/parser": "^6.16.0",
-    "babel-eslint": "^10.0.1",
+    "@babel/eslint-parser": "^7.23.3",
     "depcheck": "^1.4.7",
     "eslint": "^8.56.0",
     "eslint-config-airbnb": "^19.0.4",
@@ -71,5 +71,8 @@
     "{core,examples,plugins,scripts}/**/*.{js,jsx,ts,tsx}": [
       "prettier --config --write"
     ]
+  },
+  "overrides": {
+    "react": "^18.2.0"
   }
 }
