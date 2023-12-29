@@ -5,7 +5,11 @@ on:
     branches:
       - main
       - develop
-      - feature/*
+  pull_request:
+    branches:
+      - main
+      - develop
+    types: [opened, reopened, synchronize]
 
 jobs:
   linting:
