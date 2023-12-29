@@ -73,6 +73,7 @@ const Control = ({ layers, controlPath }: ControlProps) => {
     }
 
     return (
+      // @ts-ignore
       <Element
         key={control.path}
         value={control.value}

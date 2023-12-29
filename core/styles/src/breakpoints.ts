@@ -22,12 +22,11 @@ export const breakpointSize = {
 
 const query =
   (size: number, direction = 'max') =>
-  (content: any, ...args: any[]) =>
-    css`
-      @media screen and (${direction}-width: ${size}px) {
-        ${css(content, ...args)}
-      }
-    `;
+  (content: any, ...args: any[]) => css`
+    @media screen and (${direction}-width: ${size}px) {
+      ${css(content, ...args)}
+    }
+  `;
 
 type breakpointGroup = Record<Breakpoint, ReturnType<typeof query>>;
 

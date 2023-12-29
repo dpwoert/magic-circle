@@ -131,7 +131,7 @@ export default function create() {
       ]);
 
       // eslint-disable-next-line
-      return regl._gl.canvas;
+      return regl._gl.canvas as HTMLCanvasElement;
     },
     loop: (delta: number) => {
       settings.offset += delta * settings.speed;

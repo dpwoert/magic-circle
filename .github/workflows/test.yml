@@ -12,13 +12,14 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
       - name: Use Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
-          node-version: 16.x
+          node-version: 21.x
+          cache: 'npm'
       - name: Setup repo
-        run: npm i
+        run: npm ci
       - name: Linting
         run: npm run lint
       - name: Types
@@ -29,28 +30,32 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
       - name: Use Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
-          node-version: 16.x
+          node-version: 21.x
+          cache: 'npm'
       - name: Setup repo
-        run: npm i
+        run: npm ci
       - name: Jest
         run: npm run test
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
       - name: Use Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
-          node-version: 16.x
+          node-version: 21.x
+          cache: 'npm'
       - name: Setup repo
-        run: npm i
-      - name: Build all files to check types
+        run: npm ci
+      - name: Build all files to check types (dev)
         run: npm run build:dev
+      - name: Build all files to check types (prod)
+        run: npm run build:prod
       - name: Generate bundle stats
         run: npm run build:stats
       - name: Upload packaged files

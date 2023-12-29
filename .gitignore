@@ -49,6 +49,9 @@ jspm_packages/
 # rollup
 .rollup.cache
 
+# nx
+.nx/
+
 # project specific
 dist
 examples/**/screenshots

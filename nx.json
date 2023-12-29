@@ -1,0 +1,49 @@
+{
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "nx/tasks-runners/default",
+      "options": {
+        "cacheableOperations": [
+          "build:dev",
+          "build:prod",
+          "build:stats",
+          "generate:list",
+          "generate:icons"
+        ]
+      }
+    }
+  },
+  "targetDefaults": {
+    "build:dev": {
+      "dependsOn": ["^build:dev"],
+      "outputs": [
+        "{projectRoot}/core/client/dist",
+        "{projectRoot}/core/editor/dist"
+      ]
+    },
+    "generate:list": {
+      "dependsOn": ["^generate:list"]
+    },
+    "generate:icons": {
+      "dependsOn": ["^generate:icons"]
+    },
+    "build:prod": {
+      "outputs": [
+        "{projectRoot}/core/client/dist",
+        "{projectRoot}/core/editor/dist"
+      ]
+    },
+    "build:stats": {
+      "outputs": [
+        "{projectRoot}/core/client/dist",
+        "{projectRoot}/core/editor/dist"
+      ]
+    },
+    "editor:": {
+      "outputs": [
+        "{projectRoot}/core/client/dist",
+        "{projectRoot}/core/editor/dist"
+      ]
+    }
+  }
+}
