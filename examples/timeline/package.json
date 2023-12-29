@@ -1,7 +1,7 @@
 {
   "name": "@magic-circle/example-timeline",
   "private": true,
-  "version": "0.2.2",
+  "version": "0.3.0-alpha.0",
   "description": "Magic Circle timeline example",
   "keywords": [
     "controls",
@@ -31,13 +31,13 @@
     "editor:dev": "magic develop"
   },
   "devDependencies": {
-    "@magic-circle/editor": "^0.2.2",
+    "@magic-circle/editor": "^0.3.0-alpha.0",
     "@types/three": "^0.160.0",
     "typescript": "^5.3.3",
     "vite": "^5.0.10"
   },
   "dependencies": {
-    "@magic-circle/client": "^0.2.2",
+    "@magic-circle/client": "^0.3.0-alpha.0",
     "three": "^0.160.0"
   }
 }

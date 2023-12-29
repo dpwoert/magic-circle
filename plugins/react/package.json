@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/react",
-  "version": "0.2.2",
+  "version": "0.3.0-alpha.0",
   "description": "Magic Circle wrapper util for React projects",
   "keywords": [],
   "repository": {
@@ -24,7 +24,7 @@
     "build:prod": "NODE_ENV=production rollup --config rollup.config.js"
   },
   "devDependencies": {
-    "@magic-circle/client": "^0.2.2",
+    "@magic-circle/client": "^0.3.0-alpha.0",
     "@rollup/plugin-replace": "^4.0.0",
     "@rollup/plugin-typescript": "8.3.3",
     "@types/react": "^18.0.21",
