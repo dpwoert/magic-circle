@@ -43,7 +43,7 @@
     "clean": "find . -name 'node_modules' -type d | xargs rm -rf && find . -name 'dist' -type d | xargs rm -rf && find . -name '.cache' -type d"
   },
   "engines": {
-    "npm": ">20.0.0"
+    "node": ">20"
   },
   "devDependencies": {
     "@babel/core": "^7.23.6",
