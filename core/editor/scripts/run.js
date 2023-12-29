@@ -1,18 +1,25 @@
 #!/usr/bin/env node
-const path = require('path');
-const fs = require('fs');
-const argv = require('minimist')(process.argv.slice(2));
-const vite = require('vite');
-const getRepoInfo = require('git-repo-info');
-const prompts = require('prompts');
+import path from 'path';
+import fs from 'fs';
+import minimist from 'minimist';
+import * as vite from 'vite';
+import getRepoInfo from 'git-repo-info';
+import prompts from 'prompts';
+import { fileURLToPath } from 'url';
 
-const rollup = require('rollup');
-const nodeResolve = require('rollup-plugin-node-resolve');
-const commonjs = require('rollup-plugin-commonjs');
-const babel = require('rollup-plugin-babel');
-const json = require('@rollup/plugin-json');
+import * as rollup from 'rollup';
+import nodeResolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+import babel from '@rollup/plugin-babel';
+import json from '@rollup/plugin-json';
+import babelPresetReact from '@babel/preset-react';
 
-const magicPkg = require('../package.json');
+// eslint-disable-next-line
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const magicPkgPath = path.join(__dirname, '../package.json');
+const magicPkgFile = fs.readFileSync(magicPkgPath).toString('utf-8');
+const magicPkg = JSON.parse(magicPkgFile);
+const argv = minimist(process.argv.slice(2));
 
 const PORT = argv.port || argv.p || 8080;
 const OUTPUT_DIR = argv.output || argv.o || 'magic-circle';
@@ -97,7 +104,7 @@ const generateConfig = async () => {
       }),
       json(),
       commonjs(),
-      babel({ presets: [require('@babel/preset-react')] }),
+      babel({ presets: [babelPresetReact] }),
     ],
   });
 

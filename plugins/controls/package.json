@@ -48,9 +48,15 @@
     "@magic-circle/schema": "^0.2.2",
     "@magic-circle/styles": "^0.2.2",
     "color-rgba": "^2.4.0",
-    "rc-color-picker": "^1.2.6"
+    "@rc-component/color-picker": "^1.4.1"
   },
   "publishConfig": {
     "access": "public"
+  },
+  "overrides": {
+    "@rc-component/color-picker": {
+      "react": "*",
+      "react-dom": "*"
+    }
   }
 }

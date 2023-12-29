@@ -667,6 +667,7 @@ class CanvasDisplay {
             key,
           });
           this.timeline.setPlayhead(point.time);
+          this.timeline.valuePopup.set(true);
           this.render();
         },
         drag: (dx, dy) => {

@@ -84,7 +84,9 @@ const Box = styled.div`
   border: 1px solid ${COLORS.accent.css};
   border-radius: 3px;
   background: ${String(COLORS.accent.opacity(0))};
-  transition: border 0.2s ease, background 0.2s ease;
+  transition:
+    border 0.2s ease,
+    background 0.2s ease;
   pointer-events: none;
 `;
 

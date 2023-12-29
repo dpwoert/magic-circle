@@ -3,8 +3,8 @@ import replace from '@rollup/plugin-replace';
 import typescript from '@rollup/plugin-typescript';
 import dts from 'rollup-plugin-dts';
 import path from 'path';
-import visualiser from 'rollup-plugin-visualizer';
-import { terser } from 'rollup-plugin-terser';
+// import { visualiser } from 'rollup-plugin-visualizer';
+import terser from '@rollup/plugin-terser';
 
 export default [
   {
@@ -22,7 +22,7 @@ export default [
         plugins: [terser()],
       },
       {
-        file: 'dist/magic-circle.cjs.js',
+        file: 'dist/magic-circle.cjs.j',
         format: 'cjs',
       },
       {
@@ -39,7 +39,7 @@ export default [
         __dirname: (id) => `'${path.dirname(id)}'`,
       }),
       typescript({ tsconfig: './tsconfig.json' }),
-      process.env.STATS && visualiser(),
+      // process.env.STATS && visualiser(),
     ],
   },
   {

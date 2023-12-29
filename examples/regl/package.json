@@ -1,5 +1,6 @@
 {
   "name": "@magic-circle/example-regl",
+  "type": "module",
   "private": true,
   "version": "0.2.2",
   "description": "Magic Circle Regl example",
@@ -30,12 +31,12 @@
   },
   "devDependencies": {
     "@magic-circle/editor": "^0.2.2",
-    "typescript": "^4.8.4",
-    "vite": "^3.1.4",
-    "vite-plugin-glsl": "^0.1.2"
+    "typescript": "^5.3.3",
+    "vite": "^5.0.10",
+    "vite-plugin-glsl": "^1.2.1"
   },
   "dependencies": {
     "@magic-circle/client": "^0.2.2",
-    "regl": "1.3.13"
+    "regl": "2.1.0"
   }
 }

@@ -13,7 +13,7 @@ svgs.forEach((p) => {
   const filename = path.basename(p);
   const component = pascal(filename.replace('.svg', ''));
   file += '\n';
-  file += `import { ReactComponent as ${component}Icon } from './${filename}';`;
+  file += `import ${component}Icon from './${filename}?react';`;
 });
 
 file += '\n';

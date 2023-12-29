@@ -34,7 +34,7 @@ export default class MagicCircle {
   };
 
   private arguments: {
-    plugins?: typeof Plugin[];
+    plugins?: (typeof Plugin)[];
     ipc?: typeof IpcBase;
   };
   private plugins: PluginBase[];
@@ -51,7 +51,7 @@ export default class MagicCircle {
   isConnected: boolean;
   setupDone: boolean;
 
-  constructor(plugins: typeof Plugin[] = [], ipc?: typeof IpcBase) {
+  constructor(plugins: (typeof Plugin)[] = [], ipc?: typeof IpcBase) {
     // setup initial hooks
     this.hooks = {
       setup: null,
@@ -65,7 +65,7 @@ export default class MagicCircle {
     this.stop = this.stop.bind(this);
 
     this.arguments = { plugins, ipc };
-    this.layer = new Layer('base', true);
+    this.layer = new Layer('base', this);
     this.isPlaying = false;
     this.autoPlay = false;
     this.isConnected = false;
@@ -209,10 +209,13 @@ export default class MagicCircle {
   }
 
   sync() {
+    if (!this.setupDone) return;
+
     if (this.syncRequest) {
       clearTimeout(this.syncRequest);
     }
 
+    // debounce sync
     this.syncRequest = setTimeout(() => {
       this.flush();
     }, 12);

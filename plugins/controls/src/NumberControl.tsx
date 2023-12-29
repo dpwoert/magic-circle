@@ -47,12 +47,12 @@ const Slider = styled.input`
   }
 `;
 
-const Progress = styled.div.attrs((props) => ({
+const Progress = styled.div.attrs<{ left: number; width: number }>((props) => ({
   style: {
     left: `${props.left}%`,
     width: `${props.width}%`,
   },
-}))`
+}))<{ left: number; width: number }>`
   position: absolute;
   top: 0;
   height: 100%;
@@ -211,7 +211,7 @@ const NumberControlStepper = ({
   );
 };
 
-const NumberControl: ControlSchema = {
+const NumberControl: ControlSchema<number, options> = {
   name: 'number',
   supports: (type, options: options) => {
     if (type === 'timeline' && options.range) {
@@ -220,7 +220,7 @@ const NumberControl: ControlSchema = {
 
     return false;
   },
-  render: (props: ControlProps<number, options>) => {
+  render: (props) => {
     const { range } = props.options;
 
     if (range) {

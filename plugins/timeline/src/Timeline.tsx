@@ -173,7 +173,9 @@ const Clock = styled.div`
   gap: ${SPACING(0.5)}px;
 
   span {
-    font-feature-settings: 'kern' 1, 'tnum' 1;
+    font-feature-settings:
+      'kern' 1,
+      'tnum' 1;
   }
 
   span:nth-child(2) {
@@ -188,9 +190,11 @@ const Buttons = styled.div`
 
 type ButtonProps = {
   active?: boolean;
+  disabled?: boolean;
+  onClick?: () => void;
 };
 
-const Button = styled<ButtonProps>(Tooltip)`
+const Button = styled(Tooltip)<ButtonProps>`
   position: relative;
   width: 26px;
   height: 26px;
@@ -336,6 +340,7 @@ const Timeline = ({ timeline }: TimelineProps) => {
                 <Clock>
                   <Buttons>
                     <Button
+                      content=""
                       onClick={() => {
                         if (playing) {
                           timeline.stop();

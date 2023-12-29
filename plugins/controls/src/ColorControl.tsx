@@ -1,6 +1,6 @@
 /* eslint-disable no-bitwise */
 import rgba from 'color-rgba';
-import ColorPicker from 'rc-color-picker';
+import ColorPicker, { Color } from '@rc-component/color-picker';
 import styled from 'styled-components';
 
 import { Control as ControlSchema, ControlProps } from '@magic-circle/schema';
@@ -97,6 +97,12 @@ const ColorControlField = ({
   }
 
   const hex = toHex(color, 255);
+  const pickerColor = new Color({
+    r: color[0],
+    g: color[1],
+    b: color[2],
+    a: alpha ? color[3] : 100,
+  });
 
   return (
     <Control.Container hasChanges={hasChanges} reset={reset}>
@@ -105,12 +111,14 @@ const ColorControlField = ({
         <GlobalStyle />
         <Forms.Color>
           <ColorPicker
-            color={hex}
-            alpha={alpha ? color[3] : 100}
+            color={pickerColor}
             onChange={(c) => {
+              const newHex = c.toHexString();
+              const newAlpha = c.getAlpha();
+
               const newColor: number[] = [
-                ...rgba(c.color),
-                c.alpha * (rangeAlpha / 100),
+                ...rgba(newHex),
+                newAlpha * (rangeAlpha / 100),
               ];
               let newColorConverted: typeof value;
 
@@ -146,8 +154,8 @@ const ColorControlField = ({
 
               set(newColorConverted);
             }}
-            placement="bottomRight"
-            enableAlpha={alpha}
+            // placement="bottomRight"
+            disabledAlpha={!alpha}
           />
           <ColorValue>{alpha ? toRgbString(color, 255, 1) : hex}</ColorValue>
         </Forms.Color>

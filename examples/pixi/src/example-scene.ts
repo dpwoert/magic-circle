@@ -27,8 +27,9 @@ export function setup(gui: MagicCircle) {
   });
 
   // Add element to DOM
+  const canvas = app.view as unknown as HTMLCanvasElement;
   const root = document.querySelector('#root');
-  root.appendChild(app.view);
+  root.appendChild(canvas);
 
   // Ensure the ticker is controlled by Magic Circle
   app.ticker.stop();
@@ -71,7 +72,7 @@ export function setup(gui: MagicCircle) {
     new ColorControl(app.renderer, 'backgroundColor'),
   ]);
 
-  return app.view;
+  return canvas;
 }
 
 export function loop() {
