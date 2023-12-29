@@ -1,6 +1,7 @@
 {
   "name": "@magic-circle/state",
   "version": "0.2.2",
+  "type": "module",
   "description": "Magic Circle state management solution for React",
   "keywords": [
     "controls",
