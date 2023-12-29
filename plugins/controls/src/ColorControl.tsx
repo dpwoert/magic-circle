@@ -154,8 +154,8 @@ const ColorControlField = ({
 
               set(newColorConverted);
             }}
-            placement="bottomRight"
-            enableAlpha={alpha}
+            // placement="bottomRight"
+            disabledAlpha={!alpha}
           />
           <ColorValue>{alpha ? toRgbString(color, 255, 1) : hex}</ColorValue>
         </Forms.Color>
