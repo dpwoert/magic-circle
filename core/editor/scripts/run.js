@@ -2,18 +2,23 @@
 import path from 'path';
 import fs from 'fs';
 import minimist from 'minimist';
-import vite from 'vite';
+import * as vite from 'vite';
 import getRepoInfo from 'git-repo-info';
 import prompts from 'prompts';
+import { fileURLToPath } from 'url';
 
-import rollup from 'rollup';
-import nodeResolve from 'rollup-plugin-node-resolve';
+import * as rollup from 'rollup';
+import nodeResolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import babel from '@rollup/plugin-babel';
 import json from '@rollup/plugin-json';
+import babelPresetReact from '@babel/preset-react';
 
-import magicPkg from '../package.json';
-
+// eslint-disable-next-line
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const magicPkgPath = path.join(__dirname, '../package.json');
+const magicPkgFile = fs.readFileSync(magicPkgPath).toString('utf-8');
+const magicPkg = JSON.parse(magicPkgFile);
 const argv = minimist(process.argv.slice(2));
 
 const PORT = argv.port || argv.p || 8080;
@@ -99,7 +104,7 @@ const generateConfig = async () => {
       }),
       json(),
       commonjs(),
-      babel({ presets: [require('@babel/preset-react')] }),
+      babel({ presets: [babelPresetReact] }),
     ],
   });
 
