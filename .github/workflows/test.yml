@@ -53,7 +53,7 @@ jobs:
       - name: Setup repo
         run: npm ci
       - name: Build all files to check types
-        run: npm run build:dev
+        run: npm run build:prod
       - name: Generate bundle stats
         run: npm run build:stats
       - name: Upload packaged files

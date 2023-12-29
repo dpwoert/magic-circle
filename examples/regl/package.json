@@ -1,5 +1,6 @@
 {
   "name": "@magic-circle/example-regl",
+  "type": "module",
   "private": true,
   "version": "0.2.2",
   "description": "Magic Circle Regl example",
