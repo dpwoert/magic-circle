@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/recordings",
-  "version": "0.3.0-0.3.0-alpha.1.0",
+  "version": "0.3.0-alpha.2",
   "description": "Magic Circle screen recordings",
   "keywords": [
     "controls",
@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@magic-circle/schema": "^0.3.0-0.3.0-alpha.1.0",
-    "@magic-circle/screenshots": "^0.3.0-0.3.0-alpha.1.0",
+    "@magic-circle/screenshots": "^0.3.0-alpha.2",
     "@magic-circle/state": "^0.3.0-0.3.0-alpha.1.0",
     "@magic-circle/styles": "^0.3.0-0.3.0-alpha.1.0",
     "@types/react": "^18.0.21",

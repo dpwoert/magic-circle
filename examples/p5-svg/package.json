@@ -1,7 +1,7 @@
 {
   "name": "@magic-circle/example-p5-svg",
   "private": true,
-  "version": "0.3.0-0.3.0-alpha.1.0",
+  "version": "0.3.0-alpha.2",
   "description": "Magic Circle P5js (svg) example",
   "keywords": [
     "controls",
@@ -29,7 +29,7 @@
     "editor": "magic"
   },
   "devDependencies": {
-    "@magic-circle/editor": "^0.3.0-0.3.0-alpha.1.0",
+    "@magic-circle/editor": "^0.3.0-alpha.2",
     "@types/p5": "^1.7.6",
     "typescript": "^5.3.3",
     "vite": "^5.0.10"
