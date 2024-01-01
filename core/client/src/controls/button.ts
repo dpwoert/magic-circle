@@ -13,6 +13,7 @@ export default class ButtonControl extends Control<() => void> {
   }
 
   setDefault(): void {
+    // @ts-ignore
     this.initialValue = undefined;
   }
 }

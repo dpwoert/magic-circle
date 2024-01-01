@@ -4,6 +4,14 @@ import Paths from './paths';
 
 export type Child = Layer | Control<any>;
 
+type JSONOutput = {
+  path: string;
+  name: string;
+  folder: boolean;
+  children: Array<JSONOutput | ReturnType<Control<any>['toJSON']>>;
+  collapse: boolean;
+};
+
 export default class Layer {
   name: string;
   children: Child[];
@@ -148,7 +156,7 @@ export default class Layer {
     return paths.get(basePath, this.name);
   }
 
-  toJSON(basePath: string, paths: Paths) {
+  toJSON(basePath: string, paths: Paths): JSONOutput {
     const path = this.getPath(basePath, paths);
     const startPath = this.isBaseLayer ? '' : path;
     return {

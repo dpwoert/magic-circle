@@ -127,7 +127,7 @@ export default class MagicCircle {
     }
 
     // Run setup hook if needed so plugins can read element
-    this.plugins.forEach((p) => {
+    (this.plugins || []).forEach((p) => {
       if (p.setup) {
         p.setup(this.element);
       }

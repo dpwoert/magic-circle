@@ -14,9 +14,13 @@ export default class PluginLayers extends Plugin {
 
     if (ipc) {
       // listen to events
+      // @ts-ignore
       ipc.on('control:set', (_, ...args) => this.set.call(this, ...args));
+      // @ts-ignore
       ipc.on('control:reset', (_, ...args) => this.reset.call(this, ...args));
+      // @ts-ignore
       ipc.on('controls:set', (_, ...args) => this.setAll.call(this, ...args));
+      // @ts-ignore
       ipc.on('controls:reset', (_, ...args) =>
         this.resetAll.call(this, ...args)
       );
@@ -33,7 +37,7 @@ export default class PluginLayers extends Plugin {
   private generateCache() {
     // Create cache of controls
     const controls: typeof this.cache = {};
-    const watchers = {};
+    const watchers: Record<string, Control<any, any>> = {};
 
     this.client.layer.traverse((child, path) => {
       if ('value' in child) {
@@ -58,7 +62,7 @@ export default class PluginLayers extends Plugin {
       this.watcher = new Watcher(this.client);
 
       // Add controls
-      watcherKeys.forEach((path) => this.watcher.add(path, watchers[path]));
+      watcherKeys.forEach((path) => this.watcher?.add(path, watchers[path]));
     }
 
     // save to cache

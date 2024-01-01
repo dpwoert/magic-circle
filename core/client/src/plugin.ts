@@ -27,6 +27,7 @@ export default class Plugin implements PluginBase {
   }
 
   destroy() {
+    // @ts-ignore
     this.client = null;
   }
 }

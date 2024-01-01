@@ -271,7 +271,7 @@ export interface PluginConstructor {
   new (): Plugin;
 }
 
-export type ControlProps<T = unknown, K = Record<string, unknown>> = {
+export type ControlProps<T = any, K = Record<string, unknown> | never> = {
   value: T;
   label: string;
   options: K;
@@ -285,7 +285,7 @@ export type ControlProps<T = unknown, K = Record<string, unknown>> = {
   reset: () => void;
 };
 
-export type Control<T = unknown, K = Record<string, unknown>> = {
+export type Control<T, K> = {
   name: string;
   supports?: (type: string, options: any) => boolean;
   render: React.FunctionComponent<ControlProps<T, K>>;
@@ -304,9 +304,9 @@ export interface Config {
     | ((defaultPlugins: PluginConstructor[]) => PluginConstructor[])
     | ((defaultPlugins: PluginConstructor[]) => Promise<PluginConstructor[]>);
   controls:
-    | Control[]
-    | ((defaultControls: Control[]) => Control[])
-    | ((defaultControls: Control[]) => Promise<Control[]>);
+    | Control<any, any>[]
+    | ((defaultControls: Control<any, any>[]) => Control<any, any>[])
+    | ((defaultControls: Control<any, any>[]) => Promise<Control<any, any>[]>);
   settings: {
     pageTitle?: string;
     screenshots?: {
@@ -366,7 +366,7 @@ export type layoutHooks = Record<string, ReactNode | undefined>;
 
 export interface App {
   plugins: Plugin[];
-  controls: Record<string, Control>;
+  controls: Record<string, Control<any, any>>;
   config: Config;
   ipc: IpcBase;
 
@@ -379,7 +379,7 @@ export interface App {
   hasLoop: Store<boolean>;
 
   getPlugin: (name: string) => Plugin | undefined;
-  getControl: (name: string) => Control | undefined;
+  getControl: (name: string) => Control<any, any> | undefined;
   getSetting: <T>(path: string, defaultValue?: T) => T;
 
   setLayoutHook: (name: LayoutHook, hook: ReactNode) => void;

@@ -115,7 +115,7 @@ export default function App() {
           <Frame id="frame">
             <Iframe
               allow="display-capture"
-              src={readyToConnect && url}
+              src={readyToConnect ? url : ''}
               onLoad={() => {
                 // APP.setup();
               }}

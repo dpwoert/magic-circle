@@ -30,7 +30,7 @@ const BooleanControlField = ({
   );
 };
 
-const BooleanControl: ControlSchema = {
+const BooleanControl: ControlSchema<boolean, never> = {
   name: 'boolean',
   supports: (type) => {
     if (type === 'timeline') {
@@ -39,7 +39,7 @@ const BooleanControl: ControlSchema = {
 
     return false;
   },
-  render: (props: ControlProps<boolean, never>) => {
+  render: (props) => {
     return <BooleanControlField {...props} />;
   },
 };
