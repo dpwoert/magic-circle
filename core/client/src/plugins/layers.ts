@@ -12,11 +12,15 @@ export default class PluginLayers extends Plugin {
   connect() {
     const { ipc } = this.client;
 
-    // listen to events
-    ipc.on('control:set', (_, ...args) => this.set.call(this, ...args));
-    ipc.on('control:reset', (_, ...args) => this.reset.call(this, ...args));
-    ipc.on('controls:set', (_, ...args) => this.setAll.call(this, ...args));
-    ipc.on('controls:reset', (_, ...args) => this.resetAll.call(this, ...args));
+    if (ipc) {
+      // listen to events
+      ipc.on('control:set', (_, ...args) => this.set.call(this, ...args));
+      ipc.on('control:reset', (_, ...args) => this.reset.call(this, ...args));
+      ipc.on('controls:set', (_, ...args) => this.setAll.call(this, ...args));
+      ipc.on('controls:reset', (_, ...args) =>
+        this.resetAll.call(this, ...args)
+      );
+    }
   }
 
   hydrate(data: Record<string, any>) {

@@ -12,7 +12,7 @@ export default class PluginScreenshot extends Plugin {
   connect() {
     const { ipc } = this.client;
 
-    if (!this.ipc) {
+    if (!ipc) {
       throw new Error('IPC not defined');
     }
 

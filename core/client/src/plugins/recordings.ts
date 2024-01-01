@@ -15,20 +15,18 @@ export default class PluginRecordings extends Plugin {
   connect() {
     const { ipc } = this.client;
 
-    if (!ipc) {
-      throw new Error('IPC not defined');
+    if (ipc) {
+      // listen to events
+      ipc.on('recordings:start', (_, options: Recording) => {
+        this.start(options);
+      });
+      ipc.on('recordings:next', () => {
+        this.next();
+      });
+      ipc.on('recordings:stop', () => {
+        this.stop();
+      });
     }
-
-    // listen to events
-    ipc.on('recordings:start', (_, options: Recording) => {
-      this.start(options);
-    });
-    ipc.on('recordings:next', () => {
-      this.next();
-    });
-    ipc.on('recordings:stop', () => {
-      this.stop();
-    });
   }
 
   async start(options: Recording) {

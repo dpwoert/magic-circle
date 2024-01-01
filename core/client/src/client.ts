@@ -37,7 +37,7 @@ export default class MagicCircle {
     plugins?: (typeof Plugin)[];
     ipc?: typeof IpcBase;
   };
-  private plugins: PluginBase[] = [];
+  private plugins?: PluginBase[];
   ipc?: IpcBase;
   layer: Layer;
 
@@ -155,7 +155,7 @@ export default class MagicCircle {
     await this.runSetupHook();
 
     // run plugins on start
-    this.plugins.forEach((p) => {
+    (this.plugins || []).forEach((p) => {
       if (p.connect) {
         p.connect();
       }
@@ -163,7 +163,7 @@ export default class MagicCircle {
 
     // Receive default values by hydrating (one reload for example)
     const hydration = await this.ipc.invoke<Record<string, any>>('hydrate');
-    this.plugins.forEach((p) => {
+    (this.plugins || []).forEach((p) => {
       if (p.hydrate && hydration) {
         p.hydrate(hydration);
       }
@@ -226,7 +226,7 @@ export default class MagicCircle {
   }
 
   flush() {
-    this.plugins.forEach((p) => {
+    (this.plugins || []).forEach((p) => {
       if (p.sync) {
         p.sync();
       }
@@ -259,7 +259,7 @@ export default class MagicCircle {
       this.ipc.send('play', true);
 
       // update plugins
-      this.plugins.forEach((p) => {
+      (this.plugins || []).forEach((p) => {
         if (p.playState) {
           p.playState(true);
         }
@@ -279,7 +279,7 @@ export default class MagicCircle {
     }
 
     // update plugins
-    this.plugins.forEach((p) => {
+    (this.plugins || []).forEach((p) => {
       if (p.playState) {
         p.playState(false);
       }
@@ -296,7 +296,7 @@ export default class MagicCircle {
     const delta = this.lastTime ? (newTime - this.lastTime) / 1000 : 0;
     this.lastTime = newTime;
 
-    this.plugins.forEach((p) => {
+    (this.plugins || []).forEach((p) => {
       if (p.startFrame) {
         p.startFrame(customDelta ?? delta);
       }
@@ -307,7 +307,7 @@ export default class MagicCircle {
       this.hooks.loop(customDelta ?? delta);
     }
 
-    this.plugins.forEach((p) => {
+    (this.plugins || []).forEach((p) => {
       if (p.endFrame) {
         p.endFrame();
       }
@@ -335,7 +335,7 @@ export default class MagicCircle {
       clearTimeout(this.syncRequest);
     }
 
-    this.plugins.forEach((p) => {
+    (this.plugins || []).forEach((p) => {
       if (p.destroy) {
         p.destroy();
       }

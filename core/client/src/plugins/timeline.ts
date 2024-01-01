@@ -89,29 +89,27 @@ export default class PLuginTimeline extends Plugin {
     // Listen to events
     const { ipc } = this.client;
 
-    if (!ipc) {
-      throw new Error('IPC not defined');
+    if (ipc) {
+      ipc.on('timeline:playhead', (_, playhead: number) => {
+        this.setPlayhead(playhead);
+        this.stop();
+      });
+      ipc.on('timeline:scene', (_, scene: Scene) => {
+        this.set(scene);
+      });
+      ipc.on('timeline:variable', (_, path: string, points: ScenePoint[]) => {
+        this.setVariable(path, points);
+      });
+      ipc.on('timeline:get-value', (_, path: string, time: number) => {
+        ipc.send('timeline:get-value', this.getValueForVariable(path, time));
+      });
+      ipc.on('timeline:play', () => {
+        this.play();
+      });
+      ipc.on('timeline:stop', () => {
+        this.stop();
+      });
     }
-
-    ipc.on('timeline:playhead', (_, playhead: number) => {
-      this.setPlayhead(playhead);
-      this.stop();
-    });
-    ipc.on('timeline:scene', (_, scene: Scene) => {
-      this.set(scene);
-    });
-    ipc.on('timeline:variable', (_, path: string, points: ScenePoint[]) => {
-      this.setVariable(path, points);
-    });
-    ipc.on('timeline:get-value', (_, path: string, time: number) => {
-      ipc.send('timeline:get-value', this.getValueForVariable(path, time));
-    });
-    ipc.on('timeline:play', () => {
-      this.play();
-    });
-    ipc.on('timeline:stop', () => {
-      this.stop();
-    });
   }
 
   hydrate(data: Hydration) {

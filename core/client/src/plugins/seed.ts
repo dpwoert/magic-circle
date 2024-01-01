@@ -12,19 +12,17 @@ export default class PluginSeed extends Plugin {
   connect() {
     const { ipc } = this.client;
 
-    if (!ipc) {
-      throw new Error('IPC not defined');
+    if (ipc) {
+      // listen to events
+      ipc.on('seed:set', (_, seed) => {
+        this.set(seed);
+        this.sync();
+      });
+      ipc.on('seed:generate', () => {
+        this.generate();
+        this.sync();
+      });
     }
-
-    // listen to events
-    ipc.on('seed:set', (_, seed) => {
-      this.set(seed);
-      this.sync();
-    });
-    ipc.on('seed:generate', () => {
-      this.generate();
-      this.sync();
-    });
   }
 
   hydrate(hydration: Record<string, any>) {

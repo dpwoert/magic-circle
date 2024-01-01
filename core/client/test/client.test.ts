@@ -8,7 +8,7 @@ describe('core/client:client', () => {
   test('Should run setup without IPC', () => {
     const setup = jest.fn();
 
-    const client = new Client();
+    const client = new Client([]);
     client.setup(setup);
 
     expect(setup.mock.calls.length).toBe(1);
