@@ -1,4 +1,4 @@
-import { Config, Control } from '@magic-circle/schema';
+import { Config } from '@magic-circle/schema';
 
 const plugins = async () => [
   (await import('@magic-circle/layers')).default,

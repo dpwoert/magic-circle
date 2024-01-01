@@ -61,14 +61,18 @@ const Control = ({ layers, controlPath }: ControlProps) => {
 
     let select;
 
-    if (setExternal && type.supports) {
+    if (setExternal && type.supports && layers.setExternal.value) {
       select = type.supports(
         layers.setExternal.value.filter,
         control.options
       ) && {
         label: layers.setExternal.value.label,
         icon: layers.setExternal.value.icon,
-        onSelect: () => layers.setExternal.value.onSelect(control.path),
+        onSelect: () => {
+          if (layers.setExternal.value) {
+            layers.setExternal.value.onSelect(control.path);
+          }
+        },
       };
     }
 
