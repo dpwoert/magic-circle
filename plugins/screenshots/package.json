@@ -38,9 +38,9 @@
     "react-json-view": "^1.21.3"
   },
   "devDependencies": {
-    "@magic-circle/schema": "^0.3.0-0.3.0-alpha.1.0",
-    "@magic-circle/state": "^0.3.0-0.3.0-alpha.1.0",
-    "@magic-circle/styles": "^0.3.0-0.3.0-alpha.1.0",
+    "@magic-circle/schema": "^0.3.0-alpha.2",
+    "@magic-circle/state": "^0.3.0-alpha.2",
+    "@magic-circle/styles": "^0.3.0-alpha.2",
     "@types/react": "^18.0.21",
     "@types/styled-components": "^5.1.26",
     "typescript": "^5.3.3"

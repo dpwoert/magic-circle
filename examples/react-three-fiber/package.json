@@ -42,8 +42,8 @@
     "vite": "^5.0.10"
   },
   "dependencies": {
-    "@magic-circle/client": "^0.3.0-0.3.0-alpha.1.0",
-    "@magic-circle/react": "^0.3.0-0.3.0-alpha.1.0",
+    "@magic-circle/client": "^0.3.0-alpha.2",
+    "@magic-circle/react": "^0.3.0-alpha.2",
     "@react-three/drei": "^9.92.7",
     "@react-three/fiber": "^8.15.12",
     "react": "^18.2.0",

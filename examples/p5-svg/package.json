@@ -35,8 +35,8 @@
     "vite": "^5.0.10"
   },
   "dependencies": {
-    "@magic-circle/client": "^0.3.0-0.3.0-alpha.1.0",
-    "@magic-circle/p5": "^0.3.0-0.3.0-alpha.1.0",
+    "@magic-circle/client": "^0.3.0-alpha.2",
+    "@magic-circle/p5": "^0.3.0-alpha.2",
     "p5": "^1.9.0",
     "p5.js-svg": "^1.5.1"
   },
