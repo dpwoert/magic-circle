@@ -93,7 +93,7 @@ enum IframeMode {
 
 export class IpcIframe extends IpcBase {
   mode: IframeMode;
-  connection: HTMLIFrameElement['contentWindow'] | Window['parent'];
+  connection?: HTMLIFrameElement['contentWindow'] | Window['parent'];
 
   constructor() {
     super();
@@ -114,7 +114,7 @@ export class IpcIframe extends IpcBase {
     } else {
       this.mode = IframeMode.PARENT;
 
-      const iframe: HTMLIFrameElement = document.querySelector(
+      const iframe: HTMLIFrameElement | null = document.querySelector(
         selector || 'iframe'
       );
 
@@ -130,7 +130,7 @@ export class IpcIframe extends IpcBase {
     window.addEventListener('message', this.receiveMessage);
   }
 
-  private receiveMessage(evt) {
+  private receiveMessage(evt: MessageEvent) {
     if (evt.data && evt.data.channel) {
       this.trigger(evt.data.channel, evt.data.payload);
     }
@@ -160,7 +160,9 @@ export class IpcIframe extends IpcBase {
   }
 
   send(channel: string, ...payload: any[]) {
-    this.connection.postMessage({ channel, payload }, '*');
+    if (this.connection) {
+      this.connection.postMessage({ channel, payload }, '*');
+    }
   }
 
   destroy() {

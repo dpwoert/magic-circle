@@ -48,13 +48,13 @@ export default class VectorControl extends Control<vector, options> {
   }
 
   interpolate(from: vector, to: vector, alpha: number) {
-    const toSafe = Array.isArray(to) ? to : [to.x, to.y, to.z];
+    const toSafe = Array.isArray(to) ? to : ([to.x, to.y, to.z] as number[]);
 
     if (Array.isArray(from)) {
       return from.map((v, i) => lerp(v, toSafe[i], alpha));
     }
 
-    if (this.dimensions === 2) {
+    if (this.dimensions === 2 || !from.z) {
       return {
         x: lerp(from.x, toSafe[0], alpha),
         y: lerp(from.y, toSafe[1], alpha),

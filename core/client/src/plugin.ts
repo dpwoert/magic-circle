@@ -18,7 +18,7 @@ export default class Plugin implements PluginBase {
 
   name = '';
 
-  constructor(client) {
+  constructor(client: Client) {
     this.client = client;
   }
 

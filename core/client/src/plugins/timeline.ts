@@ -38,15 +38,15 @@ type Hydration = {
 };
 
 export default class PLuginTimeline extends Plugin {
-  private layers: PluginLayers;
-  private scene: Scene;
+  private layers?: PluginLayers;
+  private scene?: Scene;
   private start?: {
     scene: Scene;
     play: boolean;
   };
-  private variables: Record<string, SceneVariable>;
-  playhead: number;
-  playing: boolean;
+  private variables: Record<string, SceneVariable> = {};
+  playhead: number = 0;
+  playing: boolean = false;
 
   name = 'timeline';
 
@@ -88,6 +88,11 @@ export default class PLuginTimeline extends Plugin {
   connect() {
     // Listen to events
     const { ipc } = this.client;
+
+    if (!ipc) {
+      throw new Error('IPC not defined');
+    }
+
     ipc.on('timeline:playhead', (_, playhead: number) => {
       this.setPlayhead(playhead);
       this.stop();
@@ -99,10 +104,7 @@ export default class PLuginTimeline extends Plugin {
       this.setVariable(path, points);
     });
     ipc.on('timeline:get-value', (_, path: string, time: number) => {
-      this.client.ipc.send(
-        'timeline:get-value',
-        this.getValueForVariable(path, time)
-      );
+      ipc.send('timeline:get-value', this.getValueForVariable(path, time));
     });
     ipc.on('timeline:play', () => {
       this.play();
@@ -124,6 +126,10 @@ export default class PLuginTimeline extends Plugin {
       path,
       curves: [],
     };
+
+    if (!this.scene) {
+      return;
+    }
 
     const allPoints: ScenePoint[] = [
       {
@@ -166,7 +172,7 @@ export default class PLuginTimeline extends Plugin {
     this.variables = {};
 
     Object.keys(this.scene.values).forEach((path) => {
-      this.setVariable(path, this.scene.values[path]);
+      this.setVariable(path, scene.values[path]);
     });
 
     if (this.client.ipc) {
@@ -175,6 +181,8 @@ export default class PLuginTimeline extends Plugin {
   }
 
   private getValueForVariable(variableName: string, time: number) {
+    if (!this.layers) return null;
+
     const variable = this.variables[variableName];
     const control = this.layers.get(variableName);
 
@@ -216,7 +224,7 @@ export default class PLuginTimeline extends Plugin {
     // Set variables with new values
     Object.values(this.variables).forEach((variable) => {
       const value = this.getValueForVariable(variable.path, time);
-      this.layers.set(variable.path, value);
+      this.layers?.set(variable.path, value);
 
       if (this.client.ipc) {
         this.client.ipc.send('control:set-value', variable.path, value);

@@ -3,7 +3,7 @@ import Control from '../control';
 type options = {
   selection?: {
     keys: string[];
-    labels: string[];
+    labels?: string[];
   };
 };
 

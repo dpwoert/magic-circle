@@ -37,16 +37,16 @@ export default class MagicCircle {
     plugins?: (typeof Plugin)[];
     ipc?: typeof IpcBase;
   };
-  private plugins: PluginBase[];
-  ipc: IpcBase;
+  private plugins: PluginBase[] = [];
+  ipc?: IpcBase;
   layer: Layer;
 
-  private lastTime: number;
-  private frameRequest: ReturnType<typeof requestAnimationFrame>;
-  private syncRequest: ReturnType<typeof setTimeout>;
+  private lastTime?: number;
+  private frameRequest?: ReturnType<typeof requestAnimationFrame>;
+  private syncRequest?: ReturnType<typeof setTimeout>;
   private autoPlay: boolean;
   private setupCalled: boolean;
-  element: HTMLElement;
+  element?: HTMLElement;
   isPlaying: boolean;
   isConnected: boolean;
   setupDone: boolean;
@@ -54,9 +54,9 @@ export default class MagicCircle {
   constructor(plugins: (typeof Plugin)[] = [], ipc?: typeof IpcBase) {
     // setup initial hooks
     this.hooks = {
-      setup: null,
-      loop: null,
-      resize: null,
+      setup: undefined,
+      loop: undefined,
+      resize: undefined,
     };
 
     // event binding
@@ -77,7 +77,7 @@ export default class MagicCircle {
     const Ipc = this.arguments.ipc || IpcIframe;
 
     // Create plugins and IPC
-    this.plugins = [...STANDARD_PLUGINS, ...this.arguments.plugins].map(
+    this.plugins = [...STANDARD_PLUGINS, ...(this.arguments.plugins || [])].map(
       (Plugin) => new Plugin(this)
     );
     this.ipc = new Ipc();
@@ -104,7 +104,7 @@ export default class MagicCircle {
   }
 
   private async setupWithoutIPC() {
-    this.plugins = [...STANDARD_PLUGINS, ...this.arguments.plugins].map(
+    this.plugins = [...STANDARD_PLUGINS, ...(this.arguments.plugins || [])].map(
       (Plugin) => new Plugin(this)
     );
 
@@ -135,6 +135,10 @@ export default class MagicCircle {
   }
 
   async connect() {
+    if (!this.ipc) {
+      throw new Error('IPC not defined');
+    }
+
     await this.ipc.connect();
     this.isConnected = true;
 

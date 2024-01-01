@@ -13,6 +13,6 @@ export default class ButtonControl extends Control<() => void> {
   }
 
   setDefault(): void {
-    this.initialValue = null;
+    this.initialValue = undefined;
   }
 }

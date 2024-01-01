@@ -66,7 +66,7 @@ export default class Layer {
   }
 
   getMagicInstance() {
-    let instance: MagicCircle | null = null;
+    let instance: MagicCircle | undefined;
 
     this.traverseAncestors((layer) => {
       if (layer.isBaseLayer) {
@@ -119,7 +119,7 @@ export default class Layer {
   removeFromParent() {
     if (this.parent) {
       this.parent.remove(this);
-      this.parent = null;
+      this.parent = undefined;
     }
   }
 

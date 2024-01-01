@@ -1,9 +1,8 @@
 import Plugin from '../plugin';
 
 export default class PluginSeed extends Plugin {
-  seed: number;
-
   name = 'seed';
+  seed = 0;
 
   constructor(client: Plugin['client']) {
     super(client);
@@ -12,6 +11,10 @@ export default class PluginSeed extends Plugin {
 
   connect() {
     const { ipc } = this.client;
+
+    if (!ipc) {
+      throw new Error('IPC not defined');
+    }
 
     // listen to events
     ipc.on('seed:set', (_, seed) => {
