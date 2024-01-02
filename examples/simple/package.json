@@ -2,6 +2,7 @@
   "name": "@magic-circle/example-simple",
   "private": true,
   "version": "0.3.0-alpha.2",
+  "type": "module",
   "description": "Magic Circle simple example",
   "keywords": [
     "controls",
