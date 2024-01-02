@@ -1,13 +1,9 @@
-import { Plugin, App } from '@magic-circle/schema';
+import { Plugin } from '@magic-circle/schema';
 
-export default class Midi implements Plugin {
-  ipc: App['ipc'];
-  client: App;
-
+export default class Midi extends Plugin {
   name = 'midi';
 
-  async setup(client: App) {
-    this.ipc = client.ipc;
-    this.client = client;
+  async setup() {
+    // todo
   }
 }

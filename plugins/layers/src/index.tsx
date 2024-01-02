@@ -1,7 +1,6 @@
 import {
   Plugin,
   icons,
-  App,
   MainLayerExport,
   LayerExport,
   LayoutHook,
@@ -65,31 +64,17 @@ export type ExternalQuery = {
   onSelect: (path: string) => void;
 };
 
-export default class Layers implements Plugin {
-  ipc: App['ipc'];
-  client: App;
-
-  layers: Store<MainLayerExport>;
-  flat: Store<FlatListItem[]>;
-  lookup: StoreFamily<LayerExport | ControlExport>;
-  selected: Store<string>;
-  external: Store<Record<string, string[]>>;
-  setExternal: Store<ExternalQuery | null>;
+export default class Layers extends Plugin {
+  layers = new Store<MainLayerExport>([]);
+  flat = new Store<FlatListItem[]>([]);
+  lookup = new StoreFamily<LayerExport | ControlExport>();
+  selected = new Store<string | null>(null);
+  external = new Store<Record<string, string[]>>({});
+  setExternal = new Store<ExternalQuery | null>(null);
 
   name = 'layers';
 
-  async setup(client: App) {
-    this.ipc = client.ipc;
-    this.client = client;
-
-    // Create stores
-    this.layers = new Store<MainLayerExport>([]);
-    this.flat = new Store<FlatListItem[]>([]);
-    this.selected = new Store<string>(null);
-    this.lookup = new StoreFamily<LayerExport | ControlExport>();
-    this.external = new Store({});
-    this.setExternal = new Store(null);
-
+  async setup() {
     this.ipc.on('layers', (_, layers: MainLayerExport) => {
       const { flat, lookup } = convert(layers);
       this.layers.set(layers);
@@ -102,9 +87,9 @@ export default class Layers implements Plugin {
     });
 
     // Set controls sidebar
-    this.client.setLayoutHook(
+    this.app.setLayoutHook(
       LayoutHook.SIDEBAR_RIGHT,
-      <SidebarRight app={this.client} layers={this} />
+      <SidebarRight app={this.app} layers={this} />
     );
   }
 
@@ -131,7 +116,7 @@ export default class Layers implements Plugin {
   }
 
   async save() {
-    const toSave = {};
+    const toSave: Record<string, any> = {};
 
     this.lookup.export((key, value) => {
       if (value && 'value' in value && value.value) {
@@ -181,10 +166,10 @@ export default class Layers implements Plugin {
   }
 
   getControlRenderer(type: string) {
-    return this.client.controls[type]?.render;
+    return this.app.controls[type]?.render;
   }
 
   getControl(type: string) {
-    return this.client.controls[type];
+    return this.app.controls[type];
   }
 }

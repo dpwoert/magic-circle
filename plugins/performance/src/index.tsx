@@ -1,4 +1,4 @@
-import { Plugin, icons, App } from '@magic-circle/schema';
+import { Plugin, icons } from '@magic-circle/schema';
 import { Store } from '@magic-circle/state';
 import { registerIcon, TrendingUp } from '@magic-circle/styles';
 import Sidebar from './Sidebar';
@@ -29,35 +29,24 @@ const updateTick = (store: number[], value: number) => {
   return newStore;
 };
 
-export default class Performance implements Plugin {
-  ipc: App['ipc'];
-  client: App;
-
+export default class Performance extends Plugin {
   name = 'performance';
 
-  fps: Store<number[]>;
-  renderTime: Store<number[]>;
-  memory: Store<number>;
-  loadTimes: Store<loadTimes>;
+  loadTimes = new Store<loadTimes>({});
+  fps = new Store<number[]>([]);
+  memory = new Store<number>(0);
+  renderTime = new Store<number[]>([]);
 
-  async setup(client: App) {
-    this.ipc = client.ipc;
-    this.client = client;
-
-    this.loadTimes = new Store<loadTimes>({});
-    this.fps = new Store<number[]>([]);
-    this.memory = new Store<number>(0);
-    this.renderTime = new Store<number[]>([]);
-
+  async setup() {
     this.ipc.on('performance:loading', (_, metrics: loadTimes) => {
       this.loadTimes.set(metrics);
     });
     this.ipc.on('performance:fps', (_, metrics: fps) => {
-      this.fps.set(updateTick(this.fps.value, metrics.fps));
+      this.fps.set(updateTick(this.fps.value, metrics.fps || 0));
       this.renderTime.set(
-        updateTick(this.renderTime.value, metrics.renderTime)
+        updateTick(this.renderTime.value, metrics.renderTime || 0)
       );
-      this.memory.set(metrics.memory);
+      this.memory.set(metrics.memory || 0);
     });
   }
 
@@ -89,7 +78,7 @@ export default class Performance implements Plugin {
   async reset() {
     this.loadTimes.set({});
     this.fps.set([]);
-    this.memory.set(null);
+    this.memory.set(0);
     this.renderTime.set([]);
   }
 }

@@ -33,8 +33,11 @@ const Sidebar = ({ performance }: SidebarProps) => {
   useEffect(() => {
     const setSize = () => {
       const frame = document.querySelector('#frame');
-      setWidth(frame.clientWidth);
-      setHeight(frame.clientHeight);
+
+      if (frame) {
+        setWidth(frame.clientWidth);
+        setHeight(frame.clientHeight);
+      }
     };
 
     setSize();
@@ -69,18 +72,26 @@ const Sidebar = ({ performance }: SidebarProps) => {
       </Metric.Container>
       <Metric.Container>
         First paint
-        <Metric.Value>{displayMetric(loadTimes.firstPaint, 'ms')}</Metric.Value>
+        <Metric.Value>
+          {loadTimes.firstPaint
+            ? displayMetric(loadTimes.firstPaint, 'ms')
+            : '?'}
+        </Metric.Value>
       </Metric.Container>
       <Metric.Container>
         First contentful paint
         <Metric.Value>
-          {displayMetric(loadTimes.firstContentfulPaint, 'ms')}
+          {loadTimes.firstContentfulPaint
+            ? displayMetric(loadTimes.firstContentfulPaint, 'ms')
+            : '?'}
         </Metric.Value>
       </Metric.Container>
       <Metric.Container>
         Load time
         <Metric.Value>
-          {displayMetric(loadTimes.loadingTime, 'ms')}
+          {loadTimes.loadingTime
+            ? displayMetric(loadTimes.loadingTime || 0, 'ms')
+            : '?'}
         </Metric.Value>
       </Metric.Container>
       <Metric.Container>

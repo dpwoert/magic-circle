@@ -5,7 +5,7 @@ import deepMerge from 'deepmerge';
 
 import type {
   App as AppBase,
-  Plugin,
+  PluginBase,
   Config,
   UserConfig,
   ButtonCollections,
@@ -41,7 +41,7 @@ const getControls = async (
 };
 
 class App implements AppBase {
-  plugins: Plugin[];
+  plugins: PluginBase[];
   controls: AppBase['controls'];
   config: Config;
   ipc: IpcBase;
@@ -103,15 +103,15 @@ class App implements AppBase {
     const plugins = await getPlugins(this.config.plugins, defaultPlugins);
 
     // Create all plugins
-    plugins.forEach((P) => {
-      const plugin = new P();
+    plugins.forEach((Plugin) => {
+      const plugin = new Plugin(this as unknown as AppBase);
       this.plugins.push(plugin);
     });
 
     // Load all plugins
     await Promise.all(
       this.plugins.map(async (plugin) => {
-        await plugin.setup(this);
+        await plugin.setup(this as unknown as AppBase);
 
         // load plugins
         this.plugins.push(plugin);

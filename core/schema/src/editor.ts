@@ -251,7 +251,7 @@ export type CommandLineAction = {
   onSelect: (action: CommandLineAction) => Promise<void | CommandLineScreen>;
 };
 
-export interface Plugin {
+export interface PluginBase {
   name: string;
   setup: (app: App) => Promise<void>;
   connect?: () => void;
@@ -268,7 +268,24 @@ export interface Plugin {
 }
 
 export interface PluginConstructor {
-  new (): Plugin;
+  new (app: App): PluginBase;
+}
+
+export class Plugin implements PluginBase {
+  app: App;
+  ipc: App['ipc'];
+
+  name = 'Base plugin';
+
+  constructor(app: App) {
+    this.app = app;
+    this.ipc = app.ipc;
+  }
+
+  // eslint-disable-next-line
+  async setup(app: App) {
+    console.error('this needs to be implemented');
+  }
 }
 
 export type ControlProps<T = any, K = Record<string, unknown> | never> = {
@@ -300,7 +317,7 @@ export interface Config {
   url: string | ((dev: boolean) => string);
   projectName?: string;
   plugins:
-    | PluginConstructor[]
+    | (typeof Plugin)[]
     | ((defaultPlugins: PluginConstructor[]) => PluginConstructor[])
     | ((defaultPlugins: PluginConstructor[]) => Promise<PluginConstructor[]>);
   controls:
@@ -365,7 +382,7 @@ export enum LayoutHook {
 export type layoutHooks = Record<string, ReactNode | undefined>;
 
 export interface App {
-  plugins: Plugin[];
+  plugins: PluginBase[];
   controls: Record<string, Control<any, any>>;
   config: Config;
   ipc: IpcBase;
@@ -378,7 +395,7 @@ export interface App {
   commandLineReference: Store<CommandLineReference | null>;
   hasLoop: Store<boolean>;
 
-  getPlugin: (name: string) => Plugin | undefined;
+  getPlugin: (name: string) => PluginBase | undefined;
   getControl: (name: string) => Control<any, any> | undefined;
   getSetting: <T>(path: string, defaultValue?: T) => T;
 
