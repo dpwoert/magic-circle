@@ -63,8 +63,13 @@ const LegendItem = styled.div<LegendItemProps>`
   white-space: nowrap;
 `;
 
-const mapLinear = (x, a1, a2, b1, b2): number =>
-  b1 + ((x - a1) * (b2 - b1)) / (a2 - a1);
+const mapLinear = (
+  x: number,
+  a1: number,
+  a2: number,
+  b1: number,
+  b2: number
+): number => b1 + ((x - a1) * (b2 - b1)) / (a2 - a1);
 
 type vector = number[] | { x: number; y: number; z?: number };
 
@@ -118,7 +123,7 @@ const VectorControlField = ({
   reset,
   select,
 }: ControlProps<vector, VectorControlProps>) => {
-  const element = useRef(null);
+  const element = useRef<SVGSVGElement>(null);
   const clicked = useRef(false);
   const [axis, setAxis] = useState<'y' | 'z'>(
     options.defaultSecondaryAxis || 'y'
@@ -131,7 +136,7 @@ const VectorControlField = ({
 
   const position = [
     mapLinear(val.x, range[0], range[1], 0, 100),
-    mapLinear(val[axis], range[1], range[0], 0, 100),
+    mapLinear(val[axis] || 0, range[1], range[0], 0, 100),
   ];
 
   const dimensions = useMemo(() => {
@@ -147,19 +152,25 @@ const VectorControlField = ({
 
   const setFromJoystick = useCallback(
     (evt: React.MouseEvent) => {
-      const box = element.current.getBoundingClientRect();
+      if (element.current) {
+        const box = element.current.getBoundingClientRect();
 
-      const x = evt.clientX - box.x;
-      const y = evt.clientY - box.y;
-      const relX = x / box.width;
-      const relY = y / box.height;
-      const newX = mapLinear(relX, 0, 1, range[0], range[1]).toFixed(precision);
-      const newY = mapLinear(relY, 0, 1, range[1], range[0]).toFixed(precision);
+        const x = evt.clientX - box.x;
+        const y = evt.clientY - box.y;
+        const relX = x / box.width;
+        const relY = y / box.height;
+        const newX = mapLinear(relX, 0, 1, range[0], range[1]).toFixed(
+          precision
+        );
+        const newY = mapLinear(relY, 0, 1, range[1], range[0]).toFixed(
+          precision
+        );
 
-      let newValue = setVector(value, 'x', +newX);
-      newValue = setVector(newValue, axis, +newY);
+        let newValue = setVector(value, 'x', +newX);
+        newValue = setVector(newValue, axis, +newY);
 
-      set(newValue);
+        set(newValue);
+      }
     },
     [range, precision, axis, set, value]
   );
@@ -278,9 +289,9 @@ const VectorControlField = ({
   );
 };
 
-const VectorControl: ControlSchema = {
+const VectorControl: ControlSchema<vector, VectorControlProps> = {
   name: 'vector',
-  render: (props: ControlProps<vector, VectorControlProps>) => {
+  render: (props) => {
     return <VectorControlField {...props} />;
   },
 };

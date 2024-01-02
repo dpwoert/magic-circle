@@ -56,7 +56,7 @@ const ImageControlField = ({
   hasChanges,
   reset,
   select,
-}: ControlProps<string | ImageBitmap, never>) => {
+}: ControlProps<string | ImageBitmap, Record<string, never>>) => {
   const src = useMemo<string>(() => {
     if (typeof value === 'string') {
       return value;
@@ -67,7 +67,7 @@ const ImageControlField = ({
     canvas.width = value.width;
     canvas.height = value.height;
 
-    context.drawImage(value, 0, 0, value.width, value.height);
+    if (context) context.drawImage(value, 0, 0, value.width, value.height);
     return canvas.toDataURL('image/png');
   }, [value]);
 
@@ -132,9 +132,12 @@ const ImageControlField = ({
   );
 };
 
-const ImageControl: ControlSchema = {
+const ImageControl: ControlSchema<
+  string | ImageBitmap,
+  Record<string, never>
+> = {
   name: 'image',
-  render: (props: ControlProps<string | ImageBitmap, never>) => {
+  render: (props) => {
     return <ImageControlField {...props} />;
   },
 };

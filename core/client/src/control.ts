@@ -8,7 +8,7 @@ type UpdateHook<T> = (newValue: T) => void;
 type options = Record<string, unknown>;
 
 export default class Control<T, U extends options = options> {
-  type: string;
+  type: string = 'unknown';
   reference: Reference;
   key: string;
   initialValue: T;
@@ -36,6 +36,7 @@ export default class Control<T, U extends options = options> {
       label: key,
     } as Control<T, U>['options'];
 
+    this.initialValue = this.reference[key];
     this.setDefault();
   }
 
@@ -49,7 +50,7 @@ export default class Control<T, U extends options = options> {
     } else if (typeof value === 'object' && !this.blockObjectMerge) {
       // set objects per key, so to not destroy references
       Object.keys(value).forEach((k) => {
-        this.reference[this.key][k] = value[k];
+        this.reference[this.key][k] = value[k as keyof typeof value];
       });
     } else {
       this.reference[this.key] = value;
@@ -69,22 +70,31 @@ export default class Control<T, U extends options = options> {
   }
 
   setDefault() {
+    let newValue:
+      | T
+      | Array<unknown>
+      | Record<string, unknown>
+      | undefined
+      | null;
+
     if (this.value === undefined) {
-      this.initialValue = undefined;
+      newValue = undefined;
     } else if (this.value === null) {
-      this.initialValue = null;
+      newValue = null;
     } else if (Array.isArray(this.value)) {
-      // @ts-ignore
-      this.initialValue = [...this.value];
+      newValue = [...this.value];
     } else if (typeof this.value === 'object') {
-      // @ts-ignore
-      this.initialValue = {};
+      newValue = {};
       Object.keys(this.value).forEach((k) => {
-        this.initialValue[k] = this.value[k];
+        // @ts-ignore
+        newValue[k] = this.value[k];
       });
     } else {
-      this.initialValue = this.value;
+      newValue = this.value;
     }
+
+    // @ts-ignore
+    this.initialValue = newValue;
   }
 
   getPath(basePath: string, paths: Paths) {
@@ -111,7 +121,7 @@ export default class Control<T, U extends options = options> {
       this.removeFromParent();
     }
 
-    this.parent = null;
+    this.parent = undefined;
     layer.add(this);
 
     return this;
@@ -140,7 +150,7 @@ export default class Control<T, U extends options = options> {
   removeFromParent() {
     if (this.parent) {
       this.parent.remove(this);
-      this.parent = null;
+      this.parent = undefined;
     }
   }
 
@@ -149,7 +159,8 @@ export default class Control<T, U extends options = options> {
       this.removeFromParent();
     }
 
-    this.reference = null;
+    // @ts-ignore
+    this.reference = undefined;
     this.updateHooks.clear();
   }
 }

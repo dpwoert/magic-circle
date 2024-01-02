@@ -61,15 +61,18 @@ const Control = ({ layers, controlPath }: ControlProps) => {
 
     let select;
 
-    if (setExternal && type.supports) {
-      select = type.supports(
-        layers.setExternal.value.filter,
-        control.options
-      ) && {
-        label: layers.setExternal.value.label,
-        icon: layers.setExternal.value.icon,
-        onSelect: () => layers.setExternal.value.onSelect(control.path),
-      };
+    if (setExternal && type.supports && layers.setExternal.value) {
+      select = type.supports(layers.setExternal.value.filter, control.options)
+        ? {
+            label: layers.setExternal.value.label,
+            icon: layers.setExternal.value.icon,
+            onSelect: () => {
+              if (layers.setExternal.value) {
+                layers.setExternal.value.onSelect(control.path);
+              }
+            },
+          }
+        : undefined;
     }
 
     return (
@@ -137,7 +140,7 @@ type SidebarProps = {
 
 const SidebarRight = ({ layers }: SidebarProps) => {
   const selected = useStore(layers.selected);
-  const layer = useStore(layers.lookup.get(selected));
+  const layer = useStore(layers.lookup.get(selected || ''));
 
   if (layer && 'children' in layer) {
     return (

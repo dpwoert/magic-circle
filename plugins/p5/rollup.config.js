@@ -37,7 +37,7 @@ export default [
         ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
         __dirname: (id) => `'${path.dirname(id)}'`,
       }),
-      typescript({ tsconfig: './tsconfig.json' }),
+      typescript({ tsconfig: './tsconfig.json', noEmitOnError: true }),
     ],
   },
   {

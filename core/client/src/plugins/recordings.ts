@@ -15,16 +15,18 @@ export default class PluginRecordings extends Plugin {
   connect() {
     const { ipc } = this.client;
 
-    // listen to events
-    ipc.on('recordings:start', (_, options: Recording) => {
-      this.start(options);
-    });
-    ipc.on('recordings:next', () => {
-      this.next();
-    });
-    ipc.on('recordings:stop', () => {
-      this.stop();
-    });
+    if (ipc) {
+      // listen to events
+      ipc.on('recordings:start', (_, options: Recording) => {
+        this.start(options);
+      });
+      ipc.on('recordings:next', () => {
+        this.next();
+      });
+      ipc.on('recordings:stop', () => {
+        this.stop();
+      });
+    }
   }
 
   async start(options: Recording) {
@@ -39,7 +41,7 @@ export default class PluginRecordings extends Plugin {
 
     if (resizeFn) {
       resizeFn(options.width, options.height, this.client.element);
-    } else {
+    } else if (this.client.element) {
       this.client.element.style.position = `fixed`;
       this.client.element.style.height = `${options.height}px`;
       this.client.element.style.width = `${options.width}px`;
@@ -53,7 +55,7 @@ export default class PluginRecordings extends Plugin {
 
   async next() {
     // Get next frame
-    const delta = this.options.fps / 1000;
+    const delta = (this.options?.fps || 60) / 1000;
     this.client.step(delta);
 
     const plugin = this.client.plugin('screenshot') as PluginScreenshot;
@@ -64,7 +66,10 @@ export default class PluginRecordings extends Plugin {
 
     // Get and send
     const screenshot = await plugin.screenshot();
-    this.client.ipc.send('recordings:save', screenshot);
+
+    if (this.client.ipc) {
+      this.client.ipc.send('recordings:save', screenshot);
+    }
   }
 
   stop() {

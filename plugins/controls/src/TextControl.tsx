@@ -63,7 +63,7 @@ const TextControlField = ({
   );
 };
 
-const TextControl: ControlSchema = {
+const TextControl: ControlSchema<string, options> = {
   name: 'text',
   supports: (type) => {
     if (type === 'timeline') {
@@ -72,7 +72,7 @@ const TextControl: ControlSchema = {
 
     return false;
   },
-  render: (props: ControlProps<string, options>) => {
+  render: (props) => {
     const { selection } = props.options;
 
     if (selection) {

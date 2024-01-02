@@ -6,8 +6,8 @@ import type { MagicCircle } from '@magic-circle/client';
 
 import draw from './draw';
 
-export default function createSketch(magicCircle: MagicCircle, p5?: P5) {
-  p5 = p5 || globalThis.p5;
+export default function createSketch(magicCircle: MagicCircle, customP5?: P5) {
+  const p5 = (customP5 || globalThis.p5) as any;
 
   const global = (preload?: () => void) => {
     globalThis.preload = () => {

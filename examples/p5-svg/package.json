@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.3.0-alpha.2",
   "description": "Magic Circle P5js (svg) example",
+  "type": "module",
   "keywords": [
     "controls",
     "creative coding",

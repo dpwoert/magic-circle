@@ -18,7 +18,7 @@ export default class Plugin implements PluginBase {
 
   name = '';
 
-  constructor(client) {
+  constructor(client: Client) {
     this.client = client;
   }
 
@@ -27,6 +27,7 @@ export default class Plugin implements PluginBase {
   }
 
   destroy() {
+    // @ts-ignore
     this.client = null;
   }
 }

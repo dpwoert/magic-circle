@@ -5,7 +5,7 @@ import deepMerge from 'deepmerge';
 
 import type {
   App as AppBase,
-  Plugin,
+  PluginBase,
   Config,
   UserConfig,
   ButtonCollections,
@@ -35,13 +35,13 @@ const getPlugins = async (
 
 const getControls = async (
   controls: Config['controls'],
-  defaultControls: Control[]
-): Promise<Control[]> => {
+  defaultControls: Control<any, any>[]
+): Promise<Control<any, any>[]> => {
   return typeof controls === 'function' ? controls(defaultControls) : controls;
 };
 
 class App implements AppBase {
-  plugins: Plugin[];
+  plugins: PluginBase[];
   controls: AppBase['controls'];
   config: Config;
   ipc: IpcBase;
@@ -103,15 +103,15 @@ class App implements AppBase {
     const plugins = await getPlugins(this.config.plugins, defaultPlugins);
 
     // Create all plugins
-    plugins.forEach((P) => {
-      const plugin = new P();
+    plugins.forEach((Plugin) => {
+      const plugin = new Plugin(this as unknown as AppBase);
       this.plugins.push(plugin);
     });
 
     // Load all plugins
     await Promise.all(
       this.plugins.map(async (plugin) => {
-        await plugin.setup(this);
+        await plugin.setup(this as unknown as AppBase);
 
         // load plugins
         this.plugins.push(plugin);
@@ -193,7 +193,7 @@ class App implements AppBase {
 
     // Send hydration when needed
     this.ipc.on('hydrate', () => {
-      const hydration = {};
+      const hydration: Record<string, any> = {};
 
       if (this.loaded) {
         this.plugins.forEach((p) => {
@@ -272,7 +272,7 @@ class App implements AppBase {
     return this.controls[name];
   }
 
-  getSetting<T>(path: string, defaultValue: T): T {
+  getSetting<T>(path: string, defaultValue?: T): T {
     return getProperty(this.config.settings, path, defaultValue);
   }
 
@@ -305,14 +305,14 @@ class App implements AppBase {
     // Get pluggin commands
     this.plugins.forEach((p) => {
       if (p.commands) {
-        items.push(...p.commands(ref));
+        items.push(...p.commands(ref || undefined));
       }
     });
 
     return {
       searchLabel: 'Type a command or search',
       initialScreen: true,
-      reference: ref,
+      reference: ref || undefined,
       actions: ref ? [...items] : [...sidebar, ...items],
     };
   }

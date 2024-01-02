@@ -1,4 +1,4 @@
-import { Plugin, App, icons } from '@magic-circle/schema';
+import { PluginBase, App, icons } from '@magic-circle/schema';
 import { Store } from '@magic-circle/state';
 import { registerIcon, VideoCamera } from '@magic-circle/styles';
 import ScreenshotPlugin from '@magic-circle/screenshots';
@@ -23,7 +23,7 @@ type CurrentData = {
   sync: boolean;
 };
 
-export default class Recordings implements Plugin {
+export default class Recordings implements PluginBase {
   ipc: App['ipc'];
   client: App;
   screenshots: ScreenshotPlugin;
@@ -62,7 +62,9 @@ export default class Recordings implements Plugin {
   }
 
   async start() {
-    this.screenshots = this.client.getPlugin('screenshots') as ScreenshotPlugin;
+    this.screenshots = this.client.getPlugin(
+      'screenshots'
+    ) as unknown as ScreenshotPlugin;
 
     if (!this.screenshots) {
       throw new Error(

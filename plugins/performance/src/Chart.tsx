@@ -18,7 +18,7 @@ class ChartViz {
   context: CanvasRenderingContext2D;
 
   max: number;
-  values: number[];
+  values: number[] = [];
 
   constructor(canvas: HTMLCanvasElement, max: number) {
     this.canvas = canvas;
@@ -33,8 +33,10 @@ class ChartViz {
     this.canvas.style.width = String(this.canvas.width / this.PR);
     this.canvas.style.height = String(this.canvas.height / this.PR);
 
-    this.context = this.canvas.getContext('2d');
+    const context = this.canvas.getContext('2d');
+    if (!context) throw new Error('Canvas context could not be created');
 
+    this.context = context;
     this.max = max;
   }
 
@@ -45,7 +47,9 @@ class ChartViz {
 
   render() {
     const { values, max } = this;
-    this.context = this.canvas.getContext('2d');
+
+    const context = this.canvas.getContext('2d');
+    if (context && !this.context) this.context = context;
 
     // Clear all drawed elements
     this.context.clearRect(0, 0, this.width, this.height);
@@ -85,15 +89,19 @@ type ChartProps = {
 };
 
 const Chart = ({ max, values }: ChartProps) => {
-  const ref = useRef<HTMLCanvasElement>();
+  const ref = useRef<HTMLCanvasElement>(null);
   const viz = useRef<ChartViz>();
 
   useLayoutEffect(() => {
-    viz.current = new ChartViz(ref.current, max);
+    if (ref.current) {
+      viz.current = new ChartViz(ref.current, max);
+    }
   }, [max]);
 
   useEffect(() => {
-    viz.current.set(values);
+    if (viz.current) {
+      viz.current.set(values);
+    }
   }, [values]);
 
   return <Canvas ref={ref} />;
