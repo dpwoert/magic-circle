@@ -6,7 +6,6 @@ import { saveAs } from 'file-saver';
 import {
   ButtonCollections,
   Plugin,
-  App,
   icons,
   LayoutHook,
   CommandLineAction,

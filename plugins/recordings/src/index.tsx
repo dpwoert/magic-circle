@@ -1,4 +1,4 @@
-import { Plugin, App, icons } from '@magic-circle/schema';
+import { Plugin, icons } from '@magic-circle/schema';
 import { Store } from '@magic-circle/state';
 import { registerIcon, VideoCamera } from '@magic-circle/styles';
 import ScreenshotPlugin from '@magic-circle/screenshots';
