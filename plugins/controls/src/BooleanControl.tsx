@@ -14,7 +14,7 @@ const BooleanControlField = ({
   hasChanges,
   reset,
   select,
-}: ControlProps<boolean, never>) => {
+}: ControlProps<boolean, Record<string, never>>) => {
   return (
     <Control.Container hasChanges={hasChanges} reset={reset} select={select}>
       <Control.Label>{label}</Control.Label>
@@ -30,7 +30,7 @@ const BooleanControlField = ({
   );
 };
 
-const BooleanControl: ControlSchema<boolean, never> = {
+const BooleanControl: ControlSchema<boolean, Record<string, never>> = {
   name: 'boolean',
   supports: (type) => {
     if (type === 'timeline') {

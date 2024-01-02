@@ -56,7 +56,7 @@ const ImageControlField = ({
   hasChanges,
   reset,
   select,
-}: ControlProps<string | ImageBitmap, never>) => {
+}: ControlProps<string | ImageBitmap, Record<string, never>>) => {
   const src = useMemo<string>(() => {
     if (typeof value === 'string') {
       return value;
@@ -132,7 +132,10 @@ const ImageControlField = ({
   );
 };
 
-const ImageControl: ControlSchema<string | ImageBitmap, never> = {
+const ImageControl: ControlSchema<
+  string | ImageBitmap,
+  Record<string, never>
+> = {
   name: 'image',
   render: (props) => {
     return <ImageControlField {...props} />;

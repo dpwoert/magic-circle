@@ -26,7 +26,7 @@ const ButtonControlField = ({
   label,
   set,
   reset,
-}: ControlProps<() => void, never>) => {
+}: ControlProps<() => void, Record<string, never>>) => {
   return (
     <Container hasChanges={false} reset={reset} onClick={() => set(value)}>
       <Label>{label}</Label>
@@ -37,7 +37,7 @@ const ButtonControlField = ({
   );
 };
 
-const ButtonControl: ControlSchema<() => void, never> = {
+const ButtonControl: ControlSchema<() => void, Record<string, never>> = {
   name: 'button',
   render: (props) => {
     return <ButtonControlField {...props} />;

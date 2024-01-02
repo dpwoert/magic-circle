@@ -16,9 +16,9 @@ const controls = async () => {
     controls.TextControl,
     controls.NumberControl,
     controls.ColorControl,
-    // controls.ButtonControl,
-    // controls.BooleanControl,
-    // controls.ImageControl,
+    controls.ButtonControl,
+    controls.BooleanControl,
+    controls.ImageControl,
     controls.VectorControl,
     controls.RotationControl,
   ];

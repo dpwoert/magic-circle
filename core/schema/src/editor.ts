@@ -288,7 +288,7 @@ export class Plugin implements PluginBase {
   }
 }
 
-export type ControlProps<T = any, K = Record<string, unknown> | never> = {
+export type ControlProps<T = any, K = Record<string, unknown | never>> = {
   value: T;
   label: string;
   options: K;
@@ -321,9 +321,11 @@ export interface Config {
     | ((defaultPlugins: PluginConstructor[]) => PluginConstructor[])
     | ((defaultPlugins: PluginConstructor[]) => Promise<PluginConstructor[]>);
   controls:
-    | Control<any, any>[]
-    | ((defaultControls: Control<any, any>[]) => Control<any, any>[])
-    | ((defaultControls: Control<any, any>[]) => Promise<Control<any, any>[]>);
+    | Control<any, any | never>[]
+    | ((defaultControls: Control<any, any>[]) => Control<any, any | never>[])
+    | ((
+        defaultControls: Control<any, any>[]
+      ) => Promise<Control<any, any | never>[]>);
   settings: {
     pageTitle?: string;
     screenshots?: {
