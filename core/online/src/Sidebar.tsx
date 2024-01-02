@@ -74,8 +74,10 @@ const Sidebar = ({ app }: SidebarProps) => {
     async (url: string) => {
       await app.reset(false);
 
-      const frame: HTMLIFrameElement = document.querySelector('#frame iframe');
-      frame.src = url;
+      const frame: HTMLIFrameElement | null =
+        document.querySelector('#frame iframe');
+
+      if (frame) frame.src = url;
 
       // Show layers
       app.sidebar.setFn((curr) => ({

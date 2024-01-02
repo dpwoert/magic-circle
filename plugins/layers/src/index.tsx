@@ -160,7 +160,7 @@ export default class Layers extends Plugin {
   resetControl(path: string) {
     const store = this.lookup.get(path);
 
-    if (store && 'initialValue' in store.value) {
+    if (store && store.value && 'initialValue' in store.value) {
       this.setControl(path, store.value.initialValue);
     }
   }

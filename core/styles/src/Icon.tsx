@@ -24,7 +24,7 @@ export default function Icon({ name, ...props }: IconProps) {
   let Comp: Component | string = 'div';
 
   if (registry.has(name)) {
-    Comp = registry.get(name);
+    Comp = registry.get(name) || 'div';
   } else {
     console.error(`Icon '${name}' is not registered yet`);
   }

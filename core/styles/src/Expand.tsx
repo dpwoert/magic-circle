@@ -34,8 +34,8 @@ const Expand = ({
   duration = 300,
   ...props
 }: ExpandProps) => {
-  const ref = useRef(null);
-  const [height, setHeight] = useState<number>(null);
+  const ref = useRef<HTMLDivElement>(null);
+  const [height, setHeight] = useState<number>(0);
 
   useLayoutEffect(() => {
     if (ref.current) {

@@ -2,9 +2,9 @@
 import Store from './store';
 
 export default class StoreFamily<T> {
-  read: (id: string) => T;
-  cache: Record<string, Store<T>>;
-  _keys: string[];
+  read?: (id: string) => T;
+  cache: Record<string, Store<T>> = {};
+  private _keys: string[] = [];
 
   constructor() {
     this.reset();
@@ -15,7 +15,7 @@ export default class StoreFamily<T> {
 
     // ensure all values are updated
     Object.keys(this.cache).forEach((key) => {
-      this.cache[key].set(this.read(key));
+      this.cache[key].set(fn(key));
     });
 
     return this;
@@ -23,11 +23,11 @@ export default class StoreFamily<T> {
 
   get(id: string) {
     if (!id) {
-      return new Store<T>(null);
+      return new Store(null);
     }
 
     // create store when needed
-    if (!this.cache[id]) {
+    if (!this.cache[id] && this.read) {
       const data = this.read(id);
       const store = new Store<T>(data);
       this.cache[id] = store;
@@ -38,12 +38,13 @@ export default class StoreFamily<T> {
       this._keys.push(id);
     }
 
-    return this.cache[id];
+    return this.cache[id] || null;
   }
 
   export(fn: (key: string, value: T) => void) {
     this._keys.forEach((key) => {
-      fn(key, this.get(key).value);
+      const result = this.get(key);
+      if (result && result.value) fn(key, result.value);
     });
   }
 

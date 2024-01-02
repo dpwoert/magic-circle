@@ -1,4 +1,4 @@
-import { PluginBase, App, icons } from '@magic-circle/schema';
+import { Plugin, App, icons } from '@magic-circle/schema';
 import { Store } from '@magic-circle/state';
 import { registerIcon, VideoCamera } from '@magic-circle/styles';
 import ScreenshotPlugin from '@magic-circle/screenshots';
@@ -23,30 +23,23 @@ type CurrentData = {
   sync: boolean;
 };
 
-export default class Recordings implements PluginBase {
-  ipc: App['ipc'];
-  client: App;
-  screenshots: ScreenshotPlugin;
-
-  current: Store<CurrentData>;
+export default class Recordings extends Plugin {
+  screenshots?: ScreenshotPlugin;
 
   name = 'recordings';
 
-  async setup(client: App) {
-    this.ipc = client.ipc;
-    this.client = client;
+  current = new Store<CurrentData>({
+    width: 1080,
+    height: 720,
+    fps: 30,
+    duration: 15,
+    frame: 0,
+    directory: null,
+    isRecording: false,
+    sync: false,
+  });
 
-    this.current = new Store<CurrentData>({
-      width: 1080,
-      height: 720,
-      fps: 30,
-      duration: 15,
-      frame: 0,
-      directory: null,
-      isRecording: false,
-      sync: false,
-    });
-
+  async setup() {
     this.ipc.on('recordings:save', (_, data: ScreenshotExport) => {
       this.saveScreenshot(data);
     });
@@ -62,7 +55,7 @@ export default class Recordings implements PluginBase {
   }
 
   async start() {
-    this.screenshots = this.client.getPlugin(
+    this.screenshots = this.app.getPlugin(
       'screenshots'
     ) as unknown as ScreenshotPlugin;
 
@@ -72,7 +65,7 @@ export default class Recordings implements PluginBase {
       );
     }
 
-    const timeline = this.client.getPlugin('timeline') as any;
+    const timeline = this.app.getPlugin('timeline') as any;
     if (this.current.value.sync && timeline) {
       timeline.setPlayhead(0);
       timeline.play();
@@ -159,15 +152,17 @@ export default class Recordings implements PluginBase {
     const digits = String(maxFrames).length;
     const number = String(frame).padStart(digits, '0');
 
-    await this.screenshots.saveScreenshotTo(
-      directory,
-      `frame-${number}`,
-      data,
-      false
-    );
+    if (this.screenshots) {
+      await this.screenshots.saveScreenshotTo(
+        directory,
+        `frame-${number}`,
+        data,
+        false
+      );
 
-    requestAnimationFrame(() => {
-      this.next();
-    });
+      requestAnimationFrame(() => {
+        this.next();
+      });
+    }
   }
 }

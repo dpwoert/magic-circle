@@ -88,7 +88,7 @@ const Sidebar = ({ recordings }: SidebarProps) => {
                   });
                 }}
               >
-                {recordings.client
+                {recordings.app
                   .getSetting<number[]>('recordings.fps', [12, 24, 25, 30, 60])
                   .map((n) => (
                     <option key={n}>{n}</option>

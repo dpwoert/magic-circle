@@ -39,6 +39,7 @@
   "devDependencies": {
     "@types/react": "^18.0.21",
     "@types/color-rgba": "^2.1.2",
+    "@types/wicg-file-system-access": "*",
     "typescript": "^5.3.3"
   },
   "peerDependencies": {

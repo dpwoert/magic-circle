@@ -8,10 +8,10 @@ export default function useReference(reference: CommandLineReference) {
   const app = useContext(AppContext);
 
   useEffect(() => {
-    app.commandLineReference.set(reference);
+    if (app) app.commandLineReference.set(reference);
 
     return () => {
-      app.commandLineReference.set(null);
+      if (app) app.commandLineReference.set(null);
     };
   }, [app, reference]);
 }

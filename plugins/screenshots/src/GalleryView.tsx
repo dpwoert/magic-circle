@@ -146,6 +146,7 @@ const GalleryView = ({
       <Container>
         {files.map((file) => {
           const menu: Menu = {
+            // @ts-ignore
             items: screenshots.commands({
               type: 'screenshot',
               id: file.fileName,
@@ -191,7 +192,7 @@ const GalleryView = ({
                         width={SPACING(1.5)}
                         height={SPACING(1.5)}
                         onClick={() => {
-                          toggle();
+                          if (toggle) toggle();
                           // const screen = screenshots.client.getCommandLine({
                           //   type: 'screenshot',
                           //   id: file.fileName,
