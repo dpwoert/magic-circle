@@ -127,7 +127,11 @@ const LabelStyled = styled.div`
   }
 `;
 
-export const Label = ({ children, ...props }) => {
+type LabelProps = {
+  children?: React.ReactNode;
+};
+
+export const Label = ({ children, ...props }: LabelProps) => {
   return (
     <LabelStyled {...props}>
       <span>{children}</span>

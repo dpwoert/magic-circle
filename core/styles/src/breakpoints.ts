@@ -16,8 +16,8 @@ export const breakpointSize = {
   [Breakpoint.MEDIUM]: 960,
   [Breakpoint.LARGE]: 1400,
   [Breakpoint.EXTRA_LARGE]: 1600,
-  // [Breakpoint.IPAD]: 1024,
-  // [Breakpoint.IPAD_PRO]: 1366,
+  [Breakpoint.IPAD]: 1024,
+  [Breakpoint.IPAD_PRO]: 1366,
 };
 
 const query =
@@ -30,23 +30,34 @@ const query =
 
 type breakpointGroup = Record<Breakpoint, ReturnType<typeof query>>;
 
-const emptyGroup = (): breakpointGroup => {
+const createGroup = (set?: 'min' | 'max'): breakpointGroup => {
   return {
-    [Breakpoint.EXTRA_SMALL]: null,
-    [Breakpoint.SMALL]: null,
-    [Breakpoint.MEDIUM]: null,
-    [Breakpoint.LARGE]: null,
-    [Breakpoint.EXTRA_LARGE]: null,
-    [Breakpoint.IPAD]: null,
-    [Breakpoint.IPAD_PRO]: null,
+    [Breakpoint.EXTRA_SMALL]: query(
+      breakpointSize[Breakpoint.EXTRA_SMALL],
+      set
+    ),
+    [Breakpoint.SMALL]: query(breakpointSize[Breakpoint.SMALL], set),
+    [Breakpoint.MEDIUM]: query(breakpointSize[Breakpoint.MEDIUM], set),
+    [Breakpoint.LARGE]: query(breakpointSize[Breakpoint.LARGE], set),
+    [Breakpoint.EXTRA_LARGE]: query(
+      breakpointSize[Breakpoint.EXTRA_LARGE],
+      set
+    ),
+    [Breakpoint.IPAD]: query(breakpointSize[Breakpoint.IPAD], set),
+    [Breakpoint.IPAD_PRO]: query(breakpointSize[Breakpoint.IPAD_PRO], set),
   };
 };
 
-const breakpoints: {
+const breakpoints: breakpointGroup & {
   min: breakpointGroup;
   max: breakpointGroup;
   custom: typeof query;
-} = { min: emptyGroup(), max: emptyGroup(), custom: null };
+} = {
+  ...createGroup(),
+  min: createGroup('min'),
+  max: createGroup('max'),
+  custom: query,
+};
 
 Object.values(Breakpoint).forEach((key) => {
   // default (max)
@@ -54,8 +65,6 @@ Object.values(Breakpoint).forEach((key) => {
   breakpoints.min[key] = query(breakpointSize[key], 'min');
   breakpoints.max[key] = query(breakpointSize[key], 'max');
 });
-
-breakpoints.custom = query;
 
 // USAGE EXAMPLE
 // breakpoints.small`-css here-`

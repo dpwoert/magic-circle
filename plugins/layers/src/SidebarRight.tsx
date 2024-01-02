@@ -2,7 +2,11 @@ import styled from 'styled-components';
 import shallowEqual from 'shallowequal';
 
 import { App, LayerExport } from '@magic-circle/schema';
-import { useStore, usePermanentState } from '@magic-circle/state';
+import {
+  useStore,
+  usePermanentState,
+  useStoreFamily,
+} from '@magic-circle/state';
 import { SPACING, COLORS, TYPO, Icon, Expand } from '@magic-circle/styles';
 
 import type Layers from './index';
@@ -46,7 +50,7 @@ type ControlProps = {
 };
 
 const Control = ({ layers, controlPath }: ControlProps) => {
-  const control = useStore(layers.lookup.get(controlPath));
+  const control = useStoreFamily(layers.lookup, controlPath);
   const setExternal = useStore(layers.setExternal);
 
   if (control && 'type' in control) {
@@ -140,7 +144,7 @@ type SidebarProps = {
 
 const SidebarRight = ({ layers }: SidebarProps) => {
   const selected = useStore(layers.selected);
-  const layer = useStore(layers.lookup.get(selected || ''));
+  const layer = useStoreFamily(layers.lookup, selected || '');
 
   if (layer && 'children' in layer) {
     return (

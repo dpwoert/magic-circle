@@ -43,6 +43,8 @@
     "@magic-circle/styles": "^0.3.0-alpha.2",
     "@types/react": "^18.0.21",
     "@types/styled-components": "^5.1.26",
+    "@types/file-saver": "^2.0.7",
+    "@types/wicg-file-system-access": "*",
     "typescript": "^5.3.3"
   },
   "peerDependencies": {

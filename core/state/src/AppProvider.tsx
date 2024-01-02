@@ -2,7 +2,7 @@ import { createContext } from 'react';
 
 import { App } from '@magic-circle/schema';
 
-export const AppContext = createContext<App>(null);
+export const AppContext = createContext<App | null>(null);
 
 type AppProviderProps = {
   app: App;

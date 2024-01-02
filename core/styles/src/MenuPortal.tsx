@@ -18,7 +18,14 @@ const MenuPortal = ({ menu, ...props }: MenuPortalProps) => {
       placement={Placement.BOTTOM}
       alignment={Alignment.CENTER}
       background={COLORS.shades.s500.css}
-      content={(toggle) => <MenuList menu={menu} close={() => toggle()} />}
+      content={(toggle) => (
+        <MenuList
+          menu={menu}
+          close={() => {
+            if (toggle) toggle();
+          }}
+        />
+      )}
       {...props}
     />
   );

@@ -160,10 +160,12 @@ const Inner = ({ children, breadcrumbs, buttons, onClose }: InnerProps) => {
           )}
           <Close
             onClick={() => {
-              app.layoutHooks.set({
-                ...app.layoutHooks.value,
-                inner: undefined,
-              });
+              if (app) {
+                app.layoutHooks.set({
+                  ...app.layoutHooks.value,
+                  inner: undefined,
+                });
+              }
 
               if (onClose) onClose();
             }}

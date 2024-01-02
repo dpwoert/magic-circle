@@ -141,7 +141,8 @@ export class Color {
     }
 
     const c1 = this.value;
-    const c2 = typeof color2 === 'string' ? new Color(color2) : color2.value;
+    const c2 =
+      typeof color2 === 'string' ? new Color(color2).value : color2.value;
     return c1[0] === c2[0] && c1[1] === c2[1] && c1[2] === c2[2];
   }
 

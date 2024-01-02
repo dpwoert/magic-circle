@@ -89,7 +89,7 @@ const ImageControlField = ({
     // Create blob
     const file = await fileHandle.getFile();
     const arr: ArrayBuffer = await file.arrayBuffer();
-    const blob = new Blob([arr], { type: fileHandle.type });
+    const blob = new Blob([arr], { type: file.type });
 
     if (typeof value === 'string') {
       // Create base64 string

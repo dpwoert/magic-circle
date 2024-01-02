@@ -5,8 +5,7 @@ import { saveAs } from 'file-saver';
 
 import {
   ButtonCollections,
-  PluginBase,
-  App,
+  Plugin,
   icons,
   LayoutHook,
   CommandLineAction,
@@ -55,6 +54,7 @@ registerIcon(Clipboard);
 
 function dataURLtoBlob(dataUrl: string) {
   const arr = dataUrl.split(',');
+  // @ts-ignore
   const mime = arr[0].match(/:(.*?);/)[1];
   const bstr = atob(arr[1]);
   let n = bstr.length;
@@ -112,19 +112,12 @@ type ScreenshotExport = {
   type: 'png' | 'svg';
 };
 
-export default class Screenshots implements PluginBase {
-  ipc: App['ipc'];
-  client: App;
-
+export default class Screenshots extends Plugin {
   name = 'screenshots';
 
-  last: Store<string>;
+  last = new Store<string>('');
 
-  async setup(client: App) {
-    this.ipc = client.ipc;
-    this.client = client;
-    this.last = new Store<string>('');
-
+  async setup() {
     this.ipc.on('screenshot:save', (_, data: ScreenshotExport) => {
       this.saveScreenshot(data);
     });
@@ -209,7 +202,7 @@ export default class Screenshots implements PluginBase {
       icon: 'Photo' as icons,
       name: 'screenshots',
       after: 'layers',
-      render: <Sidebar app={this.client} screenshots={this} />,
+      render: <Sidebar app={this.app} screenshots={this} />,
     };
   }
 
@@ -239,7 +232,7 @@ export default class Screenshots implements PluginBase {
           icon: 'Photo',
           onSelect: async () => {
             const file = await this.getFileFromFilename(reference.id);
-            this.previewImage(file);
+            if (file) this.previewImage(file);
           },
         },
         {
@@ -248,7 +241,7 @@ export default class Screenshots implements PluginBase {
           shortcut: 'platform+i',
           onSelect: async () => {
             const file = await this.getFileFromFilename(reference.id);
-            this.jsonViewer(file);
+            if (file) this.jsonViewer(file);
           },
         },
         {
@@ -256,7 +249,7 @@ export default class Screenshots implements PluginBase {
           icon: 'Code',
           onSelect: async () => {
             const file = await this.getFileFromFilename(reference.id);
-            copyJSON(file);
+            if (file) copyJSON(file);
           },
         },
         {
@@ -264,7 +257,7 @@ export default class Screenshots implements PluginBase {
           icon: 'Code',
           onSelect: async () => {
             const file = await this.getFileFromFilename(reference.id);
-            copyGitCommit(file);
+            if (file) copyGitCommit(file);
           },
         },
         {
@@ -272,7 +265,7 @@ export default class Screenshots implements PluginBase {
           icon: 'Tag',
           onSelect: async () => {
             const file = await this.getFileFromFilename(reference.id);
-            this.renameScreenshot(file);
+            if (file) this.renameScreenshot(file);
           },
         },
         {
@@ -281,7 +274,7 @@ export default class Screenshots implements PluginBase {
           shortcut: 'platform+backspace',
           onSelect: async () => {
             const file = await this.getFileFromFilename(reference.id);
-            this.deleteScreenshot(file);
+            if (file) this.deleteScreenshot(file);
           },
         },
       ];
@@ -291,15 +284,16 @@ export default class Screenshots implements PluginBase {
   }
 
   private directoryKey(): string {
-    const useIframe = this.client.getSetting('directoryBasedOnFrameUrl', false);
+    const useIframe = this.app.getSetting('directoryBasedOnFrameUrl', false);
 
     if (useIframe) {
-      const frame: HTMLIFrameElement = document.querySelector('#frame iframe');
-      return `directory-${frame.src}`;
+      const frame: HTMLIFrameElement | null =
+        document.querySelector('#frame iframe');
+      return `directory-${frame?.src || '?'}`;
     }
 
-    if (this.client.config.projectName) {
-      return `directory-${this.client.config.projectName}`;
+    if (this.app.config.projectName) {
+      return `directory-${this.app.config.projectName}`;
     }
 
     return 'directory';
@@ -402,15 +396,14 @@ export default class Screenshots implements PluginBase {
   }
 
   async changeFolder() {
-    // @ts-ignore
     const directoryHandle = await window.showDirectoryPicker();
     await set(this.directoryKey(), directoryHandle);
     return directoryHandle;
   }
 
   async saveScreenshotTo(
-    directory,
-    fileName,
+    directory: FileSystemDirectoryHandle,
+    fileName: string,
     { data: image, type }: ScreenshotExport,
     saveJSON = true
   ) {
@@ -437,7 +430,7 @@ export default class Screenshots implements PluginBase {
 
     if (saveJSON) {
       // Get data
-      const data = await this.client.save();
+      const data = await this.app.save();
 
       const fileHandleJSON = await directory.getFileHandle(`${fileName}.json`, {
         create: true,
@@ -480,12 +473,12 @@ export default class Screenshots implements PluginBase {
   }
 
   async loadScreenshot(screenshot: ScreenshotFile) {
-    await this.client.load(screenshot.data);
+    await this.app.load(screenshot.data);
   }
 
   previewImage(screenshot: ScreenshotFile) {
     // Set controls sidebar
-    this.client.setLayoutHook(
+    this.app.setLayoutHook(
       LayoutHook.INNER,
       <ImagePreview screenshots={this} screenshot={screenshot} />
     );
@@ -493,7 +486,7 @@ export default class Screenshots implements PluginBase {
 
   jsonViewer(screenshot: ScreenshotFile) {
     // Set controls sidebar
-    this.client.setLayoutHook(
+    this.app.setLayoutHook(
       LayoutHook.INNER,
       <JsonViewer screenshots={this} screenshot={screenshot} />
     );
@@ -552,10 +545,12 @@ export default class Screenshots implements PluginBase {
     await directory.removeEntry(`${screenshot.name}.json`);
   }
 
-  async verifyPermission(directoryHandle: any, readWrite: boolean) {
-    const options = {};
+  async verifyPermission(
+    directoryHandle: FileSystemDirectoryHandle,
+    readWrite: boolean
+  ) {
+    const options: FileSystemHandlePermissionDescriptor = {};
     if (readWrite) {
-      // @ts-ignore
       options.mode = 'readwrite';
     }
     // Check if permission was already granted. If so, return true.
@@ -605,13 +600,13 @@ export default class Screenshots implements PluginBase {
   }
 
   async copyData() {
-    const data = await this.client.save();
+    const data = await this.app.save();
     copyObject(data);
   }
 
   async saveData() {
     // Get data
-    const data = await this.client.save();
+    const data = await this.app.save();
 
     // Save to file
     const blob = new Blob([JSON.stringify(data, null, 2)], {
@@ -621,7 +616,6 @@ export default class Screenshots implements PluginBase {
   }
 
   async loadDataFromFile() {
-    // @ts-ignore
     const [fileHandle] = await window.showOpenFilePicker({
       types: [
         {
@@ -639,6 +633,6 @@ export default class Screenshots implements PluginBase {
     const text = await file.text();
 
     // const
-    await this.client.load(JSON.parse(text));
+    await this.app.load(JSON.parse(text));
   }
 }
