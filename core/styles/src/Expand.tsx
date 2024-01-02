@@ -9,13 +9,13 @@ import styled from 'styled-components';
 
 type ContainerProps = {
   expand: boolean;
-  height: number;
+  height?: number;
   duration: number;
 };
 
 const Container = styled.div<ContainerProps>`
   max-height: ${(props) => {
-    if (props.height === null) return 'auto';
+    if (props.height === undefined) return 'auto';
     return props.expand ? `${props.height}px` : 0;
   }};
   transition: max-height ${(props) => props.duration}ms ease;
@@ -35,7 +35,7 @@ const Expand = ({
   ...props
 }: ExpandProps) => {
   const ref = useRef<HTMLDivElement>(null);
-  const [height, setHeight] = useState<number>(0);
+  const [height, setHeight] = useState<number>();
 
   useLayoutEffect(() => {
     if (ref.current) {
