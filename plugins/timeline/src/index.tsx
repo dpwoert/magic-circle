@@ -2,7 +2,7 @@
 import { get, set } from 'idb-keyval';
 import { saveAs } from 'file-saver';
 
-import { Plugin, icons, App, LayoutHook } from '@magic-circle/schema';
+import { PluginBase, icons, App, LayoutHook } from '@magic-circle/schema';
 import type Layers from '@magic-circle/layers';
 import { Store } from '@magic-circle/state';
 import {
@@ -89,7 +89,7 @@ type Data = {
   playhead: number;
 };
 
-export default class Timeline implements Plugin {
+export default class Timeline implements PluginBase {
   ipc: App['ipc'];
   client: App;
   layers: Layers;

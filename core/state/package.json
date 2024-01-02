@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/state",
-  "version": "0.2.2",
+  "version": "0.3.0-alpha.2",
   "type": "module",
   "description": "Magic Circle state management solution for React",
   "keywords": [
@@ -31,7 +31,7 @@
     "build:prod": "NODE_ENV=production tsc"
   },
   "devDependencies": {
-    "@magic-circle/schema": "^0.2.2",
+    "@magic-circle/schema": "^0.3.0-alpha.2",
     "@types/react": "^18.2.45",
     "typescript": "^5.3.3"
   },
@@ -40,5 +40,6 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "gitHead": "60461c64894e549cb42d16d878f2bd1925d64efd"
 }

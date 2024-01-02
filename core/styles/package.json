@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/styles",
-  "version": "0.2.2",
+  "version": "0.3.0-alpha.2",
   "description": "Magic Circle style helpers",
   "keywords": [
     "controls",
@@ -33,7 +33,7 @@
     "color-string": "1.9.1"
   },
   "devDependencies": {
-    "@magic-circle/state": "^0.2.2",
+    "@magic-circle/state": "^0.3.0-alpha.2",
     "@types/color-string": "^1.5.5",
     "@types/styled-components": "^5.1.34",
     "case": "^1.6.3",
@@ -45,5 +45,6 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "gitHead": "60461c64894e549cb42d16d878f2bd1925d64efd"
 }

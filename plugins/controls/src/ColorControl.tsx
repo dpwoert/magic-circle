@@ -78,7 +78,7 @@ const ColorControlField = ({
   const rangeAlpha = options.rangeAlpha || 1;
 
   if (typeof value === 'string') {
-    color = rgba(value);
+    color = rgba(value) || [0, 0, 0];
   } else if (typeof value === 'number') {
     color = [(value >> 16) & 255, (value >> 8) & 255, value & 255];
   } else if (Array.isArray(value)) {
@@ -117,7 +117,7 @@ const ColorControlField = ({
               const newAlpha = c.getAlpha();
 
               const newColor: number[] = [
-                ...rgba(newHex),
+                ...(rgba(newHex) || [0, 0, 0]),
                 newAlpha * (rangeAlpha / 100),
               ];
               let newColorConverted: typeof value;
@@ -164,9 +164,9 @@ const ColorControlField = ({
   );
 };
 
-const ColorControl: ControlSchema = {
+const ColorControl: ControlSchema<color, options> = {
   name: 'color',
-  render: (props: ControlProps<string, options>) => {
+  render: (props) => {
     return <ColorControlField {...props} />;
   },
 };

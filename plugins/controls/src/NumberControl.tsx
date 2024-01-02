@@ -89,7 +89,7 @@ const NumberControlContinuous = ({
   hasChanges,
   select,
   reset,
-}: ControlProps<number, options>) => {
+}: ControlProps<number, options & { range: number[] }>) => {
   const { range, stepSize } = options;
   const biDirectional = Math.abs(range[0]) === Math.abs(range[1]);
 
@@ -135,41 +135,45 @@ const NumberControlStepper = ({
   hasChanges,
 }: ControlProps<number, options>) => {
   const [valueSafe, setValueSafe] = useState<number | string>(value);
-  const drag = useRef<{ start: number; value: number }>({
+  const drag = useRef<{ start: number | null; value: number | null }>({
     start: null,
     value: null,
   });
 
   const dragEvent = useCallback(
-    (e) => {
-      const delta = e.clientY - drag.current.start;
-      const steps = Math.floor(delta / STEP_SIZE);
-      const stepSize = options.stepSize || 1;
+    (e: MouseEvent) => {
+      if (drag.current.start && drag.current.value) {
+        const delta = e.clientY - drag.current.start;
+        const steps = Math.floor(delta / STEP_SIZE);
+        const stepSize = options.stepSize || 1;
 
-      const newValue = drag.current.value + steps * stepSize;
-      const digits = Math.max(nrDigits(stepSize), nrDigits(value));
-      const rounded = utils.formatNumber(newValue, digits);
+        const newValue = drag.current.value + steps * stepSize;
+        const digits = Math.max(nrDigits(stepSize), nrDigits(value));
+        const rounded = utils.formatNumber(newValue, digits);
 
-      set(+rounded);
+        set(+rounded);
+      }
     },
     [options, set, value]
   );
 
   const endDrag = useCallback(() => {
-    document.querySelector('body').style.cursor = 'auto';
+    const body = document.querySelector('body');
+    if (body) body.style.cursor = 'auto';
     window.removeEventListener('mousemove', dragEvent);
     window.removeEventListener('mouseup', endDrag);
   }, [dragEvent]);
 
   const startDrag = useCallback(
-    (e) => {
+    (e: React.MouseEvent) => {
       drag.current.start = e.clientY;
       drag.current.value = value;
 
       window.addEventListener('mousemove', dragEvent);
       window.addEventListener('mouseup', endDrag);
 
-      document.querySelector('body').style.cursor = 'ns-resize';
+      const body = document.querySelector('body');
+      if (body) body.style.cursor = 'ns-resize';
     },
     [endDrag, dragEvent, value]
   );
@@ -223,8 +227,13 @@ const NumberControl: ControlSchema<number, options> = {
   render: (props) => {
     const { range } = props.options;
 
-    if (range) {
-      return <NumberControlContinuous {...props} />;
+    if (range && Array.isArray(range)) {
+      return (
+        <NumberControlContinuous
+          {...props}
+          options={{ ...props.options, range }}
+        />
+      );
     }
 
     return <NumberControlStepper {...props} />;

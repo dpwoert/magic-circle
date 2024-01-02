@@ -42,6 +42,7 @@ npm run lint:types
 npm run lint:dependencies
 
 echo "building packages"
+npm run build:dev
 npm run build:prod
 
 if [[ `git status --porcelain` ]]; then

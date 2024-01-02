@@ -21,7 +21,7 @@ export default function useSync(instance: Child) {
         myParent.current.remove(instance);
       }
 
-      parent.add(instance);
+      if (parent) parent.add(instance);
       myParent.current = parent;
       client.sync();
     }
@@ -29,7 +29,7 @@ export default function useSync(instance: Child) {
 
   useEffect(() => {
     return () => {
-      myParent.current.remove(instance);
+      myParent.current?.remove(instance);
       if (client) client.sync();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps

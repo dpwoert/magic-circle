@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/client",
-  "version": "0.2.2",
+  "version": "0.3.0-alpha.2",
   "type": "module",
   "description": "Magic Circle front-end client to embed in projects",
   "keywords": [],
@@ -27,16 +27,17 @@
   },
   "devDependencies": {
     "@rollup/plugin-replace": "^5.0.5",
+    "@rollup/plugin-terser": "0.4.4",
     "@rollup/plugin-typescript": "11.1.5",
     "rollup": "^4.9.1",
     "rollup-plugin-dts": "^6.1.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
-    "@rollup/plugin-terser": "0.4.4",
     "rollup-plugin-visualizer": "^5.12.0",
-    "typescript": "^5.3.3",
-    "tslib": "2.6.2"
+    "tslib": "2.6.2",
+    "typescript": "^5.3.3"
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "gitHead": "60461c64894e549cb42d16d878f2bd1925d64efd"
 }

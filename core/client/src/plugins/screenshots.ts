@@ -12,6 +12,10 @@ export default class PluginScreenshot extends Plugin {
   connect() {
     const { ipc } = this.client;
 
+    if (!ipc) {
+      throw new Error('IPC not defined');
+    }
+
     // listen to events
     ipc.on('screenshot:take', () => {
       this.saveScreenshot();
@@ -50,6 +54,8 @@ export default class PluginScreenshot extends Plugin {
 
   async saveScreenshot() {
     const screenshot = await this.screenshot();
-    this.client.ipc.send('screenshot:save', screenshot);
+    if (this.client.ipc) {
+      this.client.ipc.send('screenshot:save', screenshot);
+    }
   }
 }

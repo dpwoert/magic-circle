@@ -37,9 +37,9 @@ const ButtonControlField = ({
   );
 };
 
-const ButtonControl: ControlSchema = {
+const ButtonControl: ControlSchema<() => void, never> = {
   name: 'button',
-  render: (props: ControlProps<() => void, never>) => {
+  render: (props) => {
     return <ButtonControlField {...props} />;
   },
 };

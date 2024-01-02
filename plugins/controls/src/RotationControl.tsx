@@ -59,7 +59,7 @@ const RotationControlField = ({
   const [displayMode, setDisplayMode] = useState<DisplayMode>('degrees');
   const [moved, setMoved] = useState(0);
   const isDragging = useRef(false);
-  const lastX = useRef<number>(null);
+  const lastX = useRef<number | null>(null);
 
   const { range } = options;
   const mode = options.mode || 'radians';

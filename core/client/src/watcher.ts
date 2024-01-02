@@ -33,7 +33,7 @@ export default class Watcher {
     this.controls.forEach((control, path) => {
       const lastValue = this.lastValues.get(control);
 
-      if (lastValue !== control.value) {
+      if (lastValue !== control.value && this.client.ipc) {
         this.client.ipc.send('control:set-value', path, control.value);
       }
     });

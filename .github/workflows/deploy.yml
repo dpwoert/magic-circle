@@ -19,7 +19,7 @@ jobs:
       - name: Setup rep
         run: npm i
       - name: Build all files
-        run: npm run build:prod
+        run: npm run build:dev && npm run build:prod
       - name: Create bundle
         run: npm run publish:online
       - name: Deploy to S3

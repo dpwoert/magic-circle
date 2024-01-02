@@ -1,11 +1,6 @@
 import React from 'react';
 
-import type {
-  Plugin,
-  icons,
-  App,
-  ButtonCollections,
-} from '@magic-circle/schema';
+import { Plugin, icons, ButtonCollections } from '@magic-circle/schema';
 import {
   registerIcon,
   Video,
@@ -21,13 +16,11 @@ registerIcon(Code);
 registerIcon(Download);
 registerIcon(Github);
 
-export default class DemoPlugin implements Plugin {
-  client: App;
-
+export default class DemoPlugin extends Plugin {
   name = 'demo';
 
-  async setup(client: App) {
-    this.client = client;
+  async setup() {
+    // not needed
   }
 
   buttons(buttons: ButtonCollections) {
@@ -53,7 +46,7 @@ export default class DemoPlugin implements Plugin {
     return {
       icon: 'Video' as icons,
       name: 'demo',
-      render: <Sidebar app={this.client} />,
+      render: <Sidebar app={this.app} />,
     };
   }
 }

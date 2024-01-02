@@ -251,7 +251,7 @@ export type CommandLineAction = {
   onSelect: (action: CommandLineAction) => Promise<void | CommandLineScreen>;
 };
 
-export interface Plugin {
+export interface PluginBase {
   name: string;
   setup: (app: App) => Promise<void>;
   connect?: () => void;
@@ -268,10 +268,27 @@ export interface Plugin {
 }
 
 export interface PluginConstructor {
-  new (): Plugin;
+  new (app: App): PluginBase;
 }
 
-export type ControlProps<T = unknown, K = Record<string, unknown>> = {
+export class Plugin implements PluginBase {
+  app: App;
+  ipc: App['ipc'];
+
+  name = 'Base plugin';
+
+  constructor(app: App) {
+    this.app = app;
+    this.ipc = app.ipc;
+  }
+
+  // eslint-disable-next-line
+  async setup(app: App) {
+    console.error('this needs to be implemented');
+  }
+}
+
+export type ControlProps<T = any, K = Record<string, unknown> | never> = {
   value: T;
   label: string;
   options: K;
@@ -285,7 +302,7 @@ export type ControlProps<T = unknown, K = Record<string, unknown>> = {
   reset: () => void;
 };
 
-export type Control<T = unknown, K = Record<string, unknown>> = {
+export type Control<T, K> = {
   name: string;
   supports?: (type: string, options: any) => boolean;
   render: React.FunctionComponent<ControlProps<T, K>>;
@@ -300,13 +317,13 @@ export interface Config {
   url: string | ((dev: boolean) => string);
   projectName?: string;
   plugins:
-    | PluginConstructor[]
+    | (typeof Plugin)[]
     | ((defaultPlugins: PluginConstructor[]) => PluginConstructor[])
     | ((defaultPlugins: PluginConstructor[]) => Promise<PluginConstructor[]>);
   controls:
-    | Control[]
-    | ((defaultControls: Control[]) => Control[])
-    | ((defaultControls: Control[]) => Promise<Control[]>);
+    | Control<any, any>[]
+    | ((defaultControls: Control<any, any>[]) => Control<any, any>[])
+    | ((defaultControls: Control<any, any>[]) => Promise<Control<any, any>[]>);
   settings: {
     pageTitle?: string;
     screenshots?: {
@@ -365,8 +382,8 @@ export enum LayoutHook {
 export type layoutHooks = Record<string, ReactNode | undefined>;
 
 export interface App {
-  plugins: Plugin[];
-  controls: Record<string, Control>;
+  plugins: PluginBase[];
+  controls: Record<string, Control<any, any>>;
   config: Config;
   ipc: IpcBase;
 
@@ -378,8 +395,8 @@ export interface App {
   commandLineReference: Store<CommandLineReference | null>;
   hasLoop: Store<boolean>;
 
-  getPlugin: (name: string) => Plugin | undefined;
-  getControl: (name: string) => Control | undefined;
+  getPlugin: (name: string) => PluginBase | undefined;
+  getControl: (name: string) => Control<any, any> | undefined;
   getSetting: <T>(path: string, defaultValue?: T) => T;
 
   setLayoutHook: (name: LayoutHook, hook: ReactNode) => void;

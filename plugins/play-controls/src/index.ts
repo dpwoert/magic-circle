@@ -1,7 +1,6 @@
-import type {
+import {
   ButtonCollections,
   Plugin,
-  App,
   Button,
   CommandLineReference,
   CommandLineAction,
@@ -21,18 +20,12 @@ registerIcon(Refresh);
 registerIcon(Rewind);
 registerIcon(Maximize);
 
-export default class PlayControls implements Plugin {
-  playing: boolean;
-  ipc: App['ipc'];
-  client: App;
-
+export default class PlayControls extends Plugin {
   name = 'PlayControls';
 
-  async setup(client: App) {
-    this.ipc = client.ipc;
-    this.client = client;
-    this.playing = false;
+  playing = false;
 
+  async setup() {
     this.ipc.on('play', (_, playing: boolean) => {
       this.setPlayButton(playing);
     });
@@ -44,14 +37,14 @@ export default class PlayControls implements Plugin {
   setPlayButton(play: boolean) {
     this.playing = play;
 
-    const buttons = this.client.buttons.value;
+    const buttons = this.app.buttons.value;
     const playBtns = buttons.play.list.map((b): Button => {
       if (b.label !== 'play') return b;
 
       return {
         label: 'play',
         icon: play ? 'Pause' : 'Play',
-        disabled: !this.client.hasLoop.value,
+        disabled: !this.app.hasLoop.value,
         onClick: () => {
           if (play) this.pause();
           else this.play();
@@ -59,7 +52,7 @@ export default class PlayControls implements Plugin {
       };
     });
 
-    this.client.buttons.set({
+    this.app.buttons.set({
       ...buttons,
       play: {
         ...buttons.play,
@@ -80,7 +73,7 @@ export default class PlayControls implements Plugin {
           {
             label: 'play',
             icon: 'Play',
-            disabled: !this.client.hasLoop.value,
+            disabled: !this.app.hasLoop.value,
             onClick: () => {
               this.play();
             },
@@ -98,7 +91,7 @@ export default class PlayControls implements Plugin {
             icon: 'Rewind',
             tooltip: 'Reset all state to defaults',
             onClick: () => {
-              this.client.reset();
+              this.app.reset();
             },
           },
           {
@@ -112,7 +105,7 @@ export default class PlayControls implements Plugin {
                 element.requestFullscreen();
               }
             },
-            hide: !this.client.getSetting('playControls.fullscreen', false),
+            hide: !this.app.getSetting('playControls.fullscreen', false),
           },
           ...(buttons.play?.list || []),
         ],
@@ -143,7 +136,7 @@ export default class PlayControls implements Plugin {
           label: 'Reset',
           icon: 'Rewind',
           onSelect: async () => {
-            this.client.reset();
+            this.app.reset();
           },
         },
       ];

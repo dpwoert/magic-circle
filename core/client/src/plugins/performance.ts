@@ -11,10 +11,10 @@ const ensurePaint = (fn: () => void) => {
 };
 
 export default class PluginPerformance extends Plugin {
-  cache: Record<string, Control<any>>;
+  cache: Record<string, Control<any>> = {};
 
   frames: number;
-  startFrameTime: number;
+  startFrameTime?: number;
   previousPerformanceUpdate: number;
   loadMetrics: {
     firstPaint?: number;
@@ -91,8 +91,8 @@ export default class PluginPerformance extends Plugin {
 
       this.stats = {
         fps: (this.frames * 1000) / (time - this.previousPerformanceUpdate),
-        renderTime: time - this.startFrameTime,
-        memory: memory ? memory / 1048576 : null,
+        renderTime: time - (this.startFrameTime || 0),
+        memory: memory ? memory / 1048576 : undefined,
       };
 
       if (this.client.ipc) {

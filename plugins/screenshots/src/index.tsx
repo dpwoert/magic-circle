@@ -5,7 +5,7 @@ import { saveAs } from 'file-saver';
 
 import {
   ButtonCollections,
-  Plugin,
+  PluginBase,
   App,
   icons,
   LayoutHook,
@@ -112,7 +112,7 @@ type ScreenshotExport = {
   type: 'png' | 'svg';
 };
 
-export default class Screenshots implements Plugin {
+export default class Screenshots implements PluginBase {
   ipc: App['ipc'];
   client: App;
 

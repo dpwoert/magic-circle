@@ -27,7 +27,7 @@
     "build:stats": "lerna run build:stats",
     "generate:icons": "lerna run generate:icons --scope @magic-circle/styles",
     "example": "sh examples/run.sh",
-    "publish:npm": "sh publish.sh",
+    "publish:npm": "sh scripts/publish.sh",
     "publish:online": "lerna run package --scope @magic-circle/online",
     "publish:online:serve": "npm run publish:online && lerna run serve --scope @magic-circle/online",
     "prettier": "prettier --config --write \"{core,examples,plugins,scripts}/**/*.{js,jsx,ts,tsx,json,css}\"",
