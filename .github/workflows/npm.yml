@@ -33,11 +33,9 @@ jobs:
           save_to: ./examples/simple/package.json
           action: 'set_dep_version'
           argument: '@magic-circle/client *'
-      - name: Open simple example
-        run: cd examples/simple
       - name: Output package json
-        run: cat package.json
+        run: cat examples/simple/package.json
       - name: Setup repo
-        run: npm ci
+        run: cd examples/simple && npm ci
       - name: Run Magic Circle
-        run: npm run build:editor
+        run: cd examples/simple && npm run build:editor
