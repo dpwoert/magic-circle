@@ -22,7 +22,6 @@ jobs:
         run: cd examples/simple
       - name: Show directory content
         run: ls
-
       - name: Change package version for editor
         uses: MYXOMOPX/modify-pkg-json@master
         with:
@@ -38,7 +37,8 @@ jobs:
           save_to: ./dist/package.json
           action: 'set_dep_version'
           argument: '@magic-circle/client *'
-
+      - name: Output package json
+        run: cat package.json
       - name: Setup repo
         run: npm ci
       - name: Run Magic Circle
