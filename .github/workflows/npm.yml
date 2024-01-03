@@ -38,7 +38,7 @@ jobs:
         run: rm -rf .husky
       - name: Setup repo
         working-directory: ./examples/simple
-        run: npm i
+        run: cd ./examples/simple && npm i
       - name: Run Magic Circle
         working-directory: ./examples/simple
         run: npm run build:editor
