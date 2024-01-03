@@ -17,7 +17,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 21.x
-          cache: 'npm'
       - name: Change package version for editor
         uses: MYXOMOPX/modify-pkg-json@master
         with:
@@ -25,7 +24,6 @@ jobs:
           save_to: ./examples/simple/package.json
           action: 'set_devdep_version'
           argument: '@magic-circle/editor *'
-
       - name: Change package version for client
         uses: MYXOMOPX/modify-pkg-json@master
         with:
@@ -37,7 +35,7 @@ jobs:
         working-directory: ./examples/simple
         run: cat package.json
       - name: Clean repo
-        run: rm package.json && rm -rf .husky
+        run: rm package.json && rm package-lock.json && rm -rf .husky
       - name: Setup repo
         working-directory: ./examples/simple
         run: npm ci
