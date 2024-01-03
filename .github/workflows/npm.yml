@@ -34,11 +34,13 @@ jobs:
           action: 'set_dep_version'
           argument: '@magic-circle/client *'
       - name: Output package json
-        working-directory: examples/simple
+        working-directory: ./examples/simple
         run: cat package.json
+      - name: Clean repo
+        run: rm package.json && rm -rf .husky
       - name: Setup repo
-        working-directory: examples/simple
+        working-directory: ./examples/simple
         run: npm ci
       - name: Run Magic Circle
-        working-directory: examples/simple
-        run: cd examples/simple && npm run build:editor
+        working-directory: ./examples/simple
+        run: npm run build:editor
