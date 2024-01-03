@@ -22,21 +22,23 @@ jobs:
         run: cd examples/simple
       - name: Show directory content
         run: ls
-      - name: Extract version from package.json
-        uses: sergeysova/jq-action@v2
-        id: version
-        with:
-          cmd: 'jq .version package.json -r'
+
       - name: Change package version for editor
-        uses: sergeysova/jq-action@v2
+        uses: MYXOMOPX/modify-pkg-json@master
         with:
-          cmd: >
-            jq \'.devDependencies.@magic-circle/editor = "*"\\' package.json > "$tmp" && mv "$tmp" package.json
+          target: ./package.json
+          save_to: ./dist/package.json
+          action: 'set_devdep_version'
+          argument: '@magic-circle/editor *'
+
       - name: Change package version for client
-        uses: sergeysova/jq-action@v2
+        uses: MYXOMOPX/modify-pkg-json@master
         with:
-          cmd: >
-            jq '.dependencies.@magic-circle/client = "*"' package.json > "$tmp" && mv "$tmp" package.json
+          target: ./package.json
+          save_to: ./dist/package.json
+          action: 'set_dep_version'
+          argument: '@magic-circle/client *'
+
       - name: Setup repo
         run: npm ci
       - name: Run Magic Circle
