@@ -1,4 +1,4 @@
-name: Test
+name: NPM
 
 on:
   schedule:
@@ -23,9 +23,13 @@ jobs:
       - name: Show directory content
         run: ls
       - name: Change package version for editor
-        run: jq '.devDependencies.@magic-circle/editor = "*"' package.json > "$tmp" && mv "$tmp" package.json
+        uses: sergeysova/jq-action@v2
+        with:
+          cmd: jq '.devDependencies.@magic-circle/editor = "*"' package.json > "$tmp" && mv "$tmp" package.json
       - name: Change package version for client
-        run: jq '.dependencies.@magic-circle/client = "*"' package.json > "$tmp" && mv "$tmp" package.json
+        uses: sergeysova/jq-action@v2
+        with:
+          cmd: jq '.dependencies.@magic-circle/client = "*"' package.json > "$tmp" && mv "$tmp" package.json
       - name: Setup repo
         run: npm ci
       - name: Run Magic Circle
