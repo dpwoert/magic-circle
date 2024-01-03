@@ -35,7 +35,7 @@ jobs:
         working-directory: ./examples/simple
         run: cat package.json
       - name: Clean repo
-        run: rm package.json && rm package-lock.json && rm -rf .husky
+        run: rm -rf .husky
       - name: Setup repo
         working-directory: ./examples/simple
         run: npm ci
