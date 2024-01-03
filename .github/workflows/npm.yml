@@ -20,6 +20,8 @@ jobs:
           cache: 'npm'
       - name: Open simple example
         run: cd examples/simple
+      - name: Show directory content
+        run: ls
       - name: Change package version for editor
         run: jq '.devDependencies.@magic-circle/editor = "*"' package.json > "$tmp" && mv "$tmp" package.json
       - name: Change package version for client
