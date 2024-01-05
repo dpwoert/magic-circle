@@ -37,8 +37,9 @@ jobs:
       - name: Output package json
         # working-directory: ./examples/simple
         run: cat package.json
-      # - name: Clean repo
-      #   run: rm -rf .husky && rm package.json && rm package-lock.json && rm -rf core && rm -rf plugins
+      - name: Clean repo
+        run: rm package.json && rm package-lock.json && rm -rf core && rm -rf plugins
+        working-directory: /
       - name: Show content
         run: ls
       - name: Setup repo
