@@ -11,6 +11,9 @@ jobs:
   install:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: ./examples/simple
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js
@@ -32,15 +35,13 @@ jobs:
           action: 'set_dep_version'
           argument: '@magic-circle/client *'
       - name: Output package json
-        working-directory: ./examples/simple
+        # working-directory: ./examples/simple
         run: cat package.json
-      - name: Clean repo
-        run: rm -rf .husky && rm package.json && rm package-lock.json && rm -rf core && rm -rf plugins
+      # - name: Clean repo
+      #   run: rm -rf .husky && rm package.json && rm package-lock.json && rm -rf core && rm -rf plugins
       - name: Show content
         run: ls
       - name: Setup repo
-        # working-directory: ./examples/simple
-        run: cd examples/simple && npm i
+        run: npm i
       - name: Run Magic Circle
-        working-directory: ./examples/simple
         run: npm run build:editor
