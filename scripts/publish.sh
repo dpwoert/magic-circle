@@ -1,3 +1,4 @@
+
 #!/bin/bash
 
 # stop when one of these commands fail
@@ -31,6 +32,7 @@ fi
 echo "cleaning repo and (re)installing dependencies"
 npm run clean
 npm install
+npx nx reset
 
 echo "Running prettier to ensure not detecting wrong changes"
 npm run prettier
