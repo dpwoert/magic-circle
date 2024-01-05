@@ -35,10 +35,12 @@ jobs:
         working-directory: ./examples/simple
         run: cat package.json
       - name: Clean repo
-        run: rm -rf .husky && rm examples/simple/package-lock.json
+        run: rm -rf .husky && rm package.json && rm package-lock.json
+      - name: Show content
+        run: cd examples/simple && ls
       - name: Setup repo
         # working-directory: ./examples/simple
-        run: cd ./examples/simple && npm i
+        run: cd examples/simple && npm i
       - name: Run Magic Circle
         working-directory: ./examples/simple
         run: npm run build:editor
