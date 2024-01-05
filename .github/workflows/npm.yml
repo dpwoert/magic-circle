@@ -17,20 +17,20 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 21.x
-      - name: Change package version for editor
-        uses: MYXOMOPX/modify-pkg-json@master
-        with:
-          target: ./examples/simple/package.json
-          save_to: ./examples/simple/package.json
-          action: 'set_devdep_version'
-          argument: '@magic-circle/editor *'
-      - name: Change package version for client
-        uses: MYXOMOPX/modify-pkg-json@master
-        with:
-          target: ./examples/simple/package.json
-          save_to: ./examples/simple/package.json
-          action: 'set_dep_version'
-          argument: '@magic-circle/client *'
+      # - name: Change package version for editor
+      #   uses: MYXOMOPX/modify-pkg-json@master
+      #   with:
+      #     target: ./examples/simple/package.json
+      #     save_to: ./examples/simple/package.json
+      #     action: 'set_devdep_version'
+      #     argument: '@magic-circle/editor *'
+      # - name: Change package version for client
+      #   uses: MYXOMOPX/modify-pkg-json@master
+      #   with:
+      #     target: ./examples/simple/package.json
+      #     save_to: ./examples/simple/package.json
+      #     action: 'set_dep_version'
+      #     argument: '@magic-circle/client *'
       - name: Output package json
         working-directory: ./examples/simple
         run: cat package.json
