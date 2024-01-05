@@ -1,7 +1,7 @@
 {
   "name": "@magic-circle/example-p5-svg",
   "private": true,
-  "version": "0.3.0-alpha.2",
+  "version": "0.3.0-alpha.3",
   "description": "Magic Circle P5js (svg) example",
   "type": "module",
   "keywords": [
@@ -30,14 +30,14 @@
     "editor": "magic"
   },
   "devDependencies": {
-    "@magic-circle/editor": "^0.3.0-alpha.2",
+    "@magic-circle/editor": "^0.3.0-alpha.3",
     "@types/p5": "^1.7.6",
     "typescript": "^5.3.3",
     "vite": "^5.0.10"
   },
   "dependencies": {
-    "@magic-circle/client": "^0.3.0-alpha.2",
-    "@magic-circle/p5": "^0.3.0-alpha.2",
+    "@magic-circle/client": "^0.3.0-alpha.3",
+    "@magic-circle/p5": "^0.3.0-alpha.3",
     "p5": "^1.9.0",
     "p5.js-svg": "^1.5.1"
   },
