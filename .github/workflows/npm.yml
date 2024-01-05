@@ -11,36 +11,32 @@ jobs:
   install:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: examples/simple
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 21.x
-      # - name: Change package version for editor
-      #   uses: MYXOMOPX/modify-pkg-json@master
-      #   with:
-      #     target: ./examples/simple/package.json
-      #     save_to: ./examples/simple/package.json
-      #     action: 'set_devdep_version'
-      #     argument: '@magic-circle/editor *'
-      # - name: Change package version for client
-      #   uses: MYXOMOPX/modify-pkg-json@master
-      #   with:
-      #     target: ./examples/simple/package.json
-      #     save_to: ./examples/simple/package.json
-      #     action: 'set_dep_version'
-      #     argument: '@magic-circle/client *'
+      - name: Change package version for editor
+        uses: MYXOMOPX/modify-pkg-json@master
+        with:
+          target: ./examples/simple/package.json
+          save_to: ./examples/simple/package.json
+          action: 'set_devdep_version'
+          argument: '@magic-circle/editor *'
+      - name: Change package version for client
+        uses: MYXOMOPX/modify-pkg-json@master
+        with:
+          target: ./examples/simple/package.json
+          save_to: ./examples/simple/package.json
+          action: 'set_dep_version'
+          argument: '@magic-circle/client *'
       - name: Output package json
-        working-directory: ./examples/simple
         run: cat package.json
-      - name: Clean repo
-        run: rm -rf .husky && rm package.json && rm package-lock.json
-      - name: Show content
-        run: cd examples/simple && ls
       - name: Setup repo
-        # working-directory: ./examples/simple
-        run: cd examples/simple && npm i
+        run: npm i
       - name: Run Magic Circle
-        working-directory: ./examples/simple
         run: npm run build:editor
