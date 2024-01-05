@@ -42,6 +42,6 @@ jobs:
       - name: Show content
         run: ls
       - name: Setup repo
-        run: npm i
+        run: npm i --verbose
       - name: Run Magic Circle
         run: npm run build:editor
