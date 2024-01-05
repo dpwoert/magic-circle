@@ -39,7 +39,7 @@ jobs:
         run: cat package.json
       - name: Clean repo
         run: rm package.json && rm package-lock.json && rm -rf core && rm -rf plugins
-        working-directory: /
+        working-directory: ./
       - name: Show content
         run: ls
       - name: Setup repo
