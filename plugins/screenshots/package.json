@@ -35,7 +35,7 @@
   "dependencies": {
     "file-saver": "^2.0.5",
     "idb-keyval": "^6.1.0",
-    "react-json-view": "^1.21.3"
+    "react-json-view-lite": "^1.2.1"
   },
   "devDependencies": {
     "@magic-circle/schema": "^0.3.0-alpha.3",

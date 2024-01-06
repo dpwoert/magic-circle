@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import ReactJson from 'react-json-view';
+import { JsonView, darkStyles, allExpanded } from 'react-json-view-lite';
+import 'react-json-view-lite/dist/index.css';
 
-import { COLORS, SPACING, Inner } from '@magic-circle/styles';
+import { SPACING, Inner } from '@magic-circle/styles';
 import { useReference } from '@magic-circle/state';
 
 import type { ScreenshotFile } from './index';
@@ -12,6 +13,10 @@ const Container = styled.div`
   padding-left: ${SPACING(4)}px;
   padding-top: ${SPACING(2)}px;
   padding-bottom: ${SPACING(2)}px;
+
+  ._11RoI {
+    background: none;
+  }
 `;
 
 type JsonViewerProps = {
@@ -69,11 +74,10 @@ const JsonViewer = ({ screenshot, screenshots }: JsonViewerProps) => {
       ]}
     >
       <Container>
-        <ReactJson
-          src={screenshot.data}
-          theme="monokai"
-          iconStyle="circle"
-          style={{ background: COLORS.shades.s500.css }}
+        <JsonView
+          data={screenshot.data}
+          shouldExpandNode={allExpanded}
+          style={darkStyles}
         />
       </Container>
     </Inner>
