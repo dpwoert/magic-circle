@@ -3,9 +3,8 @@ name: NPM
 on:
   schedule:
     - cron: '0 18 * * *'
-  push:
-    branches:
-      - main
+  release:
+    types: [created, published, edited]
 
 jobs:
   install:

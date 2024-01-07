@@ -55,7 +55,10 @@ if [[ `git status --porcelain` ]]; then
 fi
 
 # update version
-npx lerna version
+npx lerna version --no-push
 
 # publish to npm
 npx lerna publish from-package
+
+# push to github
+git push --follow-tags
