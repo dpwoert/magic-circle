@@ -36,7 +36,7 @@
     "vite-plugin-glsl": "^1.2.1"
   },
   "dependencies": {
-    "@magic-circle/client": "^0.3.0-alpha.3",
+    "@magic-circle/client": "^0.3.0-alpha.4",
     "regl": "2.1.0"
   }
 }

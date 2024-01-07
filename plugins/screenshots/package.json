@@ -38,9 +38,9 @@
     "react-json-view-lite": "^1.2.1"
   },
   "devDependencies": {
-    "@magic-circle/schema": "^0.3.0-alpha.3",
-    "@magic-circle/state": "^0.3.0-alpha.3",
-    "@magic-circle/styles": "^0.3.0-alpha.3",
+    "@magic-circle/schema": "^0.3.0-alpha.4",
+    "@magic-circle/state": "^0.3.0-alpha.4",
+    "@magic-circle/styles": "^0.3.0-alpha.4",
     "@types/file-saver": "^2.0.7",
     "@types/react": "^18.0.21",
     "@types/styled-components": "^5.1.26",

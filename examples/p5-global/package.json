@@ -36,8 +36,8 @@
     "vite": "^5.0.10"
   },
   "dependencies": {
-    "@magic-circle/client": "^0.3.0-alpha.3",
-    "@magic-circle/p5": "^0.3.0-alpha.3",
+    "@magic-circle/client": "^0.3.0-alpha.4",
+    "@magic-circle/p5": "^0.3.0-alpha.4",
     "p5": "^1.9.0"
   },
   "exampleName": "p5.js (global mode)"
