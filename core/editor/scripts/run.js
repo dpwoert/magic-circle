@@ -104,7 +104,7 @@ const generateConfig = async () => {
       }),
       json(),
       commonjs(),
-      babel({ presets: [babelPresetReact] }),
+      babel({ presets: [babelPresetReact], babelHelpers: 'bundled' }),
     ],
   });
 
