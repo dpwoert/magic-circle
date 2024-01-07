@@ -194,6 +194,9 @@ const serve = async () => {
     ...viteSettings,
     server: {
       port: PORT,
+      watch: {
+        ignored: ['!**/@magic-circle/**/*'],
+      },
     },
   });
   await server.listen();
