@@ -20,6 +20,12 @@ export default class Control<T, U extends options = options> {
 
   private updateHooks: Set<UpdateHook<T>>;
 
+  /**
+   * Creates control instance
+   *
+   * @param reference Object to reference
+   * @param key Key in object to read for value
+   */
   constructor(reference: Reference, key: string) {
     if (!reference) {
       throw new Error('Reference object does not exist');
@@ -60,15 +66,26 @@ export default class Control<T, U extends options = options> {
     this.updateHooks.forEach((fn) => fn(value));
   }
 
+  /**
+   * Sets label in UI
+   *
+   * @param label
+   */
   label(label: string) {
     this.options.label = label;
     return this;
   }
 
+  /**
+   * Resets to the initial value
+   */
   reset() {
     this.value = this.initialValue;
   }
 
+  /**
+   * Sets current value as default
+   */
   setDefault() {
     let newValue:
       | T
@@ -97,25 +114,54 @@ export default class Control<T, U extends options = options> {
     this.initialValue = newValue;
   }
 
+  /**
+   * Get path in tree
+   *
+   * @param basePath Base path to prepend
+   * @param paths Reference to all paths to prevent duplicates
+   */
   getPath(basePath: string, paths: Paths) {
     return paths.get(basePath, this.key);
   }
 
+  /**
+   * Watch value changes,
+   * needed if external changes happen to this variable.
+   *
+   * @param watch Enable/disable watching
+   */
   watch(watch = true) {
     this.watchChanges = watch;
     return this;
   }
 
+  /**
+   * (if possible) interpolates values
+   *
+   * @param from
+   * @param to
+   * @param alpha Value between 0-1
+   */
   // eslint-disable-next-line
   interpolate(from: T, to: T, alpha: number) {
     return from;
   }
 
+  /**
+   * Function to run on update of values, triggered by the editor.
+   *
+   * @param hook Function to run
+   */
   onUpdate(fn: UpdateHook<T>) {
     this.updateHooks.add(fn);
     return this;
   }
 
+  /**
+   * Add this control to a layer or folder
+   *
+   * @param layer Layer/folder to add to
+   */
   addTo(layer: Layer) {
     if (this.parent) {
       this.removeFromParent();
@@ -127,12 +173,21 @@ export default class Control<T, U extends options = options> {
     return this;
   }
 
+  /**
+   * Trigger a sync of the root Magic Circle instance (if possible)
+   */
   sync() {
     if (this.parent) {
       this.parent.getMagicInstance()?.sync();
     }
   }
 
+  /**
+   * Exports settings to JSON
+   *
+   * @param basePath Base path to prepend
+   * @param paths Reference to all paths to prevent duplicates
+   */
   toJSON(basePath: string, paths: Paths) {
     const path = this.getPath(basePath, paths);
     return {
@@ -147,6 +202,9 @@ export default class Control<T, U extends options = options> {
     };
   }
 
+  /**
+   * Removes this control from parent
+   */
   removeFromParent() {
     if (this.parent) {
       this.parent.remove(this);
@@ -154,6 +212,9 @@ export default class Control<T, U extends options = options> {
     }
   }
 
+  /**
+   * Destroys this instance and all memory associated with it
+   */
   destroy() {
     if (this.parent) {
       this.removeFromParent();

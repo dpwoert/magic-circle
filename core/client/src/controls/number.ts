@@ -9,11 +9,17 @@ type options = {
 export default class NumberControl extends Control<number, options> {
   type = 'number';
 
+  /**
+   * Sets range for control. User can set the value between these two values.
+   */
   range(start: number, end: number) {
     this.options.range = [start, end];
     return this;
   }
 
+  /**
+   * Sets step size for control
+   */
   stepSize(size: number) {
     this.options.stepSize = size;
     return this;

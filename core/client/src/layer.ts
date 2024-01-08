@@ -21,6 +21,10 @@ export default class Layer {
   collapsed: boolean;
   isBaseLayer: boolean;
 
+  /**
+   * @param name Name of layer
+   * @param magicInstance Only used when created as root layer
+   */
   constructor(name: string, magicInstance?: MagicCircle) {
     this.name = name;
     this.children = [];
@@ -30,17 +34,29 @@ export default class Layer {
     this.magicInstance = magicInstance;
   }
 
+  /**
+   * Loop through all direct children.
+   * Does not work recursively.
+   *
+   * @param hook Function that has child as argument
+   */
   forEach(fn: (child: Child) => void) {
     this.children.forEach((child) => {
       fn(child);
     });
   }
 
+  /** @deprecated */
   forEachRecursive(fn: (child: Child, path: string) => void) {
     console.warn('Deprecated: use .traverse');
     this.traverse(fn);
   }
 
+  /**
+   * Loop through all children recursively.
+   *
+   * @param hook Function that has child and path as arguments
+   */
   traverse(fn: (child: Child, path: string) => void) {
     const path = new Paths();
 
@@ -58,6 +74,11 @@ export default class Layer {
     recursive(this.children, this.isBaseLayer ? '' : this.name);
   }
 
+  /**
+   * Loop through all parents recursively.
+   *
+   * @param hook Function that has parent as argument
+   */
   traverseAncestors(fn: (parent: Layer) => void) {
     const recursive = (parent: Layer) => {
       fn(parent);
@@ -73,6 +94,9 @@ export default class Layer {
     }
   }
 
+  /**
+   * Gets Magic Istance this layer is connected to
+   */
   getMagicInstance() {
     let instance: MagicCircle | undefined;
 
@@ -85,6 +109,11 @@ export default class Layer {
     return instance;
   }
 
+  /**
+   * Adds one or more children to this layer
+   *
+   * @param layer Child(ren) to add to this layer
+   */
   add(child: Child | Child[]) {
     if (Array.isArray(child)) {
       // Add one by one
@@ -105,6 +134,11 @@ export default class Layer {
     return this;
   }
 
+  /**
+   * Add this layer as child to another layer
+   *
+   * @param layer Layer/folder to add to
+   */
   addTo(layer: Layer) {
     if (this.parent) {
       this.removeFromParent();
@@ -116,6 +150,11 @@ export default class Layer {
     return this;
   }
 
+  /**
+   * Remove one of more children from this layer
+   *
+   * @param layer Layer(s) to remove
+   */
   remove(layer: Child | Child[]) {
     this.children = this.children.filter((c) =>
       Array.isArray(layer) ? !layer.includes(c) : c !== layer
@@ -124,6 +163,9 @@ export default class Layer {
     return this;
   }
 
+  /**
+   * Removes this control from parent
+   */
   removeFromParent() {
     if (this.parent) {
       this.parent.remove(this);
@@ -131,6 +173,11 @@ export default class Layer {
     }
   }
 
+  /**
+   * Destroys this instance and all memory associated with it
+   *
+   * @param removeChildren Removes and destroys all children when true
+   */
   destroy(removeChildren = false) {
     if (this.parent) {
       this.removeFromParent();
@@ -147,15 +194,32 @@ export default class Layer {
     this.magicInstance = undefined;
   }
 
+  /**
+   * Collapse list of children in UI
+   *
+   * @param collapsed Set collapsed to true/false
+   */
   collapse(collapsed = true) {
     this.collapsed = collapsed;
     return this;
   }
 
+  /**
+   * Get path in tree
+   *
+   * @param basePath Base path to prepend
+   * @param paths Reference to all paths to prevent duplicates
+   */
   getPath(basePath: string, paths: Paths) {
     return paths.get(basePath, this.name);
   }
 
+  /**
+   * Exports settings to JSON
+   *
+   * @param basePath Base path to prepend
+   * @param paths Reference to all paths to prevent duplicates
+   */
   toJSON(basePath: string, paths: Paths): JSONOutput {
     const path = this.getPath(basePath, paths);
     const startPath = this.isBaseLayer ? '' : path;

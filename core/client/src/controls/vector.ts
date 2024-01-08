@@ -32,16 +32,25 @@ export default class VectorControl extends Control<vector, options> {
     }
   }
 
+  /**
+   * Sets range for control. User can set the value between these two values.
+   */
   range(start: number, end: number) {
     this.options.range = [start, end];
     return this;
   }
 
+  /**
+   * Sets the precision in digits
+   */
   precision(digits: number) {
     this.options.precision = digits;
     return this;
   }
 
+  /**
+   * Sets the default secondary axis, either the y or z-axis
+   */
   defaultSecondaryAxis(axis: 'y' | 'z') {
     this.options.defaultSecondaryAxis = axis;
     return this;

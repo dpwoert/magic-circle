@@ -134,6 +134,9 @@ export default class MagicCircle {
     });
   }
 
+  /**
+   * Tries to make connection between frame and editor
+   */
   async connect() {
     if (!this.ipc) {
       throw new Error('IPC not defined');
@@ -176,6 +179,11 @@ export default class MagicCircle {
     this.ipc.send('ready', true);
   }
 
+  /**
+   * Provide initial setup script
+   *
+   * @param handle Function that will run on setup, return a html element (canvas/svg) for enabling screenshots.
+   */
   setup(fn?: setupFn) {
     if (this.setupDone) {
       throw new Error('Can not change setup function after it has already run');
@@ -196,6 +204,11 @@ export default class MagicCircle {
     return this;
   }
 
+  /**
+   * Provide script that will run on every tick
+   *
+   * @param handle Function that will run on every tick. Provides a time delta since previous tick.
+   */
   loop(fn: loopFn) {
     this.hooks.loop = fn;
 
@@ -207,11 +220,20 @@ export default class MagicCircle {
   resize(): resizeFn;
   resize(fn: resizeFn): MagicCircle;
 
+  /**
+   * Provide script that will run on a resize of the element.
+   *
+   * @param handle Function that will run on resize
+   */
   resize(fn?: resizeFn): unknown {
     if (fn) this.hooks.resize = fn;
     return fn ? this : this.hooks.resize;
   }
 
+  /**
+   * Trigger a (manual) sync between frame and client.
+   * Debounced to prevent sending too many messages.
+   */
   sync() {
     if (!this.setupDone) return;
 
@@ -225,6 +247,9 @@ export default class MagicCircle {
     }, 12);
   }
 
+  /**
+   * Trigger an immediate sync between frame and client
+   */
   flush() {
     (this.plugins || []).forEach((p) => {
       if (p.sync) {
@@ -233,6 +258,9 @@ export default class MagicCircle {
     });
   }
 
+  /**
+   * Start running the loop function (whenever the setup is ready)
+   */
   start() {
     if (!this.setupCalled) {
       throw new Error(
@@ -269,6 +297,9 @@ export default class MagicCircle {
     return this;
   }
 
+  /**
+   * Stop running the loop function
+   */
   stop() {
     if (this.ipc) this.ipc.send('play', false);
     this.isPlaying = false;
@@ -288,6 +319,12 @@ export default class MagicCircle {
     return this;
   }
 
+  /**
+   * Triggers one tick of the loop.
+   * Will not trigger a new step after completion.
+   *
+   * @param customDelta Manually set the time delta
+   */
   step(customDelta?: number) {
     // calculate delta
     const newTime = (
@@ -314,6 +351,9 @@ export default class MagicCircle {
     });
   }
 
+  /**
+   * Trigger a tick
+   */
   tick() {
     this.step();
 
@@ -323,7 +363,12 @@ export default class MagicCircle {
     }
   }
 
-  destroy() {
+  /**
+   * Destroys this instance and all memory associated with it
+   *
+   * @param removeChildren Removes and destroys all children when true
+   */
+  destroy(removeChildren = false) {
     this.stop();
     this.hooks = {};
 
@@ -341,10 +386,20 @@ export default class MagicCircle {
       }
     });
 
+    if (removeChildren) {
+      this.layer.destroy(true);
+    }
+
     this.plugins = [];
     this.arguments = {};
+    this.layer.children = [];
   }
 
+  /**
+   * Find a plugin
+   *
+   * @param name Name of plugin
+   */
   plugin<T extends PluginBase>(name: string): T {
     if (!this.plugins) {
       throw new Error('Plugins not created yet, first run the setup() call');
@@ -353,6 +408,11 @@ export default class MagicCircle {
     return this.plugins.find((p) => p.name === name) as T;
   }
 
+  /**
+   * Adds one or more layers
+   *
+   * @param layer Single or multiple layers to add
+   */
   add(layer: Child | Child[]) {
     this.layer.add(layer);
   }
