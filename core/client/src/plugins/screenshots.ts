@@ -7,7 +7,7 @@ type screenshot = {
 };
 
 export default class PluginScreenshot extends Plugin {
-  name = 'screenshot';
+  static id = 'screenshot';
 
   connect() {
     const { ipc } = this.client;

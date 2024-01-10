@@ -16,16 +16,16 @@ describe('core/client:plugin/layers', () => {
 
   test('Should be able to find plugin via client', () => {
     const client = new Client([PluginLayers], IpcMock).setup();
-    const layers = client.plugin<PluginLayers>('layers');
+    const layers = client.plugin(PluginLayers);
 
     expect(layers).toBeDefined();
   });
 
   test('Should warn when trying to change non-existing control', () => {
     const client = new Client([PluginLayers], IpcMock).setup();
-    const layers = client.plugin<PluginLayers>('layers');
+    const layers = client.plugin(PluginLayers);
 
-    expect(() => layers.set('value', 'test2')).not.toThrow();
+    expect(() => layers?.set('value', 'test2')).not.toThrow();
     expect(console.warn).toBeCalled();
   });
 
@@ -33,14 +33,14 @@ describe('core/client:plugin/layers', () => {
     const ref = { value: 'test' };
 
     const client = new Client([PluginLayers], IpcMock).setup();
-    const layers = client.plugin<PluginLayers>('layers');
+    const layers = client.plugin(PluginLayers);
 
     const control = new Control<string>(ref, 'value');
     client.layer.add(control);
     client.flush();
 
-    expect(() => layers.set('value', 'test2')).not.toThrow();
-    expect(console.warn).not.toBeCalled();
+    expect(() => layers?.set('value', 'test2')).not.toThrow();
+    expect(console.warn).not.toHaveBeenCalled();
     expect(ref.value).toBe('test2');
   });
 
@@ -48,7 +48,7 @@ describe('core/client:plugin/layers', () => {
     const ref = { value: 'test' };
 
     const client = new Client([PluginLayers], IpcMock).setup();
-    const layers = client.plugin<PluginLayers>('layers');
+    const layers = client.plugin(PluginLayers);
 
     const layer = new Layer('child').addTo(client.layer);
 
@@ -57,8 +57,8 @@ describe('core/client:plugin/layers', () => {
     client.flush();
 
     expect(ref.value).toBe('test');
-    expect(() => layers.set('child.value', 'test2')).not.toThrow();
-    expect(console.warn).not.toBeCalled();
+    expect(() => layers?.set('child.value', 'test2')).not.toThrow();
+    expect(console.warn).not.toHaveBeenCalled();
     expect(ref.value).toBe('test2');
   });
 
@@ -66,55 +66,55 @@ describe('core/client:plugin/layers', () => {
     const ref = { value: 'test' };
 
     const client = new Client([PluginLayers], IpcMock).setup();
-    const layers = client.plugin<PluginLayers>('layers');
+    const layers = client.plugin(PluginLayers);
 
     const control = new Control<string>(ref, 'value');
     client.layer.add(control);
     client.flush();
 
-    expect(() => layers.set('value', 'test2')).not.toThrow();
+    expect(() => layers?.set('value', 'test2')).not.toThrow();
     expect(ref.value).toBe('test2');
 
-    layers.reset('value');
+    layers?.reset('value');
     expect(ref.value).toBe('test');
-    expect(console.warn).not.toBeCalled();
+    expect(console.warn).not.toHaveBeenCalled();
   });
 
   test('Should be able to reset all controls', () => {
     const ref = { value1: 'test1', value2: 'test2' };
 
     const client = new Client([PluginLayers], IpcMock).setup();
-    const layers = client.plugin<PluginLayers>('layers');
+    const layers = client.plugin(PluginLayers);
 
     const control1 = new Control<string>(ref, 'value1');
     const control2 = new Control<string>(ref, 'value2');
     client.layer.add([control1, control2]);
     client.flush();
 
-    layers.set('value1', 'test1-update');
-    layers.set('value2', 'test2-update');
+    layers?.set('value1', 'test1-update');
+    layers?.set('value2', 'test2-update');
 
     expect(ref.value1).toBe('test1-update');
     expect(ref.value2).toBe('test2-update');
 
-    layers.resetAll();
+    layers?.resetAll();
     expect(ref.value1).toBe('test1');
     expect(ref.value2).toBe('test2');
-    expect(console.warn).not.toBeCalled();
+    expect(console.warn).not.toHaveBeenCalled();
   });
 
   test('Should be able to set multiple controls', () => {
     const ref = { value1: 'test1', value2: 'test2' };
 
     const client = new Client([PluginLayers], IpcMock).setup();
-    const layers = client.plugin<PluginLayers>('layers');
+    const layers = client.plugin(PluginLayers);
 
     const control1 = new Control<string>(ref, 'value1');
     const control2 = new Control<string>(ref, 'value2');
     client.layer.add([control1, control2]);
     client.flush();
 
-    layers.setAll({
+    layers?.setAll({
       value1: 'test1-update',
       value2: 'test2-update',
     });
@@ -127,14 +127,14 @@ describe('core/client:plugin/layers', () => {
     const ref = { value1: 'test1', value2: 'test2' };
 
     const client = new Client([PluginLayers], IpcMock).setup();
-    const layers = client.plugin<PluginLayers>('layers');
+    const layers = client.plugin(PluginLayers);
 
     const control1 = new Control<string>(ref, 'value1');
     const control2 = new Control<string>(ref, 'value2');
     client.layer.add([control1, control2]);
     client.flush();
 
-    layers.setAll({
+    layers?.setAll({
       value1: 'test1-update',
       value2: 'test2-update',
       value3: 'test3-update',
@@ -142,6 +142,6 @@ describe('core/client:plugin/layers', () => {
 
     expect(ref.value1).toBe('test1-update');
     expect(ref.value2).toBe('test2-update');
-    expect(console.warn).toBeCalled();
+    expect(console.warn).toHaveBeenCalled();
   });
 });

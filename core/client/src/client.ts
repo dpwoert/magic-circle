@@ -1,4 +1,8 @@
-import type { default as Plugin, PluginBase } from './plugin';
+import type {
+  // default as Plugin,
+  PluginBase,
+  PluginConstructor,
+} from './plugin';
 import Layer, { Child } from './layer';
 import { IpcBase, IpcIframe } from './ipc';
 
@@ -34,7 +38,7 @@ export default class MagicCircle {
   };
 
   private arguments: {
-    plugins?: (typeof Plugin)[];
+    plugins?: PluginConstructor[];
     ipc?: typeof IpcBase;
   };
   private plugins?: PluginBase[];
@@ -51,7 +55,7 @@ export default class MagicCircle {
   isConnected: boolean;
   setupDone: boolean;
 
-  constructor(plugins: (typeof Plugin)[] = [], ipc?: typeof IpcBase) {
+  constructor(plugins: PluginConstructor[] = [], ipc?: typeof IpcBase) {
     // setup initial hooks
     this.hooks = {
       setup: undefined,
@@ -398,14 +402,29 @@ export default class MagicCircle {
   /**
    * Find a plugin
    *
-   * @param name Name of plugin
+   * @param plugin Constructor of plugin
    */
-  plugin<T extends PluginBase>(name: string): T {
+  plugin<T extends PluginConstructor>(plugin: T): InstanceType<T> | null {
     if (!this.plugins) {
       throw new Error('Plugins not created yet, first run the setup() call');
     }
 
-    return this.plugins.find((p) => p.name === name) as T;
+    return (
+      (this.plugins.find((p) => p.id === plugin.id) as InstanceType<T>) || null
+    );
+  }
+
+  /**
+   * Find a plugin
+   *
+   * @param name Name of plugin
+   */
+  pluginById<T extends PluginBase>(name: string): T | null {
+    if (!this.plugins) {
+      throw new Error('Plugins not created yet, first run the setup() call');
+    }
+
+    return (this.plugins.find((p) => p.id === name) as T) || null;
   }
 
   /**

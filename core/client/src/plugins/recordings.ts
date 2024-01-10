@@ -8,7 +8,7 @@ type Recording = {
 };
 
 export default class PluginRecordings extends Plugin {
-  name = 'recordings';
+  static id = 'recordings';
 
   options?: Recording;
 
@@ -58,7 +58,7 @@ export default class PluginRecordings extends Plugin {
     const delta = (this.options?.fps || 60) / 1000;
     this.client.step(delta);
 
-    const plugin = this.client.plugin('screenshot') as PluginScreenshot;
+    const plugin = this.client.plugin(PluginScreenshot);
 
     if (!plugin) {
       throw new Error('Plugin screenshot is not loaded');

@@ -4,10 +4,10 @@ import Plugin from '../plugin';
 import Watcher from '../watcher';
 
 export default class PluginLayers extends Plugin {
+  static id = 'layers';
+
   private cache: Record<string, Control<any>> = {};
   watcher?: Watcher;
-
-  name = 'layers';
 
   connect() {
     const { ipc } = this.client;

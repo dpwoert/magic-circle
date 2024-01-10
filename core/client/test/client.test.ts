@@ -1,5 +1,5 @@
 import Client from '../src/client';
-import PluginLayers from '../src/plugins/layers';
+import PluginSeed from '../src/plugins/seed';
 
 import IpcMock from './mock-ipc';
 import Plugin from './mock-plugin';
@@ -21,7 +21,7 @@ describe('core/client:client', () => {
     client.setup().loop(loop).start();
 
     setTimeout(() => {
-      expect(loop).toBeCalled();
+      expect(loop).toHaveBeenCalled();
       client.stop();
       done();
     }, 12);
@@ -47,10 +47,10 @@ describe('core/client:client', () => {
     const client = new Client();
     client.setup(setup).loop(loop).start();
 
-    expect(setup).toBeCalled();
+    expect(setup).toHaveBeenCalled();
 
     setTimeout(() => {
-      expect(loop).toBeCalled();
+      expect(loop).toHaveBeenCalled();
       done();
     }, 12);
   });
@@ -63,8 +63,8 @@ describe('core/client:client', () => {
     client.setup(setup).loop(loop);
 
     setTimeout(() => {
-      expect(setup).toBeCalled();
-      expect(loop).not.toBeCalled();
+      expect(setup).toHaveBeenCalled();
+      expect(loop).not.toHaveBeenCalled();
       done();
     }, 12);
   });
@@ -82,12 +82,12 @@ describe('core/client:client', () => {
     const client = new Client();
     client.setup(setup).start();
 
-    expect(setup).toBeCalled();
+    expect(setup).toHaveBeenCalled();
 
     setTimeout(() => {
       expect(client.setupDone).toBe(true);
       expect(() => client.setup(setup2)).toThrow();
-      expect(setup2).not.toBeCalled();
+      expect(setup2).not.toHaveBeenCalled();
       done();
     }, 12);
   });
@@ -114,15 +114,6 @@ describe('core/client:client', () => {
     }, 100);
   });
 
-  test('Should return the correct plugin', () => {
-    const client = new Client();
-
-    // @ts-ignore
-    client.plugins = [new PluginLayers()];
-
-    expect(client.plugin('layers').name).toBe('layers');
-  });
-
   test('Should destroy the client correctly', () => {
     const client = new Client().setup().start();
     client.destroy();
@@ -139,16 +130,25 @@ describe('core/client:client', () => {
     expect(client.plugins.length).toBe(0);
   });
 
-  test('Should be able to find a plugin', () => {
+  test('Should be able to find a plugin by name', () => {
     const client = new Client().setup();
-    const seed = client.plugin('seed');
+    const seed = client.pluginById('seed');
 
     expect(seed).toBeDefined();
+    expect(seed?.id).toBe('seed');
+  });
+
+  test('Should be able to find a plugin by constructor', () => {
+    const client = new Client().setup();
+    const seed = client.plugin(PluginSeed);
+
+    expect(seed).toBeDefined();
+    expect(seed?.id).toBe('seed');
   });
 
   test('Should not be able to find a plugin if setup has not run yet', () => {
     const client = new Client();
-    expect(() => client.plugin('seed')).toThrow(
+    expect(() => client.pluginById('seed')).toThrow(
       'Plugins not created yet, first run the setup() call'
     );
   });
@@ -158,8 +158,8 @@ describe('core/client:client', () => {
     client
       .setup()
       .loop(() => {
-        const plugin = client.plugin('mock');
-        expect(plugin.connect).toBeCalled();
+        const plugin = client.plugin(Plugin);
+        expect(plugin?.connect).toHaveBeenCalled();
 
         client.stop();
         done();
@@ -173,8 +173,8 @@ describe('core/client:client', () => {
     client.setup().start();
 
     window.setTimeout(() => {
-      const plugin = client.plugin<Plugin>('mock');
-      expect(plugin.playState).toHaveBeenLastCalledWith(true);
+      const plugin = client.plugin(Plugin);
+      expect(plugin?.playState).toHaveBeenLastCalledWith(true);
 
       client.stop();
       done();
@@ -187,11 +187,11 @@ describe('core/client:client', () => {
     client.setup().start();
 
     window.setTimeout(() => {
-      const plugin = client.plugin<Plugin>('mock');
-      expect(plugin.playState).toHaveBeenLastCalledWith(true);
+      const plugin = client.plugin(Plugin);
+      expect(plugin?.playState).toHaveBeenLastCalledWith(true);
 
       client.stop();
-      expect(plugin.playState).toHaveBeenLastCalledWith(false);
+      expect(plugin?.playState).toHaveBeenLastCalledWith(false);
 
       done();
     }, 12);

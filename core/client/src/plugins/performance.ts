@@ -11,6 +11,8 @@ const ensurePaint = (fn: () => void) => {
 };
 
 export default class PluginPerformance extends Plugin {
+  static id = 'performance';
+
   cache: Record<string, Control<any>> = {};
 
   frames: number;
@@ -26,8 +28,6 @@ export default class PluginPerformance extends Plugin {
     renderTime: number;
     memory?: number;
   };
-
-  name = 'performance';
 
   constructor(client: Plugin['client']) {
     super(client);
