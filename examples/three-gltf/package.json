@@ -1,0 +1,47 @@
+{
+  "name": "@magic-circle/example-three-gltf",
+  "private": true,
+  "version": "0.3.0-alpha.5",
+  "type": "module",
+  "description": "Magic Circle Three/GLTF example",
+  "keywords": [
+    "controls",
+    "creative coding",
+    "editor",
+    "performance",
+    "layers",
+    "editing",
+    "GUI",
+    "example",
+    "threejs",
+    "three",
+    "gltf"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dpwoert/magic-circle.git",
+    "directory": "examples/three-gltf"
+  },
+  "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "serve": "vite",
+    "build:dev": "tsc && vite build",
+    "build:prod": "BUILD_ENV=production npm run build:dev",
+    "build:editor": "magic build",
+    "editor": "magic",
+    "editor:dev": "magic develop"
+  },
+  "devDependencies": {
+    "@magic-circle/editor": "^0.3.0-alpha.5",
+    "@types/three": "^0.160.0",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.10"
+  },
+  "dependencies": {
+    "@magic-circle/client": "^0.3.0-alpha.5",
+    "@magic-circle/three": "^0.3.0-alpha.5",
+    "three": "^0.160.0"
+  }
+}

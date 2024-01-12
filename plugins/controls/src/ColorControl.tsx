@@ -1,12 +1,21 @@
 /* eslint-disable no-bitwise */
-import rgba from 'color-rgba';
-import ColorPicker, { Color } from '@rc-component/color-picker';
+import { useState } from 'react';
 import styled from 'styled-components';
+import ColorPicker, { Color } from '@rc-component/color-picker';
+import rgba from 'color-rgba';
 
 import { Control as ControlSchema, ControlProps } from '@magic-circle/schema';
-import { TYPO, COLORS, Control, Forms } from '@magic-circle/styles';
+import {
+  TYPO,
+  COLORS,
+  Control,
+  Forms,
+  Popup,
+  Placement,
+} from '@magic-circle/styles';
+import ColorControlGlobal from './ColorControl.style';
 
-import GlobalStyle from './ColorControl.style';
+import '@rc-component/color-picker/assets/index.css';
 
 function clamp(val: number, min: number, max: number): number {
   return Math.max(min, Math.min(max, val));
@@ -64,6 +73,24 @@ const toRgbString = (color: number[], range: number, rangeAlpha: number) => {
   return `rgba(${r},${g},${b},${a})`;
 };
 
+type ColorTriggerProps = {
+  color: string;
+};
+
+const ColorTrigger = styled.div<ColorTriggerProps>`
+  border: none;
+  box-shadow: none;
+  width: 18px;
+  height: 18px;
+  margin-right: 5px;
+  display: inline-block;
+  padding: 2px;
+  border-radius: 2px;
+  user-select: none;
+  cursor: pointer;
+  background-color: ${(props) => props.color};
+`;
+
 const ColorControlField = ({
   value,
   label,
@@ -76,6 +103,7 @@ const ColorControlField = ({
   const { alpha } = options;
   const range = options.range || 255;
   const rangeAlpha = options.rangeAlpha || 1;
+  const [showPopup, setShowPopup] = useState(false);
 
   if (typeof value === 'string') {
     color = rgba(value) || [0, 0, 0];
@@ -108,55 +136,66 @@ const ColorControlField = ({
     <Control.Container hasChanges={hasChanges} reset={reset}>
       <Control.Label>{label}</Control.Label>
       <Control.Inside>
-        <GlobalStyle />
         <Forms.Color>
-          <ColorPicker
-            color={pickerColor}
-            onChange={(c) => {
-              const newHex = c.toHexString();
-              const newAlpha = c.getAlpha();
+          <ColorControlGlobal />
+          <Popup
+            content={
+              <ColorPicker
+                color={pickerColor}
+                onChange={(c) => {
+                  const newHex = c.toHexString();
+                  const newAlpha = c.getAlpha();
 
-              const newColor: number[] = [
-                ...(rgba(newHex) || [0, 0, 0]),
-                newAlpha * (rangeAlpha / 100),
-              ];
-              let newColorConverted: typeof value;
+                  const newColor: number[] = [
+                    ...(rgba(newHex) || [0, 0, 0]),
+                    newAlpha * (rangeAlpha / 100),
+                  ];
+                  let newColorConverted: typeof value;
 
-              // convert to old format
-              if (typeof value === 'string' && alpha) {
-                newColorConverted = toRgbString(newColor, 255, 1);
-              } else if (typeof value === 'string' && !alpha) {
-                newColorConverted = toHex(newColor, 255);
-              } else if (typeof value === 'number') {
-                newColorConverted =
-                  (clamp(newColor[0], 0, 255) << 16) ^
-                  (clamp(newColor[1], 0, 255) << 8) ^
-                  (clamp(newColor[2], 0, 255) << 0);
-              } else if (Array.isArray(value)) {
-                newColorConverted = newColor.map((v, k) =>
-                  k < 3 ? v * (range / 255) : v * (rangeAlpha / 100)
-                );
-              } else if (typeof value === 'object' && 'r' in value) {
-                newColorConverted = {
-                  r: newColor[0] * (range / 255),
-                  g: newColor[1] * (range / 255),
-                  b: newColor[2] * (range / 255),
-                  a: newColor[3] * (rangeAlpha / 100),
-                };
-              } else {
-                newColorConverted = {
-                  red: newColor[0] * (range / 255),
-                  green: newColor[1] * (range / 255),
-                  blue: newColor[2] * (range / 255),
-                  alpha: newColor[3] * (rangeAlpha / 100),
-                };
-              }
+                  // convert to old format
+                  if (typeof value === 'string' && alpha) {
+                    newColorConverted = toRgbString(newColor, 255, 1);
+                  } else if (typeof value === 'string' && !alpha) {
+                    newColorConverted = toHex(newColor, 255);
+                  } else if (typeof value === 'number') {
+                    newColorConverted =
+                      (clamp(newColor[0], 0, 255) << 16) ^
+                      (clamp(newColor[1], 0, 255) << 8) ^
+                      (clamp(newColor[2], 0, 255) << 0);
+                  } else if (Array.isArray(value)) {
+                    newColorConverted = newColor.map((v, k) =>
+                      k < 3 ? v * (range / 255) : v * (rangeAlpha / 100)
+                    );
+                  } else if (typeof value === 'object' && 'r' in value) {
+                    newColorConverted = {
+                      r: newColor[0] * (range / 255),
+                      g: newColor[1] * (range / 255),
+                      b: newColor[2] * (range / 255),
+                      a: newColor[3] * (rangeAlpha / 100),
+                    };
+                  } else {
+                    newColorConverted = {
+                      red: newColor[0] * (range / 255),
+                      green: newColor[1] * (range / 255),
+                      blue: newColor[2] * (range / 255),
+                      alpha: newColor[3] * (rangeAlpha / 100),
+                    };
+                  }
 
-              set(newColorConverted);
-            }}
-            // placement="bottomRight"
-            disabledAlpha={!alpha}
-          />
+                  set(newColorConverted);
+                }}
+                // placement="bottomRight"
+                disabledAlpha={!alpha}
+              />
+            }
+            showOnClick
+            placement={Placement.BOTTOM}
+          >
+            <ColorTrigger
+              color={hex}
+              onClick={() => setShowPopup(!showPopup)}
+            />
+          </Popup>
           <ColorValue>{alpha ? toRgbString(color, 255, 1) : hex}</ColorValue>
         </Forms.Color>
       </Control.Inside>
