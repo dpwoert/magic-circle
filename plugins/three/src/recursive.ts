@@ -1,4 +1,4 @@
-import { Mesh, Object3D, Vector2, Vector3, Camera, Light } from 'three';
+import { Mesh, Object3D, Vector2, Vector3, Light, Camera } from 'three';
 import { Layer } from '@magic-circle/client';
 
 import { MeshSettings, mesh, object3d } from './object3d';
@@ -30,8 +30,10 @@ export function recursive(
 
     if (object instanceof Mesh) {
       gui = mesh(object, {
+        ...settings,
         range: settings.range ? settings.range(object) : undefined,
         scale: settings.scale ? settings.scale(object) : undefined,
+        camera: settings.camera,
       }).addTo(parentLayer);
     } else if (object instanceof Camera) {
       gui = camera(object, {
@@ -47,6 +49,7 @@ export function recursive(
       }).addTo(parentLayer);
     } else {
       gui = object3d(object, {
+        ...settings,
         range: settings.range ? settings.range(object) : undefined,
         scale: settings.scale ? settings.scale(object) : undefined,
       }).addTo(parentLayer);

@@ -17,7 +17,7 @@ export function scene(scene: Scene, opts: SceneSettings = {}): Layer {
   const rootLayer = new Layer(opts.name || scene.name || 'Scene');
 
   if (!opts.noRecursive) {
-    rootLayer.add(recursive(scene).children);
+    rootLayer.add(recursive(scene, opts).children);
   }
 
   const background: Folder['children'] = [];

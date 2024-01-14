@@ -1,4 +1,4 @@
-import { Mesh, Object3D, Vector2, Vector3 } from 'three';
+import { Mesh, Object3D, Vector2, Vector3, Camera } from 'three';
 import {
   BooleanControl,
   VectorControl,
@@ -10,23 +10,20 @@ import {
 } from '@magic-circle/client';
 
 import { material, materialTransform } from './material';
+import { TransformControl } from './TransformControls';
 
 type MatrixSettings = {
   range: Vector3;
   scale: Vector2;
   precision: number;
+  camera?: Camera;
+  onTransformStart?: () => void;
+  onTransformEnd?: () => void;
 };
 
-type Object3dSettings = {
-  range?: Vector3;
-  scale?: Vector2;
-  precision?: number;
-};
+type Object3dSettings = Partial<MatrixSettings>;
 
-export type MeshSettings = {
-  range?: Vector3;
-  scale?: Vector2;
-  precision?: number;
+export type MeshSettings = Object3dSettings & {
   customMaterial?: materialTransform;
 };
 
@@ -34,12 +31,40 @@ export function matrixFolders(
   object: Object3D,
   settings: MatrixSettings
 ): Folder[] {
-  return [
+  const folders: Folder[] = [];
+
+  folders.push(
     new Folder('General').add([
       new TextControl(object, 'id'),
       new BooleanControl(object, 'visible'),
-    ]),
+    ])
+  );
 
+  if (settings.camera) {
+    const transformSettings = { mode: 'translate' };
+    const transformControl = new TransformControl(
+      settings.camera,
+      object
+    ).onUpdate((newVal) => {
+      if (newVal && settings.onTransformStart) {
+        settings.onTransformStart();
+      }
+      if (!newVal && settings.onTransformEnd) {
+        settings.onTransformEnd();
+      }
+    });
+    const transformMode = new TextControl(transformSettings, 'mode')
+      .selection(['translate', 'rotate', 'scale'])
+      .onUpdate(() => {
+        transformControl.mode(transformSettings.mode as any);
+      });
+
+    folders.push(
+      new Folder('Transform').add([transformControl, transformMode])
+    );
+  }
+
+  folders.push(
     new Folder('Position').add([
       new VectorControl(object, 'position')
         .range(
@@ -48,7 +73,6 @@ export function matrixFolders(
         )
         .precision(settings.precision),
     ]),
-
     new Folder('Scale').add([
       new NumberControl(object.scale, 'x').range(
         settings.scale.x,
@@ -68,8 +92,10 @@ export function matrixFolders(
       new RotationControl(object.rotation, 'x'),
       new RotationControl(object.rotation, 'y'),
       new RotationControl(object.rotation, 'z'),
-    ]),
-  ];
+    ])
+  );
+
+  return folders;
 }
 
 export function mesh(mesh: Mesh, settings: MeshSettings): Layer {
@@ -89,6 +115,7 @@ export function mesh(mesh: Mesh, settings: MeshSettings): Layer {
   // create folders for matrix
   layer.add(
     matrixFolders(mesh, {
+      ...settings,
       range: settings.range || defaultRange(),
       scale: settings.scale || new Vector2(0, 2),
       precision: settings.precision || 3,
@@ -116,6 +143,7 @@ export function object3d(
   // create folders for matrix
   layer.add(
     matrixFolders(object3d, {
+      ...settings,
       range: settings.range || new Vector3(1, 1, 1),
       scale: settings.scale || new Vector2(0, 2),
       precision: settings.precision || 3,

@@ -57,8 +57,6 @@ export function perspectiveCamera(
 }
 
 export function camera(object: Camera, settings: CameraSettings): Layer {
-  return new Layer(camera.name || 'Camera');
-
   if (object instanceof PerspectiveCamera) {
     return perspectiveCamera(object, settings);
   }

@@ -83,16 +83,7 @@ export async function setup(gui: MagicCircle) {
   }
 
   // Create UI
-  GUI.recursive(model, {
-    watch: () => true,
-    camera,
-    onTransformStart: () => {
-      controls.enabled = false;
-    },
-    onTransformEnd: () => {
-      controls.enabled = true;
-    },
-  }).traverse((child) => {
+  GUI.recursive(model, { watch: () => true, camera }).traverse((child) => {
     // skip a few root nodes...
     if ('name' in child && child.name === 'RootNode') {
       gui.layer.add(child);
