@@ -20,8 +20,8 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import { MagicCircle } from '@magic-circle/client';
 import * as GUI from '@magic-circle/three';
 
-import gltfFile from './damagedHelmet.glb?url';
-// import gltfFile from './littlestTokyo.glb?url';
+// import gltfFile from './damagedHelmet.glb?url';
+import gltfFile from './littlestTokyo.glb?url';
 
 let renderer: WebGLRenderer;
 let scene: Scene;
@@ -72,13 +72,13 @@ export async function setup(gui: MagicCircle) {
 
   // Add to scene
   const model = gltf.scene;
-  // model.position.set(1, 1, 0);
-  // model.scale.set(0.01, 0.01, 0.01);
+  model.position.set(1, 1, 0);
+  model.scale.set(0.01, 0.01, 0.01);
   scene.add(model);
 
   // Play animation
   mixer = new AnimationMixer(model);
-  if (gltf.animation && gltf.animations.length > 0) {
+  if (gltf.animations && gltf.animations.length > 0) {
     mixer.clipAction(gltf.animations[0]).play();
   }
 

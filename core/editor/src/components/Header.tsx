@@ -138,7 +138,7 @@ const Header = () => {
                     const inside = (
                       <Button
                         disabled={!button.tooltip}
-                        inactive={button.disabled}
+                        inactive={button.disabled ? true : undefined}
                         key={button.label}
                         onClick={() => button.onClick()}
                         content={button.tooltip}
