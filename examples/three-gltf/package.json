@@ -1,5 +1,6 @@
 {
   "name": "@magic-circle/example-three-gltf",
+  "exampleName": "ThreeJS helpers",
   "private": true,
   "version": "0.3.0-alpha.5",
   "type": "module",

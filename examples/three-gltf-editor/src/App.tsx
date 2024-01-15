@@ -25,14 +25,9 @@ const App = () => {
   const viewer = useRef<Viewer>(null);
 
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
-    console.log({ acceptedFiles });
-
     let base;
-    // const fileMap = new Map<string, File>();
 
     acceptedFiles.forEach((file) => {
-      // fileMap.set(file.path, file);
-
       if (file.name.match(/\.(gltf|glb)$/)) {
         base = file;
       }
@@ -43,7 +38,6 @@ const App = () => {
     }
 
     const url = URL.createObjectURL(base);
-    console.log({ url });
 
     try {
       await viewer.current.view(url);
@@ -63,7 +57,7 @@ const App = () => {
   return (
     <Container {...getRootProps()}>
       <input {...getInputProps()} />
-      {showMessage && <Message onUpload={() => console.log('test')} />}
+      {showMessage && <Message />}
       <Canvas />
     </Container>
   );
