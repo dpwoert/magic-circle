@@ -115,15 +115,19 @@ export default class Layer {
    * @param layer Child(ren) to add to this layer
    */
   add(child: Child | Child[]) {
+    /* eslint-disable no-param-reassign */
     if (Array.isArray(child)) {
       // Add one by one
       child.forEach((c) => {
         this.children.push(c);
+        c.parent = this;
       });
     } else if (this.children.indexOf(child) === -1) {
       // Make sure we're not duplicating
       this.children.push(child);
+      child.parent = this;
     }
+    /* eslint-enable no-param-reassign */
 
     // ensure we're syncing magic instance after
     const mc = this.getMagicInstance();

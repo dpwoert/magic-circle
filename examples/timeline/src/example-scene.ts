@@ -105,7 +105,7 @@ export function setup(gui: MagicCircle) {
   ]);
 
   // Add animation timeline
-  gui.plugin<PluginTimeline>('timeline').load(ANIMATION.scene, true);
+  gui.plugin(PluginTimeline).load(ANIMATION.scene, true);
 
   // Listen to resizes of the window
   window.addEventListener('resize', () => {

@@ -41,5 +41,5 @@
     "@magic-circle/client": "^0.3.0-alpha.5",
     "pixi.js": "^7.3.2"
   },
-  "exampleName": "Pixi.js"
+  "exampleName": "pixi.js"
 }

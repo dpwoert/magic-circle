@@ -110,11 +110,24 @@ export const Container = ({
   );
 };
 
-const LabelStyled = styled.div`
+type LabelStyledProps = {
+  width?: 'regular' | 'long' | 'full';
+};
+
+const LabelStyled = styled.div<LabelStyledProps>`
   ${TYPO.regular}
   display: flex;
   align-items: center;
-  width: ${SPACING(8)}px;
+  width: ${({ width }) => {
+    if (width === 'full') {
+      return '100%';
+    }
+    if (width === 'long') {
+      return SPACING(23) - SPACING(1.5) - SPACING(1) - SPACING(1);
+    }
+
+    return SPACING(8);
+  }}px;
   height: 100%;
   colors: ${COLORS.shades.s100.css};
   padding-left: ${SPACING(1)}px;
@@ -127,7 +140,7 @@ const LabelStyled = styled.div`
   }
 `;
 
-type LabelProps = {
+type LabelProps = LabelStyledProps & {
   children?: React.ReactNode;
 };
 

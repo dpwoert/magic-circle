@@ -37,7 +37,7 @@ type Hydration = {
   playhead: number;
 };
 
-export default class PLuginTimeline extends Plugin {
+export default class PluginTimeline extends Plugin {
   static id = 'timeline';
 
   private layers?: PluginLayers;

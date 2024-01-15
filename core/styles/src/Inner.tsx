@@ -84,7 +84,7 @@ const Close = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid ${COLORS.accent.opacity(0.7)};
+  border: 1px solid ${COLORS.accent.css};
   border-radius: 5px;
   background: ${COLORS.shades.s600.css};
   color: ${COLORS.white.css};
@@ -93,7 +93,7 @@ const Close = styled.div`
   transition: border-color 0.2s ease;
 
   &:hover {
-    border: 1px solid ${COLORS.accent.opacity(1)};
+    border: 1px solid ${COLORS.white.css};
   }
 `;
 

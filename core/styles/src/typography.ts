@@ -41,6 +41,13 @@ const typo = {
     line-height: ${rem(14)};
     letter-spacing: 0em;
   `,
+  medium: css`
+    font-family: ${FONT_STRING};
+    font-weight: 400;
+    font-size: ${rem(11)};
+    line-height: ${rem(14)};
+    letter-spacing: 0em;
+  `,
   small: css`
     font-family: ${FONT_STRING};
     font-weight: 400;

@@ -184,5 +184,6 @@ export default {
     s500: new Color('#212121'),
     s600: new Color('#191919'),
     s700: new Color('#0A0A0A'),
+    s800: new Color('#080808'),
   },
 };

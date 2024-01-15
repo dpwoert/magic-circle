@@ -260,14 +260,14 @@ const Timeline = ({ timeline }: TimelineProps) => {
   }, [selected, scene]);
 
   return (
-    <Container show={show}>
+    <Container show={show ? true : undefined}>
       <Header
         onClick={() => {
           timeline.show.set(!show);
         }}
       >
         <Icon name="Clock" width={SPACING(1)} height={SPACING(1)} /> Timeline
-        <Arrow show={show}>
+        <Arrow show={show ? true : undefined}>
           <Icon
             name={show ? 'ChevronDown' : 'ChevronUp'}
             width={SPACING(2)}

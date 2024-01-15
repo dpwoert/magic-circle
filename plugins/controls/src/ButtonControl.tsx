@@ -29,7 +29,7 @@ const ButtonControlField = ({
 }: ControlProps<() => void, Record<string, never>>) => {
   return (
     <Container hasChanges={false} reset={reset} onClick={() => set(value)}>
-      <Label>{label}</Label>
+      <Label width="full">{label}</Label>
       <Inside>
         <Icon name="ArrowRight" width={SPACING(2)} height={SPACING(2)} />
       </Inside>

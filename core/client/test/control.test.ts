@@ -1,4 +1,5 @@
 import Control from '../src/control';
+import BooleanControl from '../src/controls/boolean';
 
 describe('core/client:control', () => {
   test('Value should be able to get read', () => {
@@ -53,6 +54,31 @@ describe('core/client:control', () => {
 
     expect(fn).toBeCalledTimes(1);
     expect(fn).toBeCalledWith('new');
+  });
+
+  test('Should trigger update hook correctly with boolean value', () => {
+    const ref = { value: false };
+    const control = new BooleanControl(ref, 'value');
+    const fn = jest.fn();
+    control.onUpdate(fn);
+
+    control.value = true;
+    expect(fn).toBeCalledWith(true);
+    expect(fn).toBeCalledTimes(1);
+  });
+
+  test('Should trigger update hook correctly with multiple updates', () => {
+    const ref = { value: 'test' };
+    const control = new Control<string>(ref, 'value');
+    const fn = jest.fn();
+    control.onUpdate(fn);
+
+    control.value = 'new';
+    expect(fn).toBeCalledWith('new');
+    expect(fn).toBeCalledTimes(1);
+
+    control.value = 'new2';
+    expect(fn).toBeCalledTimes(2);
   });
 
   test('Should trigger update hook correctly when having multiple listeners', () => {

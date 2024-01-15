@@ -403,7 +403,7 @@ const Sidebar = ({ app, screenshots }: SidebarProps) => {
           onClick={() => setMode(ReadMode.ALL)}
           selected={mode === ReadMode.ALL}
         >
-          <Icon name="Folder" width={SPACING(1.5)} height={SPACING(1.5)} />
+          <Icon name="GridMasonry" width={SPACING(1.5)} height={SPACING(1.5)} />
         </HeaderFilterAll>
       </Header>
       {mode === ReadMode.ALL ? (
