@@ -1,7 +1,7 @@
 import Plugin from '../plugin';
 
 export default class PluginSeed extends Plugin {
-  name = 'seed';
+  static id = 'seed';
   seed = 0;
 
   constructor(client: Plugin['client']) {

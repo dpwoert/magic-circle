@@ -242,16 +242,16 @@ const VectorControlField = ({
             </LegendItem>
           )}
           <LegendItem align="left" x={0} y={50}>
-            x: {range[0]}
+            x: {range[0].toFixed(precision)}
           </LegendItem>
           <LegendItem align="right" x={100} y={50}>
-            x: {range[1]}
+            x: {range[1].toFixed(precision)}
           </LegendItem>
           <LegendItem align="right" x={50} y={0}>
-            {axis}: {range[1]}
+            {axis}: {range[1].toFixed(precision)}
           </LegendItem>
           <LegendItem align="right" x={50} y={100}>
-            {axis}: {range[0]}
+            {axis}: {range[0].toFixed(precision)}
           </LegendItem>
         </GraphLegend>
         <Graph

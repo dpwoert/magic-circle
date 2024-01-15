@@ -1,7 +1,7 @@
 {
   "name": "@magic-circle/pixi",
   "private": true,
-  "version": "0.3.0-alpha.2",
+  "version": "0.3.0-alpha.5",
   "description": "Magic Circle pixi.js example",
   "type": "module",
   "keywords": [
@@ -33,13 +33,13 @@
     "editor:dev": "magic develop"
   },
   "devDependencies": {
-    "@magic-circle/editor": "^0.3.0-alpha.2",
+    "@magic-circle/editor": "^0.3.0-alpha.5",
     "typescript": "^5.3.3",
     "vite": "^5.0.10"
   },
   "dependencies": {
-    "@magic-circle/client": "^0.3.0-alpha.2",
+    "@magic-circle/client": "^0.3.0-alpha.5",
     "pixi.js": "^7.3.2"
   },
-  "exampleName": "Pixi.js"
+  "exampleName": "pixi.js"
 }

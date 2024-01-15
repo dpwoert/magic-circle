@@ -1,0 +1,47 @@
+name: NPM
+
+on:
+  schedule:
+    - cron: '0 18 * * *'
+  release:
+    types: [created, published, edited]
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: ./examples/simple
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 21.x
+      - name: Change package version for editor
+        uses: MYXOMOPX/modify-pkg-json@master
+        with:
+          target: ./examples/simple/package.json
+          save_to: ./examples/simple/package.json
+          action: 'set_devdep_version'
+          argument: '@magic-circle/editor *'
+      - name: Change package version for client
+        uses: MYXOMOPX/modify-pkg-json@master
+        with:
+          target: ./examples/simple/package.json
+          save_to: ./examples/simple/package.json
+          action: 'set_dep_version'
+          argument: '@magic-circle/client *'
+      - name: Output package json
+        # working-directory: ./examples/simple
+        run: cat package.json
+      - name: Clean repo
+        run: rm package.json && rm package-lock.json && rm -rf core && rm -rf plugins
+        working-directory: ./
+      - name: Show content
+        run: ls
+      - name: Setup repo
+        run: npm i --verbose
+      - name: Run Magic Circle
+        run: npm run build:editor

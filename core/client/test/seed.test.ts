@@ -10,7 +10,7 @@ describe('core/client:plugin/seed', () => {
 
   test('Should be able to find plugin via client', () => {
     const client = new Client([PluginSeed], IpcMock).setup();
-    const layers = client.plugin<PluginSeed>('layers');
+    const layers = client.plugin(PluginSeed);
 
     expect(layers).toBeDefined();
   });

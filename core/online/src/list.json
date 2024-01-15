@@ -16,9 +16,14 @@
       "repo": "https://github.com/dpwoert/magic-circle/tree/master/examples/p5-global"
     },
     {
-      "name": "Pixi.js",
+      "name": "pixi.js",
       "path": "pixi",
       "repo": "https://github.com/dpwoert/magic-circle/tree/master/examples/pixi"
+    },
+    {
+      "name": "React Three Fiber",
+      "path": "react-three-fiber",
+      "repo": "https://github.com/dpwoert/magic-circle/tree/master/examples/react-three-fiber"
     },
     {
       "name": "regl",
@@ -34,6 +39,16 @@
       "name": "textures",
       "path": "textures",
       "repo": "https://github.com/dpwoert/magic-circle/tree/master/examples/simple"
+    },
+    {
+      "name": "ThreeJS helpers",
+      "path": "three-gltf",
+      "repo": "https://github.com/dpwoert/magic-circle/tree/master/examples/three-gltf"
+    },
+    {
+      "name": "ThreeJS GLTF uploads",
+      "path": "three-gltf-editor",
+      "repo": "https://github.com/dpwoert/magic-circle/tree/master/examples/three-gltf-editor"
     },
     {
       "name": "timeline",

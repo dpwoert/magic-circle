@@ -328,6 +328,7 @@ export interface Config {
       ) => Promise<Control<any, any | never>[]>);
   settings: {
     pageTitle?: string;
+    iframeAllow?: string;
     screenshots?: {
       directoryBasedOnFrameUrl?: boolean;
       gitInfo?: boolean;

@@ -249,8 +249,8 @@ const MenuContainer = ({ items, close }: MenuContainerProps) => {
             disabled={item.disabled}
             key={
               item.key ||
-              (typeof item.label === 'string' ? item.label : '') ||
-              ''
+              (typeof item.label === 'string' ? item.label : key) ||
+              key
             }
             checked={item.type === MenuItemType.CHECKBOX && item.checked}
             active={item.active}

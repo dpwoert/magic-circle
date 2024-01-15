@@ -1,7 +1,7 @@
 import Client from './client';
 
 export interface PluginBase {
-  name: string;
+  id: string;
   compatible: () => boolean;
   connect?: () => void;
   setup?: (element: Client['element']) => void;
@@ -13,13 +13,20 @@ export interface PluginBase {
   destroy: () => void;
 }
 
+export interface PluginConstructor {
+  new (client: Client): PluginBase;
+  id: string;
+}
+
 export default class Plugin implements PluginBase {
   client: Client;
 
-  name = '';
+  static id = '';
+  id: string;
 
   constructor(client: Client) {
     this.client = client;
+    this.id = (this.constructor as unknown as Plugin).id;
   }
 
   compatible() {

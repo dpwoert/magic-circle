@@ -104,7 +104,7 @@ const generateConfig = async () => {
       }),
       json(),
       commonjs(),
-      babel({ presets: [babelPresetReact] }),
+      babel({ presets: [babelPresetReact], babelHelpers: 'bundled' }),
     ],
   });
 
@@ -194,6 +194,9 @@ const serve = async () => {
     ...viteSettings,
     server: {
       port: PORT,
+      watch: {
+        ignored: ['!**/@magic-circle/**/*'],
+      },
     },
   });
   await server.listen();

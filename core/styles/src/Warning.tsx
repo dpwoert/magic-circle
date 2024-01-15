@@ -25,6 +25,8 @@ const Container = styled.div`
 
 const ButtonStyled = styled(Form.Button)`
   margin-top: ${SPACING(3)}px;
+  color: ${COLORS.white.css};
+  border-color: ${COLORS.accent.css};
 `;
 
 type WarningProps = {

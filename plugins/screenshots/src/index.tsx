@@ -28,6 +28,7 @@ import {
   StreamToTv,
   CheckCircle,
   Clipboard,
+  GridMasonry,
   MenuPortal,
 } from '@magic-circle/styles';
 
@@ -39,6 +40,7 @@ import { copyGitCommit, copyJSON, copyObject } from './utils';
 // Register icons
 registerIcon(Camera);
 registerIcon(Folder);
+registerIcon(GridMasonry);
 registerIcon(Photo);
 registerIcon(Information);
 registerIcon(Clock);

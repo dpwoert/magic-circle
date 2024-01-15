@@ -100,6 +100,9 @@ export default function App() {
     typeof APP.config.url === 'string'
       ? APP.config.url
       : APP.config.url(process.env.BUILD_ENV === 'develop');
+  const allow =
+    APP.config.settings.iframeAllow ||
+    'display-capture;camera;microphone;midi;serial;usb';
 
   // Setup on start
   useEffect(() => {
@@ -114,7 +117,7 @@ export default function App() {
           <SidebarLeft />
           <Frame id="frame">
             <Iframe
-              allow="display-capture"
+              allow={allow}
               src={readyToConnect ? url : ''}
               onLoad={() => {
                 // APP.setup();

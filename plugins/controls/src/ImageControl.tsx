@@ -64,10 +64,17 @@ const ImageControlField = ({
 
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
-    canvas.width = value.width;
-    canvas.height = value.height;
 
-    if (context) context.drawImage(value, 0, 0, value.width, value.height);
+    if (!value) {
+      canvas.width = 256;
+      canvas.height = 256;
+    } else {
+      canvas.width = value.width;
+      canvas.height = value.height;
+
+      if (context) context.drawImage(value, 0, 0, value.width, value.height);
+    }
+
     return canvas.toDataURL('image/png');
   }, [value]);
 

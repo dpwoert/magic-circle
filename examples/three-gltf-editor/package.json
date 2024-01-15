@@ -1,0 +1,54 @@
+{
+  "name": "@magic-circle/example-three-gltf-editor",
+  "exampleName": "ThreeJS GLTF uploads",
+  "private": true,
+  "version": "0.3.0-alpha.5",
+  "type": "module",
+  "description": "Magic Circle ThreeJS GLTF editor example",
+  "keywords": [
+    "controls",
+    "creative coding",
+    "editor",
+    "performance",
+    "layers",
+    "editing",
+    "GUI",
+    "example",
+    "threejs",
+    "three",
+    "gltf"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dpwoert/magic-circle.git",
+    "directory": "examples/three-gltf-editor"
+  },
+  "author": "Davey van der Woert <davey@dpwoert.com> (http://dpwoert.com)",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "serve": "vite",
+    "build:dev": "tsc && vite build",
+    "build:prod": "BUILD_ENV=production npm run build:dev",
+    "build:editor": "magic build",
+    "editor": "magic",
+    "editor:dev": "magic develop"
+  },
+  "devDependencies": {
+    "@magic-circle/editor": "^0.3.0-alpha.5",
+    "@vitejs/plugin-react": "^4.2.1",
+    "@types/three": "^0.160.0",
+    "@types/styled-components": "^5.1.34",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.10",
+    "vite-plugin-svgr": "^4.2.0"
+  },
+  "dependencies": {
+    "@magic-circle/client": "^0.3.0-alpha.5",
+    "@magic-circle/styles": "^0.3.0-alpha.5",
+    "react-dropzone": "14.2.3",
+    "@magic-circle/three": "^0.3.0-alpha.5",
+    "styled-components": "^6.1.5",
+    "three": "^0.160.0"
+  }
+}

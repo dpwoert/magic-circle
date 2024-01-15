@@ -1,5 +1,5 @@
 import Plugin from '../plugin';
-import type PluginLayers from './layers';
+import PluginLayers from './layers';
 
 import bezier from '../utils/bezier';
 import { clamp } from '../utils/math';
@@ -37,7 +37,9 @@ type Hydration = {
   playhead: number;
 };
 
-export default class PLuginTimeline extends Plugin {
+export default class PluginTimeline extends Plugin {
+  static id = 'timeline';
+
   private layers?: PluginLayers;
   private scene?: Scene;
   private start?: {
@@ -48,10 +50,8 @@ export default class PLuginTimeline extends Plugin {
   playhead: number = 0;
   playing: boolean = false;
 
-  name = 'timeline';
-
   setup() {
-    this.layers = this.client.plugin<PluginLayers>('layers');
+    this.layers = this.client.plugin(PluginLayers) || undefined;
 
     if (!this.layers) {
       throw new Error(
