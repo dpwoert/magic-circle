@@ -5,7 +5,7 @@ rm -rf magic-circle
 npx magic build
 
 # open folder for inner frame
-cd ../../examples/three-gltf-upload
+cd ../../examples/three-gltf-editor
 
 # build
 npm run build:prod
