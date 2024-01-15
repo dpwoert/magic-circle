@@ -39,7 +39,11 @@ const Message = () => {
     <Container>
       <Icon name="FilePlus" height={SPACING(2)} width={SPACING(2)} />
       Drag & drop a file here to load
-      <ButtonStyled onClick={() => onUpload()}>
+      <ButtonStyled
+        onClick={() => {
+          // noop
+        }}
+      >
         <Icon name="Upload" height={SPACING(1.5)} width={SPACING(1.5)} />
         Select file
       </ButtonStyled>
