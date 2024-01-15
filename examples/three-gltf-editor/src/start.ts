@@ -1,6 +1,18 @@
 import { MagicCircle } from '@magic-circle/client';
-import { setup, loop, resize } from './example-scene';
+
+import Viewer from './Viewer';
 
 import './style.css';
 
-new MagicCircle().setup(setup).loop(loop).resize(resize).start();
+export default function start(): Viewer {
+  const viewer = new Viewer();
+
+  // create magic circle
+  new MagicCircle()
+    .setup(viewer.setup)
+    .loop(viewer.tick)
+    .resize(viewer.resize)
+    .start();
+
+  return viewer;
+}

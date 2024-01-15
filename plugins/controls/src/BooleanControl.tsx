@@ -17,7 +17,7 @@ const BooleanControlField = ({
 }: ControlProps<boolean, Record<string, never>>) => {
   return (
     <Control.Container hasChanges={hasChanges} reset={reset} select={select}>
-      <Control.Label>{label}</Control.Label>
+      <Control.Label width="long">{label}</Control.Label>
       <Inside>
         <Forms.Checkbox
           value={value}

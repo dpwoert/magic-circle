@@ -11,6 +11,7 @@ import { RecursiveSettings, recursive } from './recursive';
 
 type SceneSettings = RecursiveSettings & {
   noRecursive?: boolean;
+  sync?: boolean;
 };
 
 export function scene(scene: Scene, opts: SceneSettings = {}): Layer {

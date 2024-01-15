@@ -33,12 +33,13 @@ export function matrixFolders(
 ): Folder[] {
   const folders: Folder[] = [];
 
-  folders.push(
-    new Folder('General').add([
-      new TextControl(object, 'id'),
-      new BooleanControl(object, 'visible'),
-    ])
-  );
+  const general = new Folder('General');
+  general.add([
+    new TextControl(object, 'name'),
+    new TextControl(object, 'id'),
+    new BooleanControl(object, 'visible'),
+  ]);
+  folders.push(general);
 
   if (settings.camera) {
     const transformSettings = { mode: 'translate' };

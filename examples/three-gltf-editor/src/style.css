@@ -11,12 +11,16 @@ body {
 }
 
 body {
-  background: #fff;
+  background: #080808;
   font-size: 14px;
   font-family: 'inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overscroll-behavior: none;
+}
+
+#root {
+  height: 100%;
 }
 
 a {
@@ -54,4 +58,13 @@ li {
   list-style-type: none;
   margin: 0;
   padding: 0;
+}
+
+#canvas {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: none;
 }
