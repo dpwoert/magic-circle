@@ -12,4 +12,4 @@ cd ../../examples/three-gltf-upload
 
 # build
 npm run build:prod
-cp -R dist ../../core/online/magic-circle/viewer
+cp -R dist ../../core/online/magic-circle/viewer/

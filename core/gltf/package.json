@@ -26,7 +26,6 @@
     "build:dev": "tsc",
     "build:prod": "NODE_ENV=production tsc",
     "package": "sh scripts/build.sh",
-    "generate:list": "node scripts/create-list.js",
     "serve": "serve magic-circle/"
   },
   "devDependencies": {
