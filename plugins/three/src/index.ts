@@ -12,3 +12,4 @@ export { scene } from './scene';
 export { recursive } from './recursive';
 export { TransformControl } from './TransformControl';
 export { CameraHelperControl } from './CameraHelperControl';
+export { LightHelperControl } from './LightHelperControl';

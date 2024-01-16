@@ -5,6 +5,7 @@ import {
   SpotLight,
   PointLight,
   AmbientLight,
+  HemisphereLight,
 } from 'three';
 import {
   VectorControl,
@@ -16,10 +17,35 @@ import {
   ColorControl,
 } from '@magic-circle/client';
 
+import { LightHelperControl } from './LightHelperControl';
+import { CameraHelperControl } from './CameraHelperControl';
+import { getParentScene } from './utils';
+
 type LightSettings = {
   range: Vector3;
   precision?: number;
 };
+
+function lightHelpers(light: Light): Folder[] {
+  const scene = getParentScene(light);
+
+  if (scene) {
+    // Add camera specific options
+    const folder = new Folder('Helper').add(new LightHelperControl(light));
+
+    if (light.shadow) {
+      folder.add(
+        new CameraHelperControl(light.shadow?.camera, scene).label(
+          'Shadow helper'
+        )
+      );
+    }
+
+    return [folder];
+  }
+
+  return [];
+}
 
 function lightMatrix(light: Light, settings: LightSettings): Folder[] {
   const folders: Folder[] = [];
@@ -81,6 +107,7 @@ export function pointLight(light: PointLight, settings: LightSettings): Layer {
   const layer = new Layer(light.name || 'Point Liight');
 
   // Add matrix controls
+  layer.add(lightHelpers(light));
   layer.add(lightMatrix(light, settings));
   layer.add(lightShadow(light));
 
@@ -103,6 +130,7 @@ export function spotLight(light: SpotLight, settings: LightSettings): Layer {
   const layer = new Layer(light.name || 'Point Liight');
 
   // Add matrix controls
+  layer.add(lightHelpers(light));
   layer.add(lightMatrix(light, settings));
   layer.add(lightShadow(light));
 
@@ -126,8 +154,26 @@ export function spotLight(light: SpotLight, settings: LightSettings): Layer {
 export function ambientLight(light: AmbientLight): Layer {
   const layer = new Layer(light.name || 'Ambient light');
 
+  // layer.add(lightHelpers(light));
+
   // Add light specific options
   const folder = new Folder('Ambient settings').add([
+    new ColorControl(light, 'color').range(1),
+    new NumberControl(light, 'intensity').range(0, 2),
+  ]);
+
+  layer.add(folder);
+
+  return layer;
+}
+
+export function hemisphereLight(light: HemisphereLight): Layer {
+  const layer = new Layer(light.name || 'Hemisphere light');
+
+  layer.add(lightHelpers(light));
+
+  // Add light specific options
+  const folder = new Folder('Hemisphere settings').add([
     new ColorControl(light, 'color').range(1),
     new NumberControl(light, 'intensity').range(0, 2),
   ]);
@@ -144,6 +190,7 @@ export function directionalLight(
   const layer = new Layer(light.name || 'Directional light');
 
   // Add matrix controls
+  layer.add(lightHelpers(light));
   layer.add(lightMatrix(light, settings));
   layer.add(lightShadow(light));
 
@@ -167,6 +214,12 @@ export function light(object: Light, settings: LightSettings): Layer {
   }
   if (object instanceof AmbientLight) {
     return ambientLight(object);
+  }
+  if (object instanceof HemisphereLight) {
+    return hemisphereLight(object);
+  }
+  if (object instanceof SpotLight) {
+    return spotLight(object, settings);
   }
 
   // Create standard fallback

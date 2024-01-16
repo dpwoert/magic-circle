@@ -6,6 +6,7 @@ import {
   Color,
   AnimationMixer,
   Vector3,
+  DirectionalLight,
 } from 'three';
 
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
@@ -56,7 +57,7 @@ export default class Viewer {
     this.controls.target.set(0, 0.5, 0);
     this.controls.update();
     this.controls.enablePan = false;
-    this.controls.enableDamping = true;
+    // this.controls.enableDamping = true;
 
     // create loader
     const dracoLoader = new DRACOLoader();
@@ -103,6 +104,11 @@ export default class Viewer {
     if (gltf.animations && gltf.animations.length > 0) {
       this.mixer.clipAction(gltf.animations[0]).play();
     }
+
+    // Add light for testing
+    const directionalLight = new DirectionalLight(0xff0000);
+    directionalLight.position.set(0, 1, 1);
+    this.scene.add(directionalLight);
 
     // Create UI
     // GUI.renderer(this.renderer).addTo(gui.layer);
