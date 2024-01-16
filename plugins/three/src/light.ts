@@ -6,6 +6,7 @@ import {
   PointLight,
   AmbientLight,
   HemisphereLight,
+  RectAreaLight,
 } from 'three';
 import {
   VectorControl,
@@ -198,6 +199,30 @@ export function directionalLight(
   const folder = new Folder('Directional settings').add([
     new ColorControl(light, 'color').range(1),
     new NumberControl(light, 'intensity').range(0, 2),
+  ]);
+
+  layer.add(folder);
+
+  return layer;
+}
+
+export function rectAreaLightHelper(
+  light: RectAreaLight,
+  settings: LightSettings
+): Layer {
+  const layer = new Layer(light.name || 'Rect. Area light');
+
+  // Add matrix controls
+  layer.add(lightHelpers(light));
+  layer.add(lightMatrix(light, settings));
+  layer.add(lightShadow(light));
+
+  // Add light specific options
+  const folder = new Folder('Rect. Area settings').add([
+    new ColorControl(light, 'color').range(1),
+    new NumberControl(light, 'intensity').range(0, 2),
+    new NumberControl(light, 'width').range(0, settings.range.x),
+    new NumberControl(light, 'height').range(0, settings.range.y),
   ]);
 
   layer.add(folder);

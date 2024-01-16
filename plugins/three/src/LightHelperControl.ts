@@ -8,6 +8,8 @@ import {
   DirectionalLightHelper,
   HemisphereLight,
   HemisphereLightHelper,
+  RectAreaLight,
+  RectAreaLightHelper,
 } from 'three';
 import { BooleanControl } from '@magic-circle/client';
 import { getParentScene } from './utils';
@@ -18,7 +20,8 @@ export class LightHelperControl extends BooleanControl {
     | SpotLightHelper
     | PointLightHelper
     | DirectionalLightHelper
-    | HemisphereLightHelper;
+    | HemisphereLightHelper
+    | RectAreaLightHelper;
 
   constructor(light: Light) {
     const value = {
@@ -55,6 +58,10 @@ export class LightHelperControl extends BooleanControl {
         }
         if (this.light instanceof HemisphereLight) {
           this.helper = new HemisphereLightHelper(this.light, 1);
+          scene.add(this.helper);
+        }
+        if (this.light instanceof RectAreaLight) {
+          this.helper = new RectAreaLightHelper(this.light);
           scene.add(this.helper);
         }
       }
