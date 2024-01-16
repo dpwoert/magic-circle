@@ -31,7 +31,7 @@
     "build:dev": "tsc && vite build",
     "build:prod": "BUILD_ENV=production npm run build:dev",
     "build:editor": "magic build",
-    "build:prod:gtlf": "EXPORT_ENV=gltf npm run build:prod",
+    "build:prod:gltf": "EXPORT_ENV=gltf npm run build:prod",
     "editor": "magic",
     "editor:dev": "magic develop"
   },
