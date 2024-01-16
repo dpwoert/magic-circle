@@ -1,13 +1,14 @@
+import { ReactNode } from 'react';
 import { Plugin, icons, ButtonCollections } from '@magic-circle/schema';
 import {
   registerIcon,
-  Download,
+  FloppyDisc,
   File,
   Folder,
   MenuPortal,
 } from '@magic-circle/styles';
 
-registerIcon(Download);
+registerIcon(FloppyDisc);
 registerIcon(File);
 registerIcon(Folder);
 
@@ -25,13 +26,13 @@ export default class DemoPlugin extends Plugin {
         after: 'screenshots',
         list: [
           {
-            label: 'Download',
-            icon: 'Download' as icons,
+            label: 'Save',
+            icon: 'FloppyDisc' as icons,
             tooltip: 'Download 3D file',
             onClick: () => {
               // todo
             },
-            wrap: (inside) => (
+            wrap: (inside: ReactNode) => (
               <MenuPortal
                 showOnClick
                 menu={{

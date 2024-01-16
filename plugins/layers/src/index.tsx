@@ -10,6 +10,7 @@ import { Store, StoreFamily } from '@magic-circle/state';
 import {
   ArrowRight,
   ChevronDown,
+  AnnotationWarning,
   registerIcon,
   Layers as LayersIcon,
 } from '@magic-circle/styles';
@@ -20,6 +21,7 @@ import SidebarRight from './SidebarRight';
 registerIcon(LayersIcon);
 registerIcon(ChevronDown);
 registerIcon(ArrowRight);
+registerIcon(AnnotationWarning);
 
 type FlatListItem = LayerExport & {
   depth: number;

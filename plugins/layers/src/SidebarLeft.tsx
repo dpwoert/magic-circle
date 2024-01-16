@@ -61,6 +61,24 @@ const LayerRow = styled.div<LayerRowProps>`
   }
 `;
 
+const LayerEmpty = styled.div`
+  ${TYPO.regular}
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: ${SPACING(1)}px;
+  padding-right: ${SPACING(2)}px;
+  gap: ${SPACING(1)}px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  align-items: center;
+  height: ${SPACING(5)}px;
+  width: 100%;
+  color: ${COLORS.shades.s300.css};
+  background: ${COLORS.shades.s600.css};
+  font-weight: 400;
+`;
+
 type ChevronProps = {
   collapsed: boolean;
 };
@@ -153,6 +171,16 @@ const Sidebar = ({ layers }: SidebarProps) => {
   return (
     <Container>
       <Inner>
+        {tree.length === 0 && (
+          <LayerEmpty>
+            <Icon
+              name="AnnotationWarning"
+              width={SPACING(2)}
+              height={SPACING(2)}
+            />
+            No layers detected
+          </LayerEmpty>
+        )}
         {tree.map(
           (layer) =>
             !layer.folder && (
