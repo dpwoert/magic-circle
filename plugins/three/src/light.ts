@@ -206,14 +206,14 @@ export function directionalLight(
   return layer;
 }
 
-export function rectAreaLightHelper(
+export function rectAreaLight(
   light: RectAreaLight,
   settings: LightSettings
 ): Layer {
   const layer = new Layer(light.name || 'Rect. Area light');
 
   // Add matrix controls
-  layer.add(lightHelpers(light));
+  // layer.add(lightHelpers(light));
   layer.add(lightMatrix(light, settings));
   layer.add(lightShadow(light));
 
@@ -245,6 +245,9 @@ export function light(object: Light, settings: LightSettings): Layer {
   }
   if (object instanceof SpotLight) {
     return spotLight(object, settings);
+  }
+  if (object instanceof RectAreaLight) {
+    return rectAreaLight(object, settings);
   }
 
   // Create standard fallback

@@ -3,6 +3,8 @@ export {
   light,
   spotLight,
   ambientLight,
+  hemisphereLight,
+  rectAreaLight,
   pointLight,
   directionalLight,
 } from './light';

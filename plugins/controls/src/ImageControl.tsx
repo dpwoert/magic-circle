@@ -72,7 +72,11 @@ const ImageControlField = ({
       canvas.width = value.width;
       canvas.height = value.height;
 
-      if (context) context.drawImage(value, 0, 0, value.width, value.height);
+      try {
+        if (context) context.drawImage(value, 0, 0, value.width, value.height);
+      } catch (e) {
+        console.error('Image for ImageControl not valid');
+      }
     }
 
     return canvas.toDataURL('image/png');
