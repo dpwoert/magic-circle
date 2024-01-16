@@ -8,5 +8,5 @@ npx magic build
 cd ../../examples/three-gltf-editor
 
 # build
-npm run build:prod
+npm run build:prod:gltf
 cp -R dist ../../core/gltf/magic-circle/viewer
