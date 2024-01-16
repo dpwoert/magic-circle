@@ -106,10 +106,6 @@ export default class Viewer {
 
     // Create UI
     GUI.webglRenderer(this.renderer).addTo(this.magicCircle.layer);
-    GUI.camera(this.camera, {
-      range: new Vector3(10, 10, 10),
-      scene: this.scene,
-    }).addTo(this.magicCircle.layer);
     GUI.scene(this.scene, {
       watch: () => true,
       camera: this.camera,
