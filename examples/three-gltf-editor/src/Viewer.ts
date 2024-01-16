@@ -5,6 +5,7 @@ import {
   WebGLRenderer,
   Color,
   AnimationMixer,
+  Vector3,
 } from 'three';
 
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
@@ -104,6 +105,11 @@ export default class Viewer {
     }
 
     // Create UI
+    // GUI.renderer(this.renderer).addTo(gui.layer);
+    GUI.camera(this.camera, {
+      range: new Vector3(10, 10, 10),
+      scene: this.scene,
+    }).addTo(this.magicCircle.layer);
     GUI.scene(this.scene, {
       watch: () => true,
       camera: this.camera,

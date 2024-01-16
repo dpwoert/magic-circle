@@ -10,7 +10,7 @@ import {
 } from '@magic-circle/client';
 
 import { material, materialTransform } from './material';
-import { TransformControl } from './TransformControls';
+import { TransformControl } from './TransformControl';
 
 type MatrixSettings = {
   range: Vector3;

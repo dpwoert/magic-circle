@@ -1,9 +1,10 @@
-import { Mesh, Object3D, Vector2, Vector3, Light, Camera } from 'three';
+import { Mesh, Object3D, Vector2, Vector3, Light, Camera, Scene } from 'three';
 import { Layer } from '@magic-circle/client';
 
 import { MeshSettings, mesh, object3d } from './object3d';
 import { camera } from './camera';
 import { light } from './light';
+import { getParentScene } from './utils';
 
 export type RecursiveSettings = Omit<MeshSettings, 'range' | 'range'> & {
   name?: string;
@@ -19,6 +20,13 @@ export function recursive(
   const mapping: Record<string, Layer> = {};
 
   const rootLayer = new Layer(settings.name || group.name);
+
+  let scene: Scene | undefined;
+  if (group instanceof Scene) {
+    scene = group;
+  } else {
+    scene = getParentScene(group) || undefined;
+  }
 
   group.traverse((object) => {
     // Find parent layer
@@ -40,6 +48,7 @@ export function recursive(
         range: settings.range
           ? settings.range(object)
           : new Vector3(10, 10, 10),
+        scene,
       }).addTo(parentLayer);
     } else if (object instanceof Light) {
       gui = light(object, {

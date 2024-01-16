@@ -1,4 +1,4 @@
-import { PerspectiveCamera, Vector3, Camera } from 'three';
+import { PerspectiveCamera, Vector3, Camera, Scene } from 'three';
 import {
   VectorControl,
   NumberControl,
@@ -6,11 +6,26 @@ import {
   Layer,
   Folder,
 } from '@magic-circle/client';
+import { CameraHelperControl } from './CameraHelperControl';
 
 type CameraSettings = {
   range: Vector3;
   precision?: number;
+  scene?: Scene;
 };
+
+function cameraHelpers(camera: Camera, settings: CameraSettings): Folder[] {
+  if (settings.scene) {
+    // Add camera specific options
+    return [
+      new Folder('Helper').add([
+        new CameraHelperControl(camera, settings.scene),
+      ]),
+    ];
+  }
+
+  return [];
+}
 
 function cameraMatrix(camera: Camera, settings: CameraSettings): Folder[] {
   return [
@@ -36,7 +51,10 @@ export function perspectiveCamera(
 ): Layer {
   const layer = new Layer(camera.name || 'Camera');
 
-  // Add matrix controls
+  console.log({ settings });
+
+  // Add matrix controls and helpers
+  layer.add(cameraHelpers(camera, settings));
   layer.add(cameraMatrix(camera, settings));
 
   // Add camera specific options
@@ -63,6 +81,7 @@ export function camera(object: Camera, settings: CameraSettings): Layer {
 
   // Create standard fallback
   const layer = new Layer(camera.name || 'Camera');
+  layer.add(cameraHelpers(object, settings));
   layer.add(cameraMatrix(object, settings));
   return layer;
 }
