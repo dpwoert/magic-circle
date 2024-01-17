@@ -51,8 +51,6 @@ export function perspectiveCamera(
 ): Layer {
   const layer = new Layer(camera.name || 'Camera');
 
-  console.log({ settings });
-
   // Add matrix controls and helpers
   layer.add(cameraHelpers(camera, settings));
   layer.add(cameraMatrix(camera, settings));

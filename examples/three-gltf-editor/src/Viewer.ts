@@ -5,7 +5,8 @@ import {
   WebGLRenderer,
   Color,
   AnimationMixer,
-  Vector3,
+  Mesh,
+  Object3D,
 } from 'three';
 
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
@@ -17,6 +18,27 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import { MagicCircle } from '@magic-circle/client';
 import * as GUI from '@magic-circle/three';
 import { COLORS } from '@magic-circle/styles';
+
+const dispose = (object: Object3D) => {
+  if ('geometry' in object) {
+    (object.geometry as Mesh['geometry']).dispose();
+  }
+
+  if ('material' in object) {
+    const mat = object.material as Mesh['material'];
+    const materials = Array.isArray(mat) ? mat : [mat];
+    materials.forEach((material) => {
+      // eslint-disable-next-line
+      for (const key in material) {
+        if (key !== 'envMap' && material[key] && material[key].isTexture) {
+          material[key].dispose();
+        }
+      }
+
+      material.dispose();
+    });
+  }
+};
 
 export default class Viewer {
   renderer: WebGLRenderer;
@@ -105,17 +127,18 @@ export default class Viewer {
     }
 
     // Create UI
-    GUI.webglRenderer(this.renderer).addTo(this.magicCircle.layer);
-    GUI.scene(this.scene, {
-      watch: () => true,
-      camera: this.camera,
-      onTransformStart: () => {
-        this.controls.enabled = false;
-      },
-      onTransformEnd: () => {
-        this.controls.enabled = true;
-      },
-    }).addTo(this.magicCircle.layer);
+    this.magicCircle.layer.add(
+      GUI.setup(this.renderer, this.camera, this.scene, {
+        watch: () => true,
+        camera: this.camera,
+        onTransformStart: () => {
+          this.controls.enabled = false;
+        },
+        onTransformEnd: () => {
+          this.controls.enabled = true;
+        },
+      })
+    );
 
     // Trigger sync of UI
     this.magicCircle.sync();
@@ -135,6 +158,14 @@ export default class Viewer {
       this.magicCircle.layer.forEach((c) => c.destroy(true));
       this.magicCircle.layer.children = [];
     }
+
+    this.scene.traverse((child) => {
+      dispose(child);
+    });
+
+    this.scene.children.forEach((child) => {
+      child.removeFromParent();
+    });
   }
 
   tick(delta: number) {

@@ -7,32 +7,66 @@ import {
   AmbientLight,
   HemisphereLight,
   RectAreaLight,
+  Camera,
 } from 'three';
 import {
   VectorControl,
   NumberControl,
   RotationControl,
+  TextControl,
   Layer,
   Folder,
   BooleanControl,
   ColorControl,
 } from '@magic-circle/client';
 
+import { TransformControl } from './TransformControl';
 import { LightHelperControl } from './LightHelperControl';
 import { CameraHelperControl } from './CameraHelperControl';
 import { getParentScene } from './utils';
 
-type LightSettings = {
+type LightHelperSettings = {
+  camera?: Camera;
+  onTransformStart?: () => void;
+  onTransformEnd?: () => void;
+};
+
+type LightSettings = LightHelperSettings & {
   range: Vector3;
   precision?: number;
 };
 
-function lightHelpers(light: Light): Folder[] {
+function lightHelpers(
+  light: Light,
+  settings: LightHelperSettings = {}
+): Folder[] {
   const scene = getParentScene(light);
 
   if (scene) {
     // Add camera specific options
     const folder = new Folder('Helper').add(new LightHelperControl(light));
+
+    // Add transform
+    if (settings.camera) {
+      const transformSettings = { mode: 'translate' };
+      const transformControl = new TransformControl(
+        settings.camera,
+        light
+      ).onUpdate((newVal) => {
+        if (newVal && settings.onTransformStart) {
+          settings.onTransformStart();
+        }
+        if (!newVal && settings.onTransformEnd) {
+          settings.onTransformEnd();
+        }
+      });
+      const transformMode = new TextControl(transformSettings, 'mode')
+        .selection(['translate', 'rotate', 'scale'])
+        .onUpdate(() => {
+          transformControl.mode(transformSettings.mode as any);
+        });
+      folder.add([transformControl, transformMode]);
+    }
 
     if (light.shadow) {
       folder.add(
@@ -108,7 +142,7 @@ export function pointLight(light: PointLight, settings: LightSettings): Layer {
   const layer = new Layer(light.name || 'Point Liight');
 
   // Add matrix controls
-  layer.add(lightHelpers(light));
+  layer.add(lightHelpers(light, settings));
   layer.add(lightMatrix(light, settings));
   layer.add(lightShadow(light));
 
@@ -131,7 +165,7 @@ export function spotLight(light: SpotLight, settings: LightSettings): Layer {
   const layer = new Layer(light.name || 'Point Liight');
 
   // Add matrix controls
-  layer.add(lightHelpers(light));
+  layer.add(lightHelpers(light, settings));
   layer.add(lightMatrix(light, settings));
   layer.add(lightShadow(light));
 
@@ -191,7 +225,7 @@ export function directionalLight(
   const layer = new Layer(light.name || 'Directional light');
 
   // Add matrix controls
-  layer.add(lightHelpers(light));
+  layer.add(lightHelpers(light, settings));
   layer.add(lightMatrix(light, settings));
   layer.add(lightShadow(light));
 
