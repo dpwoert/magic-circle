@@ -1,11 +1,26 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { useDropzone } from 'react-dropzone';
-import { COLORS } from '@magic-circle/styles';
+import {
+  COLORS,
+  registerIcon,
+  Upload,
+  FilePlus,
+  ArrowLeft,
+  WarningTriangle,
+  Spinner,
+} from '@magic-circle/styles';
 
 import Message from './Message';
 import start from './start';
 import Viewer from './Viewer';
+
+registerIcon(FilePlus);
+registerIcon(Upload);
+registerIcon(FilePlus);
+registerIcon(ArrowLeft);
+registerIcon(WarningTriangle);
+registerIcon(Spinner);
 
 const Container = styled.div`
   width: 100%;
@@ -20,13 +35,17 @@ const Canvas = styled.div`
   background: ${COLORS.shades.s800.css};
 `;
 
+type Stage = 'upload' | 'loading' | 'error' | 'viewer';
+
 const App = () => {
-  const [showMessage, setShowMessage] = useState(true);
   const viewer = useRef<Viewer>(null);
+  const [stage, setStage] = useState<Stage>('upload');
 
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     let base: File;
     const files: Map<string, File> = new Map();
+
+    setStage('loading');
 
     acceptedFiles.forEach((file) => {
       // @ts-expect-error
@@ -45,10 +64,11 @@ const App = () => {
     try {
       await viewer.current.view(base, files);
     } catch (e) {
+      setStage('error');
       console.error(e);
     }
 
-    setShowMessage(false);
+    setStage('viewer');
   }, []);
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
@@ -60,7 +80,29 @@ const App = () => {
   return (
     <Container {...getRootProps()}>
       <input {...getInputProps()} />
-      {showMessage && <Message />}
+      {stage === 'upload' && (
+        <Message
+          icon="FilePlus"
+          text="Drag & drop a file here to load"
+          button={{ icon: 'Upload', label: 'Select file' }}
+        />
+      )}
+      {stage === 'loading' && (
+        <Message icon="Spinner" text="Loading file(s)..." />
+      )}
+      {stage === 'error' && (
+        <Message
+          icon="WarningTriangle"
+          text="Error while trying to upload file"
+          button={{
+            icon: 'ArrowLeft',
+            label: 'Back',
+            onClick: () => {
+              setStage('upload');
+            },
+          }}
+        />
+      )}
       <Canvas />
     </Container>
   );

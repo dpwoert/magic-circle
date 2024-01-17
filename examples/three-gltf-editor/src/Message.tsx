@@ -6,14 +6,9 @@ import {
   TYPO,
   SPACING,
   Icon,
-  registerIcon,
   Forms,
-  FilePlus,
-  Upload,
+  IconName,
 } from '@magic-circle/styles';
-
-registerIcon(FilePlus);
-registerIcon(Upload);
 
 const Container = styled.div`
   ${TYPO.small}
@@ -34,19 +29,27 @@ const ButtonStyled = styled(Forms.Button)`
   border-color: ${COLORS.accent.css};
 `;
 
-const Message = () => {
+type MessageProps = {
+  icon: IconName;
+  text: string;
+  button?: {
+    label: string;
+    icon: IconName;
+    onClick?: () => void;
+  };
+};
+
+const Message = ({ icon, text, button }: MessageProps) => {
   return (
     <Container>
-      <Icon name="FilePlus" height={SPACING(2)} width={SPACING(2)} />
-      Drag & drop a file here to load
-      <ButtonStyled
-        onClick={() => {
-          // noop
-        }}
-      >
-        <Icon name="Upload" height={SPACING(1.5)} width={SPACING(1.5)} />
-        Select file
-      </ButtonStyled>
+      <Icon name={icon} height={SPACING(2)} width={SPACING(2)} />
+      {text}
+      {button && (
+        <ButtonStyled onClick={button.onClick}>
+          <Icon name={button.icon} height={SPACING(1.5)} width={SPACING(1.5)} />
+          {button.label}
+        </ButtonStyled>
+      )}
     </Container>
   );
 };
