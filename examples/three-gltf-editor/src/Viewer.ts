@@ -21,6 +21,8 @@ import { MagicCircle } from '@magic-circle/client';
 import * as GUI from '@magic-circle/three';
 import { COLORS } from '@magic-circle/styles';
 
+import { saveArrayBuffer, saveString } from './utils';
+
 const dispose = (object: Object3D) => {
   if ('geometry' in object) {
     (object.geometry as Mesh['geometry']).dispose();
@@ -53,7 +55,7 @@ export default class Viewer {
   magicCircle?: MagicCircle;
 
   private manager: LoadingManager;
-  private blobURLs = new Set();
+  private blobURLs = new Set<string>();
 
   constructor() {
     // Create renderer
@@ -102,7 +104,7 @@ export default class Viewer {
     this.magicCircle = gui;
 
     // Listen to download signals
-    gui.ipc.on('gltf:download', (binary) => this.exportScene(binary));
+    gui.ipc.on('gltf:download', (_, binary) => this.exportScene(binary));
 
     // Listen to resizes of the window
     window.addEventListener('resize', () => {
@@ -127,7 +129,7 @@ export default class Viewer {
 
     // Intercept and override relative URLs.
     /* @see https://github.com/donmccurdy/three-gltf-viewer/blob/main/src/viewer.js */
-    this.manager.setURLModifier((url, path) => {
+    this.manager.setURLModifier((url: string) => {
       const urlParsed = new URL(url);
       const baseURL = `${urlParsed.protocol}${urlParsed.origin}`;
 
@@ -147,7 +149,7 @@ export default class Viewer {
         return blobURL;
       }
 
-      return (path || '') + url;
+      return url;
     });
 
     // Load file
@@ -184,8 +186,6 @@ export default class Viewer {
 
     // Show
     this.renderer.domElement.style.display = 'block';
-
-    URL.revokeObjectURL(url);
   }
 
   clearView() {
