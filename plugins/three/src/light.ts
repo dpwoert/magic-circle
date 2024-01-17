@@ -139,7 +139,7 @@ function lightShadow(light: Light): Folder {
 }
 
 export function pointLight(light: PointLight, settings: LightSettings): Layer {
-  const layer = new Layer(light.name || 'Point Liight');
+  const layer = new Layer(light.name || 'Point Light').icon('light');
 
   // Add matrix controls
   layer.add(lightHelpers(light, settings));
@@ -162,7 +162,7 @@ export function pointLight(light: PointLight, settings: LightSettings): Layer {
 }
 
 export function spotLight(light: SpotLight, settings: LightSettings): Layer {
-  const layer = new Layer(light.name || 'Point Liight');
+  const layer = new Layer(light.name || 'Point Liight').icon('light');
 
   // Add matrix controls
   layer.add(lightHelpers(light, settings));
@@ -187,7 +187,7 @@ export function spotLight(light: SpotLight, settings: LightSettings): Layer {
 }
 
 export function ambientLight(light: AmbientLight): Layer {
-  const layer = new Layer(light.name || 'Ambient light');
+  const layer = new Layer(light.name || 'Ambient light').icon('light');
 
   // layer.add(lightHelpers(light));
 
@@ -203,7 +203,7 @@ export function ambientLight(light: AmbientLight): Layer {
 }
 
 export function hemisphereLight(light: HemisphereLight): Layer {
-  const layer = new Layer(light.name || 'Hemisphere light');
+  const layer = new Layer(light.name || 'Hemisphere light').icon('light');
 
   layer.add(lightHelpers(light));
 
@@ -222,7 +222,7 @@ export function directionalLight(
   light: DirectionalLight,
   settings: LightSettings
 ): Layer {
-  const layer = new Layer(light.name || 'Directional light');
+  const layer = new Layer(light.name || 'Directional light').icon('light');
 
   // Add matrix controls
   layer.add(lightHelpers(light, settings));
@@ -244,7 +244,7 @@ export function rectAreaLight(
   light: RectAreaLight,
   settings: LightSettings
 ): Layer {
-  const layer = new Layer(light.name || 'Rect. Area light');
+  const layer = new Layer(light.name || 'Rect. Area light').icon('light');
 
   // Add matrix controls
   // layer.add(lightHelpers(light));
@@ -285,7 +285,7 @@ export function light(object: Light, settings: LightSettings): Layer {
   }
 
   // Create standard fallback
-  const layer = new Layer(object.name || 'Light');
+  const layer = new Layer(object.name || 'Light').icon('light');
   layer.add(lightMatrix(object, settings));
   return layer;
 }

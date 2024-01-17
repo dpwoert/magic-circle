@@ -4,12 +4,30 @@ import Paths from './paths';
 
 export type Child = Layer | Control<any>;
 
+export type LayerIcon =
+  | 'layer'
+  | 'group'
+  | 'mesh'
+  | 'material'
+  | 'light'
+  | 'camera'
+  | 'scene'
+  | 'bone'
+  | 'plugin'
+  | 'file'
+  | 'folder'
+  | 'sound'
+  | 'code'
+  | 'computation'
+  | 'renderer';
+
 type JSONOutput = {
   path: string;
   name: string;
   folder: boolean;
   children: Array<JSONOutput | ReturnType<Control<any>['toJSON']>>;
   collapse: boolean;
+  icon?: LayerIcon;
 };
 
 export default class Layer {
@@ -20,6 +38,7 @@ export default class Layer {
   folder: boolean;
   collapsed: boolean;
   isBaseLayer: boolean;
+  customIcon?: LayerIcon;
 
   /**
    * @param name Name of layer
@@ -32,6 +51,16 @@ export default class Layer {
     this.collapsed = false;
     this.isBaseLayer = !!magicInstance;
     this.magicInstance = magicInstance;
+  }
+
+  /**
+   * Sets the type of layer, giving it a correct icon in the sidebar
+   *
+   * @param string Type of layer
+   */
+  icon(icon: LayerIcon) {
+    this.customIcon = icon;
+    return this;
   }
 
   /**
@@ -231,6 +260,7 @@ export default class Layer {
       path,
       name: this.name,
       folder: this.folder,
+      icon: this.customIcon,
       children: this.children.map((child) => child.toJSON(startPath, paths)),
       collapse: this.collapsed,
     };

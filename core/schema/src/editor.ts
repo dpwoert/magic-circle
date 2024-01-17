@@ -362,6 +362,7 @@ export type LayerExport = {
   name: string;
   folder: boolean;
   collapse: boolean;
+  icon?: icons;
   children: Array<LayerExport | ControlExport>;
 };
 

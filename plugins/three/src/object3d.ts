@@ -98,7 +98,7 @@ export function matrixFolders(
 }
 
 export function mesh(mesh: Mesh, settings: MeshSettings): Layer {
-  const layer = new Layer(mesh.name || 'Mesh');
+  const layer = new Layer(mesh.name || 'Mesh').icon('mesh');
 
   const defaultRange = () => {
     mesh.geometry.computeBoundingBox();
@@ -137,7 +137,7 @@ export function object3d(
   object3d: Object3D,
   settings: Object3dSettings
 ): Layer {
-  const layer = new Layer(object3d.name || 'Matrix');
+  const layer = new Layer(object3d.name || 'Matrix').icon('group');
 
   // create folders for matrix
   layer.add(

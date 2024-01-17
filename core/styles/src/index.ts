@@ -7,6 +7,7 @@ export {
 } from './breakpoints';
 export { default as TYPO, rem, base as typoBase } from './typography';
 export { default as Icon, register as registerIcon } from './Icon';
+export type { IconName } from './Icon';
 export { default as Shortcut } from './Shortcut';
 export { default as Inner } from './Inner';
 export { default as Warning } from './Warning';

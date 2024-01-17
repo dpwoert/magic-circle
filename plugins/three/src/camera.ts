@@ -49,7 +49,7 @@ export function perspectiveCamera(
   camera: PerspectiveCamera,
   settings: CameraSettings
 ): Layer {
-  const layer = new Layer(camera.name || 'Camera');
+  const layer = new Layer(camera.name || 'Camera').icon('camera');
 
   // Add matrix controls and helpers
   layer.add(cameraHelpers(camera, settings));
@@ -78,7 +78,7 @@ export function camera(object: Camera, settings: CameraSettings): Layer {
   }
 
   // Create standard fallback
-  const layer = new Layer(camera.name || 'Camera');
+  const layer = new Layer(camera.name || 'Camera').icon('camera');
   layer.add(cameraHelpers(object, settings));
   layer.add(cameraMatrix(object, settings));
   return layer;

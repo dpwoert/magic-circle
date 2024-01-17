@@ -6,6 +6,8 @@ import { SPACING, COLORS, TYPO, Icon } from '@magic-circle/styles';
 
 import type Layers from './index';
 
+import { iconMap } from './icon';
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -59,6 +61,16 @@ const LayerRow = styled.div<LayerRowProps>`
         ? String(COLORS.shades.s500.mix(COLORS.accent, 0.75))
         : String(COLORS.shades.s500.mix(COLORS.accent, 0.1))};
   }
+
+  span {
+    display: flex;
+    align-items: center;
+  }
+`;
+
+const LayerIcon = styled(Icon)`
+  margin: ${SPACING(0.5)}px;
+  color: ${COLORS.shades.s400.css};
 `;
 
 const LayerEmpty = styled.div`
@@ -116,7 +128,16 @@ const Layer = ({ layers, layer, depth, indexList }: LayerProps) => {
         }}
         hasChildLayers={hasChildLayers}
       >
-        <span>{layer.name}</span>
+        <span>
+          {layer.icon && (
+            <LayerIcon
+              name={iconMap[layer.icon] || 'Rows'}
+              width={SPACING(1.5)}
+              height={SPACING(1.5)}
+            />
+          )}
+          {layer.name}
+        </span>
         {hasChildLayers && (
           <Chevron
             name="ChevronDown"

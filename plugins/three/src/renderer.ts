@@ -61,5 +61,5 @@ export function webglRenderer(gl: WebGLRenderer) {
     ]),
   ];
 
-  return new Layer('WebGL render').add(folders);
+  return new Layer('WebGL render').add(folders).icon('renderer');
 }

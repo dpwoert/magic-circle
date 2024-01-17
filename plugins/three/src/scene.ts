@@ -14,7 +14,7 @@ export type SceneSettings = RecursiveSettings & {
 };
 
 export function scene(scene: Scene, opts: SceneSettings = {}): Layer {
-  const rootLayer = new Layer(opts.name || scene.name || 'Scene');
+  const rootLayer = new Layer(opts.name || scene.name || 'Scene').icon('scene');
 
   if (!opts.noRecursive) {
     rootLayer.add(recursive(scene, opts).children);
