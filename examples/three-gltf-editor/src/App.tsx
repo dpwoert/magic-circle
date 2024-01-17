@@ -25,22 +25,25 @@ const App = () => {
   const viewer = useRef<Viewer>(null);
 
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
-    let base;
+    let base: File;
+    const files: Map<string, File> = new Map();
 
     acceptedFiles.forEach((file) => {
+      // @ts-expect-error
+      files.set(file.path, file);
+
+      // determine root file
       if (file.name.match(/\.(gltf|glb)$/)) {
         base = file;
       }
     });
 
     if (!base) {
-      // todo
+      return;
     }
 
-    const url = URL.createObjectURL(base);
-
     try {
-      await viewer.current.view(url);
+      await viewer.current.view(base, files);
     } catch (e) {
       console.error(e);
     }

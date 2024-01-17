@@ -52,6 +52,7 @@ export function recursive(
       }).addTo(parentLayer);
     } else if (object instanceof Light) {
       gui = light(object, {
+        ...settings,
         range: settings.range
           ? settings.range(object)
           : new Vector3(10, 10, 10),

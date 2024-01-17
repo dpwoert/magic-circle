@@ -5,9 +5,12 @@ import {
   WebGLRenderer,
   Color,
   AnimationMixer,
-  Vector3,
+  Mesh,
+  Object3D,
+  LoadingManager,
 } from 'three';
 
+import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 
@@ -18,6 +21,27 @@ import { MagicCircle } from '@magic-circle/client';
 import * as GUI from '@magic-circle/three';
 import { COLORS } from '@magic-circle/styles';
 
+const dispose = (object: Object3D) => {
+  if ('geometry' in object) {
+    (object.geometry as Mesh['geometry']).dispose();
+  }
+
+  if ('material' in object) {
+    const mat = object.material as Mesh['material'];
+    const materials = Array.isArray(mat) ? mat : [mat];
+    materials.forEach((material) => {
+      // eslint-disable-next-line
+      for (const key in material) {
+        if (key !== 'envMap' && material[key] && material[key].isTexture) {
+          material[key].dispose();
+        }
+      }
+
+      material.dispose();
+    });
+  }
+};
+
 export default class Viewer {
   renderer: WebGLRenderer;
   loader: GLTFLoader;
@@ -27,6 +51,9 @@ export default class Viewer {
 
   mixer?: AnimationMixer;
   magicCircle?: MagicCircle;
+
+  private manager: LoadingManager;
+  private blobURLs = new Set();
 
   constructor() {
     // Create renderer
@@ -59,9 +86,10 @@ export default class Viewer {
     // this.controls.enableDamping = true;
 
     // create loader
-    const dracoLoader = new DRACOLoader();
+    this.manager = new LoadingManager();
+    const dracoLoader = new DRACOLoader(this.manager);
     dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
-    this.loader = new GLTFLoader();
+    this.loader = new GLTFLoader(this.manager);
     this.loader.setCrossOrigin('anonymous');
     this.loader.setDRACOLoader(dracoLoader);
 
@@ -72,6 +100,9 @@ export default class Viewer {
 
   setup(gui: MagicCircle) {
     this.magicCircle = gui;
+
+    // Listen to download signals
+    gui.ipc.on('gltf:download', (binary) => this.exportScene(binary));
 
     // Listen to resizes of the window
     window.addEventListener('resize', () => {
@@ -87,12 +118,42 @@ export default class Viewer {
     this.renderer.setSize(width, height);
   }
 
-  async view(url: string) {
+  async view(file: File, urls: Map<string, File>) {
     // Clear current view
     this.clearView();
 
+    // @ts-expect-error
+    const rootPath = `${file.path.substring(0, file.path.lastIndexOf('/'))}/`;
+
+    // Intercept and override relative URLs.
+    /* @see https://github.com/donmccurdy/three-gltf-viewer/blob/main/src/viewer.js */
+    this.manager.setURLModifier((url, path) => {
+      const urlParsed = new URL(url);
+      const baseURL = `${urlParsed.protocol}${urlParsed.origin}`;
+
+      // URIs in a glTF file may be escaped, or not. Assume that assetMap is
+      // from an un-escaped source, and decode all URIs before lookups.
+      // See: https://github.com/donmccurdy/three-gltf-viewer/issues/146
+      const normalizedURL =
+        rootPath +
+        decodeURI(url)
+          .replace(baseURL, '')
+          .replace(/^(\.?\/)/, '');
+
+      if (urls.has(normalizedURL)) {
+        const blob = urls.get(normalizedURL);
+        const blobURL = URL.createObjectURL(blob);
+        this.blobURLs.add(blobURL);
+        return blobURL;
+      }
+
+      return (path || '') + url;
+    });
+
     // Load file
-    const gltf = await this.loader.loadAsync(url);
+    const urlObject = URL.createObjectURL(file);
+    this.blobURLs.add(urlObject);
+    const gltf = await this.loader.loadAsync(urlObject);
 
     // Add to scene
     const model = gltf.scene;
@@ -105,17 +166,18 @@ export default class Viewer {
     }
 
     // Create UI
-    GUI.webglRenderer(this.renderer).addTo(this.magicCircle.layer);
-    GUI.scene(this.scene, {
-      watch: () => true,
-      camera: this.camera,
-      onTransformStart: () => {
-        this.controls.enabled = false;
-      },
-      onTransformEnd: () => {
-        this.controls.enabled = true;
-      },
-    }).addTo(this.magicCircle.layer);
+    this.magicCircle.layer.add(
+      GUI.setup(this.renderer, this.camera, this.scene, {
+        watch: () => true,
+        camera: this.camera,
+        onTransformStart: () => {
+          this.controls.enabled = false;
+        },
+        onTransformEnd: () => {
+          this.controls.enabled = true;
+        },
+      })
+    );
 
     // Trigger sync of UI
     this.magicCircle.sync();
@@ -135,6 +197,40 @@ export default class Viewer {
       this.magicCircle.layer.forEach((c) => c.destroy(true));
       this.magicCircle.layer.children = [];
     }
+
+    // Clear blob urls
+    this.blobURLs.forEach((url) => URL.revokeObjectURL(url));
+    this.blobURLs.clear();
+
+    this.scene.traverse((child) => {
+      dispose(child);
+    });
+
+    this.scene.children.forEach((child) => {
+      child.removeFromParent();
+    });
+  }
+
+  exportScene(binary = true) {
+    const gltfExporter = new GLTFExporter();
+    gltfExporter.parse(
+      this.scene,
+      (result) => {
+        if (result instanceof ArrayBuffer) {
+          saveArrayBuffer(result, 'scene.glb');
+        } else {
+          const output = JSON.stringify(result, null, 2);
+          saveString(output, 'scene.gltf');
+        }
+      },
+      (error) => {
+        console.error('An error happened during parsing', error);
+      },
+      {
+        onlyVisible: false,
+        binary,
+      }
+    );
   }
 
   tick(delta: number) {

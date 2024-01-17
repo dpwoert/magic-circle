@@ -41,14 +41,14 @@ export default class DemoPlugin extends Plugin {
                       label: 'Download as .glb',
                       icon: 'File',
                       onSelect: () => {
-                        // todo
+                        this.app.ipc.send('gltf:download', true);
                       },
                     },
                     {
                       label: 'Download as .gltf',
                       icon: 'Folder',
                       onSelect: () => {
-                        // todo
+                        this.app.ipc.send('gltf:download', false);
                       },
                     },
                   ],

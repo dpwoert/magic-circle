@@ -16,3 +16,4 @@ export { webglRenderer } from './renderer';
 export { TransformControl } from './TransformControl';
 export { CameraHelperControl } from './CameraHelperControl';
 export { LightHelperControl } from './LightHelperControl';
+export { setup } from './setup';

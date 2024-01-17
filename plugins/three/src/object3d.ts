@@ -72,27 +72,25 @@ export function matrixFolders(
           object.position.x - settings.range.x,
           object.position.x + settings.range.x
         )
-        .precision(settings.precision),
+        .precision(settings.precision)
+        .watch(!!settings.camera),
     ]),
     new Folder('Scale').add([
-      new NumberControl(object.scale, 'x').range(
-        settings.scale.x,
-        settings.scale.y
-      ),
-      new NumberControl(object.scale, 'y').range(
-        settings.scale.x,
-        settings.scale.y
-      ),
-      new NumberControl(object.scale, 'z').range(
-        settings.scale.x,
-        settings.scale.y
-      ),
+      new NumberControl(object.scale, 'x')
+        .range(settings.scale.x, settings.scale.y)
+        .watch(!!settings.camera),
+      new NumberControl(object.scale, 'y')
+        .range(settings.scale.x, settings.scale.y)
+        .watch(!!settings.camera),
+      new NumberControl(object.scale, 'z')
+        .range(settings.scale.x, settings.scale.y)
+        .watch(!!settings.camera),
     ]),
 
     new Folder('Rotation').add([
-      new RotationControl(object.rotation, 'x'),
-      new RotationControl(object.rotation, 'y'),
-      new RotationControl(object.rotation, 'z'),
+      new RotationControl(object.rotation, 'x').watch(!!settings.camera),
+      new RotationControl(object.rotation, 'y').watch(!!settings.camera),
+      new RotationControl(object.rotation, 'z').watch(!!settings.camera),
     ])
   );
 
