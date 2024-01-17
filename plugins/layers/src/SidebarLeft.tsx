@@ -65,12 +65,16 @@ const LayerRow = styled.div<LayerRowProps>`
   span {
     display: flex;
     align-items: center;
+
+    svg {
+      color: ${(props) =>
+        props.selected ? COLORS.white.css : COLORS.shades.s400.css};
+    }
   }
 `;
 
 const LayerIcon = styled(Icon)`
   margin: ${SPACING(0.5)}px;
-  color: ${COLORS.shades.s400.css};
 `;
 
 const LayerEmpty = styled.div`
