@@ -32,7 +32,7 @@ registerIcon(Code);
 // registerIcon(Cpu);
 registerIcon(Projector);
 
-export type LayerType =
+export type LayerIcon =
   | 'layer'
   | 'group'
   | 'mesh'
@@ -49,7 +49,7 @@ export type LayerType =
   | 'computation'
   | 'renderer';
 
-export const iconMap: Record<string, IconName> = {
+export const iconMap: Record<LayerIcon, IconName> = {
   layer: 'Rows',
   group: 'Minimize',
   mesh: 'Box',

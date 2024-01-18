@@ -23,18 +23,20 @@ const TextControlSelect = ({
     <Control.Container hasChanges={hasChanges} reset={reset} select={select}>
       <Control.Label>{label}</Control.Label>
       <Control.Inside>
-        <Forms.Select
-          value={value}
-          onChange={(evt) => {
-            set(evt.target.value);
-          }}
-        >
-          {values.map((value, k) => (
-            <option value={value} key={value}>
-              {labels[k]}
-            </option>
-          ))}
-        </Forms.Select>
+        <Forms.SelectWrapper>
+          <Forms.Select
+            value={value}
+            onChange={(evt) => {
+              set(evt.target.value);
+            }}
+          >
+            {values.map((value, k) => (
+              <option value={value} key={value}>
+                {labels[k]}
+              </option>
+            ))}
+          </Forms.Select>
+        </Forms.SelectWrapper>
       </Control.Inside>
     </Control.Container>
   );

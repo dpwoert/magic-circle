@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import COLORS from './colors';
 import TYPO from './typography';
 import SPACING from './spacing';
+import Icon from './Icon';
 
 type FieldProps = {
   focus?: boolean;
@@ -71,11 +72,38 @@ export const Select = styled.select`
   border-radius: 3px;
   transition: border-color 0.2s ease;
   padding: 0 ${SPACING(1)}px;
+  padding-right: ${SPACING(4)};
+  appearance: none;
 
   &:focus {
     border: 1px solid ${COLORS.shades.s400.css};
   }
 `;
+
+export const SelectWrapperStyle = styled.div`
+  position: relative;
+  height: ${SPACING(2.75)}px;
+  width: 100%;
+
+  svg {
+    position: absolute;
+    right: ${SPACING(0.25)}px;
+    top: calc(50% - ${SPACING(1.5 / 2)}px);
+  }
+`;
+
+type SelectWrapperProps = {
+  children: React.ReactNode;
+};
+
+export const SelectWrapper = ({ children }: SelectWrapperProps) => {
+  return (
+    <SelectWrapperStyle>
+      {children}
+      <Icon name="ChevronDown" width={SPACING(1.5)} height={SPACING(1.5)} />
+    </SelectWrapperStyle>
+  );
+};
 
 const Box = styled.div`
   position: relative;

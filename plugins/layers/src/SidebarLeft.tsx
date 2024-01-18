@@ -6,7 +6,7 @@ import { SPACING, COLORS, TYPO, Icon } from '@magic-circle/styles';
 
 import type Layers from './index';
 
-import { iconMap } from './icon';
+import { iconMap, LayerIcon as LayerIconList } from './icon';
 
 const Container = styled.div`
   display: flex;
@@ -135,7 +135,7 @@ const Layer = ({ layers, layer, depth, indexList }: LayerProps) => {
         <span>
           {layer.icon && (
             <LayerIcon
-              name={iconMap[layer.icon] || 'Rows'}
+              name={iconMap[layer.icon as LayerIconList] || 'Rows'}
               width={SPACING(1.5)}
               height={SPACING(1.5)}
             />
