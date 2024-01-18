@@ -1,5 +1,6 @@
 import type Layer from './layer';
 import type Paths from './paths';
+import Events from './events';
 
 type Reference = Record<string, any>;
 
@@ -7,7 +8,12 @@ type UpdateHook<T> = (newValue: T) => void;
 
 type options = Record<string, unknown>;
 
-export default class Control<T, U extends options = options> {
+export default class Control<T, U extends options = options> extends Events<{
+  visible: { hook: (visible: boolean) => void };
+  destroy: { hook: () => void };
+  update: { hook: (newVal: T) => void };
+  reset: { hook: () => void };
+}> {
   type: string = 'unknown';
   reference: Reference;
   key: string;
@@ -18,8 +24,6 @@ export default class Control<T, U extends options = options> {
   watchChanges?: boolean;
   parent?: Layer;
 
-  private updateHooks: Set<UpdateHook<T>>;
-
   /**
    * Creates control instance
    *
@@ -27,6 +31,8 @@ export default class Control<T, U extends options = options> {
    * @param key Key in object to read for value
    */
   constructor(reference: Reference, key: string) {
+    super();
+
     if (!reference) {
       throw new Error('Reference object does not exist');
     }
@@ -36,7 +42,6 @@ export default class Control<T, U extends options = options> {
 
     this.reference = reference;
     this.key = key;
-    this.updateHooks = new Set();
 
     this.options = {
       label: key,
@@ -63,7 +68,7 @@ export default class Control<T, U extends options = options> {
     }
 
     // Run update hooks
-    this.updateHooks.forEach((fn) => fn(value));
+    this.trigger('update', value);
   }
 
   /**
@@ -81,6 +86,7 @@ export default class Control<T, U extends options = options> {
    */
   reset() {
     this.value = this.initialValue;
+    this.trigger('reset');
   }
 
   /**
@@ -151,9 +157,11 @@ export default class Control<T, U extends options = options> {
    * Function to run on update of values, triggered by the editor.
    *
    * @param hook Function to run
+   * @deprecated use on/once instead
    */
   onUpdate(fn: UpdateHook<T>) {
-    this.updateHooks.add(fn);
+    // this.updateHooks.add(fn);
+    this.on('update', fn);
     return this;
   }
 
@@ -216,12 +224,14 @@ export default class Control<T, U extends options = options> {
    * Destroys this instance and all memory associated with it
    */
   destroy() {
+    this.trigger('destroy');
+
     if (this.parent) {
       this.removeFromParent();
     }
 
     // @ts-ignore
     this.reference = undefined;
-    this.updateHooks.clear();
+    this.resetEvents();
   }
 }

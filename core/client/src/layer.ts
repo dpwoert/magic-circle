@@ -1,6 +1,7 @@
 import type MagicCircle from './client';
 import type Control from './control';
 import Paths from './paths';
+import Events from './events';
 
 export type Child = Layer | Control<any>;
 
@@ -30,7 +31,10 @@ type JSONOutput = {
   icon?: LayerIcon;
 };
 
-export default class Layer {
+export default class Layer extends Events<{
+  visible: { hook: (visible: boolean) => void };
+  destroy: { hook: () => void };
+}> {
   name: string;
   children: Child[];
   parent?: Layer;
@@ -45,6 +49,7 @@ export default class Layer {
    * @param magicInstance Only used when created as root layer
    */
   constructor(name: string, magicInstance?: MagicCircle) {
+    super();
     this.name = name;
     this.children = [];
     this.folder = false;
@@ -212,6 +217,8 @@ export default class Layer {
    * @param removeChildren Removes and destroys all children when true
    */
   destroy(removeChildren = false) {
+    this.trigger('destroy');
+
     if (this.parent) {
       this.removeFromParent();
     }
@@ -225,6 +232,7 @@ export default class Layer {
 
     this.children = [];
     this.magicInstance = undefined;
+    this.resetEvents();
   }
 
   /**

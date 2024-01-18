@@ -1,4 +1,5 @@
 import type Control from '../control';
+import type Layer from '../layer';
 import Paths from '../paths';
 import Plugin from '../plugin';
 import Watcher from '../watcher';
@@ -6,8 +7,9 @@ import Watcher from '../watcher';
 export default class PluginLayers extends Plugin {
   static id = 'layers';
 
-  private cache: Record<string, Control<any>> = {};
+  private cache: Record<string, Control<any> | Layer> = {};
   watcher?: Watcher;
+  currentlyVisibleLayer?: Layer;
 
   connect() {
     const { ipc } = this.client;
@@ -24,6 +26,10 @@ export default class PluginLayers extends Plugin {
       ipc.on('controls:reset', (_, ...args) =>
         this.resetAll.call(this, ...args)
       );
+      ipc.on('layer:visible', (_, ...args) =>
+        // @ts-ignore
+        this.setVisible.call(this, ...args)
+      );
     }
   }
 
@@ -36,12 +42,12 @@ export default class PluginLayers extends Plugin {
 
   private generateCache() {
     // Create cache of controls
-    const controls: typeof this.cache = {};
+    const cache: typeof this.cache = {};
     const watchers: Record<string, Control<any, any>> = {};
 
     this.client.layer.traverse((child, path) => {
       if ('value' in child) {
-        controls[path] = child;
+        cache[path] = child;
       }
       if ('watchChanges' in child) {
         watchers[path] = child;
@@ -66,7 +72,7 @@ export default class PluginLayers extends Plugin {
     }
 
     // save to cache
-    this.cache = controls;
+    this.cache = cache;
   }
 
   sync() {
@@ -95,7 +101,7 @@ export default class PluginLayers extends Plugin {
     }
   }
 
-  get(path: string): Control<any> | null {
+  get(path: string): Control<any> | Layer | null {
     return this.cache[path];
   }
 
@@ -125,6 +131,33 @@ export default class PluginLayers extends Plugin {
     // and sync again so editor is correct
     if (sync) {
       this.sync();
+    }
+  }
+
+  setVisible(path: string) {
+    const layer = this.cache[path];
+
+    if (layer && 'value' in layer === false) {
+      // trigger visible: false event for previously visible layer
+      if (this.currentlyVisibleLayer) {
+        this.currentlyVisibleLayer.trigger('visible', false);
+
+        this.currentlyVisibleLayer.traverse((child) => {
+          if ('value' in child) {
+            child.trigger('visible', true);
+          }
+        });
+      }
+
+      // trigger visible: false event for next visible layer
+      layer.trigger('visible', true);
+      this.currentlyVisibleLayer = layer;
+
+      layer.traverse((child) => {
+        if ('value' in child) {
+          child.trigger('visible', true);
+        }
+      });
     }
   }
 }

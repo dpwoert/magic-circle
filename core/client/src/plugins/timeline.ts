@@ -195,11 +195,13 @@ export default class PluginTimeline extends Plugin {
           (time - current.from.time) / (current.to.time - current.from.time);
         const relative = current.curve(progress);
 
-        return control.interpolate(
-          current.from.value,
-          current.to.value,
-          relative
-        );
+        if ('interpolate' in control) {
+          return control.interpolate(
+            current.from.value,
+            current.to.value,
+            relative
+          );
+        }
       }
     }
 
