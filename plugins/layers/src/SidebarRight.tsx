@@ -87,7 +87,10 @@ const Control = ({ layers, controlPath }: ControlProps) => {
         label={control.label}
         options={control.options}
         select={select}
-        hasChanges={!shallowEqual(control.value, control.initialValue)}
+        hasChanges={
+          !shallowEqual(control.value, control.initialValue) &&
+          !control.watching
+        }
         set={(newValue: any) => layers.setControl(control.path, newValue)}
         reset={() => layers.resetControl(control.path)}
       />
