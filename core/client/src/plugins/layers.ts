@@ -46,9 +46,8 @@ export default class PluginLayers extends Plugin {
     const watchers: Record<string, Control<any, any>> = {};
 
     this.client.layer.traverse((child, path) => {
-      if ('value' in child) {
-        cache[path] = child;
-      }
+      cache[path] = child;
+
       if ('watchChanges' in child) {
         watchers[path] = child;
       }
@@ -144,7 +143,7 @@ export default class PluginLayers extends Plugin {
 
         this.currentlyVisibleLayer.traverse((child) => {
           if ('value' in child) {
-            child.trigger('visible', true);
+            child.trigger('visible', false);
           }
         });
       }

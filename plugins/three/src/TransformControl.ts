@@ -21,7 +21,9 @@ export class TransformControl extends BooleanControl {
 
     // listen to updates
     this.updateThree = this.updateThree.bind(this);
-    this.onUpdate(this.updateThree);
+    this.onVisible = this.onVisible.bind(this);
+    this.on('update', this.updateThree);
+    this.on('visible', this.onVisible);
   }
 
   mode(mode: 'translate' | 'rotate' | 'scale') {
@@ -46,6 +48,15 @@ export class TransformControl extends BooleanControl {
         scene.add(this.transformControls);
       }
     } else if (!this.value && this.transformControls) {
+      this.transformControls.removeFromParent();
+      this.transformControls.dispose();
+      this.transformControls = undefined;
+    }
+  }
+
+  private onVisible(visible: boolean) {
+    if (!visible && this.transformControls) {
+      this.transformControls.removeFromParent();
       this.transformControls.dispose();
       this.transformControls = undefined;
     }

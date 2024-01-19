@@ -8,6 +8,14 @@ import {
   Mesh,
   Object3D,
   LoadingManager,
+  DirectionalLight,
+  MeshStandardMaterial,
+  PlaneGeometry,
+  SphereGeometry,
+  SpotLight,
+  PointLight,
+  HemisphereLight,
+  AmbientLight,
 } from 'three';
 
 import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter.js';
@@ -53,6 +61,7 @@ export default class Viewer {
 
   mixer?: AnimationMixer;
   magicCircle?: MagicCircle;
+  currentlyVisible?: Object3D;
 
   private manager: LoadingManager;
   private blobURLs = new Set<string>();
@@ -103,8 +112,11 @@ export default class Viewer {
   setup(gui: MagicCircle) {
     this.magicCircle = gui;
 
-    // Listen to download signals
+    // Listen to signals from editor
     gui.ipc.on('gltf:download', (_, binary) => this.exportScene(binary));
+    gui.ipc.on('add:light', (_, light: string) => this.addLight(light));
+    gui.ipc.on('add:mesh', (_, mesh: string) => this.addMesh(mesh));
+    gui.ipc.on('add:group', () => this.addGroup());
 
     // Listen to resizes of the window
     window.addEventListener('resize', () => {
@@ -178,6 +190,9 @@ export default class Viewer {
         onTransformEnd: () => {
           this.controls.enabled = true;
         },
+        onSelectLayer: (object) => {
+          this.currentlyVisible = object;
+        },
       })
     );
 
@@ -231,6 +246,53 @@ export default class Viewer {
         binary,
       }
     );
+  }
+
+  addLight(type: string) {
+    if (type === 'directional') {
+      const light = new DirectionalLight();
+      this.scene.add(light);
+    } else if (type === 'point') {
+      const light = new PointLight();
+      this.scene.add(light);
+    } else if (type === 'spot') {
+      const light = new SpotLight();
+      this.scene.add(light);
+    } else if (type === 'hemisphere') {
+      const light = new HemisphereLight();
+      this.scene.add(light);
+    } else if (type === 'ambient') {
+      const light = new AmbientLight();
+      this.scene.add(light);
+    }
+  }
+
+  addMesh(type: string) {
+    console.info('add mesh', type);
+
+    if (this.currentlyVisible) {
+      if (type === 'plane') {
+        const cube = new Mesh(
+          new PlaneGeometry(),
+          new MeshStandardMaterial(0xffffff)
+        );
+        this.currentlyVisible.add(cube);
+      }
+      if (type === 'cube') {
+        const cube = new Mesh(
+          new CubeGeometry(),
+          new MeshStandardMaterial(0xffffff)
+        );
+        this.currentlyVisible.add(cube);
+      }
+      if (type === 'sphere') {
+        const cube = new Mesh(
+          new SphereGeometry(),
+          new MeshStandardMaterial(0xffffff)
+        );
+        this.currentlyVisible.add(cube);
+      }
+    }
   }
 
   tick(delta: number) {

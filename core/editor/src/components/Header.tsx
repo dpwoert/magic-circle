@@ -65,6 +65,7 @@ const ButtonCollection = styled.div`
 
 type ButtonProps = {
   inactive?: boolean;
+  isLast?: boolean;
 };
 
 const Button = styled(Tooltip)<ButtonProps>`
@@ -73,17 +74,14 @@ const Button = styled(Tooltip)<ButtonProps>`
   justify-content: center;
   width: ${SPACING(3)}px;
   height: ${SPACING(3) - 2}px;
-  border-right: 1px solid ${COLORS.accent.css};
+  border-right: ${(props) => (props.isLast ? 0 : 1)}px solid
+    ${COLORS.accent.css};
   cursor: pointer;
   transition: background 0.2s ease;
   pointer-events: ${(props) => (props.inactive ? 'none' : 'all')};
 
   svg {
     opacity: ${(props) => (props.inactive ? 0.4 : 1)};
-  }
-
-  &:last-child {
-    border-right: none;
   }
 
   &:hover {
@@ -134,7 +132,7 @@ const Header = () => {
               <ButtonCollection key={key}>
                 {buttons[key].list
                   .filter((button) => !button.hide)
-                  .map((button) => {
+                  .map((button, index, btns) => {
                     const inside = (
                       <Button
                         disabled={!button.tooltip}
@@ -143,6 +141,7 @@ const Header = () => {
                         onClick={() => button.onClick()}
                         content={button.tooltip}
                         placement={Placement.BOTTOM}
+                        isLast={index === btns.length - 1}
                       >
                         <Icon
                           name={button.icon}

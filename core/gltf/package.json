@@ -23,6 +23,7 @@
   "main": "src/index.js",
   "scripts": {
     "watch": "tsc --watch",
+    "editor": "magic develop",
     "build:dev": "tsc",
     "build:prod": "NODE_ENV=production tsc",
     "package": "sh scripts/build.sh",

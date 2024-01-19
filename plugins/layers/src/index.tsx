@@ -93,6 +93,13 @@ export default class Layers extends Plugin {
       LayoutHook.SIDEBAR_RIGHT,
       <SidebarRight app={this.app} layers={this} />
     );
+
+    // Track updates of selected layer and send to FE
+    this.selected.onChange((path) => {
+      if (path) {
+        this.ipc.send('layer:visible', path);
+      }
+    });
   }
 
   sidebar() {

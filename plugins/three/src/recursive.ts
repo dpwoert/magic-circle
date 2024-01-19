@@ -11,6 +11,7 @@ export type RecursiveSettings = Omit<MeshSettings, 'range' | 'range'> & {
   range?: (mesh: Mesh | Object3D) => Vector3;
   scale?: (mesh: Mesh | Object3D) => Vector2;
   watch?: (name: string) => boolean;
+  onSelectLayer?: (object: Object3D) => void;
 };
 
 export function recursive(
@@ -63,6 +64,14 @@ export function recursive(
         range: settings.range ? settings.range(object) : undefined,
         scale: settings.scale ? settings.scale(object) : undefined,
       }).addTo(parentLayer);
+    }
+
+    if (settings.onSelectLayer) {
+      gui.on('visible', (isVisible) => {
+        if (isVisible && settings.onSelectLayer) {
+          settings.onSelectLayer(object);
+        }
+      });
     }
 
     // Save this layer
