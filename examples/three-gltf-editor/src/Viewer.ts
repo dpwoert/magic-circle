@@ -16,6 +16,7 @@ import {
   PointLight,
   HemisphereLight,
   AmbientLight,
+  BoxGeometry,
 } from 'three';
 
 import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter.js';
@@ -179,6 +180,11 @@ export default class Viewer {
       this.mixer.clipAction(gltf.animations[0]).play();
     }
 
+    // Show
+    this.renderer.domElement.style.display = 'block';
+  }
+
+  addGUI() {
     // Create UI
     this.magicCircle.layer.add(
       GUI.setup(this.renderer, this.camera, this.scene, {
@@ -198,9 +204,18 @@ export default class Viewer {
 
     // Trigger sync of UI
     this.magicCircle.sync();
+  }
 
-    // Show
-    this.renderer.domElement.style.display = 'block';
+  clearGUI() {
+    if (this.magicCircle) {
+      this.magicCircle.layer.forEach((c) => c.destroy(true));
+      this.magicCircle.layer.children = [];
+    }
+  }
+
+  syncGUI() {
+    this.clearGUI();
+    this.addGUI();
   }
 
   clearView() {
@@ -208,10 +223,7 @@ export default class Viewer {
       this.mixer.stopAllAction();
       this.mixer = undefined;
     }
-    if (this.magicCircle) {
-      this.magicCircle.layer.forEach((c) => c.destroy(true));
-      this.magicCircle.layer.children = [];
-    }
+    this.clearGUI();
 
     // Clear blob urls
     this.blobURLs.forEach((url) => URL.revokeObjectURL(url));
@@ -265,6 +277,8 @@ export default class Viewer {
       const light = new AmbientLight();
       this.scene.add(light);
     }
+
+    this.syncGUI();
   }
 
   addMesh(type: string) {
@@ -274,25 +288,35 @@ export default class Viewer {
       if (type === 'plane') {
         const cube = new Mesh(
           new PlaneGeometry(),
-          new MeshStandardMaterial(0xffffff)
+          new MeshStandardMaterial({ color: 0xffffff })
         );
         this.currentlyVisible.add(cube);
       }
       if (type === 'cube') {
         const cube = new Mesh(
-          new CubeGeometry(),
-          new MeshStandardMaterial(0xffffff)
+          new BoxGeometry(),
+          new MeshStandardMaterial({ color: 0xffffff })
         );
         this.currentlyVisible.add(cube);
       }
       if (type === 'sphere') {
         const cube = new Mesh(
           new SphereGeometry(),
-          new MeshStandardMaterial(0xffffff)
+          new MeshStandardMaterial({ color: 0xffffff })
         );
         this.currentlyVisible.add(cube);
       }
     }
+
+    this.syncGUI();
+  }
+
+  addGroup() {
+    if (this.currentlyVisible) {
+      this.currentlyVisible.add(new Object3D());
+    }
+
+    this.syncGUI();
   }
 
   tick(delta: number) {
