@@ -174,6 +174,9 @@ export default class Viewer {
     const model = gltf.scene;
     this.scene.add(model);
 
+    // Create GUI
+    this.syncGUI();
+
     // Play animation
     this.mixer = new AnimationMixer(model);
     if (gltf.animations && gltf.animations.length > 0) {
@@ -313,7 +316,9 @@ export default class Viewer {
 
   addGroup() {
     if (this.currentlyVisible) {
-      this.currentlyVisible.add(new Object3D());
+      if (this.currentlyVisible instanceof Mesh === false) {
+        this.currentlyVisible.add(new Object3D());
+      }
     }
 
     this.syncGUI();

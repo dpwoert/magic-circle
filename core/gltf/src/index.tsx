@@ -35,6 +35,7 @@ export default class DemoPlugin extends Plugin {
             wrap: (inside: ReactNode) => (
               <MenuPortal
                 showOnClick
+                key="download"
                 menu={{
                   items: [
                     {
@@ -68,6 +69,7 @@ export default class DemoPlugin extends Plugin {
             wrap: (inside: ReactNode) => (
               <MenuPortal
                 showOnClick
+                key="add:lights"
                 menu={{
                   items: [
                     {
@@ -122,6 +124,7 @@ export default class DemoPlugin extends Plugin {
             wrap: (inside: ReactNode) => (
               <MenuPortal
                 showOnClick
+                key="add:mesh"
                 menu={{
                   items: [
                     {
@@ -158,6 +161,14 @@ export default class DemoPlugin extends Plugin {
                 {inside}
               </MenuPortal>
             ),
+          },
+          {
+            label: 'Add group',
+            icon: 'Minimize' as icons,
+            tooltip: 'add:group',
+            onClick: () => {
+              this.app.ipc.send('add:group');
+            },
           },
         ],
       },

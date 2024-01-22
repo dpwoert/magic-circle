@@ -161,6 +161,7 @@ export default class Screenshots extends Plugin {
             wrap: (inside) => (
               <MenuPortal
                 showOnClick
+                key="share"
                 menu={{
                   items: [
                     {
