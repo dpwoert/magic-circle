@@ -7,6 +7,7 @@ import {
   Layer,
   Folder,
   TextControl,
+  ButtonControl,
 } from '@magic-circle/client';
 
 import { material, materialTransform } from './material';
@@ -19,6 +20,8 @@ type MatrixSettings = {
   camera?: Camera;
   onTransformStart?: () => void;
   onTransformEnd?: () => void;
+  canDelete?: boolean;
+  onDelete?: () => void;
 };
 
 type Object3dSettings = Partial<MatrixSettings>;
@@ -39,6 +42,20 @@ export function matrixFolders(
     new TextControl(object, 'id'),
     new BooleanControl(object, 'visible'),
   ]);
+
+  if (settings.canDelete) {
+    const wrapper = {
+      deleteObject: () => {
+        object.removeFromParent();
+        if (settings.onDelete) settings.onDelete();
+      },
+    };
+
+    general.add(
+      new ButtonControl(wrapper, 'deleteObject').label('Delete from scene')
+    );
+  }
+
   folders.push(general);
 
   if (settings.camera) {

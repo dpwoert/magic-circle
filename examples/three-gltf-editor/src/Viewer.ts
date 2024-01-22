@@ -202,6 +202,8 @@ export default class Viewer {
         onSelectLayer: (object) => {
           this.currentlyVisible = object;
         },
+        canDelete: true,
+        onDelete: () => this.syncGUI(),
       })
     );
 
