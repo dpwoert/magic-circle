@@ -35,11 +35,11 @@
   "devDependencies": {
     "@magic-circle/editor": "^0.3.0-alpha.5",
     "typescript": "^5.3.3",
-    "vite": "^5.0.10"
+    "vite": "^5.0.12"
   },
   "dependencies": {
     "@magic-circle/client": "^0.3.0-alpha.5",
-    "pixi.js": "^7.3.2"
+    "pixi.js": "^7.3.3"
   },
   "exampleName": "pixi.js"
 }

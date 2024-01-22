@@ -41,7 +41,7 @@
     "@types/three": "^0.160.0",
     "@types/styled-components": "^5.1.34",
     "typescript": "^5.3.3",
-    "vite": "^5.0.10",
+    "vite": "^5.0.12",
     "vite-plugin-svgr": "^4.2.0"
   },
   "dependencies": {
@@ -49,7 +49,7 @@
     "@magic-circle/styles": "^0.3.0-alpha.5",
     "react-dropzone": "14.2.3",
     "@magic-circle/three": "^0.3.0-alpha.5",
-    "styled-components": "^6.1.5",
-    "three": "^0.160.0"
+    "styled-components": "^6.1.8",
+    "three": "^0.160.1"
   }
 }

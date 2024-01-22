@@ -35,21 +35,21 @@
   },
   "devDependencies": {
     "@magic-circle/editor": "^0.3.0-alpha.5",
-    "@types/react": "^18.2.46",
+    "@types/react": "^18.2.48",
     "@types/react-dom": "^18.2.18",
     "@types/three": "^0.160.0",
     "@vitejs/plugin-react": "^4.2.1",
     "typescript": "^5.3.3",
-    "vite": "^5.0.10"
+    "vite": "^5.0.12"
   },
   "dependencies": {
     "@magic-circle/client": "^0.3.0-alpha.5",
     "@magic-circle/react": "^0.3.0-alpha.5",
-    "@react-three/drei": "^9.92.7",
-    "@react-three/fiber": "^8.15.12",
+    "@react-three/drei": "^9.96.1",
+    "@react-three/fiber": "^8.15.14",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "three": "^0.160.0"
+    "three": "^0.160.1"
   },
   "exampleName": "React Three Fiber"
 }
