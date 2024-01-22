@@ -22,6 +22,7 @@ type MatrixSettings = {
   onTransformEnd?: () => void;
   canDelete?: boolean;
   onDelete?: () => void;
+  onRename?: (object: Object3D) => void;
 };
 
 type Object3dSettings = Partial<MatrixSettings>;
@@ -29,6 +30,8 @@ type Object3dSettings = Partial<MatrixSettings>;
 export type MeshSettings = Object3dSettings & {
   customMaterial?: materialTransform;
 };
+
+let renameDebounce: ReturnType<typeof setTimeout> | undefined;
 
 export function matrixFolders(
   object: Object3D,
@@ -38,7 +41,15 @@ export function matrixFolders(
 
   const general = new Folder('General');
   general.add([
-    new TextControl(object, 'name'),
+    new TextControl(object, 'name').on('update', () => {
+      if (renameDebounce) {
+        clearTimeout(renameDebounce);
+      }
+
+      renameDebounce = setTimeout(() => {
+        if (settings.onRename) settings.onRename(object);
+      }, 500);
+    }),
     new TextControl(object, 'id'),
     new BooleanControl(object, 'visible'),
   ]);
