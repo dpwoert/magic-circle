@@ -11,7 +11,7 @@ export default class ImageControl extends Control<string | ImageBitmap> {
   ) {
     // if key is not present, it must be an HTMLImageElement and we can use the 'src' key
     const isHTMLImageElement = !key && 'src' in reference;
-    super(reference || new Image(), isHTMLImageElement || !key ? 'src' : key);
+    super(reference, isHTMLImageElement || !key ? 'src' : key);
 
     if (!key) {
       this.label('Image');
