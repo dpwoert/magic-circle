@@ -25,7 +25,7 @@ export function scene(scene: Scene, opts: SceneSettings = {}): Layer {
   // Background
   if (scene.background instanceof Color) {
     background.push(new ColorControl(scene, 'background').range(1));
-  } else if (scene.background) {
+  } else if (scene.background && scene.background?.source.data) {
     background.push(
       new ImageControl(scene.background?.source, 'data'),
       new NumberControl(scene, 'backgroundIntensity').range(0, 1),
