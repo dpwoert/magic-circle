@@ -290,29 +290,33 @@ export default class Viewer {
   }
 
   addMesh(type: string) {
-    console.info('add mesh', type);
-
     if (this.currentlyVisible) {
+      // ensure we're not adding a mesh to mesh...
+      const toAddTo =
+        this.currentlyVisible instanceof Mesh
+          ? this.currentlyVisible.parent
+          : this.currentlyVisible;
+
       if (type === 'plane') {
         const cube = new Mesh(
           new PlaneGeometry(),
           new MeshStandardMaterial({ color: 0xffffff })
         );
-        this.currentlyVisible.add(cube);
+        toAddTo.add(cube);
       }
       if (type === 'cube') {
         const cube = new Mesh(
           new BoxGeometry(),
           new MeshStandardMaterial({ color: 0xffffff })
         );
-        this.currentlyVisible.add(cube);
+        toAddTo.add(cube);
       }
       if (type === 'sphere') {
         const cube = new Mesh(
           new SphereGeometry(),
           new MeshStandardMaterial({ color: 0xffffff })
         );
-        this.currentlyVisible.add(cube);
+        toAddTo.add(cube);
       }
     }
 
@@ -321,7 +325,14 @@ export default class Viewer {
 
   addGroup() {
     if (this.currentlyVisible) {
-      if (this.currentlyVisible instanceof Mesh === false) {
+      if (this.currentlyVisible instanceof Mesh) {
+        // wrap mesh in group
+        const { parent } = this.currentlyVisible;
+        const newGroup = new Object3D();
+        parent.add(newGroup);
+        this.currentlyVisible.removeFromParent();
+        newGroup.add(this.currentlyVisible);
+      } else {
         this.currentlyVisible.add(new Object3D());
       }
     }
