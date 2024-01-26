@@ -114,10 +114,12 @@ export default class Viewer {
     this.magicCircle = gui;
 
     // Listen to signals from editor
-    gui.ipc.on('gltf:download', (_, binary) => this.exportScene(binary));
-    gui.ipc.on('add:light', (_, light: string) => this.addLight(light));
-    gui.ipc.on('add:mesh', (_, mesh: string) => this.addMesh(mesh));
-    gui.ipc.on('add:group', () => this.addGroup());
+    if (gui.ipc) {
+      gui.ipc.on('gltf:download', (_, binary) => this.exportScene(binary));
+      gui.ipc.on('add:light', (_, light: string) => this.addLight(light));
+      gui.ipc.on('add:mesh', (_, mesh: string) => this.addMesh(mesh));
+      gui.ipc.on('add:group', () => this.addGroup());
+    }
 
     // Listen to resizes of the window
     window.addEventListener('resize', () => {

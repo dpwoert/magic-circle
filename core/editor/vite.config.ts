@@ -11,6 +11,6 @@ export default defineConfig({
     // process.env.STATS && visualizer()
   ],
   resolve: {
-    dedupe: ['styled-components', 'react', 'react-dom', 'react-is', 'three'],
+    dedupe: ['styled-components', 'react', 'react-dom', 'react-is'],
   },
 });

@@ -17,8 +17,8 @@ export default defineConfig({
     strictPort: true,
   },
   base,
-  // resolve: {
-  //   dedupe: ['react', 'react-dom', 'react-is'],
-  // },
+  resolve: {
+    dedupe: ['three'],
+  },
   plugins: [react(), svgr()],
 });
