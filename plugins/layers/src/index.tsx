@@ -10,6 +10,7 @@ import { Store, StoreFamily } from '@magic-circle/state';
 import {
   ArrowRight,
   ChevronDown,
+  ChevronRight,
   AnnotationWarning,
   registerIcon,
   Layers as LayersIcon,
@@ -20,6 +21,7 @@ import SidebarRight from './SidebarRight';
 
 registerIcon(LayersIcon);
 registerIcon(ChevronDown);
+registerIcon(ChevronRight);
 registerIcon(ArrowRight);
 registerIcon(AnnotationWarning);
 
@@ -71,6 +73,7 @@ export default class Layers extends Plugin {
   flat = new Store<FlatListItem[]>([]);
   lookup = new StoreFamily<LayerExport | ControlExport>();
   selected = new Store<string | null>(null);
+  depthStart = new Store<{ layer: LayerExport; depth: number } | null>(null);
   external = new Store<Record<string, string[]>>({});
   setExternal = new Store<ExternalQuery | null>(null);
 

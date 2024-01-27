@@ -8,6 +8,8 @@ import type Layers from './index';
 
 import { iconMap, LayerIcon as LayerIconList } from './icon';
 
+const MAX_DEPTH = 3;
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -28,10 +30,16 @@ type LayerRowProps = {
   depth: number;
   selected?: boolean;
   hasChildLayers?: boolean;
+  depthZoomBase?: boolean;
 };
 
-const getRowColor = (index: number, selected: boolean) => {
+const getRowColor = (
+  index: number,
+  selected: boolean,
+  depthZoomBase: boolean
+) => {
   if (selected) return String(COLORS.shades.s500.mix(COLORS.accent, 0.75));
+  if (depthZoomBase) return String(COLORS.shades.s700.css);
   if (index % 2 === 1) return COLORS.shades.s500.css;
   return 'none';
 };
@@ -52,8 +60,11 @@ const LayerRow = styled.div<LayerRowProps>`
   color: ${COLORS.white.css};
   cursor: pointer;
   transition: background-color 0.2s ease;
-  background: ${(props) => getRowColor(props.index, !!props.selected)};
+  background: ${(props) =>
+    getRowColor(props.index, !!props.selected, !!props.depthZoomBase)};
   font-weight: ${(props) => (props.selected ? 700 : 400)};
+  border-bottom: ${(props) =>
+    props.depthZoomBase ? `1px solid ${COLORS.shades.s100.css}` : 'none'};
 
   &:hover {
     background: ${(props) =>
@@ -108,10 +119,19 @@ type LayerProps = {
   layers: Layers;
   layer: Layers['layers']['value'][0];
   depth: number;
+  currentDepth: number;
   indexList: string[];
+  depthZoomBase?: boolean;
 };
 
-const Layer = ({ layers, layer, depth, indexList }: LayerProps) => {
+const Layer = ({
+  layers,
+  layer,
+  depth,
+  currentDepth,
+  indexList,
+  depthZoomBase = false,
+}: LayerProps) => {
   const selected = useStore(layers.selected);
   const [expand, setExpand] = usePermanentState(
     `collapsed-${layer.path}`,
@@ -119,6 +139,7 @@ const Layer = ({ layers, layer, depth, indexList }: LayerProps) => {
   );
   const hasChildLayers =
     layer.children.filter((c) => 'children' in c && !c.folder).length > 0;
+  const reachedMaxDepth = depth >= currentDepth + MAX_DEPTH;
 
   return (
     <Fragment key={layer.path}>
@@ -131,6 +152,7 @@ const Layer = ({ layers, layer, depth, indexList }: LayerProps) => {
           layers.selected.set(layer.path);
         }}
         hasChildLayers={hasChildLayers}
+        depthZoomBase={depthZoomBase}
       >
         <span>
           {layer.icon && (
@@ -142,7 +164,7 @@ const Layer = ({ layers, layer, depth, indexList }: LayerProps) => {
           )}
           {layer.name}
         </span>
-        {hasChildLayers && (
+        {hasChildLayers && !reachedMaxDepth && !depthZoomBase && (
           <Chevron
             name="ChevronDown"
             width={SPACING(2)}
@@ -151,8 +173,31 @@ const Layer = ({ layers, layer, depth, indexList }: LayerProps) => {
             collapsed={!expand}
           />
         )}
+        {hasChildLayers && !reachedMaxDepth && depthZoomBase && (
+          <Icon
+            name="Close"
+            width={SPACING(1.5)}
+            height={SPACING(1.5)}
+            onClick={() => layers.depthStart.set(null)}
+          />
+        )}
+        {hasChildLayers && reachedMaxDepth && (
+          <Chevron
+            name="ChevronRight"
+            width={SPACING(2)}
+            height={SPACING(2)}
+            onClick={() => {
+              layers.depthStart.set({
+                layer,
+                depth,
+              });
+            }}
+            collapsed={true}
+          />
+        )}
       </LayerRow>
       {expand &&
+        !reachedMaxDepth &&
         (layer.children || []).map((child) => {
           if ('children' in child && !child.folder) {
             return (
@@ -161,6 +206,7 @@ const Layer = ({ layers, layer, depth, indexList }: LayerProps) => {
                 layers={layers}
                 layer={child}
                 depth={depth + 1}
+                currentDepth={currentDepth}
                 indexList={indexList}
               />
             );
@@ -180,8 +226,18 @@ const Sidebar = ({ layers }: SidebarProps) => {
   const list = useStore(layers.flat);
   const tree = useStore(layers.layers);
   const selected = useStore(layers.selected);
+  const depthStart = useStore(layers.depthStart);
 
   const indexList = useMemo(() => list.map((l) => l.path), [list]);
+
+  const { startLayers, currentDepth } = useMemo(() => {
+    if (!depthStart) return { startLayers: tree, currentDepth: 0 };
+
+    return {
+      startLayers: [depthStart.layer],
+      currentDepth: depthStart.depth,
+    };
+  }, [tree, depthStart]);
 
   useEffect(() => {
     // If nothing is selected, try to select the first option
@@ -206,7 +262,7 @@ const Sidebar = ({ layers }: SidebarProps) => {
             No layers detected
           </LayerEmpty>
         )}
-        {tree.map(
+        {startLayers.map(
           (layer) =>
             !layer.folder && (
               <Layer
@@ -214,7 +270,9 @@ const Sidebar = ({ layers }: SidebarProps) => {
                 layers={layers}
                 layer={layer}
                 depth={0}
+                currentDepth={currentDepth}
                 indexList={indexList}
+                depthZoomBase={currentDepth !== 0}
               />
             )
         )}
