@@ -35,7 +35,7 @@ const Bottom = styled.div`
   width: 100%;
   padding: ${SPACING(1)}px 0;
   flex-shrink: 0;
-  background: ${COLORS.shades.s300.css};
+  background: ${COLORS.shades.s500.css};
 `;
 
 const Header = styled.div`
