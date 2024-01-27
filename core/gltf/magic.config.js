@@ -4,7 +4,7 @@ export default {
   url: 'https://gltf.magic-circle.dev/viewer',
   plugins: (defaultPlugins) => [DemoPlugin, ...defaultPlugins],
   settings: {
-    pageTitle: 'Three.JS GLTF editor by Magic Circle',
+    pageTitle: 'Three.JS GLTF editor (beta) by Magic Circle',
     directoryBasedOnFrameUrl: true,
     screenshots: {
       gitInfo: false,
