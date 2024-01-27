@@ -308,6 +308,22 @@ const Popover = ({
     };
   }, [target, placement, offset, visible]);
 
+  // handles "click aways"
+  useEffect(() => {
+    const handler = (event: MouseEvent) => {
+      const { current: element } = portal;
+      if (element && !element.contains(event.target as Node) && visible) {
+        setVisible(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handler);
+
+    return () => {
+      document.removeEventListener('mousedown', handler);
+    };
+  }, [visible]);
+
   const childrenElement = useMemo(() => {
     return typeof children === 'function'
       ? children(toggle, visible)

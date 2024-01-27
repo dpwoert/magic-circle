@@ -151,6 +151,7 @@ export default class DemoPlugin extends Plugin {
                     {
                       label: 'GLTF',
                       icon: 'File',
+                      disabled: true,
                       onSelect: () => {
                         this.app.ipc.send('add:mesh', 'gltf');
                       },
