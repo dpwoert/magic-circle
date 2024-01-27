@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/gltf",
-  "version": "0.3.0-alpha.5",
+  "version": "0.3.0-alpha.6",
   "private": true,
   "description": "Magic Circle GLTF editor",
   "keywords": [
@@ -30,9 +30,9 @@
     "serve": "serve magic-circle/"
   },
   "devDependencies": {
-    "@magic-circle/editor": "^0.3.0-alpha.5",
-    "@magic-circle/schema": "^0.3.0-alpha.5",
-    "@magic-circle/styles": "^0.3.0-alpha.5",
+    "@magic-circle/editor": "^0.3.0-alpha.6",
+    "@magic-circle/schema": "^0.3.0-alpha.6",
+    "@magic-circle/styles": "^0.3.0-alpha.6",
     "@types/react": "^18.2.45",
     "@types/styled-components": "^5.1.34",
     "serve": "*",

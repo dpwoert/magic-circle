@@ -2,7 +2,7 @@
   "name": "@magic-circle/example-three-gltf-editor",
   "exampleName": "ThreeJS GLTF uploads",
   "private": true,
-  "version": "0.3.0-alpha.5",
+  "version": "0.3.0-alpha.6",
   "type": "module",
   "description": "Magic Circle ThreeJS GLTF editor example",
   "keywords": [
@@ -36,19 +36,19 @@
     "editor:dev": "magic develop"
   },
   "devDependencies": {
-    "@magic-circle/editor": "^0.3.0-alpha.5",
-    "@vitejs/plugin-react": "^4.2.1",
-    "@types/three": "^0.160.0",
+    "@magic-circle/editor": "^0.3.0-alpha.6",
     "@types/styled-components": "^5.1.34",
+    "@types/three": "^0.160.0",
+    "@vitejs/plugin-react": "^4.2.1",
     "typescript": "^5.3.3",
     "vite": "^5.0.12",
     "vite-plugin-svgr": "^4.2.0"
   },
   "dependencies": {
-    "@magic-circle/client": "^0.3.0-alpha.5",
-    "@magic-circle/styles": "^0.3.0-alpha.5",
+    "@magic-circle/client": "^0.3.0-alpha.6",
+    "@magic-circle/styles": "^0.3.0-alpha.6",
+    "@magic-circle/three": "^0.3.0-alpha.6",
     "react-dropzone": "14.2.3",
-    "@magic-circle/three": "^0.3.0-alpha.5",
     "styled-components": "^6.1.8",
     "three": "^0.160.1"
   }
