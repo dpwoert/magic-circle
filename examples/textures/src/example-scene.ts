@@ -7,7 +7,8 @@ import {
   Color,
   TextureLoader,
   MeshStandardMaterial,
-  PointLight,
+  DirectionalLight,
+  AmbientLight,
 } from 'three';
 
 import {
@@ -58,13 +59,16 @@ export async function setup(gui: MagicCircle) {
   const sceneLayer = new Layer('Scene').addTo(gui.layer);
 
   // Create lights
-  const light = new PointLight(0xffffff, 1);
-  light.position.set(300, 300, 300);
+  const light = new DirectionalLight(0xffffff, 1);
+  light.position.set(300, 0, 300);
   scene.add(light);
 
-  const light2 = new PointLight(0xffffff, 1);
-  light2.position.set(-300, -300, -300);
+  const light2 = new DirectionalLight(0xffffff, 1);
+  light2.position.set(-300, 300, 0);
   scene.add(light2);
+
+  const ambient = new AmbientLight(0xffffff, 0.2);
+  scene.add(ambient);
 
   const loader = new TextureLoader();
 
@@ -113,7 +117,7 @@ export async function setup(gui: MagicCircle) {
         textureFolder.add([
           new ImageControl(texDiffuse.source.data)
             .label('Diffuse')
-            .onUpdate(() => {
+            .on('update', () => {
               texDiffuse.needsUpdate = true;
             }),
           new ImageControl(texBump.source.data).label('Bump').onUpdate(() => {
@@ -121,7 +125,7 @@ export async function setup(gui: MagicCircle) {
           }),
           new ImageControl(texRoughness.source.data)
             .label('Roughness')
-            .onUpdate(() => {
+            .on('update', () => {
               texRoughness.needsUpdate = true;
             }),
         ]);
