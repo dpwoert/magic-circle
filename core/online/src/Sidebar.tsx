@@ -22,15 +22,20 @@ const Container = styled.div`
   justify-content: space-between;
   width: 100%;
   height: 100%;
-  padding-bottom: ${SPACING(2)}px;
 `;
 
-const Top = styled.div``;
+const Top = styled.div`
+  flex: 1;
+  overflow: auto;
+`;
 
 const Bottom = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
+  padding: ${SPACING(1)}px 0;
+  flex-shrink: 0;
+  background: ${COLORS.shades.s300.css};
 `;
 
 const Header = styled.div`
