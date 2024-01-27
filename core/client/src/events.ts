@@ -6,6 +6,12 @@ export default class Events<T extends Record<string, Event>> {
   private listeners: Record<string, Set<Event['hook']>> = {};
   private onceMap: Map<Event['hook'], boolean> = new Map();
 
+  /**
+   * Executes function when events happens
+   *
+   * @param on Name of event
+   * @param hook Function to run
+   */
   on<K extends keyof T>(eventName: K, hook: T[K]['hook']) {
     const key = String(eventName);
     this.listeners[key] = this.listeners[key] || new Set<Event['hook']>();
@@ -15,6 +21,12 @@ export default class Events<T extends Record<string, Event>> {
     return this;
   }
 
+  /**
+   * Executes function when events happens, will only run once
+   *
+   * @param on Name of event
+   * @param hook Function to run
+   */
   once<K extends keyof T>(eventName: K, hook: T[K]['hook']) {
     this.on(eventName, hook);
     this.onceMap.set(hook, true);
@@ -22,6 +34,12 @@ export default class Events<T extends Record<string, Event>> {
     return this;
   }
 
+  /**
+   * Deregisters functions from executing when events happens
+   *
+   * @param on Name of event
+   * @param hook Function to run
+   */
   off<K extends keyof T>(eventName: K, hook: T[K]['hook']) {
     const key = String(eventName);
     this.listeners[key] = this.listeners[key] || new Set<Event['hook']>();
@@ -29,6 +47,11 @@ export default class Events<T extends Record<string, Event>> {
     this.onceMap.delete(hook);
   }
 
+  /**
+   * Remove all listeners for event
+   *
+   * @param on Name of event
+   */
   removeAllListeners(eventName: keyof T) {
     const key = String(eventName);
 
@@ -42,6 +65,12 @@ export default class Events<T extends Record<string, Event>> {
     }
   }
 
+  /**
+   * Removes all listeners for all events on this object
+   *
+   * @param on Name of event
+   * @param hook Function to run
+   */
   resetEvents() {
     Object.keys(this.listeners).forEach((key) => {
       this.listeners[key].clear();
@@ -50,6 +79,12 @@ export default class Events<T extends Record<string, Event>> {
     this.onceMap.clear();
   }
 
+  /**
+   * Trigger all listeners on an event
+   *
+   * @param on Name of event
+   * @param args Data to pass to listeners
+   */
   trigger<K extends keyof T>(eventName: K, ...args: Parameters<T[K]['hook']>) {
     const key = String(eventName);
     if (this.listeners[key]) {
