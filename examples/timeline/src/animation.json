@@ -5,7 +5,7 @@
     "loop": true,
     "seamlessLoop": true,
     "values": {
-      "base.scene.box-4.position.y": [
+      "scene.box-4.position.y": [
         {
           "time": 716.6666666666667,
           "value": 100
@@ -23,7 +23,7 @@
           "value": 100
         }
       ],
-      "base.scene.box-2.position.z": [
+      "scene.box-2.position.z": [
         {
           "time": 716.6666666666667,
           "value": 100
@@ -41,7 +41,7 @@
           "value": 100
         }
       ],
-      "base.scene.box-3.position.x": [
+      "scene.box-3.position.x": [
         {
           "time": 716.6666666666667,
           "value": 0
@@ -59,7 +59,7 @@
           "value": 0
         }
       ],
-      "base.scene.box-4.position.x": [
+      "scene.box-4.position.x": [
         {
           "time": 716.6666666666667,
           "value": 0
