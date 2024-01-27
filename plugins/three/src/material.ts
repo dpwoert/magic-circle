@@ -63,7 +63,7 @@ function defaultMaterialFolders(
     main.push(new ColorControl(material, 'displacementScale').range(0, 2));
   }
 
-  folders.push(new Folder('Material').add(main));
+  folders.push(new Folder('Material').add(main).icon('material'));
 
   // Add PBR properties
   if ('metalness' in material) {

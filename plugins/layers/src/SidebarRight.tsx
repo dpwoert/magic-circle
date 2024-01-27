@@ -9,6 +9,8 @@ import {
 } from '@magic-circle/state';
 import { SPACING, COLORS, TYPO, Icon, Expand } from '@magic-circle/styles';
 
+import { iconMap, LayerIcon as LayerIconList } from './icon';
+
 import type Layers from './index';
 
 const Container = styled.div`
@@ -32,6 +34,16 @@ const GroupHeader = styled.div`
   height: ${SPACING(5)}px;
   background: ${COLORS.shades.s600.css};
   border-bottom: 1px solid ${String(COLORS.shades.s400.opacity(0.5))};
+
+  span {
+    display: flex;
+    align-items: center;
+  }
+`;
+
+const GroupIcon = styled(Icon)`
+  margin-right: ${SPACING(1)}px;
+  color: ${COLORS.shades.s400.css};
 `;
 
 type ChevronProps = {
@@ -114,7 +126,14 @@ const Group = ({ layers, group }: GroupProps) => {
   return (
     <GroupContainer>
       <GroupHeader>
-        {group.name}
+        <span>
+          <GroupIcon
+            name={iconMap[group.icon as LayerIconList] || 'Folder'}
+            width={SPACING(1.5)}
+            height={SPACING(1.5)}
+          />
+          {group.name}
+        </span>
         {hasChildren && (
           <Chevron
             name="ChevronDown"
