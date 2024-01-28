@@ -7,7 +7,7 @@ import useSync from './useSync';
 type ClientProps = {
   name: string;
   children: React.ReactNode;
-  icon: LayerMC['customIcon'];
+  icon?: LayerMC['customIcon'];
 };
 
 export const Layer = ({ name, children, icon }: ClientProps) => {

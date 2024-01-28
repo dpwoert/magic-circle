@@ -42,7 +42,6 @@
   "dependencies": {
     "@babel/core": "^7.23.6",
     "@babel/preset-react": "^7.23.3",
-    "@emotion/is-prop-valid": "^1.2.1",
     "@magic-circle/client": "^0.3.0-alpha.6",
     "@magic-circle/controls": "^0.3.0-alpha.6",
     "@magic-circle/layers": "^0.3.0-alpha.6",

@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import styled, { StyleSheetManager } from 'styled-components';
-import isPropValid from '@emotion/is-prop-valid';
+import styled from 'styled-components';
 
 import { AppProvider, useStore } from '@magic-circle/state';
 import { LayoutHook } from '@magic-circle/schema';
@@ -112,35 +111,33 @@ export default function App() {
 
   return (
     <AppProvider app={APP}>
-      <StyleSheetManager>
-        <Container>
-          <Header />
-          <Inside>
-            <SidebarLeft />
-            <Frame id="frame">
-              <Iframe
-                allow={allow}
-                src={readyToConnect ? url : ''}
-                onLoad={() => {
-                  // APP.setup();
-                }}
-              />
-              <Inner />
-            </Frame>
-            <SidebarRight />
-          </Inside>
-          <Bottom>{hooks[LayoutHook.BOTTOM]}</Bottom>
-          <CommandLine />
-        </Container>
-        <MobileWarning>
-          <Icon
-            name="WarningTriangle"
-            width={SPACING(1.5)}
-            height={SPACING(1.5)}
-          />
-          Magic Circle is not available on mobile
-        </MobileWarning>
-      </StyleSheetManager>
+      <Container>
+        <Header />
+        <Inside>
+          <SidebarLeft />
+          <Frame id="frame">
+            <Iframe
+              allow={allow}
+              src={readyToConnect ? url : ''}
+              onLoad={() => {
+                // APP.setup();
+              }}
+            />
+            <Inner />
+          </Frame>
+          <SidebarRight />
+        </Inside>
+        <Bottom>{hooks[LayoutHook.BOTTOM]}</Bottom>
+        <CommandLine />
+      </Container>
+      <MobileWarning>
+        <Icon
+          name="WarningTriangle"
+          width={SPACING(1.5)}
+          height={SPACING(1.5)}
+        />
+        Magic Circle is not available on mobile
+      </MobileWarning>
     </AppProvider>
   );
 }
