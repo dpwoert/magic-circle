@@ -65,7 +65,7 @@ export function setup(gui: MagicCircle) {
         mesh.position.y = y * 100;
         mesh.position.z = z * 100;
 
-        const meshLayer = new Layer(`Box ${i}`).addTo(sceneLayer);
+        const meshLayer = new Layer(`Box ${i}`).addTo(sceneLayer).icon('mesh');
         const positionFolder = new Folder('Position').addTo(meshLayer);
         const scaleFolder = new Folder('Scale').addTo(meshLayer);
         const rotationFolder = new Folder('Rotation').addTo(meshLayer);

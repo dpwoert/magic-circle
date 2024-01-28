@@ -52,7 +52,7 @@ const Box = ({ x, y, z, i }: BoxProps) => {
         opacity={opacity}
         transparent={transparant}
       />
-      <Layer name={`Box ${i}`}>
+      <Layer name={`Box ${i}`} icon="mesh">
         <Folder name="Position">
           <NumberControl
             name="x"

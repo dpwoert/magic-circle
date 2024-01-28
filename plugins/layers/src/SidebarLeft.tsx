@@ -155,13 +155,11 @@ const Layer = ({
         depthZoomBase={depthZoomBase}
       >
         <span>
-          {layer.icon && (
-            <LayerIcon
-              name={iconMap[layer.icon as LayerIconList] || 'Rows'}
-              width={SPACING(1.5)}
-              height={SPACING(1.5)}
-            />
-          )}
+          <LayerIcon
+            name={iconMap[layer.icon as LayerIconList] || 'Rows'}
+            width={SPACING(1.5)}
+            height={SPACING(1.5)}
+          />
           {layer.name}
         </span>
         {hasChildLayers && !reachedMaxDepth && !depthZoomBase && (

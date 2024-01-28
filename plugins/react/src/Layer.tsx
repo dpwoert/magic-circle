@@ -7,19 +7,21 @@ import useSync from './useSync';
 type ClientProps = {
   name: string;
   children: React.ReactNode;
+  icon: LayerMC['customIcon'];
 };
 
-export const Layer = ({ name, children }: ClientProps) => {
+export const Layer = ({ name, children, icon }: ClientProps) => {
   const client = useContext(ClientContext);
   const [layer] = useState<LayerMC>(new LayerMC(name));
   useSync(layer);
 
   useEffect(() => {
     layer.name = name;
+    layer.customIcon = icon;
     if (client) {
       client.sync();
     }
-  }, [name, client, layer]);
+  }, [name, icon, client, layer]);
 
   return (
     <ParentContext.Provider value={layer}>{children}</ParentContext.Provider>
