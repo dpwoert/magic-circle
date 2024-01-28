@@ -18,13 +18,15 @@ import {
   ButtonControl,
   BooleanControl,
   TextControl,
+  VectorControl,
+  RotationControl,
 } from '@magic-circle/client';
 
-let renderer;
-let scene;
-let camera;
+let renderer: WebGLRenderer;
+let scene: Scene;
+let camera: Camera;
 
-const boxes = [];
+const boxes: Mesh[] = [];
 const animation = { x: 0.005, y: 0.01 };
 
 export function resize(width: number, height: number) {
@@ -71,10 +73,13 @@ export function setup(gui: MagicCircle) {
         const rotationFolder = new Folder('Rotation').addTo(meshLayer);
         const materialFolder = new Folder('Material').addTo(meshLayer);
 
+        // positionFolder.add([
+        //   new NumberControl(mesh.position, 'x').range(-200, 200),
+        //   new NumberControl(mesh.position, 'y').range(-200, 200),
+        //   new NumberControl(mesh.position, 'z').range(-200, 200),
+        // ]);
         positionFolder.add([
-          new NumberControl(mesh.position, 'x').range(-200, 200),
-          new NumberControl(mesh.position, 'y').range(-200, 200),
-          new NumberControl(mesh.position, 'z').range(-200, 200),
+          new VectorControl(mesh, 'position').range(-200, 200).watch(true),
         ]);
 
         scaleFolder.add([
@@ -84,9 +89,9 @@ export function setup(gui: MagicCircle) {
         ]);
 
         rotationFolder.add([
-          new NumberControl(mesh.rotation, 'x').watch(),
-          new NumberControl(mesh.rotation, 'y').watch(),
-          new NumberControl(mesh.rotation, 'z').watch(),
+          new RotationControl(mesh.rotation, 'x').watch(),
+          new RotationControl(mesh.rotation, 'y').watch(),
+          new RotationControl(mesh.rotation, 'z').watch(),
         ]);
 
         materialFolder.add([
@@ -130,6 +135,8 @@ export function loop() {
   boxes.forEach((mesh) => {
     mesh.rotation.x += animation.x;
     mesh.rotation.y += animation.y;
+
+    mesh.position.y += Math.sin(animation.y * 10) * 1;
   });
 
   renderer.render(scene, camera);

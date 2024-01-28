@@ -47,12 +47,16 @@ const Slider = styled.input`
   }
 `;
 
-const Progress = styled.div.attrs<{ left: number; width: number }>((props) => ({
-  style: {
-    left: `${props.left}%`,
-    width: `${props.width}%`,
-  },
-}))<{ left: number; width: number }>`
+const Progress = styled.div
+  .withConfig({
+    shouldForwardProp: (prop) => ['left', 'width'].includes(prop) === false,
+  })
+  .attrs<{ left: number; width: number }>((props) => ({
+    style: {
+      left: `${props.left}%`,
+      width: `${props.width}%`,
+    },
+  }))<{ left: number; width: number }>`
   position: absolute;
   top: 0;
   height: 100%;

@@ -68,7 +68,9 @@ type ButtonProps = {
   isLast?: boolean;
 };
 
-const Button = styled(Tooltip)<ButtonProps>`
+const Button = styled(Tooltip).withConfig({
+  shouldForwardProp: (prop) => ['inactive', 'isLast'].includes(prop) === false,
+})<ButtonProps>`
   display: flex;
   align-items: center;
   justify-content: center;

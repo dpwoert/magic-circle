@@ -23,7 +23,9 @@ type ResetProps = {
   hasChanges: boolean;
 };
 
-export const Reset = styled.div<ResetProps>`
+export const Reset = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== 'hasChanges',
+})<ResetProps>`
   position: absolute;
   top: 0;
   left: 0;

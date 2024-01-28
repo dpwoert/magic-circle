@@ -50,7 +50,9 @@ type LegendItemProps = {
   y: number;
 };
 
-const LegendItem = styled.div<LegendItemProps>`
+const LegendItem = styled.div.withConfig({
+  shouldForwardProp: (prop) => ['x', 'align', 'y'].includes(prop) === false,
+})<LegendItemProps>`
   ${TYPO.small}
   position: absolute;
   top: ${(props) => props.y}%;

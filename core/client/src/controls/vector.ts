@@ -76,4 +76,36 @@ export default class VectorControl extends Control<vector, options> {
       z: lerp(from.z, toSafe[2], alpha),
     };
   }
+
+  hasChanges(newValue: vector): boolean {
+    if (typeof this.value !== typeof newValue) {
+      return true;
+    }
+
+    if (Array.isArray(this.value) && Array.isArray(newValue)) {
+      if (this.dimensions === 3) {
+        return (
+          newValue[0] !== this.value[0] ||
+          newValue[1] !== this.value[1] ||
+          newValue[2] !== this.value[2]
+        );
+      }
+
+      return newValue[0] !== this.value[0] || newValue[1] !== this.value[1];
+    }
+
+    if (!Array.isArray(this.value) && !Array.isArray(newValue)) {
+      if (this.dimensions === 3) {
+        return (
+          newValue.x !== this.value.x ||
+          newValue.y !== this.value.y ||
+          newValue.z !== this.value.z
+        );
+      }
+
+      return newValue.x !== this.value.x || newValue.y !== this.value.y;
+    }
+
+    return false;
+  }
 }

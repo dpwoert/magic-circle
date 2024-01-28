@@ -20,7 +20,11 @@ export default class Watcher {
 
   add(path: string, control: Control<any>) {
     this.controls.set(path, control);
-    this.lastValues.set(control, control.value);
+    if (typeof control.value === 'object') {
+      this.lastValues.set(control, JSON.parse(JSON.stringify(control.value)));
+    } else {
+      this.lastValues.set(control, control.value);
+    }
   }
 
   stop() {
@@ -33,7 +37,9 @@ export default class Watcher {
     this.controls.forEach((control, path) => {
       const lastValue = this.lastValues.get(control);
 
-      if (lastValue !== control.value && this.client.ipc) {
+      if (control.hasChanges(lastValue) && this.client.ipc) {
+        this.client.ipc.send('control:set-value', path, control.value);
+      } else if (lastValue !== control.value && this.client.ipc) {
         this.client.ipc.send('control:set-value', path, control.value);
       }
     });

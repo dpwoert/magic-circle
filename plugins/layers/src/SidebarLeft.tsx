@@ -44,7 +44,12 @@ const getRowColor = (
   return 'none';
 };
 
-const LayerRow = styled.div<LayerRowProps>`
+const LayerRow = styled.div.withConfig({
+  shouldForwardProp: (prop) =>
+    ['depth', 'index', 'selected', 'hasChildLayers', 'depthZoomBase'].includes(
+      prop
+    ) === false,
+})<LayerRowProps>`
   ${TYPO.medium}
   display: flex;
   justify-content: space-between;
@@ -110,7 +115,9 @@ type ChevronProps = {
   collapsed: boolean;
 };
 
-const Chevron = styled(Icon)<ChevronProps>`
+const Chevron = styled(Icon).withConfig({
+  shouldForwardProp: (prop) => prop !== 'collapsed',
+})<ChevronProps>`
   transform: rotate(${(props) => (props.collapsed ? 0 : -180)}deg);
   transition: transform 0.2s ease;
 `;

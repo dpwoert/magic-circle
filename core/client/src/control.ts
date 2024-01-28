@@ -154,6 +154,15 @@ export default class Control<T, U extends options = options> extends Events<{
   }
 
   /**
+   * Check if a value has changes to possible new value
+   *
+   * @param newValue value to compare to current value
+   */
+  hasChanges(newValue: T) {
+    return this.value === newValue;
+  }
+
+  /**
    * Function to run on update of values, triggered by the editor.
    *
    * @param hook Function to run

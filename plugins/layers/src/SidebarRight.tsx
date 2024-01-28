@@ -50,7 +50,9 @@ type ChevronProps = {
   collapsed: boolean;
 };
 
-const Chevron = styled(Icon)<ChevronProps>`
+const Chevron = styled(Icon).withConfig({
+  shouldForwardProp: (prop) => prop !== 'collapsed',
+})<ChevronProps>`
   transform: rotate(${(props) => (props.collapsed ? 0 : -180)}deg);
   transition: transform 0.2s ease;
   cursor: pointer;

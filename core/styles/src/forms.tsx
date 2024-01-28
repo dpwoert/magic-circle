@@ -9,7 +9,9 @@ type FieldProps = {
   focus?: boolean;
 };
 
-export const Field = styled.input<FieldProps>`
+export const Field = styled.input.withConfig({
+  shouldForwardProp: (prop) => prop !== 'focus',
+})<FieldProps>`
   ${TYPO.input}
   height: ${SPACING(2.75)}px;
   width: 100%;

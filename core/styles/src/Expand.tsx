@@ -13,7 +13,10 @@ type ContainerProps = {
   duration: number;
 };
 
-const Container = styled.div<ContainerProps>`
+const Container = styled.div.withConfig({
+  shouldForwardProp: (prop) =>
+    ['expand', 'height', 'duration'].includes(prop) === false,
+})<ContainerProps>`
   max-height: ${(props) => {
     if (props.height === undefined) return 'auto';
     return props.expand ? `${props.height}px` : 0;

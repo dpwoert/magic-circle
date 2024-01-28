@@ -142,8 +142,8 @@ const RotationControlField = ({
                   id="radial"
                   gradientTransform="translate(0,0) scale(1, 1)"
                 >
-                  <stop offset="0%" stop-color={COLORS.white.opacity(1)} />
-                  <stop offset="100%" stop-color={COLORS.white.opacity(0)} />
+                  <stop offset="0%" stopColor={COLORS.white.opacity(1)} />
+                  <stop offset="100%" stopColor={COLORS.white.opacity(0)} />
                 </radialGradient>
               </defs>
               <rect fill="url(#radial)" height="100%" width="100%" />

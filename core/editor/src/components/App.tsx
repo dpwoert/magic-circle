@@ -112,11 +112,7 @@ export default function App() {
 
   return (
     <AppProvider app={APP}>
-      <StyleSheetManager
-        shouldForwardProp={(prop) => {
-          return isPropValid(prop);
-        }}
-      >
+      <StyleSheetManager>
         <Container>
           <Header />
           <Inside>
