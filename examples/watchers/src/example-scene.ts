@@ -24,7 +24,7 @@ import {
 
 let renderer: WebGLRenderer;
 let scene: Scene;
-let camera: Camera;
+let camera: PerspectiveCamera;
 
 const boxes: Mesh[] = [];
 const animation = { x: 0.005, y: 0.01 };
