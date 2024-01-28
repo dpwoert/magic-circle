@@ -189,7 +189,7 @@ const ColorControlField = ({
               />
             }
             showOnClick
-            placement={Placement.BOTTOM}
+            placement={Placement.LEFT}
           >
             <ColorTrigger
               color={hex}

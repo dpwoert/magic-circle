@@ -22,7 +22,7 @@ export default class DemoPlugin extends Plugin {
   buttons(buttons: ButtonCollections) {
     return {
       ...buttons,
-      website: {
+      gltf: {
         after: 'screenshots',
         list: [
           {
@@ -169,6 +169,19 @@ export default class DemoPlugin extends Plugin {
             tooltip: 'add:group',
             onClick: () => {
               this.app.ipc.send('add:group');
+            },
+          },
+        ],
+      },
+      website: {
+        after: 'gltf',
+        list: [
+          {
+            label: 'Information',
+            icon: 'Information' as icons,
+            tooltip: 'Visit Magic Circle website',
+            onClick: () => {
+              window.open('https://magic-circle.dev', '_blank');
             },
           },
         ],
