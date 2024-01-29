@@ -119,6 +119,10 @@ export default class Viewer {
       gui.ipc.on('add:light', (_, light: string) => this.addLight(light));
       gui.ipc.on('add:mesh', (_, mesh: string) => this.addMesh(mesh));
       gui.ipc.on('add:group', () => this.addGroup());
+      gui.ipc.on(
+        'gltf:transform',
+        (_, mode: 'scale' | 'rotate' | 'translate') => this.setTransform(mode)
+      );
     }
 
     // Listen to resizes of the window
@@ -338,6 +342,29 @@ export default class Viewer {
     }
 
     this.syncGUI();
+  }
+
+  setTransform(mode?: 'scale' | 'rotate' | 'translate') {
+    if (this.magicCircle) {
+      console.log({ mode }, this.magicCircle);
+      this.magicCircle.layer.traverse((child) => {
+        console.log(child);
+        if ('value' in child && child.type === 'boolean' && 'mode' in child) {
+          const transformControl = child as GUI.TransformControl;
+
+          if (mode) {
+            console.log('set mode', mode);
+            transformControl.mode(mode);
+            transformControl.value = true;
+          } else if (!mode && transformControl.value) {
+            transformControl.value = false;
+          }
+
+          transformControl.setAutoEnable(!!mode);
+        }
+      });
+      this.magicCircle.layer.children = [];
+    }
   }
 
   tick(delta: number) {

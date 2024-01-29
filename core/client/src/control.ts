@@ -1,6 +1,7 @@
 import type Layer from './layer';
 import type Paths from './paths';
 import Events from './events';
+import shallowCompare from './utils/shallowCompare';
 
 type Reference = Record<string, any>;
 
@@ -159,7 +160,18 @@ export default class Control<T, U extends options = options> extends Events<{
    * @param newValue value to compare to current value
    */
   hasChanges(newValue: T) {
-    return this.value === newValue;
+    if (
+      typeof this.value === 'object' &&
+      typeof newValue === 'object' &&
+      !this.blockObjectMerge
+    ) {
+      return !shallowCompare(
+        this.value as Record<string, unknown>,
+        newValue as Record<string, unknown>
+      );
+    }
+
+    return this.value !== newValue;
   }
 
   /**

@@ -50,7 +50,7 @@ export function matrixFolders(
         if (settings.onRename) settings.onRename(object);
       }, 500);
     }),
-    new TextControl(object, 'id'),
+    // new TextControl(object, 'id'),
     new BooleanControl(object, 'visible'),
   ]);
 

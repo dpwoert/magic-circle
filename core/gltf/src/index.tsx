@@ -1,22 +1,38 @@
 import React, { ReactNode } from 'react';
-import { Plugin, icons, ButtonCollections } from '@magic-circle/schema';
+import {
+  Plugin,
+  icons,
+  ButtonCollections,
+  LayoutHook,
+} from '@magic-circle/schema';
 import {
   registerIcon,
   FloppyDisc,
   File,
   Folder,
   MenuPortal,
+  Scale,
+  Move,
+  Rotate,
+  Cursor,
 } from '@magic-circle/styles';
+
+import Header from './Header';
 
 registerIcon(FloppyDisc);
 registerIcon(File);
 registerIcon(Folder);
+registerIcon(Scale);
+registerIcon(Move);
+registerIcon(Rotate);
+registerIcon(Cursor);
 
 export default class DemoPlugin extends Plugin {
   name = 'gltf';
 
   async setup() {
-    // not needed
+    // Set controls sidebar
+    this.app.setLayoutHook(LayoutHook.HEADER_RIGHT, <Header app={this.app} />);
   }
 
   buttons(buttons: ButtonCollections) {
@@ -174,7 +190,7 @@ export default class DemoPlugin extends Plugin {
         ],
       },
       website: {
-        after: 'gltf',
+        after: 'screenshots',
         list: [
           {
             label: 'Information',

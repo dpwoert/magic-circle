@@ -184,6 +184,9 @@ export type icons =
   | 'ZoomIn'
   | 'ZoomOut'
   | 'Npm'
+  | 'Scale'
+  | 'Rotate'
+  | 'Move'
   | 'Github';
 
 export type StoreHook<T> = (newValue: T) => void;

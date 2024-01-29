@@ -20,8 +20,12 @@ export default class Watcher {
 
   add(path: string, control: Control<any>) {
     this.controls.set(path, control);
-    if (typeof control.value === 'object') {
-      this.lastValues.set(control, JSON.parse(JSON.stringify(control.value)));
+    this.updateValue(control);
+  }
+
+  private updateValue(control: Control<any>) {
+    if (typeof control.value === 'object' && !control.blockObjectMerge) {
+      this.lastValues.set(control, { ...control.value });
     } else {
       this.lastValues.set(control, control.value);
     }
@@ -39,8 +43,7 @@ export default class Watcher {
 
       if (control.hasChanges(lastValue) && this.client.ipc) {
         this.client.ipc.send('control:set-value', path, control.value);
-      } else if (lastValue !== control.value && this.client.ipc) {
-        this.client.ipc.send('control:set-value', path, control.value);
+        this.updateValue(control);
       }
     });
 

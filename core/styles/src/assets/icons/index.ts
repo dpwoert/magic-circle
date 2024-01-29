@@ -110,6 +110,7 @@ import MinusIcon from './minus.svg?react';
 import Monitor2Icon from './monitor-2.svg?react';
 import MonitorIcon from './monitor.svg?react';
 import MoonIcon from './moon.svg?react';
+import MoveIcon from './move.svg?react';
 import MusicIcon from './music.svg?react';
 import NpmIcon from './npm.svg?react';
 import PaintbucketIcon from './paintbucket.svg?react';
@@ -137,7 +138,9 @@ import ProjectorIcon from './projector.svg?react';
 import RedoIcon from './redo.svg?react';
 import RefreshIcon from './refresh.svg?react';
 import RewindIcon from './rewind.svg?react';
+import RotateIcon from './rotate.svg?react';
 import RowsIcon from './rows.svg?react';
+import ScaleIcon from './scale.svg?react';
 import SearchIcon from './search.svg?react';
 import SendIcon from './send.svg?react';
 import ServerIcon from './server.svg?react';
@@ -495,6 +498,7 @@ export const Monitor: IconDefinition = {
   component: MonitorIcon,
 };
 export const Moon: IconDefinition = { name: 'Moon', component: MoonIcon };
+export const Move: IconDefinition = { name: 'Move', component: MoveIcon };
 export const Music: IconDefinition = { name: 'Music', component: MusicIcon };
 export const Npm: IconDefinition = { name: 'Npm', component: NpmIcon };
 export const Paintbucket: IconDefinition = {
@@ -564,7 +568,9 @@ export const Refresh: IconDefinition = {
   component: RefreshIcon,
 };
 export const Rewind: IconDefinition = { name: 'Rewind', component: RewindIcon };
+export const Rotate: IconDefinition = { name: 'Rotate', component: RotateIcon };
 export const Rows: IconDefinition = { name: 'Rows', component: RowsIcon };
+export const Scale: IconDefinition = { name: 'Scale', component: ScaleIcon };
 export const Search: IconDefinition = { name: 'Search', component: SearchIcon };
 export const Send: IconDefinition = { name: 'Send', component: SendIcon };
 export const Server: IconDefinition = { name: 'Server', component: ServerIcon };
@@ -809,6 +815,7 @@ export type list =
   | 'Monitor2'
   | 'Monitor'
   | 'Moon'
+  | 'Move'
   | 'Music'
   | 'Npm'
   | 'Paintbucket'
@@ -836,7 +843,9 @@ export type list =
   | 'Redo'
   | 'Refresh'
   | 'Rewind'
+  | 'Rotate'
   | 'Rows'
+  | 'Scale'
   | 'Search'
   | 'Send'
   | 'Server'

@@ -8,6 +8,7 @@ export class TransformControl extends BooleanControl {
   private object: Object3D;
   private transformControls?: TransformControls;
   private transformMode: 'translate' | 'rotate' | 'scale' = 'translate';
+  private autoEnable = false;
 
   constructor(camera: Camera, object: Object3D) {
     const value = {
@@ -30,8 +31,16 @@ export class TransformControl extends BooleanControl {
     this.transformMode = mode;
 
     if (this.transformControls) {
-      this.transformControls.mode = this.transformMode;
+      // this.transformControls.mode = this.transformMode;
+      this.transformControls.setMode(this.transformMode);
     }
+
+    return this;
+  }
+
+  setAutoEnable(autoEnable = true) {
+    this.autoEnable = autoEnable;
+    return this;
   }
 
   private updateThree() {
@@ -55,10 +64,10 @@ export class TransformControl extends BooleanControl {
   }
 
   private onVisible(visible: boolean) {
-    if (!visible && this.transformControls) {
-      this.transformControls.removeFromParent();
-      this.transformControls.dispose();
-      this.transformControls = undefined;
+    if (!visible && this.value) {
+      this.value = false;
+    } else if (visible && !this.value && this.autoEnable) {
+      this.value = true;
     }
   }
 }

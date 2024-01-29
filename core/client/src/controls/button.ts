@@ -16,4 +16,8 @@ export default class ButtonControl extends Control<() => void> {
     // @ts-ignore
     this.initialValue = undefined;
   }
+
+  hasChanges() {
+    return false;
+  }
 }
