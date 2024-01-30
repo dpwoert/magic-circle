@@ -145,7 +145,8 @@ export default class Viewer {
     this.clearView();
 
     // @ts-expect-error
-    const rootPath = `${file.path.substring(0, file.path.lastIndexOf('/'))}/`;
+    const path = file.path || '';
+    const rootPath = `${path.substring(0, path.lastIndexOf('/'))}/`;
 
     // Intercept and override relative URLs.
     /* @see https://github.com/donmccurdy/three-gltf-viewer/blob/main/src/viewer.js */

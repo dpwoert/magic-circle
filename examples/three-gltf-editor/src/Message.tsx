@@ -21,6 +21,15 @@ const Container = styled.div`
   color: ${COLORS.white.css};
   gap: ${SPACING(1)}px;
   padding: ${SPACING(6)}px ${SPACING(1)}px;
+
+  div {
+    max-width: 220px;
+  }
+
+  span {
+    font-weight: bold;
+    cursor: pointer;
+  }
 `;
 
 const spinnerAnim = keyframes`
@@ -77,7 +86,7 @@ const ButtonStyled = styled(Forms.Button)`
 
 type MessageProps = {
   icon: IconName;
-  text: string;
+  text: React.ReactNode;
   button?: {
     label: string;
     icon: IconName;
@@ -93,7 +102,7 @@ const Message = ({ icon, text, button }: MessageProps) => {
       ) : (
         <Icon name={icon} height={SPACING(2)} width={SPACING(2)} />
       )}
-      {text}
+      <div>{text}</div>
       {button && (
         <ButtonStyled onClick={button.onClick}>
           <Icon name={button.icon} height={SPACING(1.5)} width={SPACING(1.5)} />

@@ -14,6 +14,9 @@ import {
 import Message from './Message';
 import start from './start';
 import Viewer from './Viewer';
+import { downloadFile } from './utils';
+
+import exampleFile from './example.glb?url';
 
 registerIcon(FilePlus);
 registerIcon(Upload);
@@ -63,12 +66,24 @@ const App = () => {
 
     try {
       await viewer.current.view(base, files);
+      setStage('viewer');
     } catch (e) {
       setStage('error');
       console.error(e);
     }
+  }, []);
 
-    setStage('viewer');
+  const loadExample = useCallback(async () => {
+    setStage('loading');
+
+    try {
+      const base = await downloadFile(exampleFile, 'example.glb');
+      await viewer.current.view(base, new Map());
+      setStage('viewer');
+    } catch (e) {
+      setStage('error');
+      console.error(e);
+    }
   }, []);
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
@@ -83,7 +98,20 @@ const App = () => {
       {stage === 'upload' && (
         <Message
           icon="FilePlus"
-          text="Drag & drop a file here to load"
+          text={
+            <>
+              Drag & drop a file here to load, or click{' '}
+              <span
+                onClick={(evt) => {
+                  evt.stopPropagation();
+                  loadExample();
+                }}
+              >
+                here
+              </span>{' '}
+              for an example file
+            </>
+          }
           button={{ icon: 'Upload', label: 'Select file' }}
         />
       )}
