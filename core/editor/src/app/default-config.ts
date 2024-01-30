@@ -30,9 +30,13 @@ const config: Config = {
   plugins,
   controls,
   settings: {
+    layers: {
+      hydrate: true,
+    },
     screenshots: {
       directoryBasedOnFrameUrl: false,
       gitInfo: true,
+      share: true,
     },
     playControls: {
       fullscreen: false,

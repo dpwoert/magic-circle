@@ -12,6 +12,13 @@ export default {
     directoryBasedOnFrameUrl: true,
     screenshots: {
       gitInfo: false,
+      share: false,
+    },
+    layers: {
+      hydrate: false,
+    },
+    playControls: {
+      fullScreen: true,
     },
   },
 };

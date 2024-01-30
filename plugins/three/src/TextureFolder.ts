@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import {
   BooleanControl,
   Control,
@@ -15,7 +16,7 @@ type TextureFolderSettings = {
 export class TextureFolder extends Folder {
   constructor(
     label: string,
-    reference: Control<any>['reference'],
+    reference: { needsUpdate: boolean } & Control<any>['reference'],
     key: string,
     settings: TextureFolderSettings = {}
   ) {
@@ -34,11 +35,10 @@ export class TextureFolder extends Folder {
           .label('Use texture')
           .on('update', (newVal) => {
             if (newVal) {
-              // eslint-disable-next-line
               reference[key] = new Texture();
             } else {
-              // eslint-disable-next-line
               reference[key] = undefined;
+              reference.needsUpdate = true;
             }
 
             if (settings.onChange) settings.onChange();
@@ -48,9 +48,17 @@ export class TextureFolder extends Folder {
 
     if (obj.on) {
       controls.push(
-        new NumberControl(value, 'wrapS'),
-        new NumberControl(value, 'wrapT'),
-        new ImageControl(value.source, 'data').label('Image')
+        new NumberControl(value.repeat, 'x').label('repeat x'),
+        new NumberControl(value.repeat, 'y').label('repeat y'),
+        new NumberControl(value.offset, 'x').range(-1, 1).label('offset x'),
+        new NumberControl(value.offset, 'y').range(-1, 1).label('offset y'),
+        new ImageControl(value.source, 'data')
+          .label('Image')
+          .on('update', (newVal) => {
+            value.source.data = newVal;
+            value.needsUpdate = true;
+            reference.needsUpdate = true;
+          })
       );
     }
 

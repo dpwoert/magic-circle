@@ -17,4 +17,9 @@ export default class ImageControl extends Control<string | ImageBitmap> {
       this.label('Image');
     }
   }
+
+  // disable watching on images...
+  watch() {
+    return this;
+  }
 }

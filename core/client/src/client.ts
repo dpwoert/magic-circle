@@ -168,7 +168,7 @@ export default class MagicCircle {
       }
     });
 
-    // Receive default values by hydrating (one reload for example)
+    // Receive default values by hydrating (on reload for example)
     const hydration = await this.ipc.invoke<Record<string, any>>('hydrate');
     (this.plugins || []).forEach((p) => {
       if (p.hydrate && hydration) {

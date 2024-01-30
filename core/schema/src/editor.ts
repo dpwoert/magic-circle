@@ -332,9 +332,13 @@ export interface Config {
   settings: {
     pageTitle?: string;
     iframeAllow?: string;
+    layers?: {
+      hydrate?: boolean;
+    };
     screenshots?: {
       directoryBasedOnFrameUrl?: boolean;
       gitInfo?: boolean;
+      share?: boolean;
     };
     playControls?: {
       fullscreen?: boolean;

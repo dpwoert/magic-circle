@@ -158,6 +158,7 @@ export default class Screenshots extends Plugin {
             label: 'copy',
             icon: 'Share',
             tooltip: 'Share current settings',
+            hide: this.app.getSetting('screenshots.share') === false,
             wrap: (inside) => (
               <MenuPortal
                 showOnClick

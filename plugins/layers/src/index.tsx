@@ -119,11 +119,15 @@ export default class Layers extends Plugin {
 
   hydrate() {
     const hydrate: Record<string, any> = {};
-    this.lookup.export((key, value) => {
-      if ('value' in value && !value.blockHydrate) {
-        hydrate[key] = value.value;
-      }
-    });
+
+    if (this.app.getSetting('layers.hydrate', true)) {
+      this.lookup.export((key, value) => {
+        if ('value' in value && !value.blockHydrate) {
+          hydrate[key] = value.value;
+        }
+      });
+    }
+
     return hydrate;
   }
 
