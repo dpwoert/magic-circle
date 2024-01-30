@@ -24,7 +24,7 @@ jobs:
         run: |
           VERSION=$(node -p -e "require('./lerna.json').version")
           echo "version: $VERSION"
-          echo "{version}={$VERSION}" >> $GITHUB_OUTPUT
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Display version number
         run: |
