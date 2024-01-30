@@ -66,6 +66,7 @@ export default class Viewer {
 
   private manager: LoadingManager;
   private blobURLs = new Set<string>();
+  private currentTransformMode?: 'scale' | 'rotate' | 'translate';
 
   constructor() {
     // Create renderer
@@ -228,6 +229,7 @@ export default class Viewer {
   syncGUI() {
     this.clearGUI();
     this.addGUI();
+    this.setTransform(this.currentTransformMode);
   }
 
   clearView() {
@@ -345,15 +347,14 @@ export default class Viewer {
   }
 
   setTransform(mode?: 'scale' | 'rotate' | 'translate') {
+    this.currentTransformMode = mode;
+
     if (this.magicCircle) {
-      console.log({ mode }, this.magicCircle);
       this.magicCircle.layer.traverse((child) => {
-        console.log(child);
         if ('value' in child && child.type === 'boolean' && 'mode' in child) {
           const transformControl = child as GUI.TransformControl;
 
           if (mode) {
-            console.log('set mode', mode);
             transformControl.mode(mode);
             transformControl.value = true;
           } else if (!mode && transformControl.value) {
@@ -363,7 +364,6 @@ export default class Viewer {
           transformControl.setAutoEnable(!!mode);
         }
       });
-      this.magicCircle.layer.children = [];
     }
   }
 
