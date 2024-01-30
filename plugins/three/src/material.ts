@@ -12,6 +12,7 @@ import {
   NumberControl,
   Folder,
   ColorControl,
+  TextControl,
 } from '@magic-circle/client';
 
 import { TextureFolder } from './TextureFolder';
@@ -20,7 +21,7 @@ type CustomMaterialTransform = (material: Material) => Folder[];
 
 export type MaterialSettings = {
   canChangeMaterial?: boolean;
-  onChangeMaterial?: () => void;
+  onChangeMaterial?: (newMaterial: Material) => void;
   canAddRemoveTextures?: boolean;
   onAddRemoveTexture?: () => void;
   customMaterial?: CustomMaterialTransform;
@@ -49,6 +50,87 @@ function defaultMaterialFolders(
   const folders: Folder[] = [];
   const main: Folder['children'] = [];
   const pbr: Folder['children'] = [];
+
+  if (settings.canChangeMaterial) {
+    const materials = [
+      'MeshStandardMaterial',
+      'MeshPhysicalMaterial',
+      'MeshBasicMaterial',
+      'MeshPhongMaterial',
+      'MeshLambertMaterial',
+      'MeshToonMaterial',
+    ];
+    const type = { material: material.type };
+
+    main.push(
+      new TextControl(type, 'material')
+        .selection(materials)
+        .label('Type')
+        .on('update', () => {
+          if (!settings.onChangeMaterial) {
+            console.warn(
+              'onChangeMaterial not defined, can not change material'
+            );
+            return;
+          }
+
+          switch (type.material) {
+            case 'MeshStandardMaterial': {
+              const newMaterial = new MeshStandardMaterial({
+                color: material.color.clone(),
+                map: material.map,
+              } as any);
+              settings.onChangeMaterial(newMaterial);
+              break;
+            }
+            case 'MeshPhysicalMaterial': {
+              const newMaterial = new MeshPhysicalMaterial({
+                color: material.color.clone(),
+                map: material.map,
+              } as any);
+              settings.onChangeMaterial(newMaterial);
+              break;
+            }
+            case 'MeshBasicMaterial': {
+              const newMaterial = new MeshBasicMaterial({
+                color: material.color.clone(),
+                map: material.map,
+              } as any);
+              settings.onChangeMaterial(newMaterial);
+              break;
+            }
+            case 'MeshPhongMaterial': {
+              const newMaterial = new MeshPhongMaterial({
+                color: material.color.clone(),
+                map: material.map,
+              } as any);
+              settings.onChangeMaterial(newMaterial);
+              break;
+            }
+            case 'MeshLambertMaterial': {
+              const newMaterial = new MeshLambertMaterial({
+                color: material.color.clone(),
+                map: material.map,
+              } as any);
+              settings.onChangeMaterial(newMaterial);
+              break;
+            }
+            case 'MeshToonMaterial': {
+              const newMaterial = new MeshToonMaterial({
+                color: material.color.clone(),
+                map: material.map,
+              } as any);
+              settings.onChangeMaterial(newMaterial);
+              break;
+            }
+
+            default:
+              // nothing...
+              break;
+          }
+        })
+    );
+  }
 
   // add main material options
   if ('transparant' in material) {
@@ -107,7 +189,7 @@ function defaultMaterialFolders(
     pbr.push(new NumberControl(material, 'ior').range(1, 2.333));
   }
   if ('reflectivity' in material) {
-    pbr.push(new NumberControl(material, 'ior').range(0, 1));
+    pbr.push(new NumberControl(material, 'reflectivity').range(0, 1));
   }
   if ('iridescence' in material) {
     pbr.push(new NumberControl(material, 'iridescence').range(0, 1));
@@ -135,7 +217,9 @@ function defaultMaterialFolders(
   }
 
   if (pbr.length > 1) {
-    folders.push(new Folder('Physically based properties').add(pbr));
+    folders.push(
+      new Folder('Physically based properties').icon('material').add(pbr)
+    );
   }
 
   // add texture options

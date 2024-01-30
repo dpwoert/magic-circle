@@ -150,10 +150,33 @@ export function mesh(mesh: Mesh, settings: MeshSettings): Layer {
   // create folder for material
   if (mesh.material && Array.isArray(mesh.material)) {
     mesh.material.forEach((mat) => {
-      layer.add(material(mat, settings));
+      new Layer(mat.name || `${mat.type} material`)
+        .addTo(layer)
+        .add(material(mat, settings));
     });
   } else if (mesh.material) {
-    layer.add(material(mesh.material, settings));
+    layer.add(
+      material(mesh.material, {
+        ...settings,
+        onChangeMaterial: (newMaterial) => {
+          if (settings.canChangeMaterial) {
+            // layer.children.forEach((c) => {
+            //   if ('name' in c && c.name === 'Material') {
+            //     c.removeFromParent();
+            //     c.destroy(true);
+            //   }
+            // });
+
+            // eslint-disable-next-line
+            mesh.material = newMaterial;
+          }
+
+          if (settings.onChangeMaterial) {
+            settings.onChangeMaterial(newMaterial);
+          }
+        },
+      })
+    );
   }
 
   return layer;
