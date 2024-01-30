@@ -38,6 +38,7 @@ export function recursive(
     let gui: Layer;
 
     if (object instanceof Mesh) {
+      console.log({ settings });
       gui = mesh(object, {
         ...settings,
         range: settings.range ? settings.range(object) : undefined,

@@ -14,6 +14,8 @@ export function setup(
   const bbox = new Box3().setFromObject(scene);
   const range = bbox.getSize(new Vector3()).multiplyScalar(3);
 
+  console.log({ settings });
+
   return [
     createRenderer(renderer),
     createCamera(camera, { scene, range }),

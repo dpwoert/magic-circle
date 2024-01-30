@@ -20,7 +20,8 @@ export type LayerIcon =
   | 'sound'
   | 'code'
   | 'computation'
-  | 'renderer';
+  | 'renderer'
+  | 'texture';
 
 type JSONOutput = {
   path: string;

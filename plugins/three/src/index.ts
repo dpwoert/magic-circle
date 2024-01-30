@@ -14,6 +14,7 @@ export { scene } from './scene';
 export { recursive } from './recursive';
 export { webglRenderer } from './renderer';
 export { TransformControl } from './TransformControl';
+export { TextureFolder } from './TextureFolder';
 export { CameraHelperControl } from './CameraHelperControl';
 export { LightHelperControl } from './LightHelperControl';
 export { setup } from './setup';

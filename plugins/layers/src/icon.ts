@@ -15,6 +15,7 @@ import {
   Code,
   Projector,
   // Cpu,
+  Photo,
 } from '@magic-circle/styles';
 
 registerIcon(Rows);
@@ -31,6 +32,7 @@ registerIcon(Music);
 registerIcon(Code);
 // registerIcon(Cpu);
 registerIcon(Projector);
+registerIcon(Photo);
 
 export type LayerIcon =
   | 'layer'
@@ -47,7 +49,8 @@ export type LayerIcon =
   | 'sound'
   | 'code'
   | 'computation'
-  | 'renderer';
+  | 'renderer'
+  | 'texture';
 
 export const iconMap: Record<LayerIcon, IconName> = {
   layer: 'Rows',
@@ -66,4 +69,5 @@ export const iconMap: Record<LayerIcon, IconName> = {
   computation: 'Code',
   // computation: 'Cpu',
   renderer: 'Projector',
+  texture: 'Photo',
 };

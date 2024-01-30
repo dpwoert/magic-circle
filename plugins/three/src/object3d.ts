@@ -10,7 +10,7 @@ import {
   ButtonControl,
 } from '@magic-circle/client';
 
-import { material, materialTransform } from './material';
+import { material, MaterialSettings } from './material';
 import { TransformControl } from './TransformControl';
 
 type MatrixSettings = {
@@ -27,9 +27,7 @@ type MatrixSettings = {
 
 type Object3dSettings = Partial<MatrixSettings>;
 
-export type MeshSettings = Object3dSettings & {
-  customMaterial?: materialTransform;
-};
+export type MeshSettings = Object3dSettings & MaterialSettings;
 
 let renameDebounce: ReturnType<typeof setTimeout> | undefined;
 
@@ -152,10 +150,10 @@ export function mesh(mesh: Mesh, settings: MeshSettings): Layer {
   // create folder for material
   if (mesh.material && Array.isArray(mesh.material)) {
     mesh.material.forEach((mat) => {
-      layer.add(material(mat));
+      layer.add(material(mat, settings));
     });
   } else if (mesh.material) {
-    layer.add(material(mesh.material));
+    layer.add(material(mesh.material, settings));
   }
 
   return layer;

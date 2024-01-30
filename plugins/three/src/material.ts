@@ -12,10 +12,29 @@ import {
   NumberControl,
   Folder,
   ColorControl,
-  ImageControl,
 } from '@magic-circle/client';
 
-export type materialTransform = (material: Material) => Folder[];
+import { TextureFolder } from './TextureFolder';
+
+type CustomMaterialTransform = (material: Material) => Folder[];
+
+export type MaterialSettings = {
+  canChangeMaterial?: boolean;
+  onChangeMaterial?: () => void;
+  canAddRemoveTextures?: boolean;
+  onAddRemoveTexture?: () => void;
+  customMaterial?: CustomMaterialTransform;
+};
+
+const textureKeys = [
+  'map',
+  'roughnessMap',
+  'metalnessMap',
+  'emissiveMap',
+  'bumpMap',
+  'alphaMap',
+  'displacementMap',
+];
 
 function defaultMaterialFolders(
   material:
@@ -24,12 +43,12 @@ function defaultMaterialFolders(
     | MeshBasicMaterial
     | MeshPhongMaterial
     | MeshLambertMaterial
-    | MeshToonMaterial
+    | MeshToonMaterial,
+  settings: MaterialSettings = {}
 ): Folder[] {
   const folders: Folder[] = [];
   const main: Folder['children'] = [];
   const pbr: Folder['children'] = [];
-  const textures: ImageControl[] = [];
 
   // add main material options
   if ('transparant' in material) {
@@ -120,54 +139,37 @@ function defaultMaterialFolders(
   }
 
   // add texture options
-  if (material.map) {
-    textures.push(new ImageControl(material.map?.source, 'data').label('Map'));
-  }
-  if ('roughnessMap' in material && material.roughnessMap) {
-    textures.push(
-      new ImageControl(material.roughnessMap.source, 'data').label('Roughness')
-    );
-  }
-  if ('metalnessMap' in material && material.metalnessMap) {
-    textures.push(
-      new ImageControl(material.metalnessMap.source, 'data').label('Metalness')
-    );
-  }
-  if ('emissiveMap' in material && material.emissiveMap) {
-    textures.push(
-      new ImageControl(material.emissiveMap.source, 'data').label('Emissive')
-    );
-  }
-  if ('bumpMap' in material && material.bumpMap) {
-    textures.push(
-      new ImageControl(material.bumpMap.source, 'data').label('Bump')
-    );
-  }
-  if ('displacementMap' in material && material.displacementMap) {
-    textures.push(
-      new ImageControl(material.displacementMap.source, 'data').label(
-        'Displacement'
-      )
-    );
-  }
+  textureKeys.forEach((key) => {
+    if (key !== undefined) {
+      folders.push(
+        new TextureFolder(key, material, key, {
+          canChange: settings.canAddRemoveTextures,
+          onChange: settings.onAddRemoveTexture,
+        })
+      );
+    }
+  });
 
-  if (textures.length > 0) {
-    folders.push(new Folder('Textures').add(textures));
-  }
+  // Remove empty folders
+  folders.forEach((folder, key) => {
+    if (folder.children.length === 0) {
+      folders.splice(key, 1);
+    }
+  });
 
   return folders;
 }
 
 function customMaterialFolders(
   material: Material,
-  transform: materialTransform
+  transform: CustomMaterialTransform
 ): Folder[] {
   return transform(material);
 }
 
 export function material(
   material: Material,
-  customTransform?: materialTransform
+  settings: MaterialSettings = {}
 ): Folder[] {
   if (
     material instanceof MeshToonMaterial ||
@@ -177,11 +179,11 @@ export function material(
     material instanceof MeshLambertMaterial ||
     material instanceof MeshPhongMaterial
   ) {
-    return defaultMaterialFolders(material);
+    return defaultMaterialFolders(material, settings);
   }
 
-  if (customTransform) {
-    return customMaterialFolders(material, customTransform);
+  if (settings.customMaterial) {
+    return customMaterialFolders(material, settings.customMaterial);
   }
 
   return [];

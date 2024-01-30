@@ -212,6 +212,8 @@ export default class Viewer {
         canDelete: true,
         onDelete: () => this.syncGUI(),
         onRename: () => this.syncGUI(),
+        canAddRemoveTextures: true,
+        onAddRemoveTexture: () => this.syncGUI(),
       })
     );
 
