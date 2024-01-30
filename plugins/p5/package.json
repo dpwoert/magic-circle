@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/p5",
-  "version": "0.3.0-alpha.6",
+  "version": "0.3.0-alpha.7",
   "description": "Magic Circle wrapper util for p5.js projects",
   "keywords": [],
   "repository": {
@@ -24,7 +24,7 @@
     "build:prod": "NODE_ENV=production rollup --config rollup.config.js"
   },
   "devDependencies": {
-    "@magic-circle/client": "^0.3.0-alpha.6",
+    "@magic-circle/client": "^0.3.0-alpha.7",
     "@rollup/plugin-replace": "^4.0.0",
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "8.3.3",
