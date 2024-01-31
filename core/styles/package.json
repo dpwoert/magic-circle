@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/styles",
-  "version": "0.3.0-alpha.7",
+  "version": "0.3.0-alpha.8",
   "description": "Magic Circle style helpers",
   "keywords": [
     "controls",
@@ -33,7 +33,7 @@
     "color-string": "1.9.1"
   },
   "devDependencies": {
-    "@magic-circle/state": "^0.3.0-alpha.7",
+    "@magic-circle/state": "^0.3.0-alpha.8",
     "@types/color-string": "^1.5.5",
     "@types/styled-components": "^5.1.34",
     "case": "^1.6.3",

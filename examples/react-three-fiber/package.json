@@ -1,7 +1,7 @@
 {
   "name": "@magic-circle/example-react-three-fiber",
   "private": true,
-  "version": "0.3.0-alpha.7",
+  "version": "0.3.0-alpha.8",
   "description": "Magic Circle React Three Fiber example",
   "type": "module",
   "keywords": [
@@ -34,7 +34,7 @@
     "editor:dev": "magic develop"
   },
   "devDependencies": {
-    "@magic-circle/editor": "^0.3.0-alpha.7",
+    "@magic-circle/editor": "^0.3.0-alpha.8",
     "@types/react": "^18.2.48",
     "@types/react-dom": "^18.2.18",
     "@types/three": "^0.160.0",
@@ -43,8 +43,8 @@
     "vite": "^5.0.12"
   },
   "dependencies": {
-    "@magic-circle/client": "^0.3.0-alpha.7",
-    "@magic-circle/react": "^0.3.0-alpha.7",
+    "@magic-circle/client": "^0.3.0-alpha.8",
+    "@magic-circle/react": "^0.3.0-alpha.8",
     "@react-three/drei": "^9.96.1",
     "@react-three/fiber": "^8.15.14",
     "react": "^18.2.0",

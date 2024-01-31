@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/screenshots",
-  "version": "0.3.0-alpha.7",
+  "version": "0.3.0-alpha.8",
   "description": "Magic Circle screenshots",
   "type": "module",
   "keywords": [
@@ -38,9 +38,9 @@
     "react-json-view-lite": "^1.2.1"
   },
   "devDependencies": {
-    "@magic-circle/schema": "^0.3.0-alpha.7",
-    "@magic-circle/state": "^0.3.0-alpha.7",
-    "@magic-circle/styles": "^0.3.0-alpha.7",
+    "@magic-circle/schema": "^0.3.0-alpha.8",
+    "@magic-circle/state": "^0.3.0-alpha.8",
+    "@magic-circle/styles": "^0.3.0-alpha.8",
     "@types/file-saver": "^2.0.7",
     "@types/react": "^18.0.21",
     "@types/styled-components": "^5.1.26",
