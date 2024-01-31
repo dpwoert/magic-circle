@@ -69,11 +69,26 @@ const ImageControlField = ({
       canvas.width = 256;
       canvas.height = 256;
     } else {
-      canvas.width = value.width;
-      canvas.height = value.height;
+      const maxWidth = 276 * window.devicePixelRatio;
+      const aspect = value.width / value.height;
+      const width = Math.min(maxWidth, value.width);
+      const height = width * aspect;
+      canvas.width = width;
+      canvas.height = height;
 
       try {
-        if (context) context.drawImage(value, 0, 0, value.width, value.height);
+        if (context)
+          context.drawImage(
+            value,
+            0,
+            0,
+            value.width,
+            value.height,
+            0,
+            0,
+            width,
+            height
+          );
       } catch (e) {
         console.error('Image for ImageControl not valid');
       }
