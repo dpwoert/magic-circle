@@ -16,6 +16,7 @@ import {
   Rotate,
   Cursor,
 } from '@magic-circle/styles';
+import PiwikPro, { CookieManagement } from '@piwikpro/react-piwik-pro';
 
 import Header from './Header';
 
@@ -26,6 +27,16 @@ registerIcon(Scale);
 registerIcon(Move);
 registerIcon(Rotate);
 registerIcon(Cursor);
+
+// Add some simple anonymous analytics
+PiwikPro.initialize(
+  'c3251b56-01f9-426f-ad81-611dd1fd2573',
+  'https://dpwoert.piwik.pro'
+);
+
+// just be anonymous, please...
+CookieManagement.deleteCookies();
+CookieManagement.disableCookies();
 
 export default class DemoPlugin extends Plugin {
   name = 'gltf';
