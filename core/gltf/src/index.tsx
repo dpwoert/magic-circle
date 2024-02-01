@@ -30,6 +30,9 @@ registerIcon(Rotate);
 registerIcon(Cursor);
 
 // Add some simple anonymous analytics
+
+console.info(process.env.VITE_MIXPANEL_TOKEN_GLTF);
+
 if (process.env.VITE_MIXPANEL_TOKEN_GLTF) {
   mixpanel.init(process.env.VITE_MIXPANEL_TOKEN_GLTF, {
     track_pageview: true,
