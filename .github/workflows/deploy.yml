@@ -57,6 +57,8 @@ jobs:
         run: npm run build:dev && npm run build:prod
       - name: Create bundle
         run: npm run publish:gltf
+        env:
+          NEXT_PUBLIC_MIXPANEL_TOKEN_GLTF: ${{ secrets.NEXT_PUBLIC_MIXPANEL_TOKEN_GLTF }}
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@master
         with:

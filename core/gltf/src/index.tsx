@@ -1,4 +1,6 @@
 import React, { ReactNode } from 'react';
+import mixpanel from 'mixpanel-browser';
+
 import {
   Plugin,
   icons,
@@ -16,7 +18,6 @@ import {
   Rotate,
   Cursor,
 } from '@magic-circle/styles';
-import PiwikPro, { CookieManagement } from '@piwikpro/react-piwik-pro';
 
 import Header from './Header';
 
@@ -29,14 +30,15 @@ registerIcon(Rotate);
 registerIcon(Cursor);
 
 // Add some simple anonymous analytics
-PiwikPro.initialize(
-  'c3251b56-01f9-426f-ad81-611dd1fd2573',
-  'https://dpwoert.piwik.pro'
-);
-
-// just be anonymous, please...
-CookieManagement.deleteCookies();
-CookieManagement.disableCookies();
+if (
+  process.env.NEXT_PUBLIC_MIXPANEL_TOKEN_GLTF &&
+  typeof window !== 'undefined'
+) {
+  mixpanel.init(process.env.NEXT_PUBLIC_MIXPANEL_TOKEN_GLTF, {
+    track_pageview: true,
+    disable_persistence: true,
+  });
+}
 
 export default class DemoPlugin extends Plugin {
   name = 'gltf';

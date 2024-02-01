@@ -27,10 +27,14 @@
     "generate:list": "node scripts/create-list.js",
     "serve": "serve magic-circle/"
   },
+  "dependencies": {
+    "mixpanel-browser": "^2.48.1"
+  },
   "devDependencies": {
     "@magic-circle/editor": "^0.3.0-alpha.8",
     "@magic-circle/schema": "^0.3.0-alpha.8",
     "@magic-circle/styles": "^0.3.0-alpha.8",
+    "@types/mixpanel-browser": "^2.48.1",
     "@types/react": "^18.2.45",
     "@types/styled-components": "^5.1.34",
     "serve": "*",

@@ -1,4 +1,5 @@
 import React from 'react';
+import mixpanel from 'mixpanel-browser';
 
 import { Plugin, icons, ButtonCollections } from '@magic-circle/schema';
 import {
@@ -15,6 +16,17 @@ registerIcon(Video);
 registerIcon(Code);
 registerIcon(Download);
 registerIcon(Github);
+
+// Add some simple anonymous analytics
+if (
+  process.env.NEXT_PUBLIC_MIXPANEL_TOKEN_PLAYGROUND &&
+  typeof window !== 'undefined'
+) {
+  mixpanel.init(process.env.NEXT_PUBLIC_MIXPANEL_TOKEN_PLAYGROUND, {
+    track_pageview: true,
+    disable_persistence: true,
+  });
+}
 
 export default class DemoPlugin extends Plugin {
   name = 'demo';
