@@ -18,12 +18,10 @@ registerIcon(Download);
 registerIcon(Github);
 
 // Add some simple anonymous analytics
-if (process.env.VITE_MIXPANEL_TOKEN_PLAYGROUND) {
-  mixpanel.init(process.env.VITE_MIXPANEL_TOKEN_PLAYGROUND, {
-    track_pageview: true,
-    disable_persistence: true,
-  });
-}
+mixpanel.init('edb1b386dca84df2b9c5e5b25f4a3633', {
+  track_pageview: true,
+  disable_persistence: true,
+});
 
 export default class DemoPlugin extends Plugin {
   name = 'demo';

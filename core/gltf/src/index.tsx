@@ -30,15 +30,10 @@ registerIcon(Rotate);
 registerIcon(Cursor);
 
 // Add some simple anonymous analytics
-
-console.info(process.env.VITE_MIXPANEL_TOKEN_GLTF);
-
-if (process.env.VITE_MIXPANEL_TOKEN_GLTF) {
-  mixpanel.init(process.env.VITE_MIXPANEL_TOKEN_GLTF, {
-    track_pageview: true,
-    disable_persistence: true,
-  });
-}
+mixpanel.init('e5ee560219eca783b133c0dbaf99abd9', {
+  track_pageview: true,
+  disable_persistence: true,
+});
 
 export default class DemoPlugin extends Plugin {
   name = 'gltf';
