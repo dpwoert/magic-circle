@@ -18,11 +18,8 @@ registerIcon(Download);
 registerIcon(Github);
 
 // Add some simple anonymous analytics
-if (
-  process.env.NEXT_PUBLIC_MIXPANEL_TOKEN_PLAYGROUND &&
-  typeof window !== 'undefined'
-) {
-  mixpanel.init(process.env.NEXT_PUBLIC_MIXPANEL_TOKEN_PLAYGROUND, {
+if (process.env.VITE_MIXPANEL_TOKEN_PLAYGROUND) {
+  mixpanel.init(process.env.VITE_MIXPANEL_TOKEN_PLAYGROUND, {
     track_pageview: true,
     disable_persistence: true,
   });

@@ -30,11 +30,8 @@ registerIcon(Rotate);
 registerIcon(Cursor);
 
 // Add some simple anonymous analytics
-if (
-  process.env.NEXT_PUBLIC_MIXPANEL_TOKEN_GLTF &&
-  typeof window !== 'undefined'
-) {
-  mixpanel.init(process.env.NEXT_PUBLIC_MIXPANEL_TOKEN_GLTF, {
+if (process.env.VITE_MIXPANEL_TOKEN_GLTF) {
+  mixpanel.init(process.env.VITE_MIXPANEL_TOKEN_GLTF, {
     track_pageview: true,
     disable_persistence: true,
   });
