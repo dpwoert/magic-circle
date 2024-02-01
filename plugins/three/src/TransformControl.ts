@@ -9,6 +9,7 @@ export class TransformControl extends BooleanControl {
   private transformControls?: TransformControls;
   private transformMode: 'translate' | 'rotate' | 'scale' = 'translate';
   private autoEnable = false;
+  isVisible = false;
 
   constructor(camera: Camera, object: Object3D) {
     const value = {
@@ -64,6 +65,8 @@ export class TransformControl extends BooleanControl {
   }
 
   private onVisible(visible: boolean) {
+    this.isVisible = visible;
+
     if (!visible && this.value) {
       this.value = false;
     } else if (visible && !this.value && this.autoEnable) {

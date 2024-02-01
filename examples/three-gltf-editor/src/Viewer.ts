@@ -361,7 +361,7 @@ export default class Viewer {
 
           if (mode) {
             transformControl.mode(mode);
-            transformControl.value = true;
+            transformControl.value = transformControl.isVisible;
           } else if (!mode && transformControl.value) {
             transformControl.value = false;
           }
