@@ -20,6 +20,8 @@ jobs:
         run: npm i
       - name: Build all files
         run: npm run build:dev && npm run build:prod
+        env:
+          VITE_MIXPANEL_TOKEN_PLAYGROUND: ${{ secrets.MIXPANEL_TOKEN_PLAYGROUND }}
       - name: Create bundle
         run: npm run publish:online
         env:
@@ -57,6 +59,8 @@ jobs:
         run: npm i
       - name: Build all files
         run: npm run build:dev && npm run build:prod
+        env:
+          VITE_MIXPANEL_TOKEN_GLTF: ${{ secrets.MIXPANEL_TOKEN_GLTF }}
       - name: Create bundle
         run: npm run publish:gltf
         env:
