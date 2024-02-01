@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/play-controls",
-  "version": "0.3.0-alpha.8",
+  "version": "0.3.0",
   "description": "Magic Circle play controls",
   "keywords": [
     "controls",
@@ -33,8 +33,8 @@
     "build:prod": "NODE_ENV=production tsc"
   },
   "devDependencies": {
-    "@magic-circle/schema": "^0.3.0-alpha.8",
-    "@magic-circle/styles": "^0.3.0-alpha.8",
+    "@magic-circle/schema": "^0.3.0",
+    "@magic-circle/styles": "^0.3.0",
     "typescript": "^4.8.4"
   },
   "peerDependencies": {
