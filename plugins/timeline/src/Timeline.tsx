@@ -7,6 +7,7 @@ import {
   Icon,
   SPACING,
   TYPO,
+  BREAKPOINTS,
   Placement,
   Tooltip,
 } from '@magic-circle/styles';
@@ -27,6 +28,10 @@ const Container = styled.div<ContainerProps>`
   flex-direction: column;
   height: ${(props) => (props.show ? '40vh' : `${SPACING(2)}px`)};
   min-height: 0;
+
+  ${BREAKPOINTS.max.medium`
+    display: none;
+  `}
 `;
 
 const Header = styled.div`
