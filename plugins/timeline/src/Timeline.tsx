@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 
 import {
@@ -258,6 +258,24 @@ const Timeline = ({ timeline }: TimelineProps) => {
       ? value[selected.key].time
       : scene.duration;
   }, [selected, scene]);
+
+  useEffect(() => {
+    const toggle = (evt: KeyboardEvent) => {
+      if (show && evt.code === 'Space') {
+        if (playing) {
+          timeline.stop();
+        } else {
+          timeline.play();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', toggle);
+
+    return () => {
+      window.removeEventListener('keydown', toggle);
+    };
+  }, [playing, show, timeline]);
 
   return (
     <Container show={show ? true : undefined}>
