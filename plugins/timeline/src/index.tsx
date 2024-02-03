@@ -521,7 +521,6 @@ export default class Timeline implements PluginBase {
 
   async importScene() {
     if ('showOpenFilePicker' in window) {
-      // @ts-ignore
       const [fileHandle] = await window.showOpenFilePicker({
         types: [
           {

@@ -1,4 +1,7 @@
+/*  eslint-disable consistent-return */
+
 import styled from 'styled-components';
+import { useEffect, useState } from 'react';
 
 import {
   Warning,
@@ -33,6 +36,38 @@ type SidebarProps = {
 
 const Sidebar = ({ recordings }: SidebarProps) => {
   const current = useStore(recordings.current);
+  const [allowSync, setAllowSync] = useState(false);
+
+  useEffect(() => {
+    const timeline = recordings.app.getPlugin('timeline') as any;
+
+    if (timeline) {
+      // set sync to true
+      recordings.current.set({
+        ...recordings.current.value,
+        sync: true,
+      });
+      setAllowSync(true);
+
+      const update = () => {
+        const duration = Number(
+          (timeline.scene.value.duration / 1000).toFixed(2)
+        );
+
+        recordings.current.set({
+          ...recordings.current.value,
+          duration,
+        });
+      };
+
+      timeline.scene.onChange(update);
+      update();
+
+      return () => {
+        timeline.scene.removeListener(update);
+      };
+    }
+  }, [recordings]);
 
   if ('showOpenFilePicker' in window === false) {
     return (
@@ -113,20 +148,22 @@ const Sidebar = ({ recordings }: SidebarProps) => {
             </Control.Inside>
           </Control.Container>
 
-          <Control.Container hasChanges={false}>
-            <Control.Label>Scene sync</Control.Label>
-            <BooleanInside>
-              <Forms.Checkbox
-                value={current.sync}
-                onChange={(val) => {
-                  recordings.current.setFn((curr) => ({
-                    ...curr,
-                    sync: val,
-                  }));
-                }}
-              />
-            </BooleanInside>
-          </Control.Container>
+          {allowSync && (
+            <Control.Container hasChanges={false}>
+              <Control.Label>Scene sync</Control.Label>
+              <BooleanInside>
+                <Forms.Checkbox
+                  value={current.sync}
+                  onChange={(val) => {
+                    recordings.current.setFn((curr) => ({
+                      ...curr,
+                      sync: val,
+                    }));
+                  }}
+                />
+              </BooleanInside>
+            </Control.Container>
+          )}
 
           <ButtonArea>
             <Forms.Button highlight onClick={() => recordings.start()}>
