@@ -671,18 +671,16 @@ class CanvasDisplay {
           this.render();
         },
         drag: (dx, dy) => {
-          if (isNumber) {
-            // ensure we're updating the same keyframe and not the reference to the old one...
-            const curr = this.timeline.getKeyframeByKey(path, key);
+          // ensure we're updating the same keyframe and not the reference to the old one...
+          const curr = this.timeline.getKeyframeByKey(path, key);
 
-            const newX = this.position(curr.time) + dx;
-            const newY = axis(+curr.value) + dy;
-            const newTime = this.invert(newX);
-            const newValue = clamp(axisInverse(newY), range[0], range[1]);
+          const newX = this.position(curr.time) + dx;
+          const newY = isNumber ? axis(+curr.value) + dy : axis(+curr.value);
+          const newTime = this.invert(newX);
+          const newValue = clamp(axisInverse(newY), range[0], range[1]);
 
-            this.timeline.changeKeyframe(path, key, newValue, newTime);
-            this.render();
-          }
+          this.timeline.changeKeyframe(path, key, newValue, newTime);
+          this.render();
         },
       });
     });
