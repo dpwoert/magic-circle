@@ -20,13 +20,13 @@ import ValuePopup from './ValuePopup';
 import { formatTime } from './utils';
 
 type ContainerProps = {
-  show: boolean;
+  $show: boolean;
 };
 
 const Container = styled.div<ContainerProps>`
   display: flex;
   flex-direction: column;
-  height: ${(props) => (props.show ? '40vh' : `${SPACING(2)}px`)};
+  height: ${(props) => (props.$show ? '40vh' : `${SPACING(2)}px`)};
   min-height: 0;
 
   ${BREAKPOINTS.max.medium`
@@ -49,7 +49,7 @@ const Header = styled.div`
 `;
 
 type ArrowProps = {
-  show: boolean;
+  $show: boolean;
 };
 
 const Arrow = styled.div<ArrowProps>`
@@ -117,13 +117,13 @@ const ZoomControls = styled.div`
 `;
 
 type ZoomControlProps = {
-  active: boolean;
+  $active: boolean;
 };
 
 const ZoomControl = styled.div<ZoomControlProps>`
   display: flex;
-  opacity: ${(props) => (props.active ? 1 : 0.2)};
-  cursor: ${(props) => (props.active ? 'pointer' : 'default')};
+  opacity: ${(props) => (props.$active ? 1 : 0.2)};
+  cursor: ${(props) => (props.$active ? 'pointer' : 'default')};
 `;
 
 const SidebarRows = styled.div`
@@ -199,7 +199,9 @@ type ButtonProps = {
   onClick?: () => void;
 };
 
-const Button = styled(Tooltip)<ButtonProps>`
+const Button = styled(Tooltip).withConfig({
+  shouldForwardProp: (prop) => prop !== 'active',
+})<ButtonProps>`
   position: relative;
   width: 26px;
   height: 26px;
@@ -283,14 +285,14 @@ const Timeline = ({ timeline }: TimelineProps) => {
   }, [playing, show, timeline]);
 
   return (
-    <Container show={show ? true : undefined}>
+    <Container $show={show ? true : undefined}>
       <Header
         onClick={() => {
           timeline.show.set(!show);
         }}
       >
         <Icon name="Clock" width={SPACING(1)} height={SPACING(1)} /> Timeline
-        <Arrow show={show ? true : undefined}>
+        <Arrow $show={show}>
           <Icon
             name={show ? 'ChevronDown' : 'ChevronUp'}
             width={SPACING(2)}
@@ -314,7 +316,7 @@ const Timeline = ({ timeline }: TimelineProps) => {
                 </SceneSelector>
                 <ZoomControls>
                   <span>{Math.round(zoom * 100)}%</span>
-                  <ZoomControl active={zoom > 0}>
+                  <ZoomControl $active={zoom > 0}>
                     <Icon
                       name="ZoomOut"
                       width={SPACING(1.5)}
@@ -324,7 +326,7 @@ const Timeline = ({ timeline }: TimelineProps) => {
                       }}
                     />
                   </ZoomControl>
-                  <ZoomControl active={zoom < 1}>
+                  <ZoomControl $active={zoom < 1}>
                     <Icon
                       name="ZoomIn"
                       width={SPACING(1.5)}

@@ -154,7 +154,9 @@ type ButtonProps = {
   highlight?: boolean;
 };
 
-export const Button = styled.button<ButtonProps>`
+export const Button = styled.button.withConfig({
+  shouldForwardProp: (prop) => prop !== 'highlight',
+})<ButtonProps>`
   ${TYPO.regular}
   display: flex;
   align-items: center;

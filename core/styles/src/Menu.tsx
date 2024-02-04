@@ -95,7 +95,9 @@ const Label = styled.div`
   flex: 1;
 `;
 
-const Item = styled.a<ItemProps>`
+const Item = styled.a.withConfig({
+  shouldForwardProp: (prop) => !['active', 'checked'].includes(prop),
+})<ItemProps>`
   ${TYPO.regular}
   position: relative;
   height: ${SPACING(3.5)}px;
