@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/three",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Magic Circle helpers for ThreeJs projects",
   "keywords": [],
   "repository": {
@@ -24,7 +24,7 @@
     "build:prod": "NODE_ENV=production rollup --config rollup.config.js"
   },
   "devDependencies": {
-    "@magic-circle/client": "^0.3.0",
+    "@magic-circle/client": "^0.3.1",
     "@rollup/plugin-replace": "^4.0.0",
     "@rollup/plugin-typescript": "8.3.3",
     "@types/three": "*",

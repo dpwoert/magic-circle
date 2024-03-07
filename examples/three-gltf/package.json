@@ -2,7 +2,7 @@
   "name": "@magic-circle/example-three-gltf",
   "exampleName": "ThreeJS helpers",
   "private": true,
-  "version": "0.3.0",
+  "version": "0.3.1",
   "type": "module",
   "description": "Magic Circle Three/GLTF example",
   "keywords": [
@@ -35,14 +35,14 @@
     "editor:dev": "magic develop"
   },
   "devDependencies": {
-    "@magic-circle/editor": "^0.3.0",
+    "@magic-circle/editor": "^0.3.1",
     "@types/three": "^0.160.0",
     "typescript": "^5.3.3",
     "vite": "^5.0.12"
   },
   "dependencies": {
-    "@magic-circle/client": "^0.3.0",
-    "@magic-circle/three": "^0.3.0",
+    "@magic-circle/client": "^0.3.1",
+    "@magic-circle/three": "^0.3.1",
     "three": "^0.160.1"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/gltf",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "description": "Magic Circle GLTF editor",
   "keywords": [
@@ -33,9 +33,9 @@
     "mixpanel-browser": "^2.48.1"
   },
   "devDependencies": {
-    "@magic-circle/editor": "^0.3.0",
-    "@magic-circle/schema": "^0.3.0",
-    "@magic-circle/styles": "^0.3.0",
+    "@magic-circle/editor": "^0.3.1",
+    "@magic-circle/schema": "^0.3.1",
+    "@magic-circle/styles": "^0.3.1",
     "@types/mixpanel-browser": "^2.48.1",
     "@types/react": "^18.2.45",
     "@types/styled-components": "^5.1.34",

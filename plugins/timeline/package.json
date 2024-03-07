@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/timeline",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Magic Circle timeline",
   "keywords": [
     "controls",
@@ -33,15 +33,15 @@
     "build:prod": "NODE_ENV=production tsc"
   },
   "dependencies": {
-    "@magic-circle/layers": "^0.3.0",
-    "@magic-circle/state": "^0.3.0",
-    "@magic-circle/styles": "^0.3.0",
+    "@magic-circle/layers": "^0.3.1",
+    "@magic-circle/state": "^0.3.1",
+    "@magic-circle/styles": "^0.3.1",
     "file-saver": "^2.0.5",
     "idb-keyval": "^6.2.0",
     "virtual-scroll": "^2.2.1"
   },
   "devDependencies": {
-    "@magic-circle/schema": "^0.3.0",
+    "@magic-circle/schema": "^0.3.1",
     "@types/react": "^18.0.21",
     "typescript": "^4.8.4"
   },
