@@ -16,7 +16,7 @@
   ],
   "author": "Davey van der Woert",
   "license": "ISC",
-  "main": "dist/magic-circle.cjs.js",
+  "main": "dist/magic-circle.cjs",
   "module": "dist/magic-circle.esm.js",
   "types": "dist/magic-circle.d.ts",
   "scripts": {
