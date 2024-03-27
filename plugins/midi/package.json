@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/midi",
-  "version": "0.3.1",
+  "version": "0.3.2-alpha.0",
   "description": "Magic Circle midi",
   "private": true,
   "keywords": [
@@ -30,12 +30,12 @@
     "build:prod": "NODE_ENV=production tsc"
   },
   "dependencies": {
-    "@magic-circle/state": "^0.3.1",
-    "@magic-circle/styles": "^0.3.1",
+    "@magic-circle/state": "^0.3.2-alpha.0",
+    "@magic-circle/styles": "^0.3.2-alpha.0",
     "webmidi": "^2.5.1"
   },
   "devDependencies": {
-    "@magic-circle/schema": "^0.3.1"
+    "@magic-circle/schema": "^0.3.2-alpha.0"
   },
   "peerDependencies": {
     "react": "*",

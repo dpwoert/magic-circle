@@ -2,7 +2,7 @@
   "name": "@magic-circle/example-regl",
   "type": "module",
   "private": true,
-  "version": "0.3.1",
+  "version": "0.3.2-alpha.0",
   "description": "Magic Circle Regl example",
   "keywords": [
     "controls",
@@ -30,13 +30,13 @@
     "editor": "magic"
   },
   "devDependencies": {
-    "@magic-circle/editor": "^0.3.1",
+    "@magic-circle/editor": "^0.3.2-alpha.0",
     "typescript": "^5.3.3",
     "vite": "^5.0.12",
     "vite-plugin-glsl": "^1.2.1"
   },
   "dependencies": {
-    "@magic-circle/client": "^0.3.1",
+    "@magic-circle/client": "^0.3.2-alpha.0",
     "regl": "2.1.0"
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "@magic-circle/example-p5-instance",
   "private": true,
-  "version": "0.3.1",
+  "version": "0.3.2-alpha.0",
   "description": "Magic Circle P5js (instance mode) example",
   "type": "module",
   "keywords": [
@@ -30,14 +30,14 @@
     "editor": "magic"
   },
   "devDependencies": {
-    "@magic-circle/editor": "^0.3.1",
+    "@magic-circle/editor": "^0.3.2-alpha.0",
     "@types/p5": "^1.7.6",
     "typescript": "^5.3.3",
     "vite": "^5.0.12"
   },
   "dependencies": {
-    "@magic-circle/client": "^0.3.1",
-    "@magic-circle/p5": "^0.3.1",
+    "@magic-circle/client": "^0.3.2-alpha.0",
+    "@magic-circle/p5": "^0.3.2-alpha.0",
     "p5": "^1.9.0"
   },
   "exampleName": "p5.js (instance mode)"
