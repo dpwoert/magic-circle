@@ -1,7 +1,7 @@
 {
   "name": "@magic-circle/example-textures",
   "private": true,
-  "version": "0.3.2-alpha.0",
+  "version": "0.3.2",
   "description": "Magic Circle textures example",
   "type": "module",
   "keywords": [
@@ -32,13 +32,13 @@
     "editor:dev": "magic develop"
   },
   "devDependencies": {
-    "@magic-circle/editor": "^0.3.2-alpha.0",
+    "@magic-circle/editor": "^0.3.2",
     "@types/three": "^0.160.0",
     "typescript": "^5.3.3",
     "vite": "^5.0.12"
   },
   "dependencies": {
-    "@magic-circle/client": "^0.3.2-alpha.0",
+    "@magic-circle/client": "^0.3.2",
     "three": "^0.160.1"
   }
 }

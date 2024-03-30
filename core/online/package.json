@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/online",
-  "version": "0.3.2-alpha.0",
+  "version": "0.3.2",
   "private": true,
   "description": "Magic Circle online test environment",
   "keywords": [
@@ -31,9 +31,9 @@
     "mixpanel-browser": "^2.48.1"
   },
   "devDependencies": {
-    "@magic-circle/editor": "^0.3.2-alpha.0",
-    "@magic-circle/schema": "^0.3.2-alpha.0",
-    "@magic-circle/styles": "^0.3.2-alpha.0",
+    "@magic-circle/editor": "^0.3.2",
+    "@magic-circle/schema": "^0.3.2",
+    "@magic-circle/styles": "^0.3.2",
     "@types/mixpanel-browser": "^2.48.1",
     "@types/react": "^18.2.45",
     "@types/styled-components": "^5.1.34",

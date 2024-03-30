@@ -30,13 +30,13 @@
     "editor": "magic"
   },
   "devDependencies": {
-    "@magic-circle/editor": "^0.3.2-alpha.0",
+    "@magic-circle/editor": "^0.3.2",
     "@types/p5": "^1.7.6",
     "typescript": "^5.3.3",
     "vite": "^5.0.12"
   },
   "dependencies": {
-    "@magic-circle/client": "^0.3.2-alpha.0",
+    "@magic-circle/client": "^0.3.2",
     "@magic-circle/p5": "^0.3.2",
     "p5": "^1.9.0"
   },
