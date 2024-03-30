@@ -21,7 +21,7 @@ export default [
         plugins: [terser()],
       },
       {
-        file: 'dist/magic-circle-p5.cjs.js',
+        file: 'dist/magic-circle-p5.cjs',
         format: 'cjs',
       },
       {

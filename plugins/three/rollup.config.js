@@ -9,7 +9,7 @@ export default [
     input: 'src/index.ts',
     output: [
       {
-        file: 'dist/magic-circle-three.cjs.js',
+        file: 'dist/magic-circle-three.cjs',
         format: 'cjs',
       },
       {
