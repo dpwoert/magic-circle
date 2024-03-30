@@ -2,7 +2,7 @@
   "name": "@magic-circle/example-three-gltf",
   "exampleName": "ThreeJS helpers",
   "private": true,
-  "version": "0.3.2-alpha.0",
+  "version": "0.3.2",
   "type": "module",
   "description": "Magic Circle Three/GLTF example",
   "keywords": [
@@ -42,7 +42,7 @@
   },
   "dependencies": {
     "@magic-circle/client": "^0.3.2-alpha.0",
-    "@magic-circle/three": "^0.3.2-alpha.0",
+    "@magic-circle/three": "^0.3.2",
     "three": "^0.160.1"
   }
 }

@@ -2,7 +2,7 @@
   "name": "@magic-circle/example-three-gltf-editor",
   "exampleName": "ThreeJS GLTF uploads",
   "private": true,
-  "version": "0.3.2-alpha.0",
+  "version": "0.3.2",
   "type": "module",
   "description": "Magic Circle ThreeJS GLTF editor example",
   "keywords": [
@@ -47,7 +47,7 @@
   "dependencies": {
     "@magic-circle/client": "^0.3.2-alpha.0",
     "@magic-circle/styles": "^0.3.2-alpha.0",
-    "@magic-circle/three": "^0.3.2-alpha.0",
+    "@magic-circle/three": "^0.3.2",
     "react-dropzone": "14.2.3",
     "styled-components": "^6.1.8",
     "three": "^0.160.1"

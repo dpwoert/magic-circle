@@ -1,6 +1,6 @@
 {
   "name": "@magic-circle/react",
-  "version": "0.3.2-alpha.0",
+  "version": "0.3.2",
   "description": "Magic Circle wrapper util for React projects",
   "keywords": [],
   "repository": {
